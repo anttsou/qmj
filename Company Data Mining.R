@@ -149,6 +149,106 @@ cLinks[25] <- "https://www.google.com/finance?cid=674368"
 cNames[25] <- "Taisei Corp"
 cTicker[25] <- "TYO:1801"
 
+cLinks[26] <- "https://www.google.com/finance?cid=674368"
+cNames[26] <- "Taisei Corp"
+cTicker[26] <- "TYO:1801"
+
+cLinks[27] <- "https://www.google.com/finance?cid=674368"
+cNames[27] <- "Taisei Corp"
+cTicker[27] <- "TYO:1801"
+
+cLinks[28] <- "https://www.google.com/finance?cid=674368"
+cNames[28] <- "Taisei Corp"
+cTicker[28] <- "TYO:1801"
+
+cLinks[29] <- "https://www.google.com/finance?cid=674368"
+cNames[29] <- "Taisei Corp"
+cTicker[29] <- "TYO:1801"
+
+cLinks[30] <- "https://www.google.com/finance?cid=674368"
+cNames[30] <- "Taisei Corp"
+cTicker[30] <- "TYO:1801"
+
+cLinks[31] <- "https://www.google.com/finance?cid=674368"
+cNames[31] <- "Taisei Corp"
+cTicker[31] <- "TYO:1801"
+
+cLinks[32] <- "https://www.google.com/finance?cid=674368"
+cNames[32] <- "Taisei Corp"
+cTicker[32] <- "TYO:1801"
+
+cLinks[33] <- "https://www.google.com/finance?cid=674368"
+cNames[33] <- "Taisei Corp"
+cTicker[33] <- "TYO:1801"
+
+cLinks[34] <- "https://www.google.com/finance?cid=674368"
+cNames[34] <- "Taisei Corp"
+cTicker[34] <- "TYO:1801"
+
+cLinks[35] <- "https://www.google.com/finance?cid=674368"
+cNames[35] <- "Taisei Corp"
+cTicker[35] <- "TYO:1801"
+
+cLinks[36] <- "https://www.google.com/finance?cid=674368"
+cNames[36] <- "Taisei Corp"
+cTicker[36] <- "TYO:1801"
+
+cLinks[37] <- "https://www.google.com/finance?cid=674368"
+cNames[37] <- "Taisei Corp"
+cTicker[37] <- "TYO:1801"
+
+cLinks[38] <- "https://www.google.com/finance?cid=674368"
+cNames[38] <- "Taisei Corp"
+cTicker[38] <- "TYO:1801"
+
+cLinks[39] <- "https://www.google.com/finance?cid=674368"
+cNames[39] <- "Taisei Corp"
+cTicker[39] <- "TYO:1801"
+
+cLinks[40] <- "https://www.google.com/finance?cid=674368"
+cNames[40] <- "Taisei Corp"
+cTicker[40] <- "TYO:1801"
+
+cLinks[41] <- "https://www.google.com/finance?cid=674368"
+cNames[41] <- "Taisei Corp"
+cTicker[41] <- "TYO:1801"
+
+cLinks[42] <- "https://www.google.com/finance?cid=674368"
+cNames[42] <- "Taisei Corp"
+cTicker[42] <- "TYO:1801"
+
+cLinks[43] <- "https://www.google.com/finance?cid=674368"
+cNames[43] <- "Taisei Corp"
+cTicker[43] <- "TYO:1801"
+
+cLinks[44] <- "https://www.google.com/finance?cid=674368"
+cNames[44] <- "Taisei Corp"
+cTicker[44] <- "TYO:1801"
+
+cLinks[45] <- "https://www.google.com/finance?cid=674368"
+cNames[45] <- "Taisei Corp"
+cTicker[45] <- "TYO:1801"
+
+cLinks[46] <- "https://www.google.com/finance?cid=674368"
+cNames[46] <- "Taisei Corp"
+cTicker[46] <- "TYO:1801"
+
+cLinks[47] <- "https://www.google.com/finance?cid=674368"
+cNames[47] <- "Taisei Corp"
+cTicker[47] <- "TYO:1801"
+
+cLinks[48] <- "https://www.google.com/finance?cid=674368"
+cNames[48] <- "Taisei Corp"
+cTicker[48] <- "TYO:1801"
+
+cLinks[49] <- "https://www.google.com/finance?cid=674368"
+cNames[49] <- "Taisei Corp"
+cTicker[49] <- "TYO:1801"
+
+cLinks[50] <- "https://www.google.com/finance?cid=674368"
+cNames[50] <- "Taisei Corp"
+cTicker[50] <- "TYO:1801"
+
 dataF <- data.frame(cLinks, cNames, cTicker)
 dataF <- dataF[1:26,]
 dataF
