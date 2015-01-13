@@ -14,7 +14,7 @@ getcompanies <- function() {
     while(htmlCode[n] != "<div class=\"stock-char-links\">") {
       if(htmlCode[n] != "N/A</div>") {
         newString <- sub('</div>','',htmlCode[n])
-        newTicker <- sub("\">.*","",sub(".*ticker=","",htmlCode[n+3]))
+        newTicker <- gsub("[^A-Za-z]","",sub("\">.*","",sub(".*ticker=","",htmlCode[n+3])))
         names <- c(names,newString)
         tickers <- c(tickers,newTicker)
       }
