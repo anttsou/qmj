@@ -245,7 +245,206 @@ cLinks[50] <- "https://www.google.com/finance?q=Ruth%27s+Hospitality+Group+Inc.&
 cNames[50] <- "Ruth's Hospitality Group, Inc."
 cTicker[50] <- "NASDAQ:RUTH"
 
+cLinks[51] <- "http://finance.yahoo.com/q/ks?s=VIP"
+cNames[51] <- "VimpelCom Ltd."
+cTicker[51] <- "NasdaqGS:VIP"
+
+cLinks[52] <- "http://finance.yahoo.com/q/ks?s=NLY"
+cNames[52] <- "Annaly Capital Management, Inc."
+cTicker[52] <- "NYSE:NLY"
+
+cLinks[53] <- "http://finance.yahoo.com/q/ks?s=EQR"
+cNames[53] <- "Equity Residential"
+cTicker[53] <- "NYSE:EQR"
+
+cLinks[54] <- "http://finance.yahoo.com/q/ks?s=RJF"
+cNames[54] <- "Raymond James Financial, Inc."
+cTicker[54] <- "NYSE:RJF"
+
+cLinks[55] <- "http://finance.yahoo.com/q/ks?s=IOB.NS"
+cNames[55] <- "Indian Overseas Bank"
+cTicker[55] <- "NSE:IOB.NS"
+
+cLinks[56] <- "http://finance.yahoo.com/q/ks?s=LB"
+cNames[56] <- "L Brands, Inc."
+cTicker[56] <- "NYSE:LB"
+
+cLinks[57] <- "http://finance.yahoo.com/q/ks?s=NABZY"
+cNames[57] <- "National Australia Bank Limited"
+cTicker[57] <- "NABZY"
+
+cLinks[58] <- "http://finance.yahoo.com/q/ks?s=CP"
+cNames[58] <- "Canadian Pacific Railway Limited"
+cTicker[58] <- "NYSE:CP"
+
+cLinks[59] <- "http://finance.yahoo.com/q/ks?s=BPI"
+cNames[59] <- "Bridgepoint Education, Inc."
+cTicker[59] <- "NYSE:BPI"
+
+cLinks[60] <- "http://finance.yahoo.com/q/ks?s=AAPL"
+cNames[60] <- "Apple Inc."
+cTicker[60] <- "NasdaqGS:AAPL"
+
+cLinks[61] <- "http://finance.yahoo.com/q/ks?s=WFC"
+cNames[61] <- "Wells Fargo & Company"
+cTicker[61] <- "NYSE:WFC"
+
+cLinks[62] <- "http://finance.yahoo.com/q/ks?s=CPN"
+cNames[62] <- "Calpine Corp."
+cTicker[62] <- "NYSE:CPN"
+
+cLinks[63] <- "http://finance.yahoo.com/q/ks?s=EBK.DE"
+cNames[63] <- "Energie Baden-Wuerttemberg AG"
+cTicker[63] <- "XETRA:EBK.DE"
+
+cLinks[64] <- "http://finance.yahoo.com/q/ks?s=ALXN"
+cNames[64] <- "Alexion Pharmaceuticals, Inc."
+cTicker[64] <- "NasdaqGS:ALXN"
+
+cLinks[65] <- "http://finance.yahoo.com/q/ks?s=SUBCY"
+cNames[65] <- "Subsea 7 SA"
+cTicker[65] <- "SUBCY"
+
+cLinks[66] <- "http://finance.yahoo.com/q/ks?s=GWW"
+cNames[66] <- "W.W. Grainger, Inc."
+cTicker[66] <- "NYSE:GWW"
+
+cLinks[67] <- "http://finance.yahoo.com/q/ks?s=CNCO"
+cNames[67] <- "Cencosud S.A."
+cTicker[67] <- "NYSE:CNCO"
+
+cLinks[68] <- "http://finance.yahoo.com/q/ks?s=KYSEY"
+cNames[68] <- "Kyushu Electric Power Company, Inc."
+cTicker[68] <- "KYSEY"
+
+cLinks[69] <- "http://finance.yahoo.com/q/ks?s=DUK"
+cNames[69] <- "Duke Energy Corporation"
+cTicker[69] <- "NYSE:DUK"
+
+cLinks[70] <- "http://finance.yahoo.com/q/ks?s=CIXPF"
+cNames[70] <- "CaixaBank, S.A."
+cTicker[70] <- "CIXPF"
+
+cLinks[71] <- "http://finance.yahoo.com/q/ks?s=SGO.PA"
+cNames[71] <- "Compagnie de Saint-Gobain S.A."
+cTicker[71] <- "Paris:SGO.PA"
+
+cLinks[72] <- "http://finance.yahoo.com/q/ks?s=NDAQ"
+cNames[72] <- "The Nasdaq OMX Group, Inc."
+cTicker[72] <- "NasdaqGS:NDAQ"
+
+cLinks[73] <- "http://finance.yahoo.com/q/ks?s=SMCAY"
+cNames[73] <- "SMC Corp."
+cTicker[73] <- "SMCAY"
+
+cLinks[74] <- "http://finance.yahoo.com/q/ks?s=SMMYY"
+cNames[74] <- "Sumitomo Metal Mining Co., Ltd."
+cTicker[74] <- "SMMYY"
+
+cLinks[75] <- "http://finance.yahoo.com/q/ks?s=ERIC"
+cNames[75] <- "Ericsson"
+cTicker[75] <- "NasdaqGS:ERIC"
+
+cLinks[76] <- "http://finance.yahoo.com/q/ks?s=DJCO"
+cNames[76] <- "Daily Journal Corp."
+cTicker[76] <- "NasdaqCM:DJCO"
+
+cLinks[77] <- "http://finance.yahoo.com/q/ks?s=QBAK"
+cNames[77] <- "Qualstar Corp."
+cTicker[77] <- "NasdaqCM:QBAK"
+
+cLinks[78] <- "http://finance.yahoo.com/q/ks?s=JKHY"
+cNames[78] <- "Jack Henry & Associates Inc."
+cTicker[78] <- "NasdaqGS:JKHY"
+
+cLinks[79] <- "http://finance.yahoo.com/q/ks?s=MBTF"
+cNames[79] <- "MBT Financial Corp."
+cTicker[79] <- "NasdaqGS:MBTF"
+
+cLinks[80] <- "http://finance.yahoo.com/q/ks?s=GPRO"
+cNames[80] <- "GoPro, Inc."
+cTicker[80] <- "NasdaqGS:GPRO"
+
+cLinks[81] <- "http://finance.yahoo.com/q/ks?s=PNRA"
+cNames[81] <- "Panera Bread Company"
+cTicker[81] <- "NasdaqGS:PNRA"
+
+cLinks[82] <- "http://finance.yahoo.com/q/ks?s=PZZA"
+cNames[82] <- "Papa John's International Inc."
+cTicker[82] <- "NasdaqGS:PZZA"
+  
+cLinks[83] <- "http://finance.yahoo.com/q/ks?s=BSET"
+cNames[83] <- "Bassett Furniture Industries, Inc."
+cTicker[83] <- "NasdaqGS:BSET"
+  
+cLinks[84] <- "http://finance.yahoo.com/q/ks?s=KING"
+cNames[84] <- "King Digital Entertainment plc"
+cTicker[84] <- "NYSE:KING"
+  
+cLinks[85] <- "http://finance.yahoo.com/q/ks?s=TRUE"
+cNames[85] <- "TrueCar, Inc."
+cTicker[85] <- "NasdaqGS:TRUE"
+  
+cLinks[86] <- "http://finance.yahoo.com/q/ks?s=CACH"
+cNames[86] <- "Cache Inc."
+cTicker[86] <- "NasdaqGS:CACH"
+  
+cLinks[87] <- "http://finance.yahoo.com/q/ks?s=HBHC"
+cNames[87] <- "Hancock Holding Company"
+cTicker[87] <- "NasdaqGS:HBHC"
+  
+cLinks[88] <- "http://finance.yahoo.com/q/ks?s=ICCC"
+cNames[88] <- "ImmuCell Corp."
+cTicker[88] <- "NasdaqCM:ICCC"
+  
+cLinks[89] <- "http://finance.yahoo.com/q/ks?s=DAVE"
+cNames[89] <- "Famous Dave's of America Inc."
+cTicker[89] <- "NasdaqGS:DAVE"
+  
+cLinks[90] <- "http://finance.yahoo.com/q/ks?s=ZEUS"
+cNames[90] <- "Olympic Steel Inc."
+cTicker[90] <- "NasdaqGS:ZEUS"
+  
+cLinks[91] <- "http://finance.yahoo.com/q/ks?s=OSUR"
+cNames[91] <- "OraSure Technologies, Inc."
+cTicker[91] <- "NasdaqGS:OSUR"
+  
+cLinks[92] <- "http://finance.yahoo.com/q/ks?s=HAUP"
+cNames[92] <- "Hauppauge Digital Inc."
+cTicker[92] <- "HAUP"
+  
+cLinks[93] <- "http://finance.yahoo.com/q/ks?s=HSON"
+cNames[93] <- "Hudson Global, Inc."
+cTicker[93] <-"NasdaqGS:HSON"
+  
+cLinks[94] <- "http://finance.yahoo.com/q/ks?s=LAWS"
+cNames[94] <- "Lawson Products Inc."
+cTicker[94] <- "NasdaqGS:LAWS"
+  
+cLinks[95] <- "http://finance.yahoo.com/q/ks?s=CYBE"
+cNames[95] <- "CyberOptics Corp."
+cTicker[95] <- "NasdaqGM:CYBE"
+  
+cLinks[96] <- "http://finance.yahoo.com/q/ks?s=ATRO"
+cNames[96] <- "Astronic Corporation"
+cTicker[96] <- "NasdaqGS:ATRO"
+  
+cLinks[97] <- "http://finance.yahoo.com/q/ks?s=AYR"
+cNames[97] <- "Aircastle LTD"
+cTicker[97] <- "NYSE:AYR"
+  
+cLinks[98] <- "http://finance.yahoo.com/q/ks?s=NYNY"
+cNames[98] <- "Empire Resorts Inc."
+cTicker[98] <- "NasdaqGM:NYNY"
+  
+cLinks[99] <- "http://finance.yahoo.com/q/ks?s=LOCO"
+cNames[99] <- "El Pollo Loco Holdings, Inc."
+cTicker[99] <- "NasdaqGS:LOCO"
+  
+cLinks[100] <- "http://finance.yahoo.com/q/ks?s=RSYS"
+cNames[100] <- "RadiSys Corporation"
+cTicker[100] <- "NasdaqGS:RSYS"
+  
 dataF <- data.frame(cLinks, cNames, cTicker)
 dataF
-
-write.table(dataF, file="Ryan50Companies.csv")
+write.table(dataF, file="100Companies.csv")
