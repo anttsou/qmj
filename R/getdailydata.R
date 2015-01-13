@@ -8,10 +8,15 @@ getdailydata <- function(x){
   } else{
     numCompanies <- length(x$tickers)
     for(i in 1:numCompanies){
-      companyTicker <- x$ticker[i]
-      stockData <- quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE)
-      fileName <- paste("/data/", companyTicker, ".csv", sep='')
-      write.zoo(stockData, file = fileName, sep=",")
+      companyTicker <- as.character(x$ticker[i])
+      stockData <- tryCatch(
+        quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE),
+        error=function(e) e
+      )
+      if(!inherits(stockData, "error")){
+        fileName <- paste("data/", companyTicker, ".csv", sep='')
+        write.zoo(stockData, file = fileName, sep=",") 
+      }
     }
   }
 }
