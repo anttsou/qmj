@@ -1,4 +1,4 @@
-R/.Rproj.user
-R/.Rhistory
-R/.RData
-R/.Rproj
+*.Rproj.user
+package/*.Rhistory
+package/*.RData
+*.Rproj
