@@ -20,6 +20,5 @@ getbalancesheets <- function() {
         n = n+1
     }
   }
-  print(colnames(matr))
   write.csv(vect,file="balancesheets.csv")
 }
