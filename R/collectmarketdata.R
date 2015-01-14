@@ -13,6 +13,7 @@ collectmarketdata <- function(x){
   
   numCompanies <- length(x$tickers)
   profitability <- rep(0, numCompanies)
+  growth <- rep(0, numCompanies)
   for(i in 1:numCompanies){
     #GPOA = (revenue - cost of goods sold)/(total assets)
     #?#GROSS PROFITS OVER TOTAL ASSETS. THIS CAN BE EASILY FOUND.
@@ -53,5 +54,22 @@ collectmarketdata <- function(x){
     # Depreciation - CF
     # Changes in working capital - CF
     # Total assets - BS 
+    
+    ###GROWTH
+    #(5 year change in gross profits)/Total assets
+    
+    #(5 year change in Net income)/book equity
+    
+    #(5 year change in net income)/total assets
+    
+    #(5 year change in cash flow over assets)
+
+    #(5 year change in gross profit)/(total sales)
+    
+    #(5 year change in (low) accruals)/total assets
+    
+    ###SAFETY
+    #BAB
+    # - market beta
   }
 }
