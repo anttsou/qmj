@@ -11,7 +11,9 @@ getdailydata <- function(x){
       error=function(e) e
     )
     if(!inherits(stockData, "error")){
-      stockData <- stockData[,4]
+      thisYear <- as.numeric(format(Sys.Date(), "%Y"))
+      desiredDates <- paste(thisYear - 5, "/", sep='')
+      stockData <- stockData[desiredDates,4]
       fileName <- paste("data/", companyTicker, ".csv", sep='')
       write.zoo(stockData, file = fileName, sep=",") 
     } else{
