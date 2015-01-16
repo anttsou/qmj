@@ -3,7 +3,10 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   
   
   ###GROWTH
+  #GPOA
   #(5 year change in gross profits)/Total assets
+  #GP - IS 5
+  #Total assets - BS 18
   
   #(5 year change in Net income)/book equity
   

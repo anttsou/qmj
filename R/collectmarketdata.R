@@ -26,10 +26,11 @@ collectmarketdata <- function(){
   profitability <- collectmarketprofitability(companies, BS, CF, IS)
   growth <- rep(0, numCompanies)
   safety <- rep(0, numCompanies)
+  payouts <- collectmarketpayout(companies, BS, CF, IS)
   
   ###SAFETY
   #BAB
   # - market beta
   # Use PerformanceAnalytics
-  profitability
+  payouts
 }
