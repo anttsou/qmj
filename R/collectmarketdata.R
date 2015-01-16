@@ -10,11 +10,11 @@ collectmarketdata <- function(){
   # Gross margin (GMAR)
   # Fraction of earnings composed of cash
   #   i.e., low accruals, ACC
-  companies <- read.csv("companies.csv")
+  companies <- read.csv("data/companies.csv")
   numCompanies <- length(companies$tickers)
-  BS <- read.csv("balancesheets.csv")
-  CF <- read.csv("cashflows.csv")
-  IS <- read.csv("incomestatements.csv")
+  BS <- read.csv("data/balancesheets.csv")
+  CF <- read.csv("data/cashflows.csv")
+  IS <- read.csv("data/incomestatements.csv")
   
   #What to do with missing data?
   # If we're missing a lot of data, then simply assigning 0's skews
@@ -42,4 +42,5 @@ collectmarketdata <- function(){
   ###SAFETY
   #BAB
   # - market beta
+  profitability
 }
