@@ -1,5 +1,4 @@
 getincomestatements <- function() {
-  require(quantmod)
   companies <- read.csv("companies.csv")
   tickers <- as.character(companies$tickers)
   vect <- list()
@@ -17,6 +16,9 @@ getincomestatements <- function() {
         a = a + 1
       }
       vect[[n]] <- matr
+      n = n+1
+    } else {
+      vect[[n]] <- matrix(dat=NA, ncol=4, nrow=49)
       n = n+1
     }
   }

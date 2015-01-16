@@ -1,5 +1,4 @@
 getbalancesheets <- function() {
-  require(quantmod)
   companies <- read.csv("companies.csv")
   tickers <- as.character(companies$tickers)
   vect <- list()
@@ -18,7 +17,10 @@ getbalancesheets <- function() {
         }
         vect[[n]] <- matr
         n = n+1
+    } else {
+      vect[[n]] <- matrix(dat=NA, ncol=4, nrow=42)
+      n = n+1
     }
-  }
+  } 
   write.csv(vect,file="balancesheets.csv")
 }
