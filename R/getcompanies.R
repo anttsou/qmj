@@ -22,5 +22,12 @@ getcompanies <- function() {
     }
     i = i+1
   }
-  data.frame(names = names, tickers = tickers)
+  smallNames <- NULL
+  smallTickers <- NULL
+  indices <- c(8482,1586,6338,9087,1297,8674,6081,7800,8079,4854,3381,2469,5203,2841,7576,769,9199,2990,9122,3100)
+  for(i in indices) {
+    smallNames <- c(smallNames,names[i])
+    smallTickers <- c(smallTickers,tickers[i])
+  }
+  data.frame(names = smallNames, tickers = smallTickers)
 }
