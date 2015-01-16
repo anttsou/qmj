@@ -30,5 +30,6 @@ collectmarketdata <- function(){
   ###SAFETY
   #BAB
   # - market beta
+  # Use PerformanceAnalytics
   profitability
 }

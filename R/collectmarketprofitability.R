@@ -11,7 +11,6 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   GMAR <- rep(0, numCompanies)
   ACC <- rep(0, numCompanies)
   for(i in 1:numCompanies){
-    print(i)
     cBS <- BS[,(4*i)-2]
     cCF <- CF[,(4*i)-2]
     cIS <- IS[,(4*i)-2]
