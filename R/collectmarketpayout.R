@@ -45,9 +45,9 @@ collectmarketpayout <- function(x, BS, CF, IS){
   DISS <- scale(DISS)
   NPOP <- scale(NPOP)
   
-  EISS[is.nan(EISS)] <- 0
-  DISS[is.nan(DISS)] <- 0
-  NPOP[is.nan(NPOP)] <- 0
+  EISS[is.na(EISS)] <- 0
+  DISS[is.na(DISS)] <- 0
+  NPOP[is.na(NPOP)] <- 0
   
   for(i in 1:numCompanies){
     payouts[i] <- EISS[i] + DISS[i] + NPOP[i]

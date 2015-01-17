@@ -16,7 +16,7 @@ collectmarketgrowth <- function(x, BS, CF, IS){
     cCFm3y <- CF[,(4*i)+1]
     cIS <- IS[,(4*i)-2]
     cISm3y <- IS[,(4*i)+1]
-    
+    print(i)
     ###GROWTH
     #GPOA
     #(5 year change in gross profits)/Total assets
@@ -33,7 +33,6 @@ collectmarketgrowth <- function(x, BS, CF, IS){
     # Net income - CF 2
     # Total assets - BS 18
     ROA[i] <- (cCF[2] - cCFm3y[2])/(cBSm3y[18])
-    
     #(5 year change in cash flow over assets)
     #Change in cash flow = net income + depreciation - change in working capital - capital expenditure
     # IB (Net income) - CF 2
@@ -41,10 +40,9 @@ collectmarketgrowth <- function(x, BS, CF, IS){
     # Change in working capital - CF 7
     # Capital expenditure - CF 9
     #Total assets - BS 18
-    changeCF1 <- (cCF[2] + cCF[3] - cCF[7] - cCf[9])
-    changeCF2 <- (cCFm3y[2] + cCFm3y[3] - cCFm3y[7] - cCfm3y[9])
+    changeCF1 <- (cCF[2] + cCF[3] - cCF[7] - cCF[9])
+    changeCF2 <- (cCFm3y[2] + cCFm3y[3] - cCFm3y[7] - cCFm3y[9])
     CFOA[i] <- (changeCF1 - changeCF2)/(cBSm3y[18])
-    
     #(5 year change in gross profit)/(total sales)
     # GP - IS 6
     # Total sales (total revenues) - IS 4

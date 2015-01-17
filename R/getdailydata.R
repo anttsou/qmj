@@ -20,4 +20,10 @@ getdailydata <- function(x){
       print(paste("Error retrieving data for ", companyTicker, sep=""))
     }
   }
+  #Block of code below specially gathers the daily data for the S&P 500 for use as a benchmark.
+  stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE)
+  thisYear <- as.numeric(format(Sys.Date(), "%Y"))
+  desiredDates <- paste(thisYear - 5, "/", sep='')
+  stockData <- stockData[desiredDates,4]
+  write.zoo(stockData, file = "data/GSPC.csv", sep=",") 
 }

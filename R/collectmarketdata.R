@@ -24,7 +24,7 @@ collectmarketdata <- function(){
   IS[is.na(IS)] <- 0
   
   profitability <- collectmarketprofitability(companies, BS, CF, IS)
-  growth <- rep(0, numCompanies)
+  growth <- collectmarketgrowth(companies, BS, CF, IS)
   safety <- rep(0, numCompanies)
   payouts <- collectmarketpayout(companies, BS, CF, IS)
   
@@ -32,5 +32,7 @@ collectmarketdata <- function(){
   #BAB
   # - market beta
   # Use PerformanceAnalytics
-  payouts
+  names <- companies$names
+  tickers <- companies$tickers
+  data.frame(names, tickers, profitability, growth, safety, payouts)
 }

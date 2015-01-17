@@ -11,6 +11,7 @@ Description: An implementation of Quality Minus Junk (QMJ) in R. It allows the u
 	to the QMJ factor.
 Imports: 
 	quantmod(>= 0.4-3)
+	PerformanceAnalytics(>=1.4.2541)
 Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
 LazyData: true
