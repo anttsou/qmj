@@ -16,7 +16,6 @@ collectmarketgrowth <- function(x, BS, CF, IS){
     cCFm3y <- CF[,(4*i)+1]
     cIS <- IS[,(4*i)-2]
     cISm3y <- IS[,(4*i)+1]
-    print(i)
     ###GROWTH
     #GPOA
     #(5 year change in gross profits)/Total assets

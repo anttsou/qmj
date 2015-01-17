@@ -2,14 +2,6 @@ collectmarketdata <- function(){
   ##Collect market data focuses on collecting needed
   ##  means and sd's for use in other functions.
   
-  #We need:
-  # gross profits over assets (GPOA)
-  # Return on equity (ROE)
-  # return on assets (ROA)
-  # Cash flow over assets (GPOA)
-  # Gross margin (GMAR)
-  # Fraction of earnings composed of cash
-  #   i.e., low accruals, ACC
   companies <- read.csv("data/companies.csv")
   numCompanies <- length(companies$tickers)
   BS <- read.csv("data/balancesheets.csv")
@@ -28,10 +20,6 @@ collectmarketdata <- function(){
   safety <- collectmarketsafety(companies, BS, CF, IS)
   payouts <- collectmarketpayout(companies, BS, CF, IS)
   
-  ###SAFETY
-  #BAB
-  # - market beta
-  # Use PerformanceAnalytics
   names <- companies$names
   tickers <- companies$tickers
   data.frame(names, tickers, profitability, growth, safety, payouts)
