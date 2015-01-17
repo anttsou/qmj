@@ -25,7 +25,7 @@ collectmarketdata <- function(){
   
   profitability <- collectmarketprofitability(companies, BS, CF, IS)
   growth <- collectmarketgrowth(companies, BS, CF, IS)
-  safety <- rep(0, numCompanies)
+  safety <- collectmarketsafety(companies, BS, CF, IS)
   payouts <- collectmarketpayout(companies, BS, CF, IS)
   
   ###SAFETY
