@@ -11,6 +11,7 @@ getdailydata <- function(x){
   ##getdailydata is meant to be used only when desiring to retrieve
   ### data from the web.
   numCompanies <- length(x$tickers)
+  filepath <- system.file("data", package="qmj")
   for(i in 1:numCompanies){
     companyTicker <- as.character(x$ticker[i])
     stockData <- tryCatch(
@@ -23,7 +24,7 @@ getdailydata <- function(x){
       stockData <- stockData[desiredDates,4]
       #Calculates price returns. Not total returns.
       stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
-      fileName <- paste("data/", companyTicker, ".csv", sep='')
+      fileName <- paste(filepath, "/", companyTicker, ".csv", sep='')
       write.zoo(stockData, file = fileName, sep=",") 
     } else{
       print(paste("Error retrieving data for ", companyTicker, sep=""))
@@ -35,5 +36,6 @@ getdailydata <- function(x){
   desiredDates <- paste(thisYear - 5, "/", sep='')
   stockData <- stockData[desiredDates,4]
   stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
+  fileName <- paste(filepath, "/", "GSPC.csv", sep='')
   write.zoo(stockData, file = "data/GSPC.csv", sep=",") 
 }

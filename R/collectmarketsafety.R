@@ -14,7 +14,7 @@ collectmarketsafety <- function(x, BS, CF, IS){
   # CollectMarketSafety collects data on overall safety
   ## In the market for individual companies for later processing.
   ## x is the list of companies to be processed. BS, CF, IS are financial statements.
-  
+  filepath <- system.file("data", package="qmj")
   numCompanies <- length(x$tickers)
   safety <- rep(0, numCompanies)
   BAB <- rep(0, numCompanies)
@@ -23,13 +23,14 @@ collectmarketsafety <- function(x, BS, CF, IS){
   O <- rep(0, numCompanies)
   Z <- rep(0, numCompanies)
   EVOL <- rep(0, numCompanies)
-  benchmarkReturns <- read.csv("data/GSPC.csv", sep=',', row.names=1)
+  benchmarkpath <- paste(filepath, "/GSPC.csv", sep='')
+  benchmarkReturns <- read.csv(benchmarkpath, sep=',', row.names=1)
   
   for(i in 1:numCompanies){
     cBS <- BS[,(4*i)-2]
     cCF <- CF[,(4*i)-2]
     cIS <- IS[,(4*i)-2]
-    returnsFile <- paste(x$tickers[i], ".csv", sep='')
+    returnsFile <- paste(filepath, "/", x$tickers[i], ".csv", sep='')
     companyFile <- tryCatch(
       read.csv(returnsFile, sep=',', row.names=1),
       error=function(e) e

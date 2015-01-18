@@ -26,6 +26,8 @@ getbalancesheets <- function() {
       vect[[n]] <- matrix(dat=NA, ncol=4, nrow=42)
       n = n+1
     }
-  } 
-  write.csv(vect,file="balancesheets.csv")
+  }
+  filepath <- system.file("data", package="qmj")
+  filepath <- paste(filepath, "/balancesheets.csv", sep='')
+  write.csv(vect,file=filepath)
 }

@@ -27,5 +27,7 @@ getcashflows <- function() {
       n = n+1
     }
   }
-  write.csv(vect,file="cashflows.csv")
+  filepath <- system.file("data", package="qmj")
+  filepath <- paste(filepath, "/cashflows.csv", sep='')
+  write.csv(vect,file=filepath)
 }
