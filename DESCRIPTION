@@ -15,4 +15,4 @@ Imports:
 	xts
 Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
-LazyData: true
+LazyData: false
