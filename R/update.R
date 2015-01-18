@@ -9,4 +9,5 @@ update <- function(){
   qmj::getbalancesheets()
   qmj::getcashflows()
   qmj::getincomestatements()
+  print(paste("Downloading data to: ", system.file("data", package="qmj"), sep=''))
 }
