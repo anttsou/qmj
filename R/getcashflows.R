@@ -4,6 +4,7 @@
 #' @export
 
 getcashflows <- function() {
+  filepath <- system.file("data", package="qmj")
   companies <- read.csv(paste(filepath, "/companies.csv", sep=''))
   tickers <- as.character(companies$tickers)
   vect <- list()
@@ -27,7 +28,6 @@ getcashflows <- function() {
       n = n+1
     }
   }
-  filepath <- system.file("data", package="qmj")
   filepath <- paste(filepath, "/cashflows.csv", sep='')
   write.csv(vect,file=filepath)
 }
