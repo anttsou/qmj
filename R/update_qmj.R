@@ -1,9 +1,9 @@
-#' update
+#' update_qmj
 #'
 #' Temp function to read in data initially.
 #' @export
 
-update <- function(){
+update_qmj <- function(){
   companies <- qmj::getcompanies()
   qmj::getdailydata(companies)
   qmj::getbalancesheets()
