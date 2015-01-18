@@ -37,5 +37,5 @@ getdailydata <- function(x){
   stockData <- stockData[desiredDates,4]
   stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
   fileName <- paste(filepath, "/", "GSPC.csv", sep='')
-  write.zoo(stockData, file = "data/GSPC.csv", sep=",") 
+  write.zoo(stockData, file=fileName, sep=",") 
 }
