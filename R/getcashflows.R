@@ -4,7 +4,7 @@
 #' @export
 
 getcashflows <- function() {
-  companies <- read.csv("companies.csv")
+  companies <- read.csv(paste(filepath, "/companies.csv", sep=''))
   tickers <- as.character(companies$tickers)
   vect <- list()
   n <- 1
