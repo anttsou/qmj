@@ -10,8 +10,8 @@ Description: An implementation of Quality Minus Junk (QMJ) in R. It allows the u
 	securities, as well as to determine how well an overall portfolio adheres
 	to the QMJ factor.
 Imports: 
-	quantmod(>= 0.4-3)
-	PerformanceAnalytics(>=1.4.2541)
+	quantmod(>= 0.4-3),
+	PerformanceAnalytics(>=1.4.2541),
 	xts(>=0.9-7)
 Depends: R (>= 3.1.2)
 License: MIT + file LICENSE

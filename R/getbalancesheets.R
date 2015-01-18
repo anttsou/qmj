@@ -1,3 +1,8 @@
+#' getbalancesheets
+#'
+#' Retrieves data from companies.csv and writes associated balanceflow statements to 'balancesheets.csv'.
+#' @export
+
 getbalancesheets <- function() {
   companies <- read.csv("companies.csv")
   tickers <- as.character(companies$tickers)

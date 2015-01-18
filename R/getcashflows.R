@@ -1,3 +1,8 @@
+#' getcashflows
+#'
+#' Retrieves data from companies.csv and writes associated cashflow statements to 'cashflows.csv'.
+#' @export
+
 getcashflows <- function() {
   companies <- read.csv("companies.csv")
   tickers <- as.character(companies$tickers)

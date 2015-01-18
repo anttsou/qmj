@@ -1,5 +1,17 @@
+#' collectmarketsafety
+#'
+#' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
+#' and an income statement, calculates BAB, IVOL, LEV, O, Z, and EVOL.
+#' and determines the z-score of overall profitability based on the paper
+#' Quality Minus Junk (Asness et al.) in Appendix page A2.
+#' @param x A dataframe of company names and tickers.
+#' @param BS A dataframe containing balance sheet information for every company.
+#' @param CF A dataframe containing cash flow information for every company.
+#' @param IS A dataframe containing income statement information for every company.
+#' @export
+
 collectmarketsafety <- function(x, BS, CF, IS){
-  # CollectMarketProfitability collects data on overall safety
+  # CollectMarketSafety collects data on overall safety
   ## In the market for individual companies for later processing.
   ## x is the list of companies to be processed. BS, CF, IS are financial statements.
   

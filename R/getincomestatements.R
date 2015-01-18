@@ -1,3 +1,8 @@
+#' getincomestatements
+#'
+#' Retrieves data from companies.csv and writes associated income statements to 'incomestatements.csv'.
+#' @export
+
 getincomestatements <- function() {
   companies <- read.csv("companies.csv")
   tickers <- as.character(companies$tickers)

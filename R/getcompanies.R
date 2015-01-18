@@ -1,3 +1,9 @@
+#' getcompanies
+#'
+#' Collects names and tickers into a dataframe of 20 chosen companies.
+#' In the future, will more selectively determine companies.
+#' @export
+
 getcompanies <- function() {
   i <- 1
   newLetters <- c("num",letters)

@@ -1,3 +1,9 @@
+#' collectmarketdata
+#'
+#' Reads data from companies.csv and calculates market growth, payouts, safety, and profitability
+#' for later processing.
+#' @export
+
 collectmarketdata <- function(){
   ##Collect market data focuses on collecting needed
   ##  means and sd's for use in other functions.

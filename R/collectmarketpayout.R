@@ -1,3 +1,15 @@
+#' collectmarketpayout
+#'
+#' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
+#' and an income statement, calculates EISS, DISS, NPOP
+#' and determines the z-score of overall payout based on the paper
+#' Quality Minus Junk (Asness et al.) in Appendix page A3-4.
+#' @param x A dataframe of company names and tickers.
+#' @param BS A dataframe containing balance sheet information for every company.
+#' @param CF A dataframe containing cash flow information for every company.
+#' @param IS A dataframe containing income statement information for every company.
+#' @export
+
 collectmarketpayout <- function(x, BS, CF, IS){
   # CollectMarketPayout collects data on overall payouts
   ## In the market for individual companies for later processing.

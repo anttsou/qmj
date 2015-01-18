@@ -1,3 +1,10 @@
+#' getdailydata
+#'
+#' Given a list of companies (names and tickers), writes .csv files for every company
+#' storing price returns.
+#' @param x A dataframe of company names and tickers.
+#' @export
+
 getdailydata <- function(x){
   ##x is a dataframe containing a list of companies.
   ##Requires quantmod package
