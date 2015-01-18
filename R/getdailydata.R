@@ -22,8 +22,10 @@ getdailydata <- function(x){
       thisYear <- as.numeric(format(Sys.Date(), "%Y"))
       desiredDates <- paste(thisYear - 5, "/", sep='')
       stockData <- stockData[desiredDates,4]
+      colname <- paste(companyTicker, ".Close", sep='')
       #Calculates price returns. Not total returns.
-      stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
+      #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
+      stockData[,1] <- pricereturns(stockData)
       fileName <- paste(filepath, "/", companyTicker, ".csv", sep='')
       write.zoo(stockData, file = fileName, sep=",") 
     } else{
@@ -35,7 +37,8 @@ getdailydata <- function(x){
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))
   desiredDates <- paste(thisYear - 5, "/", sep='')
   stockData <- stockData[desiredDates,4]
-  stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
+  #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
+  stockData[,1] <- pricereturns(stockData)
   fileName <- paste(filepath, "/", "GSPC.csv", sep='')
   write.zoo(stockData, file=fileName, sep=",") 
 }
