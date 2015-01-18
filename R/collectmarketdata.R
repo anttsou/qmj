@@ -21,10 +21,10 @@ collectmarketdata <- function(){
   CF[is.na(CF)] <- 0
   IS[is.na(IS)] <- 0
   
-  profitability <- collectmarketprofitability(companies, BS, CF, IS)
-  growth <- collectmarketgrowth(companies, BS, CF, IS)
-  safety <- collectmarketsafety(companies, BS, CF, IS)
-  payouts <- collectmarketpayout(companies, BS, CF, IS)
+  profitability <- qmj::collectmarketprofitability(companies, BS, CF, IS)
+  growth <- qmj::collectmarketgrowth(companies, BS, CF, IS)
+  safety <- qmj::collectmarketsafety(companies, BS, CF, IS)
+  payouts <- qmj::collectmarketpayout(companies, BS, CF, IS)
   
   names <- companies$names
   tickers <- companies$tickers
