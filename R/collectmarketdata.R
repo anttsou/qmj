@@ -1,57 +1,32 @@
-collectmarketdata <- function(x){
+#' collectmarketdata
+#'
+#' Reads data from companies.csv and calculates market growth, payouts, safety, and profitability
+#' for later processing.
+#' @export
+
+collectmarketdata <- function(){
   ##Collect market data focuses on collecting needed
   ##  means and sd's for use in other functions.
   
-  #We need:
-  # gross profits over assets (GPOA)
-  # Return on equity (ROE)
-  # return on assets (ROA)
-  # Cash flow over assets (GPOA)
-  # Gross margin (GMAR)
-  # Fraction of earnings composed of cash
-  #   i.e., low accruals, ACC
+  companies <- read.csv("data/companies.csv")
+  numCompanies <- length(companies$tickers)
+  BS <- read.csv("data/balancesheets.csv")
+  CF <- read.csv("data/cashflows.csv")
+  IS <- read.csv("data/incomestatements.csv")
   
-  numCompanies <- length(x$tickers)
-  profitability <- rep(0, numCompanies)
-  for(i in 1:numCompanies){
-    #GPOA = (revenue - cost of goods sold)/(total assets)
-    #?#GROSS PROFITS OVER TOTAL ASSETS. THIS CAN BE EASILY FOUND.
-    #Cost of goods sold = Beginning Inventory + Inventory Purchases - End Inventory
-    ##Gross profit - Income statement
-    ##Total assets - in balance sheet.
-    
-    #ROE
-    # Net income /book equity
-    # Net income - Cash flow
-    #?#Book equity = Total equity (BS) 
-    
-    #ROA
-    #Net income / Total assets
-    # Net income - CF
-    # Total assets - BS
-    
-    #CFOA
-    #(net income + depreciation - (change in working capital) - capital expenditures)/(total assets)
-    # Net income - CF
-    # Depreciation - IS
-    # Change in working capital - CF
-    # Capital Expenditures - CF
-    # Total assets - BS
-    
-    #GMAR
-    # (Revenue - costs of goods sold)/(total sales)
-    # = Gross profit/(total sales)
-    #?# Using different equation:
-    # Gross profit/ (Total revenue)
-    #Gross profit - IS
-    #Total Revenue - IS
-    
-    #ACC
-    # (depreciation - changes in working capital)/(total assets)
-    #*# Going from equation they show. Slight difference from their own
-    ## words.
-    # Depreciation - CF
-    # Changes in working capital - CF
-    # Total assets - BS 
-  }
+  #What to do with missing data?
+  # If we're missing a lot of data, then simply assigning 0's skews
+  # the mean and SD. However, short term solution to getting a result.
+  BS[is.na(BS)] <- 0
+  CF[is.na(CF)] <- 0
+  IS[is.na(IS)] <- 0
+  
+  profitability <- collectmarketprofitability(companies, BS, CF, IS)
+  growth <- collectmarketgrowth(companies, BS, CF, IS)
+  safety <- collectmarketsafety(companies, BS, CF, IS)
+  payouts <- collectmarketpayout(companies, BS, CF, IS)
+  
+  names <- companies$names
+  tickers <- companies$tickers
+  data.frame(names, tickers, profitability, growth, safety, payouts)
 }
