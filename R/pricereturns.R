@@ -2,6 +2,7 @@
 #'
 #' Given an xts object with closing prices, returns an xts object with price returns.
 #' @param x An xts object with closing prices.
+#' @export
 
 pricereturns <- function(x){
   closingprices <- as.numeric(x[,1])

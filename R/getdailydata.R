@@ -10,8 +10,19 @@ getdailydata <- function(x){
   ##Requires quantmod package
   ##getdailydata is meant to be used only when desiring to retrieve
   ### data from the web.
-  numCompanies <- length(x$tickers)
   filepath <- system.file("data", package="qmj")
+  numCompanies <- length(x$tickers)
+  thisYear <- as.numeric(format(Sys.Date(), "%Y"))
+  desiredDates <- paste(thisYear - 5, "/", sep='')
+  
+  #Block of code below specially gathers the daily data for the S&P 500 for use as a benchmark.
+  stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE)
+  stockData <- stockData[desiredDates,4]
+  #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
+  #output$GSPC <- pricereturns(stockData)
+  outputlist <- c(zoo::index(stockData), pricereturns(stockData))
+  #fileName <- paste(filepath, "/", "GSPC.csv", sep='')
+  #write.zoo(stockData, file=fileName, sep=",") 
   for(i in 1:numCompanies){
     companyTicker <- as.character(x$ticker[i])
     stockData <- tryCatch(
@@ -19,26 +30,17 @@ getdailydata <- function(x){
       error=function(e) e
     )
     if(!inherits(stockData, "error")){
-      thisYear <- as.numeric(format(Sys.Date(), "%Y"))
-      desiredDates <- paste(thisYear - 5, "/", sep='')
       stockData <- stockData[desiredDates,4]
       colname <- paste(companyTicker, ".Close", sep='')
       #Calculates price returns. Not total returns.
       #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
-      stockData[,1] <- pricereturns(stockData)
-      fileName <- paste(filepath, "/", companyTicker, ".csv", sep='')
-      write.zoo(stockData, file = fileName, sep=",") 
+      #stockData[,1] <- pricereturns(stockData)
+      outputlist <- c(outputlist, pricereturns(stockData))
+      #fileName <- paste(filepath, "/", companyTicker, ".csv", sep='')
+      #write.zoo(stockData, file = fileName, sep=",") 
     } else{
       print(paste("Error retrieving data for ", companyTicker, sep=""))
     }
   }
-  #Block of code below specially gathers the daily data for the S&P 500 for use as a benchmark.
-  stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE)
-  thisYear <- as.numeric(format(Sys.Date(), "%Y"))
-  desiredDates <- paste(thisYear - 5, "/", sep='')
-  stockData <- stockData[desiredDates,4]
-  #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
-  stockData[,1] <- pricereturns(stockData)
-  fileName <- paste(filepath, "/", "GSPC.csv", sep='')
-  write.zoo(stockData, file=fileName, sep=",") 
+  outputlist
 }
