@@ -10,7 +10,7 @@ getdailydata <- function(x){
   ##Requires quantmod package
   ##getdailydata is meant to be used only when desiring to retrieve
   ### data from the web.
-  filepath <- system.file("data", package="qmj")
+  filepath <- system.file(package="qmj")
   numCompanies <- length(x$tickers)
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))
   desiredDates <- paste(thisYear - 5, "/", sep='')
@@ -19,10 +19,12 @@ getdailydata <- function(x){
   stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE)
   stockData <- stockData[desiredDates,4]
   #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
+  stockData[,1] <- pricereturns(stockData)
   #output$GSPC <- pricereturns(stockData)
-  outputlist <- c(zoo::index(stockData), pricereturns(stockData))
+  #outputlist <- list(zoo::index(stockData), pricereturns(stockData))
   #fileName <- paste(filepath, "/", "GSPC.csv", sep='')
-  #write.zoo(stockData, file=fileName, sep=",") 
+  #write.zoo(stockData, file=fileName, sep=","
+  devtools::use_data(stockData, pkg=filepath) 
   for(i in 1:numCompanies){
     companyTicker <- as.character(x$ticker[i])
     stockData <- tryCatch(
@@ -34,10 +36,11 @@ getdailydata <- function(x){
       colname <- paste(companyTicker, ".Close", sep='')
       #Calculates price returns. Not total returns.
       #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
-      #stockData[,1] <- pricereturns(stockData)
-      outputlist <- c(outputlist, pricereturns(stockData))
+      stockData[,1] <- pricereturns(stockData)
+      #outputlist <- c(outputlist, data.frame(pricereturns(stockData)))
       #fileName <- paste(filepath, "/", companyTicker, ".csv", sep='')
       #write.zoo(stockData, file = fileName, sep=",") 
+      devtools::use_data(stockData, pkg=filepath) 
     } else{
       print(paste("Error retrieving data for ", companyTicker, sep=""))
     }
