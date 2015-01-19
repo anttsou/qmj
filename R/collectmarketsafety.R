@@ -37,7 +37,7 @@ collectmarketsafety <- function(x, BS, CF, IS){
     )
     if(!inherits(companyFile, "error")){
     #BAB
-    BAB[i] <- PerformanceAnalytics::CAPM.beta(companyFile[,2], benchmarkReturns)
+    #BAB[i] <- PerformanceAnalytics::CAPM.beta(companyFile[,1], benchmarkReturns)
     }
   }
   
