@@ -20,6 +20,7 @@ collectmarketpayout <- function(x, BS, CF, IS){
   DISS <- rep(0, numCompanies)
   NPOP <- rep(0, numCompanies)
   for(i in 1:numCompanies){
+    readattempt = tryCatch({
     cBS <- BS[[i]]
     cBS[is.na(cBS)] <- 0
     cBS <- data.frame(cBS)
@@ -61,6 +62,11 @@ collectmarketpayout <- function(x, BS, CF, IS){
     totalNetPayouts <- (cCF[2] - cBS[40]) + (cCFm1y[2] - cBSm1y[40]) + (cCFm2y[2] - cBSm2y[40]) + (cCFm3y[2] - cBSm3y[40]) 
     totalProfits <- cIS[6] + cISm1y[6] + cISm2y[6] + cISm3y[6]
     NPOP[i] <- totalNetPayouts/totalProfits
+    }, error = function(e){
+      EISS[i] <- 0
+      DISS[i] <- 0
+      NPOP[i] <- 0
+    })
   }
   
   #Scale converts the individual scores for these values into z-scores.

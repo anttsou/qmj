@@ -20,8 +20,8 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   CFOA <- rep(0, numCompanies)
   GMAR <- rep(0, numCompanies)
   ACC <- rep(0, numCompanies)
-  
   for(i in 1:numCompanies){
+    readattempt = tryCatch({
     cBS <- BS[[i]]
     cBS[is.na(cBS)] <- 0
     cBS <- data.frame(cBS)
@@ -79,6 +79,14 @@ collectmarketgrowth <- function(x, BS, CF, IS){
     accrual1 <- cCF[3] - cCF[7]
     accrual2 <- cCFm3y[3] - cCFm3y[7]
     ACC[i] <- (accrual1 - accrual2)/(cBSm3y[18])
+    }, error = function(e){
+      GPOA[i] <- 0
+      ROE[i] <- 0
+      ROA[i] <- 0
+      CFOA[i] <- 0
+      GMAR[i] <- 0
+      ACC[i] <- 0
+    })
   }
   
   #Scale converts the individual scores for these values into z-scores.
