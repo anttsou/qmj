@@ -29,7 +29,7 @@ collectmarketdata <- function(){
   growth <- qmj::collectmarketgrowth(companies, BS, CF, IS)
   safety <- rep(NaN, numCompanies)
   #safety <- qmj::collectmarketsafety(companies, BS, CF, IS)
-  payouts <- qmj::collectmarketpayout(companies, BS, CF, IS)
+  payouts <- qmj:collectmarketpayout(companies, BS, CF, IS)
   
   names <- companies$names
   tickers <- companies$tickers
