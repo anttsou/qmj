@@ -80,12 +80,12 @@ collectmarketgrowth <- function(x, BS, CF, IS){
     accrual2 <- cCFm3y[3] - cCFm3y[7]
     ACC[i] <- (accrual1 - accrual2)/(cBSm3y[18])
     }, error = function(e){
-      GPOA[i] <- 0
-      ROE[i] <- 0
-      ROA[i] <- 0
-      CFOA[i] <- 0
-      GMAR[i] <- 0
-      ACC[i] <- 0
+      GPOA[i] <- NA
+      ROE[i] <- NA
+      ROA[i] <- NA
+      CFOA[i] <- NA
+      GMAR[i] <- NA
+      ACC[i] <- NA
     })
   }
   

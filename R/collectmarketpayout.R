@@ -63,9 +63,9 @@ collectmarketpayout <- function(x, BS, CF, IS){
     totalProfits <- cIS[6] + cISm1y[6] + cISm2y[6] + cISm3y[6]
     NPOP[i] <- totalNetPayouts/totalProfits
     }, error = function(e){
-      EISS[i] <- 0
-      DISS[i] <- 0
-      NPOP[i] <- 0
+      EISS[i] <- NA
+      DISS[i] <- NA
+      NPOP[i] <- NA
     })
   }
   
