@@ -38,8 +38,17 @@ getdailydata <- function(x){
     } else{
       print(paste("Error retrieving data for ", companyTicker, sep=""))
       fileName <- paste(filepath, "/", companyTicker, ".RData", sep='')
-      nullData <- rep(NA, 1000)
+      nullData <- rep(NA, 1)
       save(nullData, file=fileName)
     }
   }
+  fileList <- list.files(path=filepath, pattern="\\.RData$", full.names=TRUE)
+  compiled <- matrix()
+  load(fileList[1])
+  compiled = cbind(compiled, stockData)
+  for(i in 2:length(fileList)){
+    load(fileList[i])
+    compiled = cbind(compiled, stockData)
+  }
+  data.frame(compiled)
 }
