@@ -24,19 +24,19 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   for(i in 1:numCompanies){
     cBS <- BS[[i]]
     cBS[is.na(cBS)] <- 0
-    cBS <- data.frame(cBS)[,1]
+    cBS <- data.frame(cBS)
     cBSm3y <- cBS[,4]
     cBS <- cBS[,1]
     
     cCF <- CF[[i]]
     cCF[is.na(cCF)] <- 0
-    cCF <- data.frame(cCF)[,1]
+    cCF <- data.frame(cCF)
     cCFm3y <- cCF[,4]
     cCF <- cCF[,1]
     
     cIS <- IS[[i]]
     cIS[is.na(cIS)] <- 0
-    cIS <- data.frame(cIS)[,1]
+    cIS <- data.frame(cIS)
     cISm3y <- cIS[,4]
     cIS <- cIS[,1]
     
