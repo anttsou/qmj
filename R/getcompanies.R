@@ -39,5 +39,10 @@ getcompanies <- function() {
     }
     i = i+1
   }
-  data.frame(names = names, tickers = tickers)
+  companies <- data.frame(names = names, tickers = tickers)
+  #saves companies to data folder.
+  filepath <- system.file("data", package="qmj")
+  filepath <- paste(filepath, "/companies.RData", sep='')
+  #save(companies, file=filepath)
+  companies
 }

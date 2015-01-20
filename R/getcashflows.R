@@ -5,9 +5,10 @@
 
 getcashflows <- function() {
   filepath <- system.file("data", package="qmj")
-  companies <- read.csv(paste(filepath, "/companies.csv", sep=''))
+  filepath1 <- paste(filepath, "/companies.RData", sep='')
+  load(filepath1)
   tickers <- as.character(companies$tickers)
-  vect <- list()
+  cashflows <- list()
   n <- 1
   for(i in tickers) {
     prospective <- tryCatch(getFinancials(i,auto.assign = FALSE),
@@ -21,13 +22,14 @@ getcashflows <- function() {
         colnames(matr)[a] <- sub("[-][0-9]*[-][0-9]*","",paste(i,colnames(matr)[a]))
         a = a + 1
       }
-      vect[[n]] <- matr
+      cashflows[[n]] <- matr
       n = n+1
     } else {
-      vect[[n]] <- matrix(dat=NA, ncol=4, nrow=19)
+      cashflows[[n]] <- matrix(dat=NA, ncol=4, nrow=19)
       n = n+1
     }
   }
-  filepath <- paste(filepath, "/cashflows.csv", sep='')
-  write.csv(vect,file=filepath)
+  filepath2 <- paste(filepath, "/cashflows.RData", sep='')
+  #save(cashflows, file="cashflows.RData")
+  cashflows
 }

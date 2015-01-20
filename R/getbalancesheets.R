@@ -5,9 +5,10 @@
 
 getbalancesheets <- function() {
   filepath <- system.file("data", package="qmj")
-  companies <- read.csv(paste(filepath, "/companies.csv", sep=''))
+  filepath1 <- paste(filepath, "/companies.RData", sep='')
+  load(filepath1)
   tickers <- as.character(companies$tickers)
-  vect <- list()
+  balancesheets <- list()
   n <- 1
   for(i in tickers) {
     prospective <- tryCatch(getFinancials(i,auto.assign = FALSE),
@@ -21,13 +22,14 @@ getbalancesheets <- function() {
           colnames(matr)[a] <- sub("[-][0-9]*[-][0-9]*","",paste(i,colnames(matr)[a]))
           a = a + 1
         }
-        vect[[n]] <- matr
+        balancesheets[[n]] <- matr
         n = n+1
     } else {
-      vect[[n]] <- matrix(dat=NA, ncol=4, nrow=42)
+      balancesheets[[n]] <- matrix(dat=NA, ncol=4, nrow=42)
       n = n+1
     }
   }
-  filepath <- paste(filepath, "/balancesheets.csv", sep='')
-  write.csv(vect,file=filepath)
+  filepath2 <- paste(filepath, "/balancesheets.RData", sep='')
+  #save(balancesheets, file="balancesheets.RData")
+  balancesheets
 }
