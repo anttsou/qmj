@@ -22,12 +22,24 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   ACC <- rep(0, numCompanies)
   
   for(i in 1:numCompanies){
-    cBS <- BS[,(4*i)-2]
-    cBSm3y <- BS[,(4*i)+1]
-    cCF <- CF[,(4*i)-2]
-    cCFm3y <- CF[,(4*i)+1]
-    cIS <- IS[,(4*i)-2]
-    cISm3y <- IS[,(4*i)+1]
+    cBS <- BS[[i]]
+    cBS[is.na(cBS)] <- 0
+    cBS <- data.frame(cBS)[,1]
+    cBSm3y <- cBS[,4]
+    cBS <- cBS[,1]
+    
+    cCF <- CF[[i]]
+    cCF[is.na(cCF)] <- 0
+    cCF <- data.frame(cCF)[,1]
+    cCFm3y <- cCF[,4]
+    cCF <- cCF[,1]
+    
+    cIS <- IS[[i]]
+    cIS[is.na(cIS)] <- 0
+    cIS <- data.frame(cIS)[,1]
+    cISm3y <- cIS[,4]
+    cIS <- cIS[,1]
+    
     ###GROWTH
     #GPOA
     #(5 year change in gross profits)/Total assets

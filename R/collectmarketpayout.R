@@ -20,18 +20,29 @@ collectmarketpayout <- function(x, BS, CF, IS){
   DISS <- rep(0, numCompanies)
   NPOP <- rep(0, numCompanies)
   for(i in 1:numCompanies){
-    cBS <- BS[,(4*i)-2]
-    cBSm1y <- BS[,(4*i)-1]
-    cBSm2y <- BS[,(4*i)]
-    cBSm3y <- BS[,(4*i)+1]
-    cCF <- CF[,(4*i)-2]
-    cCFm1y <- CF[,(4*i)-1]
-    cCFm2y <- CF[,(4*i)]
-    cCFm3y <- CF[,(4*i)+1]
-    cIS <- IS[,(4*i)-2]
-    cISm1y <- IS[,(4*i)-1]
-    cISm2y <- IS[,(4*i)]
-    cISm3y <- IS[,(4*i)+1]
+    cBS <- BS[[i]]
+    cBS[is.na(cBS)] <- 0
+    cBS <- data.frame(cBS)
+    cBSm1y <- cBS[,2]
+    cBSm2y <- cBS[,3]
+    cBSm3y <- cBS[,4]
+    cBS <- cBS[,1]
+    
+    cCF <- CF[[i]]
+    cCF[is.na(cCF)] <- 0
+    cCF <- data.frame(cCF)
+    cCFm1y <- cCF[,2]
+    cCFm2y <- cCF[,3]
+    cCFm3y <- cCF[,4]
+    cCF <- cCF[,1]
+    
+    cIS <- IS[[i]]
+    cIS[is.na(cCF)] <- 0
+    cIS <- data.frame(cIS)
+    cISm1y <- cIS[,2]
+    cISm2y <- cIS[,3]
+    cISm3y <- cIS[,4]
+    cIS <- cIS[,1]
     
     #EISS
     # Issuance (retirement) of stock, net - CF 14

@@ -23,9 +23,15 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   GMAR <- rep(0, numCompanies)
   ACC <- rep(0, numCompanies)
   for(i in 1:numCompanies){
-    cBS <- BS[,(4*i)-2]
-    cCF <- CF[,(4*i)-2]
-    cIS <- IS[,(4*i)-2]
+    cBS <- BS[[i]]
+    cBS <- data.frame(cBS)[,1]
+    cBS[is.na(cBS)] <- 0
+    cCF <- CF[[i]]
+    cCF <- data.frame(cCF)[,1]
+    cCF[is.na(cCF)] <- 0
+    cIS <- IS[[i]]
+    cIS <- data.frame(cIS)[,1]
+    cIS[is.na(cIS)] <- 0
     #GPOA = (revenue - cost of goods sold)/(total assets)
     #?#GROSS PROFITS OVER TOTAL ASSETS. THIS CAN BE EASILY FOUND.
     #Cost of goods sold = Beginning Inventory + Inventory Purchases - End Inventory
