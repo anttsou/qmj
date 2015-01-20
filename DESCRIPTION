@@ -13,6 +13,6 @@ Imports:
 	quantmod(>= 0.4-3),
 	PerformanceAnalytics,
 	xts
-Depends: R (>= 3.1.2)
+Depends: R (>= 3.1.1)
 License: MIT + file LICENSE
 LazyData: false
