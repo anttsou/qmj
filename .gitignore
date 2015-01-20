@@ -1,5 +1,6 @@
 R/.Rproj.user
 R/.RData
 R/.Rproj
-*.Rhistory
+.Rhistory
+R/.Rhistory
 .DS_Store
