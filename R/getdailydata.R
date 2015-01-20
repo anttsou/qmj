@@ -50,5 +50,6 @@ getdailydata <- function(x){
     load(fileList[i])
     compiled = cbind(compiled, stockData)
   }
+  file.remove(fileList)
   data.frame(compiled)
 }
