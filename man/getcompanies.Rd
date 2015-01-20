@@ -7,7 +7,9 @@
 getcompanies()
 }
 \description{
-Collects names and tickers into a dataframe of 20 chosen companies.
-In the future, will more selectively determine companies.
+Collects names and tickers into a dataframe of companies starting with the letter 'A'.
+}
+\examples{
+getcompanies()
 }
 

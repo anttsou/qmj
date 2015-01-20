@@ -1,6 +1,8 @@
 #' getcompanies
 #' 
-#' Maps company names to tickers and ciks if available.
+#' Collects names and tickers into a dataframe of companies starting with the letter 'A'.
+#' @examples
+#' getcompanies()
 #' @export
 
 getcompanies <- function() {
@@ -11,7 +13,6 @@ getcompanies <- function() {
   urlFront <- "http://www.sec.gov/cgi-bin/cik.pl.c?company="
   names <- NULL
   tickers <- NULL
-  ciks <- NULL
   while(i < 3) {
     newUrl <- paste(stringfront,paste(newLetters[i],stringback,sep=""),sep="")
     con <- url(newUrl)
