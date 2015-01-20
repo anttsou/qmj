@@ -14,12 +14,12 @@ getcashflows <- function() {
   cashflows <- list()
   n <- 1
   for(i in tickers) {
-    prospective <- tryCatch(getFinancials(i,auto.assign = FALSE),
+    prospective <- tryCatch(quantmod::getFinancials(i,auto.assign = FALSE),
                             error=function(e) {
                               e
                             })
     matr <- matrix()
-    if(!inherits(prospective,"error") && nrow(matr <- viewFinancials(prospective,type = 'CF',period = 'A'))) {
+    if(!inherits(prospective,"error") && nrow(matr <- quantmod::viewFinancials(prospective,type = 'CF',period = 'A'))) {
       a <- 1
       while(a <= length(colnames(matr))) {
         colnames(matr)[a] <- sub("[-][0-9]*[-][0-9]*","",paste(i,colnames(matr)[a]))
