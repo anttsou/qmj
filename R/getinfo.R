@@ -35,9 +35,6 @@ getinfo <- function() {
         }
         cashflows[[n]] <- matr
         n <- n+1
-      } else {
-        cashflows[[n]] <- matrix(dat=NA, ncol=4, nrow=19)
-        n <- n+1
       }
       if(nrow(matr <- quantmod::viewFinancials(prospective,type = 'IS',period = 'A'))) {
         a <- 1
@@ -47,9 +44,6 @@ getinfo <- function() {
         }
         incomestatements[[k]] <- matr
         k <- k+1
-      } else {
-        incomestatements[[k]] <- matrix(dat=NA, ncol=4, nrow=49)
-        k <- k+1
       }
       if(nrow(matr <- quantmod::viewFinancials(prospective,type = 'BS',period = 'A'))) {
         a <- 1
@@ -58,9 +52,6 @@ getinfo <- function() {
           a <- a + 1
         }
         balancesheets[[c]] <- matr
-        c <- c+1
-      } else {
-        balancesheets[[c]] <- matrix(dat=NA, ncol=4, nrow=42)
         c <- c+1
       }
     }

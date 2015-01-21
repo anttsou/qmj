@@ -4,7 +4,7 @@
 #' 
 #' @export
 
-tidy_balancesheets <- function(x) {
+tidy_incomestatements <- function(x) {
   numCompanies <- length(x)
   incomestatements <- data.frame(matrix(nrow=1, ncol=52))
   
