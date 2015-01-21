@@ -44,7 +44,6 @@ getfinancials <- function(period) {
         if(length(indices) > 0) {
           a <- 1
           while(a <= length(indices) && counter < 4) {
-<<<<<<< HEAD
             newUrl2 <- paste(start3,sub("\\\".*","",sub(".*Archives","",htmlCode[indices[a]])),sep="")
             con2 <- url(newUrl2)
             htmlCode2 <- readLines(con2)
@@ -102,65 +101,6 @@ getfinancials <- function(period) {
               index2 = index2 + 1
             }
             a = a + 1
-=======
-              newUrl2 <- paste(start3,sub("\\\".*","",sub(".*Archives","",htmlCode[indices[a]])),sep="")
-              con2 <- url(newUrl2)
-              htmlCode2 <- readLines(con2)
-              close(con2)
-              index2 <- 1
-              found2 <- 0
-              while(index2 <= length(htmlCode2) && !found2) {
-                if(grepl(".*[0-9].xml",htmlCode2[index2],ignore.case=TRUE)) {
-                  newUrl3 <- paste(start3,sub("\\\".*","",sub(".*Archives","",htmlCode2[index2])),sep="")
-                  options(stringsAsFactors = FALSE)
-                  xbrl.vars <- xbrlDoAll(newUrl3)
-                  xbrl.sec <- xbrlSECdev01(xbrl.vars)
-                  rawlist <- xbrl.sec$showStatements()
-                  pos <- 1
-                  while(pos <= length(rawlist)) {
-                    pos2 <- 1
-                    while(pos2 <= length(rawlist[[pos]])) {
-                      if(grepl("us-gaap", rawlist[[pos]][[pos2]][1],ignore.case=TRUE)) {
-                        cur <- 1
-                        labelfound <- 0
-                        while(cur <= length(colnames(rawlist[[pos]][[pos2]])) && !labelfound) {
-                          if(colnames(rawlist[[pos]][[pos2]])[cur] == "label") {
-                            namesvect <- c(namesvect,"label")
-                            namesvect2 <- c(namesvect2, paste(companies$tickers[i],"label",sep=" "))
-                            labelfound <- 1
-                          }  
-                          cur = cur + 1
-                        }
-                        while(cur <= length(colnames(rawlist[[pos]][[pos2]]))) {
-                          namesvect <- c(namesvect,colnames(rawlist[[pos]][[pos2]])[cur])
-                          namesvect2 <- c(namesvect2, paste(companies$tickers[i],colnames(rawlist[[pos]][[pos2]])[cur],sep=" "))
-                          cur = cur + 1
-                        }
-                        while(k <= length(namesvect)) {
-                          if(length(temp) == 0) {
-                            temp[[1]] <- rawlist[[pos]][[pos2]][,"label"]
-                            maxrows <- length(rawlist[[pos]][[pos2]][,"label"])                        
-                          } else {                        
-                            temp[[tempindex]] = rawlist[[pos]][[pos2]][,namesvect[k]] 
-                            if(length(rawlist[[pos]][[pos2]][,namesvect[k]]) > maxrows) {
-                              maxrows <- length(rawlist[[pos]][[pos2]][,namesvect[k]])
-                            }
-                          }
-                          tempindex = tempindex + 1
-                          k = k+1
-                        }
-                      }
-                      pos2 = pos2 + 1
-                    }
-                    pos = pos + 1
-                  }
-                  found2 <- 1
-                  counter = counter + 1
-                }
-                index2 = index2 + 1
-              }
-              a = a + 1
->>>>>>> 9312d91aeb380771626f779ec0dd91b7185d477b
           }
         }
       }

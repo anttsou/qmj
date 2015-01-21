@@ -10,4 +10,7 @@ collectmarketdata()
 Reads data from companies.csv and calculates market growth, payouts, safety, and profitability
 for later processing.
 }
+\examples{
+collectmarketdata()
+}
 
