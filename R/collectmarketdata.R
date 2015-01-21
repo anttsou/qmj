@@ -11,14 +11,14 @@ collectmarketdata <- function(){
   ##  means and sd's for use in other functions.
   filepath <- system.file(package="qmj")
   data(companies, package="qmj")
-  data(balancesheets, package="qmj")
-  data(cashflows, package="qmj")
-  data(incomestatements, package="qmj")
+  data(tidybalance, package="qmj")
+  data(tidycash, package="qmj")
+  data(tidyincome, package="qmj")
   #companies <- read.csv(paste(filepath, "/companies.csv", sep=''))
   numCompanies <- length(companies$tickers)
-  BS <- balancesheets
-  CF <- cashflows
-  IS <- incomestatements
+  BS <- tidybalance
+  CF <- tidycash
+  IS <- tidyincome
   
   #What to do with missing data?
   # If we're missing a lot of data, then simply assigning 0's skews
