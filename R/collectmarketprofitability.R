@@ -102,6 +102,6 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   for(i in 1:numCompanies){
     profitability[i] <- GPOA[i] + ROE[i] + ROA[i] + CFOA[i] + GMAR[i] + ACC[i]
   }
-  #scale(profitability) 
-  data.frame(x$names, x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
+  scale(profitability) 
+  #data.frame(x$names, x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }
