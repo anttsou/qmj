@@ -34,11 +34,7 @@ getincomestatements <- function() {
       n = n+1
     }
   }
-<<<<<<< HEAD
-  vect
-=======
   filepath2 <- paste(filepath, "/incomestatements.RData", sep='')
   #save(incomestatements, file="incomestatements.RData")
   incomestatements
->>>>>>> 9312d91aeb380771626f779ec0dd91b7185d477b
 }
