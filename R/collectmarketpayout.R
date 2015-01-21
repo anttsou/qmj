@@ -69,14 +69,18 @@ collectmarketpayout <- function(x, BS, CF, IS){
     })
   }
   
+  EISS[is.na(EISS)] <- 0
+  DISS[is.na(DISS)] <- 0
+  NPOP[is.na(NPOP)] <- 0
+  
+  EISS[is.infinite(EISS)] <- 0
+  DISS[is.infinite(DISS)] <- 0
+  NPOP[is.infinite(NPOP)] <- 0
+  
   #Scale converts the individual scores for these values into z-scores.
   EISS <- scale(EISS)
   DISS <- scale(DISS)
   NPOP <- scale(NPOP)
-  
-  EISS[is.na(EISS)] <- 0
-  DISS[is.na(DISS)] <- 0
-  NPOP[is.na(NPOP)] <- 0
   
   for(i in 1:numCompanies){
     payouts[i] <- EISS[i] + DISS[i] + NPOP[i]

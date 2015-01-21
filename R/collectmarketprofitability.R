@@ -77,6 +77,20 @@ collectmarketprofitability <- function(x, BS, CF, IS){
     ACC[i] = (cIS[8] - cCF[6])/cBS[17]
   }
   
+  GPOA[is.nan(GPOA)] <- 0
+  ROE[is.nan(ROE)] <- 0
+  ROA[is.nan(ROA)] <- 0
+  CFOA[is.nan(CFOA)] <- 0
+  GMAR[is.nan(GMAR)] <- 0
+  ACC[is.nan(ACC)] <- 0
+  
+  GPOA[is.infinite(GPOA)] <- 0
+  ROE[is.infinite(ROE)] <- 0
+  ROA[is.infinite(ROA)] <- 0
+  CFOA[is.infinite(CFOA)] <- 0
+  GMAR[is.infinite(GMAR)] <- 0
+  ACC[is.infinite(ACC)] <- 0
+  
   #Scale converts the individual scores for these values into z-scores.
   GPOA <- scale(GPOA)
   ROE <- scale(ROE)
@@ -85,16 +99,9 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   GMAR <- scale(GMAR)
   ACC <- scale(ACC)
   
-  GPOA[is.nan(GPOA)] <- 0
-  ROE[is.nan(ROE)] <- 0
-  ROA[is.nan(ROA)] <- 0
-  CFOA[is.nan(CFOA)] <- 0
-  GMAR[is.nan(GMAR)] <- 0
-  ACC[is.nan(ACC)] <- 0
-  
   for(i in 1:numCompanies){
     profitability[i] <- GPOA[i] + ROE[i] + ROA[i] + CFOA[i] + GMAR[i] + ACC[i]
   }
-  scale(profitability) 
-  #data.frame(x$names, x$tickers, GPOA, ROE, ROA, CFOA, GMAR, ACC)
+  #scale(profitability) 
+  data.frame(x$names, x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }

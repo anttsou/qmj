@@ -89,6 +89,20 @@ collectmarketgrowth <- function(x, BS, CF, IS){
     })
   }
   
+  GPOA[is.nan(GPOA)] <- 0
+  ROE[is.nan(ROE)] <- 0
+  ROA[is.nan(ROA)] <- 0
+  CFOA[is.nan(CFOA)] <- 0
+  GMAR[is.nan(GMAR)] <- 0
+  ACC[is.nan(ACC)] <- 0
+  
+  GPOA[is.infinite(GPOA)] <- 0
+  ROE[is.infinite(ROE)] <- 0
+  ROA[is.infinite(ROA)] <- 0
+  CFOA[is.infinite(CFOA)] <- 0
+  GMAR[is.infinite(GMAR)] <- 0
+  ACC[is.infinite(ACC)] <- 0
+  
   #Scale converts the individual scores for these values into z-scores.
   GPOA <- scale(GPOA)
   ROE <- scale(ROE)
@@ -96,13 +110,6 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   CFOA <- scale(CFOA)
   GMAR <- scale(GMAR)
   ACC <- scale(ACC)
-  
-  GPOA[is.nan(GPOA)] <- 0
-  ROE[is.nan(ROE)] <- 0
-  ROA[is.nan(ROA)] <- 0
-  CFOA[is.nan(CFOA)] <- 0
-  GMAR[is.nan(GMAR)] <- 0
-  ACC[is.nan(ACC)] <- 0
   
   for(i in 1:numCompanies){
     growth[i] <- GPOA[i] + ROE[i] + ROA[i] + CFOA[i] + GMAR[i] + ACC[i]
