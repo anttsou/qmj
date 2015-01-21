@@ -54,9 +54,18 @@ NULL
 
 #' A list of all companies of interest
 #'
-#' Stores all companies of interest. Stores names and tickers.
+#' Stores sample set of companies (namely, all those starting with the letter "A" as found on investorguide.com)
 #'
 #' @name companies
+#' @docType data
+#' @keywords data
+NULL
+
+#' A dataframe of price returns for companies
+#'
+#' Stores calculated price returns (pret) for companies in companies.RData
+#'
+#' @name dailydata
 #' @docType data
 #' @keywords data
 NULL
