@@ -1,6 +1,10 @@
 #' getcompanies
 #' 
 #' Collects names and tickers into a dataframe of companies starting with the letter 'A'.
+#' @examples
+#' \donttest{
+#' getcompanies()
+#' }
 #' @export
 
 getcompanies <- function() {
