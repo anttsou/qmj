@@ -9,7 +9,4 @@ getcompanies()
 \description{
 Collects names and tickers into a dataframe of companies starting with the letter 'A'.
 }
-\examples{
-getcompanies()
-}
 
