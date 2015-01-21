@@ -31,6 +31,5 @@ getincomestatements <- function() {
       n = n+1
     }
   }
-  filepath <- paste(filepath, "/incomestatements.csv", sep='')
-  write.csv(vect,file=filepath)
+  vect
 }
