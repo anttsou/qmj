@@ -23,6 +23,7 @@ getbetas <- function() {
     betas <- c(betas,as.numeric(sub("</td.*","",sub(".*Beta:</th><td class=\"yfnc_tabledata1\">","",htmlCode[191]))))
   }
   betaframe <- data.frame(tickers = tickers, betas = betas)
-  #filepath2 <- paste(filepath, "/betas.RData", sep='')
-  save(betaframe, file="~/econ20/R Paper/qmj/data/betas.RData")
+  filepath2 <- paste(filepath, "/betas.RData", sep='')
+  save(betaframe,file="~/econ20/R Paper/qmj/data/betas.RData")
+  save(betaframe, file=filepath2)
 }
