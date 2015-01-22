@@ -6,10 +6,6 @@
 #' @export
 
 getdailydata <- function(x){
-  ##x is a dataframe containing a list of companies.
-  ##Requires quantmod package
-  ##getdailydata is meant to be used only when desiring to retrieve
-  ### data from the web.
   filepath <- system.file("data", package="qmj")
   numCompanies <- length(x$tickers)
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))
@@ -19,7 +15,7 @@ getdailydata <- function(x){
   stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE)
   stockData <- stockData[desiredDates,6]
   priceData <- stockData[,1]
-  #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
+  #Calculates price returns. Not total returns.
   stockData[,1] <- qmj::pricereturns(stockData)
   fileName <- paste(filepath, "/", "GSPC.RData", sep='')
   fileName2 <- paste(filepath,"/", "GSPCprice.RData", sep='')
@@ -38,13 +34,11 @@ getdailydata <- function(x){
     if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1){
       stockData <- stockData[desiredDates,4]
       priceData <- stockData
-      #Calculates price returns. Not total returns.
-      #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
       stockData[,1] <- qmj::pricereturns(stockData)
       fileName <- paste(filepath, "/", companyTicker, ".RData", sep='')
       fileName2 <- paste(filepath, "/", companyTicker, "price", ".RData", sep='')
-      listfiles[2*i + 1] <- fileName
-      listfiles[2*i + 2] <- fileName2
+      listfiles[(2*i) + 1] <- fileName
+      listfiles[(2*i) + 2] <- fileName2
       
       save(stockData, file=fileName)
       save(priceData, file=fileName2)
@@ -52,27 +46,26 @@ getdailydata <- function(x){
       print(paste("Error retrieving data for ", companyTicker, sep=""))
       fileName <- paste(filepath, "/", companyTicker, ".RData", sep='')
       fileName2 <- paste(filepath, "/", companyTicker, "price", ".RData", sep='')
-      listfiles[2*i + 1] <- fileName
-      listfiles[2*i + 2] <- fileName2
+      listfiles[(2*i) + 1] <- fileName
+      listfiles[(2*i) + 2] <- fileName2
       nullData <- rep(NA, 3)
       save(nullData, file=fileName)
       save(nullData, file=fileName2)
     }
   }
-  print(listfiles)
   compiled <- matrix()
   load(listfiles[1])
   load(listfiles[2])
   compiled = cbind(compiled, stockData)
   compiled = cbind(compiled, priceData)
   for(i in 2:numCompanies){
-    load(listfiles[2*i - 1])
+    load(listfiles[(2*i) - 1])
     load(listfiles[2*i])
     compiled = cbind(compiled, stockData)
     compiled = cbind(compiled, priceData)
   }
   file.remove(listfiles)
-  dailydata <- data.frame(compiled)
+  dailydata <- data.frame(compiled)[,-1]
   filepath2 <- paste(filepath, "/dailydata.RData", sep='')
   save(dailydata, file="dailydata.RData")
   dailydata
