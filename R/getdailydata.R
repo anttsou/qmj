@@ -17,7 +17,7 @@ getdailydata <- function(x){
   listfiles <- rep("", numCompanies + 1)
   #Block of code below specially gathers the daily data for the S&P 500 for use as a benchmark.
   stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE)
-  stockData <- stockData[desiredDates,4]
+  stockData <- stockData[desiredDates,6]
   #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
   stockData[,1] <- qmj::pricereturns(stockData)
   fileName <- paste(filepath, "/", "GSPC.RData", sep='')
@@ -31,7 +31,7 @@ getdailydata <- function(x){
       error=function(e) e
     )
     if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1){
-      stockData <- stockData[desiredDates,4]
+      stockData <- stockData[desiredDates,6]
       #Calculates price returns. Not total returns.
       #stockData <- round(TTR::ROC(quantmod::Cl(stockData)), digits=5)
       stockData[,1] <- qmj::pricereturns(stockData)
