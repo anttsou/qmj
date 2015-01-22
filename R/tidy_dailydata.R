@@ -19,33 +19,12 @@ tidy_dailydata <- function(x){
     cDates <- dates[nas]
     col1 <- col1[nas]
     col2 <- col2[nas]
-    print(i/numCompanies)
-#Attempt 3: Pre-allocated matrix.
     for(k in 1:length(col1)){
       tidymatrix[k + ((i-1) * numDaysInFiveYears), 1] <- ticker
       tidymatrix[k + ((i-1) * numDaysInFiveYears), 2] <- cDates[k]
       tidymatrix[k + ((i-1) * numDaysInFiveYears), 3] <- col1[k]
       tidymatrix[k + ((i-1) * numDaysInFiveYears), 4] <- col2[k]
     }
-    
-#Attempt 2: rbind individual rows to tidymatrix.
-#     for(k in 1:length(col1)){
-#       row <- c(ticker, cDates[k], col1[k], col2[k])
-#       tidymatrix <- rbind(tidymatrix, row)
-#     }
-    
-#Attempt 1: Make matrix of columns, combine with tidymatrix.
-#     if(length(which(tidymatrix["ticker"] == ticker)) == 0 && length(col1) > 1000){
-#       print(ticker)
-#       print(i)
-#       ticker <- rep(ticker, length(col1))
-#       matr <- matrix(ticker)
-#       matr <- cbind(matr, cDates)
-#       matr <- cbind(matr, col1)
-#       matr <- cbind(matr, col2)
-#       colnames(matr) <- c("ticker", "date", "pret", "close")
-#       tidymatrix <- merge(tidymatrix, matr, all=TRUE)
-#     }
   }
   tidymatrix <- na.omit(tidymatrix)
   as.data.frame(tidymatrix)
