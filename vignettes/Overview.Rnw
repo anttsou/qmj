@@ -1,10 +1,37 @@
 \documentclass[12pt]{article}
-
+\usepackage{listings}
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 \section*{Background}
-qmj implements the results and methodology of the paper \emph{Quality Minus Junk} by Clifford Asness, Andrea Frazzini, Lasse Pedersen. In their paper, they use several measures to calculate the relative profitability 
-\section*{Getting Started}
+qmj implements the results and methodology of the paper \emph{Quality Minus Junk} by Clifford Asness, Andrea Frazzini, Lasse Pedersen. In their paper, they use several measures to calculate the relative profitability, growth, safety, and payouts of a company, which they use to provide an overall quality score for a company.
 
+This quality score is used to recommend which companies to buy and which to sell, by reasoning that quality companies are likely to increase in price in the future, while ``junk'' companies are likely to fall in price.
+
+Here we use the equations and methods described in the paper, coupled with data scraped from reputable online sources, in order to produce quality measurements for companies listed in the Russell 3000 Index.
+
+\section*{Getting Started}
+In order to start you off, qmj comes equipped with several data sets, including company information, financial statements, and daily stock data. These data sets are named:
+
+\begin{lstlisting}[language=R]
+companies
+dailydata
+tidybalance
+tidycash
+tidyincome
+\end{lstlisting}
+
+qmj currently works based on the data saved in the package. Consequently, if you want a quality measurement of the companies currently stored in the package, call:
+\begin{lstlisting}[language=R]
+collectmarketdata()
+\end{lstlisting}
+
+If you're only interested in accessing certain quality factors, such as profitability, you're able to call:
+\begin{lstlisting}[language=R]
+collectmarketprofitability(companies, tidybalance, tidycash, tidyincome)
+\end{lstlisting}
+This will return a numeric vector containing profitability z-scores for the given companies, where the nth number corresponds to the nth company. If you're interested in inputting your own data, you must follow the organization of the tidy data sets.
+
+\section*{Updating your Data}
+Although pre-loaded data already exists as part of the package, it's easy to update your local data sets.
 
 \end{document}
