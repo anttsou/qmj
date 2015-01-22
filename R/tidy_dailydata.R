@@ -7,7 +7,8 @@
 
 tidy_dailydata <- function(x){
   numCompanies <- (length(names(x))/2)
-  tidymatrix <- matrix(nrow=1, ncol=4)
+  numDaysInFiveYears <- 1827
+  tidymatrix <- matrix(nrow=(numDaysInFiveYears * numCompanies), ncol=4)
   colnames(tidymatrix) <- c("ticker", "date", "pret", "close")
   dates <- rownames(dailydata)
   for(i in 1:numCompanies){
@@ -18,6 +19,15 @@ tidy_dailydata <- function(x){
     cDates <- dates[nas]
     col1 <- col1[nas]
     col2 <- col2[nas]
+    print(i/numCompanies)
+#Attempt 3: Pre-allocated matrix.
+    for(k in 1:length(col1)){
+      tidymatrix[k + ((i-1) * numDaysInFiveYears), 1] <- ticker
+      tidymatrix[k + ((i-1) * numDaysInFiveYears), 2] <- cDates[k]
+      tidymatrix[k + ((i-1) * numDaysInFiveYears), 3] <- col1[k]
+      tidymatrix[k + ((i-1) * numDaysInFiveYears), 4] <- col2[k]
+    }
+    
 #Attempt 2: rbind individual rows to tidymatrix.
 #     for(k in 1:length(col1)){
 #       row <- c(ticker, cDates[k], col1[k], col2[k])
@@ -37,5 +47,6 @@ tidy_dailydata <- function(x){
 #       tidymatrix <- merge(tidymatrix, matr, all=TRUE)
 #     }
   }
-  tidymatrix
+  tidymatrix <- na.omit(tidymatrix)
+  as.data.frame(tidymatrix)
 }
