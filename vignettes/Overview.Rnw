@@ -1,0 +1,10 @@
+\documentclass[12pt]{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\section*{Background}
+qmj implements the results and methodology of the paper \emph{Quality Minus Junk} by Clifford Asness, Andrea Frazzini, Lasse Pedersen. In their paper, they use several measures to calculate the relative profitability 
+\section*{Getting Started}
+
+
+\end{document}
