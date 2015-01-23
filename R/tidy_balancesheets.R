@@ -6,17 +6,61 @@
 
 tidy_balancesheets <- function(x) {
   numCompanies <- length(x)
-  balancesheets <- data.frame(matrix(nrow=1, ncol=44))
+  balancesheets <- matrix(nrow=numCompanies * 4, ncol=44)
   
   colnames(balancesheets) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", "CS", "APIC", "RE", "TS", "OE", "TE", "TLSE", "SO", "TCSO")
   for(i in 1:numCompanies){
+    #print(paste("Progress: ", i/numCompanies, sep=''))
     cdata <- x[[i]]
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ ]', '', colnames(cdata))
     for(k in 1:length(colnames(cdata))){
-      row <- c(ticker, years[k], as.numeric(cdata[,k]))
-      balancesheets <- rbind(balancesheets, setNames(row, names(balancesheets)))
+      balancesheets[k + (i-1)*4,1] <- ticker
+      balancesheets[k + (i-1)*4,2] <- years[k]
+      balancesheets[k + (i-1)*4,3] <- cdata[1,k]
+      balancesheets[k + (i-1)*4,4] <- cdata[2,k]
+      balancesheets[k + (i-1)*4,5] <- cdata[3,k]
+      balancesheets[k + (i-1)*4,6] <- cdata[4,k]
+      balancesheets[k + (i-1)*4,7] <- cdata[5,k]
+      balancesheets[k + (i-1)*4,8] <- cdata[6,k]
+      balancesheets[k + (i-1)*4,9] <- cdata[7,k]
+      balancesheets[k + (i-1)*4,10] <- cdata[8,k]
+      balancesheets[k + (i-1)*4,11] <- cdata[9,k]
+      balancesheets[k + (i-1)*4,12] <- cdata[10,k]
+      balancesheets[k + (i-1)*4,13] <- cdata[11,k]
+      balancesheets[k + (i-1)*4,14] <- cdata[12,k]
+      balancesheets[k + (i-1)*4,15] <- cdata[13,k]
+      balancesheets[k + (i-1)*4,16] <- cdata[14,k]
+      balancesheets[k + (i-1)*4,17] <- cdata[15,k]
+      balancesheets[k + (i-1)*4,18] <- cdata[16,k]
+      balancesheets[k + (i-1)*4,19] <- cdata[17,k]
+      balancesheets[k + (i-1)*4,20] <- cdata[18,k]
+      balancesheets[k + (i-1)*4,21] <- cdata[19,k]
+      balancesheets[k + (i-1)*4,22] <- cdata[20,k]
+      balancesheets[k + (i-1)*4,23] <- cdata[21,k]
+      balancesheets[k + (i-1)*4,24] <- cdata[22,k]
+      balancesheets[k + (i-1)*4,25] <- cdata[23,k]
+      balancesheets[k + (i-1)*4,26] <- cdata[24,k]
+      balancesheets[k + (i-1)*4,27] <- cdata[25,k]
+      balancesheets[k + (i-1)*4,28] <- cdata[26,k]
+      balancesheets[k + (i-1)*4,29] <- cdata[27,k]
+      balancesheets[k + (i-1)*4,30] <- cdata[28,k]
+      balancesheets[k + (i-1)*4,31] <- cdata[29,k]
+      balancesheets[k + (i-1)*4,32] <- cdata[30,k]
+      balancesheets[k + (i-1)*4,33] <- cdata[31,k]
+      balancesheets[k + (i-1)*4,34] <- cdata[32,k]
+      balancesheets[k + (i-1)*4,35] <- cdata[33,k]
+      balancesheets[k + (i-1)*4,36] <- cdata[34,k]
+      balancesheets[k + (i-1)*4,37] <- cdata[35,k]
+      balancesheets[k + (i-1)*4,38] <- cdata[36,k]
+      balancesheets[k + (i-1)*4,39] <- cdata[37,k]
+      balancesheets[k + (i-1)*4,40] <- cdata[38,k]
+      balancesheets[k + (i-1)*4,41] <- cdata[39,k]
+      balancesheets[k + (i-1)*4,42] <- cdata[40,k]
+      balancesheets[k + (i-1)*4,43] <- cdata[41,k]
+      balancesheets[k + (i-1)*4,44] <- cdata[42,k]
     }
   }
-  balancesheets[-1,]
+  balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1,]
+  data.frame(balancesheets)
 }

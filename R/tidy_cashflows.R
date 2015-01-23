@@ -10,6 +10,7 @@ tidy_cashflows <- function(x) {
   
   colnames(cashflows) <- c("ticker", "year", "NI", "DP", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP")
   for(i in 1:numCompanies){
+    print(paste(i/numCompanies, "% complete", sep=''))
     cdata <- x[[i]]
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ ]', '', colnames(cdata))

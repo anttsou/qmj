@@ -12,6 +12,7 @@ tidy_dailydata <- function(x){
   colnames(tidymatrix) <- c("ticker", "date", "pret", "close")
   dates <- rownames(dailydata)
   for(i in 1:numCompanies){
+    print(paste(i/numCompanies, "% complete", sep=''))
     ticker <- gsub("\\..*","",names(x)[2*i])
     col1 <- x[,(2*i)-1]
     col2 <- x[,(2*i)]
