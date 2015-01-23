@@ -29,30 +29,22 @@ get_extra_fin <- function() {
     con2 <- url(newUrl2)
     htmlCode2 <- readLines(con2)
     close(con2)
-    ebitdas <- c(ebitdas,sub(".*yfnc_tabledata1\">","",sub("</td></tr>.*","",sub(".*>EBITDA","",htmlCode2[195]))))
-    for(n in 196:length(htmlCode2)) {
-      if(grepl("Last Split Factor",htmlCode2[n])) {
+    n <- 100
+    while(n <= length(htmlCode2)) {
+      if(grepl(">EBITDA",htmlCode2[n])) {
         break
       }
+      n <- n + 1
     }
-    splitfactors <- c(splitfactors, 
-                      sub(".*yfnc_tabledata1\">",
-                          "",
-                          sub("</td></tr>.*",
-                              "",
-                              sub(".*Last Split Factor","",htmlCode[n]))))
-    splitdates <- c(splitdates,
-                    sub(".*yfnc_tabledata1\">",
-                        "",
-                        sub("</td></tr>.*",
-                            "",
-                            sub(".*Last Split Date","",htmlCode[n]))))
+    ebitdas <- c(ebitdas,sub(".*yfnc_tabledata1\">",
+                             "",
+                             sub("</td></tr>.*",
+                                 "",
+                                 sub(".*>EBITDA","",htmlCode2[n]))))
   }
   extrafin <- data.frame(tickers = tickers, 
                             betas = betas, 
-                            ebitdas = ebitdas, 
-                            splitfactors = splitfactors,
-                            splitdates = splitdates)
+                            ebitdas = ebitdas)
   filepath2 <- paste(filepath, "/extrafin.RData", sep='')
   save(extrafin,file="~/econ20/R Paper/qmj/data/extrafin.RData")
   save(extrafin, file=filepath2)
