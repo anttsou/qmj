@@ -10,7 +10,7 @@
 #' @export
 
 getinfo <- function() {
-  filepath <- system.file("extdata", package="qmj")
+  filepath <- system.file("data", package="qmj")
   filepath1 <- paste(filepath, "/companies.RData", sep='')
   load(filepath1)
   tickers <- as.character(companies$tickers)
@@ -56,6 +56,7 @@ getinfo <- function() {
       }
     }
   }
+  filepath <- system.file("extdata", package="qmj")
   filepath2 <- paste(filepath, "/cashflows.RData", sep='')
   save(cashflows, file=filepath2)
   #save(cashflows,file="~/econ20/R Paper/qmj/extdata/instcashflows.RData")
