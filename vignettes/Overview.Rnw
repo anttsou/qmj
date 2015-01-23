@@ -38,6 +38,10 @@ save_companies(companies)
 
 
 \section*{Updating your Data}
-Although pre-loaded data already exists as part of the package, it's easy to update your local data sets.
+Although pre-loaded data already exists as part of the package, it's easy to update your local data sets. Simply call
+\begin{lstlisting}[language=R]
+getinfo()
+\end{lstlisting}
+To save the most recent 4 years of financial statements for the companies.RData file in the extdata folder.
 
 \end{document}

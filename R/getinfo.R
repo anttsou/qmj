@@ -10,7 +10,7 @@
 #' @export
 
 getinfo <- function() {
-  filepath <- system.file("data", package="qmj")
+  filepath <- system.file("extdata", package="qmj")
   filepath1 <- paste(filepath, "/companies.RData", sep='')
   load(filepath1)
   tickers <- as.character(companies$tickers)
