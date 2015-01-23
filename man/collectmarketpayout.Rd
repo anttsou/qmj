@@ -4,14 +4,12 @@
 \alias{collectmarketpayout}
 \title{collectmarketpayout}
 \usage{
-collectmarketpayout(x, BS, CF, IS)
+collectmarketpayout(x, BS, IS)
 }
 \arguments{
 \item{x}{A dataframe of company names and tickers.}
 
 \item{BS}{A dataframe containing balance sheet information for every company.}
-
-\item{CF}{A dataframe containing cash flow information for every company.}
 
 \item{IS}{A dataframe containing income statement information for every company.}
 }

@@ -4,7 +4,7 @@
 \alias{collectmarketsafety}
 \title{collectmarketsafety}
 \usage{
-collectmarketsafety(x, BS, CF, IS)
+collectmarketsafety(x, BS, CF, IS, extrafin, daily)
 }
 \arguments{
 \item{x}{A dataframe of company names and tickers.}
