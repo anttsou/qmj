@@ -37,6 +37,7 @@ This will return a numeric vector containing profitability z-scores for the give
 
 \section*{Updating your Data}
 If you're interested in inputting your own data, you must follow the organization of the tidy data sets, though these can be generated from a user-created company data file as follows:
+
 <<Updating your Data>>=
 #companies #Your custom data frame of company names and tickers.
 #save_companies(companies)
@@ -48,10 +49,11 @@ These commands will automatically retrieve relevant financial data from the web 
 
 \subsection*{Updating Daily Data}
 Updating daily data is a slightly more protracted process, and for that reason is separated from the other functions that automatically collect financial statements. To update daily data, which is necessary for calculating safety measurements, call:
+
 <<Updating Daily Data>>=
-#getdailydata(companies)
-#tidy_dailydata()
+#update_dailydata(companies)
 @
 
+The update dailydata function deliberately requires a parameter as opposed to the financial statement functions due to the amount of time necessary to read in and compile relevant stock data from our sources. ( Google finance, with the S\&P 500 being taken from Yahoo finance )
 
 \end{document}
