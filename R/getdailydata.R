@@ -6,7 +6,7 @@
 #' @export
 
 getdailydata <- function(x){
-  filepath <- system.file("data", package="qmj")
+  filepath <- system.file("extdata", package="qmj")
   numCompanies <- length(x$tickers)
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))
   desiredDates <- paste(thisYear - 5, "/", sep='')

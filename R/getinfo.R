@@ -56,15 +56,16 @@ getinfo <- function() {
       }
     }
   }
+  filepath <- system.file("extdata", package="qmj")
   filepath2 <- paste(filepath, "/cashflows.RData", sep='')
-  #save(cashflows, file=filepath2)
-  save(cashflows,file="~/econ20/R Paper/qmj/inst/extdata/cashflows.RData")
+  save(cashflows, file=filepath2)
+  #save(cashflows,file="~/econ20/R Paper/qmj/extdata/instcashflows.RData")
   
   filepath2 <- paste(filepath, "/incomestatements.RData", sep='')
-  #save(incomestatements, file=filepath2)
-  save(incomestatements,file="~/econ20/R Paper/qmj/inst/extdata/incomestatements.RData")
+  save(incomestatements, file=filepath2)
+  #save(incomestatements,file="~/econ20/R Paper/qmj/inst/extdata/incomestatements.RData")
   
   filepath2 <- paste(filepath, "/balancesheets.RData", sep='')
-  #save(balancesheets, file=filepath2)
-  save(balancesheets,file="~/econ20/R Paper/qmj/inst/extdata/balancesheets.RData")
+  save(balancesheets, file=filepath2)
+  #save(balancesheets,file="~/econ20/R Paper/qmj/inst/extdata/balancesheets.RData")
 }
