@@ -108,6 +108,8 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
         value <- as.numeric(sub("M.*","",as.character(extrafin$ebitdas[i])))
       } else if(grepl("K",as.character(extrafin$ebitdas[i]))) {
         value <- as.numeric(sub("K.*","",as.character(extrafin$ebitdas[i])))/1000
+      } else {
+        value <- as.numeric(as.character(extrafin$ebitdas[i]))/1000000
       }
       EBIT <- value - as.numeric(cCF$DP[1]) - as.numeric(cCF$AM[1])
       
