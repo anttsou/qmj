@@ -6,11 +6,10 @@
 #' Quality Minus Junk (Asness et al.) in Appendix page A3-4.
 #' @param x A dataframe of company names and tickers.
 #' @param BS A dataframe containing balance sheet information for every company.
-#' @param CF A dataframe containing cash flow information for every company.
 #' @param IS A dataframe containing income statement information for every company.
 #' @export
 
-collectmarketpayout <- function(x, BS, CF, IS){
+collectmarketpayout <- function(x, BS, IS){
   # CollectMarketPayout collects data on overall payouts
   ## In the market for individual companies for later processing.
   ## x is the list of companies to be processed. BS, CF, IS are financial statements.
@@ -19,54 +18,46 @@ collectmarketpayout <- function(x, BS, CF, IS){
   EISS <- rep(0, numCompanies)
   DISS <- rep(0, numCompanies)
   NPOP <- rep(0, numCompanies)
-  for(i in 1:numCompanies){
-    readattempt = tryCatch({
-    cBS <- BS[[i]]
-    cBS[is.na(cBS)] <- 0
-    cBS <- data.frame(cBS)
-    cBSm1y <- cBS[,2]
-    cBSm2y <- cBS[,3]
-    cBSm3y <- cBS[,4]
-    cBS <- cBS[,1]
+  BS[is.na(BS)] <- 0
+  IS[is.na(IS)] <- 0
+  for(i in 1:numCompanies) {
+    cBS <- subset(BS,ticker == as.character(x$tickers[i]))
+    cIS <- subset(IS,ticker == as.character(x$tickers[i]))
     
-    cCF <- CF[[i]]
-    cCF[is.na(cCF)] <- 0
-    cCF <- data.frame(cCF)
-    cCFm1y <- cCF[,2]
-    cCFm2y <- cCF[,3]
-    cCFm3y <- cCF[,4]
-    cCF <- cCF[,1]
-    
-    cIS <- IS[[i]]
-    cIS[is.na(cCF)] <- 0
-    cIS <- data.frame(cIS)
-    cISm1y <- cIS[,2]
-    cISm2y <- cIS[,3]
-    cISm3y <- cIS[,4]
-    cIS <- cIS[,1]
-    
-    #EISS
-    # Issuance (retirement) of stock, net - CF 14
-    ##Total number of Shares - BS 43
-    EISS[i] <- -log(cBS[42]/cBSm1y[42])
-    #DISS
-    # Issuance (retirement) of debt, net - CF 15
-    #Total debt - BS 28
-    DISS[i] <- -log(cBS[27]/cBSm1y[27])
-    
-    #NPOP
-    # (Net income - changes in book equity) / (total profits over the past 5 years)
-    # Net income - CF 2
-    # Total equity - BS 40
-    # Gross profits - IS 6
-    totalNetPayouts <- (cCF[1] - cBS[39]) + (cCFm1y[1] - cBSm1y[39]) + (cCFm2y[1] - cBSm2y[39]) + (cCFm3y[1] - cBSm3y[39]) 
-    totalProfits <- cIS[5] + cISm1y[5] + cISm2y[5] + cISm3y[5]
-    NPOP[i] <- totalNetPayouts/totalProfits
-    }, error = function(e){
-      EISS[i] <- NA
-      DISS[i] <- NA
-      NPOP[i] <- NA
-    })
+    if(nrow(cBS) > 1 && nrow(cIS) > 1) {
+      #EISS
+      # need to edit
+      ##Total number of Shares - BS 43
+      # Does not account for splits currently!!!
+      EISS[i] <- -log(as.numeric(cBS$TCSO[1])/as.numeric(cBS$TCSO[2]))
+      #DISS
+      #Total debt - BS 28
+      DISS[i] <- -log(as.numeric(cBS$TD[1])/as.numeric(cBS$TD[2]))
+      
+      #NPOP
+      # (Net income - changes in book equity) / (total profits over the past 5 years)
+      # Net income 
+      #book equity = total liabilities and shareholders' equity - total liabilities - preferred stock
+      # Gross profits - IS 6
+      minimum <- min(c(length(cBS$TLSE), length(cIS$NI)))
+      tempvect <- numeric()
+      tempvect2 <- numeric()
+      i <- 1
+      while(i < minimum) {
+        tempvect <- c(tempvect, as.numeric(cIS$NI[i+1]) - 
+                     ((as.numeric(cBS$TLSE[i]) - 
+                       as.numeric(cBS$TL[i]) - 
+                      (as.numeric(cBS$RPS[i]) + as.numeric(cBS$NRPS[i]))) - 
+                      (as.numeric(cBS$TLSE[i]) - 
+                       as.numeric(cBS$TL[i+1]) - 
+                      (as.numeric(cBS$RPS[i+1]) + as.numeric(cBS$NRPS[i+1])))))
+        tempvect2 <- c(tempvect2, as.numeric(cIS$GPROF[i]), as.numeric(cIS$GPROF[i+1]))
+        i <- i + 1
+      }
+      totalNetPayouts <- sum(tempvect)
+      totalProfits <- sum(tempvect2)
+      NPOP[i] <- totalNetPayouts/totalProfits
+    }
   }
   
   EISS[is.na(EISS)] <- 0

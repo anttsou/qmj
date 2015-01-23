@@ -10,6 +10,7 @@
 #' @param IS A dataframe containing income statement information for every company.
 #' @export
 
+#use sapply to make columns numeric
 collectmarketprofitability <- function(x, BS, CF, IS){
   # CollectMarketProfitability collects data on overall profitability
   ## In the market for individual companies for later processing.
@@ -22,59 +23,65 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   CFOA <- rep(0, numCompanies)
   GMAR <- rep(0, numCompanies)
   ACC <- rep(0, numCompanies)
-  for(i in 1:numCompanies){
-    cBS <- BS[[i]]
-    cBS <- data.frame(cBS)[,1]
-    cBS[is.na(cBS)] <- 0
-    cCF <- CF[[i]]
-    cCF <- data.frame(cCF)[,1]
-    cCF[is.na(cCF)] <- 0
-    cIS <- IS[[i]]
-    cIS <- data.frame(cIS)[,1]
-    cIS[is.na(cIS)] <- 0
-    #GPOA = (revenue - cost of goods sold)/(total assets)
-    #?#GROSS PROFITS OVER TOTAL ASSETS. THIS CAN BE EASILY FOUND.
-    #Cost of goods sold = Beginning Inventory + Inventory Purchases - End Inventory
-    ##Gross profit - Income statement
-    ##Total assets - in balance sheet.
-    GPOA[i] = cIS[5]/cBS[17]
-    #ROE
-    # Net income /book equity
-    # Net income - Cash flow
-    #?#Book equity = Total equity (BS) 
-    ROE[i] = cCF[1]/cBS[39]
-    #ROA
-    #Net income / Total assets
-    # Net income - CF
-    # Total assets - BS
-    ROA[i] = cCF[1]/cBS[17]
+  BS[is.na(BS)] <- 0
+  IS[is.na(IS)] <- 0
+  CF[is.na(CF)] <- 0
+  for(i in 1:numCompanies) {
+    cBS <- subset(BS,ticker == as.character(x$tickers[i]))
+    cIS <- subset(IS,ticker == as.character(x$tickers[i]))
+    cCF <- subset(CF,ticker == as.character(x$tickers[i]))
     
-    #CFOA
-    #(net income + depreciation - (change in working capital) - capital expenditures)/(total assets)
-    # Net income - CF
-    # Depreciation - IS
-    # Change in working capital - CF
-    # Capital Expenditures - CF
-    # Total assets - BS
-    CFOA[i] = (cCF[1] + cIS[8] - cCF[6] - cCF[8])/cBS[17]
-    
-    #GMAR
-    # (Revenue - costs of goods sold)/(total sales)
-    # = Gross profit/(total sales)
-    #?# Using different equation:
-    # Gross profit/ (Total revenue)
-    #Gross profit - IS
-    #Total Revenue - IS
-    GMAR[i] = cIS[5]/cIS[3]
-    
-    #ACC
-    # (depreciation - changes in working capital)/(total assets)
-    #*# Going from equation they show. Slight difference from their own
-    ## words.
-    # Depreciation - CF
-    # Changes in working capital - CF
-    # Total assets - BS 
-    ACC[i] = (cIS[8] - cCF[6])/cBS[17]
+    if(nrow(cBS) > 0 && nrow(cIS) > 0 && nrow(cCF) > 0) {
+      #GPOA = (revenue - cost of goods sold)/(total assets)
+      #?#GROSS PROFITS OVER TOTAL ASSETS. THIS CAN BE EASILY FOUND.
+      #Cost of goods sold = Beginning Inventory + Inventory Purchases - End Inventory
+      ##Gross profit - Income statement
+      ##Total assets - in balance sheet.
+      # gpoa = gross profits/total assets    
+      GPOA[i] = as.numeric(cIS$GPROF[1])/as.numeric(cBS$TA[1])
+      #ROE
+      # Net income /book equity
+      # Net income - Cash flow
+      #?#Book equity = Total equity (BS) 
+      # 1)book equity = total liabilities and shareholder's equity - total liabilities - preferred stock
+      # 2)book equity = total assets - (total liabilities + minority interest) - preferred stock
+      ROE[i] = as.numeric(cIS$NI[1])/(as.numeric(cBS$TLSE[1]) - 
+                                      as.numeric(cBS$TL[1]) - 
+                                     (as.numeric(cBS$RPS[1]) + as.numeric(cBS$NRPS[1])))
+      #ROA
+      #Net income / Total assets
+      # Net income - CF
+      # Total assets - BS
+      ROA[i] = as.numeric(cCF$NI[1])/as.numeric(cBS$TA[1])
+      
+      #CFOA
+      #(net income + depreciation - (change in working capital) - capital expenditures)/(total assets)
+      # Net income - CF
+      # Depreciation - CF
+      # Change in working capital - CF
+      # Capital Expenditures - CF
+      # Total assets - BS
+      CFOA[i] = (as.numeric(cCF$NI[1]) + as.numeric(cCF$DP[1]) - as.numeric(cCF$CWC[1]) - as.numeric(cCF$CX[1]))/
+                 as.numeric(cBS$TA[1])
+      
+      #GMAR
+      # (Revenue - costs of goods sold)/(total sales)
+      # = Gross profit/(total sales)
+      #?# Using different equation:
+      # Gross profit/ (Total revenue)
+      #Gross profit - IS
+      #Total Revenue - IS
+      GMAR[i] = as.numeric(cIS$GPROF[1])/as.numeric(cIS$TREV[1])
+      
+      #ACC
+      # (depreciation - changes in working capital)/(total assets)
+      #*# Going from equation they show. Slight difference from their own
+      ## words.
+      # Depreciation - CF
+      # Changes in working capital - CF
+      # Total assets - BS 
+      ACC[i] = (as.numeric(cCF$DP[1]) - as.numeric(cCF$CWC[1]))/as.numeric(cBS$TA[1])
+    }
   }
   
   GPOA[is.nan(GPOA)] <- 0
@@ -102,6 +109,6 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   for(i in 1:numCompanies){
     profitability[i] <- GPOA[i] + ROE[i] + ROA[i] + CFOA[i] + GMAR[i] + ACC[i]
   }
-  scale(profitability) 
+  scale(profitability)
   #data.frame(x$names, x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }
