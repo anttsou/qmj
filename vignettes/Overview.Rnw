@@ -46,4 +46,12 @@ If you're interested in inputting your own data, you must follow the organizatio
 
 These commands will automatically retrieve relevant financial data from the web for your data frame of companies, store that data in the extdata folder of qmj, and then produce tidy versions of that data to be stored in the data folder.
 
+\subsection*{Updating Daily Data}
+Updating daily data is a slightly more protracted process, and for that reason is separated from the other functions that automatically collect financial statements. To update daily data, which is necessary for calculating safety measurements, call:
+<<Updating Daily Data>>=
+#getdailydata(companies)
+#tidy_dailydata()
+@
+
+
 \end{document}
