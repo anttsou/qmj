@@ -20,6 +20,20 @@ collectmarketpayout <- function(x, BS, IS){
   NPOP <- rep(0, numCompanies)
   BS[is.na(BS)] <- 0
   IS[is.na(IS)] <- 0
+  
+  fin <- merge(BS, IS, by=c("ticker", "year"))
+  fin <- fin[order(fin$year, decreasing=TRUE),]
+  fin <- data.table(fin, key="ticker")
+  fstyear <- fin[J(unique(ticker)), mult="first"]
+  #fin <- fin[! duplicated(fin, fromLast = FALSE) & seq(nrow(fin)) <= nrow(fstyear),]
+  #fin <- intersect(fin, fstyear)
+  
+  
+  #   fin <- rbind(fin, fstyear)
+  #   setkey(fin, NULL)
+  #   fin <- unique(fin[,list(ticker, yea)])
+  sndyear <- fin[J(unique(ticker)), mult="first"]
+  
   for(i in 1:numCompanies) {
     cBS <- subset(BS,ticker == as.character(x$tickers[i]))
     cIS <- subset(IS,ticker == as.character(x$tickers[i]))

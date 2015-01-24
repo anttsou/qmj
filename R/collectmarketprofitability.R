@@ -150,6 +150,7 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   colnames(res) <- c("tickers", "profitability")
   originalorder <- data.frame(x$tickers)
   colnames(originalorder) <- "tickers"
-  merge(originalorder, res, by="tickers")
+  res <- merge(originalorder, res, by="tickers")
+  res$profitability
   #data.frame(x$names, x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }
