@@ -21,18 +21,31 @@ collectmarketpayout <- function(x, BS, IS){
   BS[is.na(BS)] <- 0
   IS[is.na(IS)] <- 0
   
+  #Function returns a structure that contains all elements in x.1 that are not in x.2
+  modifiedsetdiff <- function(x.1,x.2,...){
+    x.1p <- do.call("paste", x.1)
+    x.2p <- do.call("paste", x.2)
+    x.1[! x.1p %in% x.2p, ]
+  }
+  
   fin <- merge(BS, IS, by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
   fstyear <- fin[J(unique(ticker)), mult="first"]
-  #fin <- fin[! duplicated(fin, fromLast = FALSE) & seq(nrow(fin)) <= nrow(fstyear),]
-  #fin <- intersect(fin, fstyear)
-  
-  
-  #   fin <- rbind(fin, fstyear)
-  #   setkey(fin, NULL)
-  #   fin <- unique(fin[,list(ticker, yea)])
+  fin <- modifiedsetdiff(fin, fstyear)
   sndyear <- fin[J(unique(ticker)), mult="first"]
+  
+  eiss <- function(tcso1, tcso2){
+    -log(tcso1/tcso2)
+  }
+  diss <- function(td1, td2){
+    -log(td1/td2)
+  }
+  npop <- function(){
+    
+  }
+  EISS <- mapply(eiss, as.numeric(as.character(fstyear$TCSO)), as.numeric(as.character(sndyear$TCSO)))
+  DISS <- mapply(diss, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(sndyear$TD)))
   
   for(i in 1:numCompanies) {
     cBS <- subset(BS,ticker == as.character(x$tickers[i]))
@@ -74,10 +87,6 @@ collectmarketpayout <- function(x, BS, IS){
     }
   }
   
-  EISS[is.na(EISS)] <- 0
-  DISS[is.na(DISS)] <- 0
-  NPOP[is.na(NPOP)] <- 0
-  
   EISS[is.infinite(EISS)] <- 0
   DISS[is.infinite(DISS)] <- 0
   NPOP[is.infinite(NPOP)] <- 0
@@ -87,8 +96,21 @@ collectmarketpayout <- function(x, BS, IS){
   DISS <- scale(DISS)
   NPOP <- scale(NPOP)
   
-  for(i in 1:numCompanies){
-    payouts[i] <- EISS[i] + DISS[i] + NPOP[i]
-  }
+  EISS[is.na(EISS)] <- 0
+  DISS[is.na(DISS)] <- 0
+  NPOP[is.na(NPOP)] <- 0
+  
+  payouts <- EISS + DISS + NPOP
+  
+#   for(i in 1:numCompanies){
+#     payouts[i] <- EISS[i] + DISS[i] + NPOP[i]
+#   }
   scale(payouts)
+  res <- data.frame(fstyear$ticker, payouts)
+  colnames(res) <- c("tickers", "payouts")
+  originalorder <- data.frame(x$tickers)
+  colnames(originalorder) <- "tickers"
+  res <- merge(originalorder, res, by="tickers")
+  #res$payouts
+  res
 }

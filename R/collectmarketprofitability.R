@@ -16,14 +16,14 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   ## In the market for individual companies for later processing.
   ## x is the list of companies to be processed. BS, CF, IS are financial statements.
   numCompanies <- length(x$tickers)
-  profitability <- rep(0, numCompanies)
-  
-  GPOA <- rep(0, numCompanies)
-  ROE <- rep(0, numCompanies)
-  ROA <- rep(0, numCompanies)
-  CFOA <- rep(0, numCompanies)
-  GMAR <- rep(0, numCompanies)
-  ACC <- rep(0, numCompanies)
+#   profitability <- rep(0, numCompanies)
+#   
+#   GPOA <- rep(0, numCompanies)
+#   ROE <- rep(0, numCompanies)
+#   ROA <- rep(0, numCompanies)
+#   CFOA <- rep(0, numCompanies)
+#   GMAR <- rep(0, numCompanies)
+#   ACC <- rep(0, numCompanies)
   BS[is.na(BS)] <- 0
   IS[is.na(IS)] <- 0
   CF[is.na(CF)] <- 0
@@ -33,34 +33,34 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   fin <- data.table(fin, key="ticker")
   fin <- fin[J(unique(ticker)), mult="first"]
   
-    gpoa <- function(gprof, ta){
-      gprof/ta
-    }
-    roe <- function(ni, tlse, tl, rps, nrps){
-      ni/(tlse - tl - (rps + nrps))
-    }
-    roa <- function(ni, ta){
-      ni/ta
-    }
-    cfoa <- function(ni, dp, cwc, cx, ta){
-      (ni + dp - cwc - cx)/ta
-    }
-    gmar <- function(gprof, trev){
-      gprof/trev
-    }
-    acc <- function(dp, cwc, ta){
-      (dp - cwc)/ta
-    }
-    
-    #fin[,-c(1,2)] <- as.numeric(as.character(fin[,-c(1,2)]))
-    GPOA <- mapply(gpoa, as.numeric(as.character(fin$GPROF)), as.numeric(as.character(fin$TA)))
-    ROE <- mapply(roe, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$TLSE)), 
-                  as.numeric(as.character(fin$TL)), as.numeric(as.character(fin$RPS)), as.numeric(as.character(fin$NRPS)))
-    ROA <- mapply(roa, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$TA)))
-    CFOA <- mapply(cfoa, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$DP.AM)), 
-                   as.numeric(as.character(fin$CWC)), as.numeric(as.character(fin$CX)), as.numeric(as.character(fin$TA)))
-    GMAR <- mapply(gmar, as.numeric(as.character(fin$GPROF)), as.numeric(as.character(fin$TREV)))
-    ACC <- mapply(acc, as.numeric(as.character(fin$DP.AM)), as.numeric(as.character(fin$CWC)), as.numeric(as.character(fin$TA)))
+  gpoa <- function(gprof, ta){
+    gprof/ta
+  }
+  roe <- function(ni, tlse, tl, rps, nrps){
+    ni/(tlse - tl - (rps + nrps))
+  }
+  roa <- function(ni, ta){
+    ni/ta
+  }
+  cfoa <- function(ni, dp, cwc, cx, ta){
+    (ni + dp - cwc - cx)/ta
+  }
+  gmar <- function(gprof, trev){
+    gprof/trev
+  }
+  acc <- function(dp, cwc, ta){
+    (dp - cwc)/ta
+  }
+  
+  #fin[,-c(1,2)] <- as.numeric(as.character(fin[,-c(1,2)]))
+  GPOA <- mapply(gpoa, as.numeric(as.character(fin$GPROF)), as.numeric(as.character(fin$TA)))
+  ROE <- mapply(roe, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$TLSE)), 
+                as.numeric(as.character(fin$TL)), as.numeric(as.character(fin$RPS)), as.numeric(as.character(fin$NRPS)))
+  ROA <- mapply(roa, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$TA)))
+  CFOA <- mapply(cfoa, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$DP.AM)), 
+                 as.numeric(as.character(fin$CWC)), as.numeric(as.character(fin$CX)), as.numeric(as.character(fin$TA)))
+  GMAR <- mapply(gmar, as.numeric(as.character(fin$GPROF)), as.numeric(as.character(fin$TREV)))
+  ACC <- mapply(acc, as.numeric(as.character(fin$DP.AM)), as.numeric(as.character(fin$CWC)), as.numeric(as.character(fin$TA)))
   
 #   for(i in 1:numCompanies) {
 #     cticker <- x$tickers[i]

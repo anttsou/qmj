@@ -13,13 +13,13 @@
 #use sapply to make columns numeric
 collectmarketgrowth <- function(x, BS, CF, IS){
   numCompanies <- length(x$tickers)
-  growth <- rep(0, numCompanies)
-  GPOA <- rep(0, numCompanies)
-  ROE <- rep(0, numCompanies)
-  ROA <- rep(0, numCompanies)
-  CFOA <- rep(0, numCompanies)
-  GMAR <- rep(0, numCompanies)
-  ACC <- rep(0, numCompanies)
+#   growth <- rep(0, numCompanies)
+#   GPOA <- rep(0, numCompanies)
+#   ROE <- rep(0, numCompanies)
+#   ROA <- rep(0, numCompanies)
+#   CFOA <- rep(0, numCompanies)
+#   GMAR <- rep(0, numCompanies)
+#   ACC <- rep(0, numCompanies)
   BS[is.na(BS)] <- 0
   IS[is.na(IS)] <- 0
   CF[is.na(CF)] <- 0
@@ -56,6 +56,7 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   }
   GPOA <- mapply(gpoa, as.numeric(as.character(fstyear$GPROF)), as.numeric(as.character(lstyear$GPROF)), 
                  as.numeric(as.character(lstyear$TA)))
+  #Note: ROE is almost entirely NA's.
   ROE <- mapply(roe, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(fstyear$NI)), 
                 as.numeric(as.character(lstyear$TLSE)), as.numeric(as.character(lstyear$TL)), 
                 as.numeric(as.character(lstyear$RPS)), as.numeric(as.character(lstyear$NRPS)))
