@@ -12,7 +12,7 @@ tidy_cashflows <- function(x) {
   for(i in 1:numCompanies){
     cdata <- x[[i]]
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
-    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ ]', '', colnames(cdata))
+    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata))
     for(k in 1:length(colnames(cdata))){
       cashflows[k + (i-1)*4,1] <- ticker
       cashflows[k + (i-1)*4,2] <- years[k]
