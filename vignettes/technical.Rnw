@@ -1,0 +1,7 @@
+\documentclass[12pt]{article}
+\usepackage{listings}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\section*{Background}
+
+\end{document}

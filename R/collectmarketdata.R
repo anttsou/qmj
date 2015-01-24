@@ -19,7 +19,7 @@ collectmarketdata <- function(){
   BS <- tidybalance
   CF <- tidycash
   IS <- tidyincome
-  
+  print("test")
   #What to do with missing data?
   # If we're missing a lot of data, then simply assigning 0's skews
   # the mean and SD. However, short term solution to getting a result.
