@@ -8,7 +8,8 @@ tidy_cashflows <- function(x) {
   numCompanies <- length(x)
   cashflows <- matrix(nrow=numCompanies*4, ncol=21)
   
-  colnames(cashflows) <- c("ticker", "year", "NI", "DP", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP")
+  colnames(cashflows) <- c("ticker", "year", "NI", "DP", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", 
+                           "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP")
   for(i in 1:numCompanies){
     cdata <- x[[i]]
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
