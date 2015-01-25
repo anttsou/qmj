@@ -57,10 +57,10 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   ROE <- mapply(roe, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$TLSE)), 
                 as.numeric(as.character(fin$TL)), as.numeric(as.character(fin$RPS)), as.numeric(as.character(fin$NRPS)))
   ROA <- mapply(roa, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$TA)))
-  CFOA <- mapply(cfoa, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$DP.AM)), 
+  CFOA <- mapply(cfoa, as.numeric(as.character(fin$NI)), as.numeric(as.character(fin$DP.DPL)), 
                  as.numeric(as.character(fin$CWC)), as.numeric(as.character(fin$CX)), as.numeric(as.character(fin$TA)))
   GMAR <- mapply(gmar, as.numeric(as.character(fin$GPROF)), as.numeric(as.character(fin$TREV)))
-  ACC <- mapply(acc, as.numeric(as.character(fin$DP.AM)), as.numeric(as.character(fin$CWC)), as.numeric(as.character(fin$TA)))
+  ACC <- mapply(acc, as.numeric(as.character(fin$DP.DPL)), as.numeric(as.character(fin$CWC)), as.numeric(as.character(fin$TA)))
   
 #   for(i in 1:numCompanies) {
 #     cticker <- x$tickers[i]
