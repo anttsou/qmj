@@ -22,7 +22,7 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   
 #   safety <- rep(0, numCompanies)
 #   BAB <- rep(0, numCompanies)
-#   IVOL <- rep(0, numCompanies)
+   IVOL <- rep(0, numCompanies)
 #   LEV <- rep(0, numCompanies)
 #   O <- rep(0, numCompanies)
 #   Z <- rep(0, numCompanies)
@@ -38,7 +38,8 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   companiesstored <- names(splitindices)
   setkey(ordereddaily, "ticker")
   yearlyprices <- ordereddaily[J(unique(ticker)), mult="first"]
-  market <- list(daily[daily$ticker == "GSPC",])
+  market <- daily[daily$ticker == "GSPC",]
+  marketlist <- list(daily[daily$ticker == "GSPC",])
   
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1)
@@ -99,38 +100,39 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
     sd(c(val1, val2, val3, val4), na.rm=TRUE)
   }
   ivol <- function(refineddat, betas){
-    market <- refineddat[1]
-    market <- market[[1]]
-    market <- market$close
-    stock <- refineddat[2]
-    stock <- stock$close
-    excess_return <- mapply(exret, stock$close, betas, market$close)
+    market <- refineddat[[1]]
+    market <- as.numeric(as.character(market$close))
+    stock <- refineddat[[2]]
+    stock <- as.numeric(as.character(stock$close))
+    excess_return <- mapply(exret, stock, betas, market)
     sd(excess_return)
   }
   refine_ivol_data <- function(marketdat, stockindices){
-    stockindices <- as.numeric(stockindices)
+    #stockindices <- as.numeric(stockindices)
     stockdat <- daily[stockindices,]
     if(sum(marketdat$date == currentyear) <= 150){
       year <- currentyear - 1
     } else{
       year <- currentyear
     }
-    marketdat <- marketdat[[1]]
-    marketdat <- market[market$date == year,]
+    #marketdat <- marketdat[[1]]
+    marketdat <- marketdat[marketdat$date == year,]
     stockdat <- stockdat[stockdat$date == year,]
-    smallersize <- min(c(length(marketdat[,1]), length(stockdat[,1])))
-    c(marketdat[1:smallersize,], stockdat[1:smallersize,])
+    smallersize <- min(c(length(marketdat$date), length(stockdat$date)))
+    marketdat <- marketdat[1:smallersize,]
+    stockdat <- stockdat[1:smallersize,]
+    list(marketdat, stockdat)
   }
 
   #BAB scraped from web
   BAB <- extrafin$betas
   
-  refined_data <- mapply(refine_ivol_data, market, splitindices)
-  tempframe <- data.frame(companiesstored, refined_data)
-  colnames(tempframe) <- c("ticker", "refined")
-  tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)
-  IVOL <- mapply(ivol, refined_data, BAB)
-
+#   refined_data <- mapply(refine_ivol_data, market, splitindices)
+#   tempframe <- data.table(companiesstored, refined_data)
+#   colnames(tempframe) <- c("ticker", "refined")
+#   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)
+#   IVOL <- mapply(ivol, tempframe$refined, BAB)
+#   print(head(IVOL))
   LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
 
   closingmeans <- sapply(splitindices, calcmean)
@@ -174,42 +176,42 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
 
-#   for(i in 1:numCompanies) {
-#     print(i/numCompanies)
-#     cBS <- BS[BS$ticker == x$tickers[i],]
-#     CIS <- IS[IS$ticker == x$tickers[i],]
-#     cCF <- CF[CF$ticker == x$tickers[i],]
-# #     cBS <- subset(BS,ticker == as.character(x$tickers[i]))
-# #     cIS <- subset(IS,ticker == as.character(x$tickers[i]))
-# #     cCF <- subset(CF,ticker == as.character(x$tickers[i]))
-#     
-#     if(nrow(cBS) > 0 && nrow(cIS) > 1 && nrow(cCF) > 0 && !is.na(extrafin$betas[i]) 
-#        && !is.na(extrafin$ebitdas[i]) && extrafin$ebitdas[i] != "N/A") {
-#       
-#       compdata <- daily[daily$ticker == as.character(x$tickers[i]),]
-#       #BAB[i] <- extrafin$betas[i]
-#     
-#       #IVOL 
-#       #sumvect <- numeric()
-#       market <- daily[daily$ticker == "GSPC",]
-#       market <- market[market$date == (as.character(cBS$year[1])),]
-#         #subset(subset(daily,ticker=="GSPC"),date == as.character(cBS$year[1]))
-#       subcomps <- compdata[compdata$date == (as.character(cBS$year[1])),]
-#       #subcomps <- subset(subset(daily,ticker==as.character(x$tickers[i])),date == as.character(cBS$year[1]))
-#       minsub <- min(c(length(market$ticker),length(subcomps$ticker)))
-#       # assume daily risk free return rate is 0.02 percent
-#       market <- market[1:minsub,]
-#       subcomps <- subcomps[1:minsub,]
-#       
-#       excess_return <- mapply(exret, as.numeric(as.character(subcomps$close)), BAB[i], market$close)
-# #       for(a in 1:minsub) {
-# #         excess_return <- as.numeric(as.character(subcomps$close[a])) - (0.0002 + extrafin$betas[i]*
-# #                                                                 (as.numeric(as.character(market$close[a])) -
-# #                                                                  0.0002))
-# #         sumvect <- c(sumvect,excess_return)
-# #       }
-#       #IVOL[i] <- sd(sumvect)
-#       IVOL[i] <- sd(excess_return)
+  for(i in 1:numCompanies) {
+    print(i/numCompanies)
+    cBS <- BS[BS$ticker == x$tickers[i],]
+    cIS <- IS[IS$ticker == x$tickers[i],]
+    cCF <- CF[CF$ticker == x$tickers[i],]
+#     cBS <- subset(BS,ticker == as.character(x$tickers[i]))
+#     cIS <- subset(IS,ticker == as.character(x$tickers[i]))
+#     cCF <- subset(CF,ticker == as.character(x$tickers[i]))
+    
+    if(nrow(cBS) > 0 && nrow(cIS) > 1 && nrow(cCF) > 0 && !is.na(extrafin$betas[i]) 
+       && !is.na(extrafin$ebitdas[i]) && extrafin$ebitdas[i] != "N/A") {
+      
+      compdata <- daily[daily$ticker == as.character(x$tickers[i]),]
+      #BAB[i] <- extrafin$betas[i]
+    
+      #IVOL 
+      #sumvect <- numeric()
+      market <- daily[daily$ticker == "GSPC",]
+      market <- market[market$date == (as.character(cBS$year[1])),]
+        #subset(subset(daily,ticker=="GSPC"),date == as.character(cBS$year[1]))
+      subcomps <- compdata[compdata$date == (as.character(cBS$year[1])),]
+      #subcomps <- subset(subset(daily,ticker==as.character(x$tickers[i])),date == as.character(cBS$year[1]))
+      minsub <- min(c(length(market$ticker),length(subcomps$ticker)))
+      # assume daily risk free return rate is 0.02 percent
+      market <- market[1:minsub,]
+      subcomps <- subcomps[1:minsub,]
+      
+      excess_return <- mapply(exret, as.numeric(as.character(subcomps$close)), BAB[i], market$close)
+#       for(a in 1:minsub) {
+#         excess_return <- as.numeric(as.character(subcomps$close[a])) - (0.0002 + extrafin$betas[i]*
+#                                                                 (as.numeric(as.character(market$close[a])) -
+#                                                                  0.0002))
+#         sumvect <- c(sumvect,excess_return)
+#       }
+      #IVOL[i] <- sd(sumvect)
+      IVOL[i] <- sd(excess_return)
 #       #LEV
 #       # -(total debt/total assets)
 #       #LEV[i] <- -(as.numeric(cBS$TD[1])/as.numeric(cBS$TA[1]))
@@ -256,8 +258,8 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
 #                  1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
 #       
 #       
-#     }
-#   }
+     }
+  }
   
   BAB[is.infinite(BAB)] <- 0
   IVOL[is.infinite(IVOL)] <- 0
@@ -282,5 +284,6 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   EVOL[is.nan(EVOL)] <- 0
   
   safety <- BAB + IVOL + LEV + O + Z + EVOL
+  #safety <- BAB + LEV + O + Z + EVOL
   scale(safety)
 }

@@ -27,6 +27,6 @@ tidy_dailydata <- function(x){
       tidymatrix[k + ((i-1) * numDaysInFiveYears), 4] <- col2[k]
     }
   }
-  tidymatrix <- na.omit(tidymatrix)
+  tidymatrix <- tidymatrix[which(is.na(tidymatrix$ticker), ]
   as.data.frame(tidymatrix)
 }

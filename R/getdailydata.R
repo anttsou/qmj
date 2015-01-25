@@ -48,7 +48,8 @@ getdailydata <- function(x){
       fileName2 <- paste(filepath, "/", companyTicker, "price", ".RData", sep='')
       listfiles[(2*i) + 1] <- fileName
       listfiles[(2*i) + 2] <- fileName2
-      nullData <- rep(NA, 3)
+      nullData <- data.frame(companyTicker, NA)
+      colnames(nullData) <- c(companyTicker, companyTicker)
       save(nullData, file=fileName)
       save(nullData, file=fileName2)
     }
