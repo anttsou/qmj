@@ -12,9 +12,9 @@
 #' @export
 
 collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
-  # CollectMarketSafety collects data on overall safety
-  ## In the market for individual companies for later processing.
-  ## x is the list of companies to be processed. BS, CF, IS are financial statements.
+  #Is there a better way to do this than calling "library(data.table)?"
+  library(data.table)
+  
   filepath <- system.file("data", package="qmj")
   numCompanies <- length(x$tickers)
   safety <- rep(0, numCompanies)
@@ -28,23 +28,41 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   IS[is.na(IS)] <- 0
   CF[is.na(CF)] <- 0
   daily$date <- sub("-.*","",daily$date)
+  daily <- data.table(daily, key="ticker")
+  ordereddaily <- daily[order(fin$date, decreasing=TRUE),]
+  splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
+  companiesstored <- names(splitindices)
+  yearlyprices <- ordereddaily[J(unique(ticker)), mult="first"]
   market <- daily[daily$ticker == "GSPC",]
   
-  #Is there a better way to do this than calling "library(data.table)?"
-  library(data.table)
-  #allcompanies <- data.table(x$tickers)
-  #setnames(allcompanies, names(allcompanies), "ticker")
-  fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
+  modifiedsetdiff <- function(x.1,x.2,...){
+    x.1p <- do.call("paste", x.1)
+    x.2p <- do.call("paste", x.2)
+    x.1[! x.1p %in% x.2p, ]
+  }
+  
+  allcompanies <- data.frame(x$tickers)
+  colnames(allcompanies) <- "ticker"
+  
+  fin <- merge(BS, IS, by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
   fstyear <- fin[J(unique(ticker)), mult="first"]
-  #fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)
   
   fin <- modifiedsetdiff(fin, fstyear)
   sndyear <- fin[J(unique(ticker)), mult="first"]
-  #sndyear <- merge(allcompanies, sndyear, by="ticker", all.x = TRUE)
   
-#   market <- daily[daily$ticker == "GPSC",]
+  fin <- modifiedsetdiff(fin, sndyear)
+  thdyear <- fin[J(unique(ticker)), mult="first"]
+  
+  fthyear <- modifiedsetdiff(fin, thdyear)
+  fthyear <- unique(fthyear)
+  
+  #Forces all data frames to have the same number of rows.
+  fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)
+  sndyear <- merge(allcompanies, sndyear, by="ticker", all.x = TRUE)
+  thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
+  fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
 
   lev <- function(td, ta){
     -td/ta
@@ -63,25 +81,40 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
       as.numeric(as.character(ebitdascol))/1000000
     }
   }
-  
+  calcME <- fuction(indexlist, tcso){
+    indexlist <- as.numeric(indexlist)
+    mean(daily$close[indexlist])/tcso
+  }
+  evol <- function(ni1, ni2, ni3, ni4, tlse1, tlse2, tlse3, tlse4,tl1, tl2, tl3, tl4, rps1, 
+                 rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4){
+    val1 <- ni1/(tlse1 - tl1 - (rps1 + nrps1))
+    val2 <- ni2/(tlse2 - tl2 - (rps2 + nrps2))
+    val3 <- ni3/(tlse3 - tl3 - (rps3 + nrps3))
+    val4 <- ni4/(tlse4 - tl4 - (rps4 + nrps4))
+    sd(c(val1, val2, val3, val4), na.rm=TRUE)
+  }
+
+  ME <- mapply(calcME, splitindices, fstyear$TCSO)
   EBITDAS <- sapply(extrafin$ebitdas, extrafinclean)
-  # working capital = current assets - current liabilities
-  WC <- fin$TCA - fin$TCL
-  # retained earnings = beginning earnings + net income - dividends
-  # dividends = dividends per share * total number of shares
-  RE <- fin$NI - fin$DIVC
-  # earnings before interest and taxes = net income + interest + taxes
-  ###taxes???
-  EBIT <- EBITDAS - fin$DP.DPL - fin$AM
-
-# total sales 
-SALE <- as.numeric(as.character(cIS$TREV[1]))
-
-Z[i] <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(cBS$TA[1]))
+  WC <- as.numeric(as.character(fstyear$TCA)) - as.numeric(as.character(fstyear$TCL))
+  RE <- as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(fstyear$DIVC))
+  EBIT <- EBITDAS - as.numeric(as.character(fstyear$DP.DPL)) - as.numeric(as.character(fstyear$AM))
+  SALE <- as.numeric(as.character(fstyear$TREV))
 
   #BAB scraped from web
   BAB <- extrafin$betas
-  LEV <- mapply(lev, fin$TD, fin$TA)
+  LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
+  Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(as.character(fstyear$TA)))
+
+minimum <- min(c(length(cBS$TLSE), length(cIS$NI)))
+tempvals <- numeric()
+for(n in 1:minimum) {
+  tempvals <- c(tempvals, as.numeric(cIS$NI[n])/(as.numeric(cBS$TLSE[n]) - 
+                                                   as.numeric(cBS$TL[n]) - 
+                                                   (as.numeric(cBS$RPS[n]) + as.numeric(cBS$NRPS[n]))))
+}
+  EVOL <- mapply(evol, fstyear)
+= sd(tempvals)
 
   for(i in 1:numCompanies) {
     print(i/numCompanies)
@@ -141,7 +174,7 @@ Z[i] <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(cBS$TA[1]))
 #       }
       # market equity
       # price of shares*number of shares
-      ME <- mean(compdata)*as.numeric(as.character(cBS$TCSO[1]))
+      
       #total assets + (.1 * (market equity - TLSE - TL + RPS + NRPS))
       #ME <- sumvect 2 <- all closing prices for that company for the most recent year.
       
@@ -164,14 +197,7 @@ Z[i] <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(cBS$TA[1]))
       O[i] <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
                  1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
       
-      minimum <- min(c(length(cBS$TLSE), length(cIS$NI)))
-      tempvals <- numeric()
-      for(n in 1:minimum) {
-        tempvals <- c(tempvals, as.numeric(cIS$NI[n])/(as.numeric(cBS$TLSE[n]) - 
-                                as.numeric(cBS$TL[n]) - 
-                               (as.numeric(cBS$RPS[n]) + as.numeric(cBS$NRPS[n]))))
-      }
-      EVOL[i] = sd(tempvals)
+      
     }
   }
   
