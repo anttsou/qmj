@@ -28,6 +28,7 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   IS[is.na(IS)] <- 0
   CF[is.na(CF)] <- 0
   daily$date <- sub("-.*","",daily$date)
+  
   for(i in 1:numCompanies) {
     print(i/numCompanies)
     cBS <- subset(BS,ticker == as.character(x$tickers[i]))
@@ -75,6 +76,9 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
       # market equity
       # price of shares*number of shares
       ME <- mean(sumvect2)*as.numeric(cBS$TCSO[1])
+      #total assets + (.1 * (market equity - TLSE - TL + RPS + NRPS))
+      #ME <- sumvect 2 <- all closing prices for that company for the most recent year.
+      
       ADJASSET <- as.numeric(cBS$TA[1]) + 0.1*(ME - (as.numeric(cBS$TLSE[1]) - 
                                                    as.numeric(cBS$TL[1]) - 
                                                   (as.numeric(cBS$RPS[1]) + 
@@ -131,13 +135,6 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
     }
   }
   
-  BAB[is.nan(BAB)] <- 0
-  IVOL[is.nan(IVOL)] <- 0
-  LEV[is.nan(LEV)] <- 0
-  O[is.nan(O)] <- 0
-  Z[is.nan(Z)] <- 0
-  EVOL[is.nan(EVOL)] <- 0
-  
   BAB[is.infinite(BAB)] <- 0
   IVOL[is.infinite(IVOL)] <- 0
   LEV[is.infinite(LEV)] <- 0
@@ -153,8 +150,13 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   Z <- scale(Z)
   EVOL <- scale(EVOL)
   
-  for(i in 1:numCompanies){
-    safety[i] <- BAB[i] + IVOL[i] + LEV[i] + O[i] + Z[i] + EVOL[i]
-  }
+  BAB[is.nan(BAB)] <- 0
+  IVOL[is.nan(IVOL)] <- 0
+  LEV[is.nan(LEV)] <- 0
+  O[is.nan(O)] <- 0
+  Z[is.nan(Z)] <- 0
+  EVOL[is.nan(EVOL)] <- 0
+  
+  safety <- BAB + IVOL + LEV + O + Z + EVOL
   scale(safety)
 }

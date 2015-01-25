@@ -8,11 +8,12 @@ tidy_cashflows <- function(x) {
   numCompanies <- length(x)
   cashflows <- matrix(nrow=numCompanies*4, ncol=21)
   
-  colnames(cashflows) <- c("ticker", "year", "NI", "DP", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP")
+  colnames(cashflows) <- c("ticker", "year", "NI.SL", "DP.DPL", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", 
+                           "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP")
   for(i in 1:numCompanies){
     cdata <- x[[i]]
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
-    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ ]', '', colnames(cdata))
+    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata))
     for(k in 1:length(colnames(cdata))){
       cashflows[k + (i-1)*4,1] <- ticker
       cashflows[k + (i-1)*4,2] <- years[k]

@@ -16,13 +16,11 @@ collectmarketdata <- function(){
   data(tidyincome, package="qmj")
   data(tidydaily, package="qmj")
   data(extrafin, package="qmj")
-  #companies <- read.csv(paste(filepath, "/companies.csv", sep=''))
   numCompanies <- length(companies$tickers)
   BS <- tidybalance
   CF <- tidycash
   IS <- tidyincome
   daily <- tidydaily
-  
   #What to do with missing data?
   # If we're missing a lot of data, then simply assigning 0's skews
   # the mean and SD. However, short term solution to getting a result.

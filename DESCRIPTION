@@ -13,7 +13,8 @@ Imports:
 	quantmod(>= 0.4-3),
 	PerformanceAnalytics,
 	xts,
-	stringr
+	stringr,
+	data.table
 Depends: R (>= 3.1.1)
 License: MIT + file LICENSE
 LazyData: false

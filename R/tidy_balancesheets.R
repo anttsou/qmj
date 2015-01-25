@@ -8,11 +8,14 @@ tidy_balancesheets <- function(x) {
   numCompanies <- length(x)
   balancesheets <- matrix(nrow=numCompanies * 4, ncol=44)
   
-  colnames(balancesheets) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", "CS", "APIC", "RE", "TS", "OE", "TE", "TLSE", "SO", "TCSO")
+  colnames(balancesheets) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", 
+                               "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", 
+                               "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", 
+                               "CS", "APIC", "RE", "TS", "OE", "TE", "TLSE", "SO", "TCSO")
   for(i in 1:numCompanies){
     cdata <- x[[i]]
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
-    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ ]', '', colnames(cdata))
+    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata))
     for(k in 1:length(colnames(cdata))){
       balancesheets[k + (i-1)*4,1] <- ticker
       balancesheets[k + (i-1)*4,2] <- years[k]
