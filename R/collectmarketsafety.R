@@ -33,9 +33,10 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   daily$date <- sub("-.*","",daily$date)
   daily <- data.table(daily, key="ticker")
-  ordereddaily <- daily[order(fin$date, decreasing=TRUE),]
+  ordereddaily <- daily[order(daily$date, decreasing=TRUE),]
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
   companiesstored <- names(splitindices)
+  setkey(ordereddaily, "ticker")
   yearlyprices <- ordereddaily[J(unique(ticker)), mult="first"]
   market <- list(daily[daily$ticker == "GSPC",])
   
@@ -82,7 +83,7 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
       as.numeric(as.character(ebitdascol))/1000000
     }
   }
-  calcmean <- fuction(indexlist){
+  calcmean <- function(indexlist){
     indexlist <- as.numeric(indexlist)
     mean(daily$close[indexlist])
   }
@@ -99,6 +100,7 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   }
   ivol <- function(refineddat, betas){
     market <- refineddat[1]
+    market <- market[[1]]
     market <- market$close
     stock <- refineddat[2]
     stock <- stock$close
@@ -107,12 +109,13 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   }
   refine_ivol_data <- function(marketdat, stockindices){
     stockindices <- as.numeric(stockindices)
-    stockdat <- daily[stockdat,]
+    stockdat <- daily[stockindices,]
     if(sum(marketdat$date == currentyear) <= 150){
       year <- currentyear - 1
     } else{
       year <- currentyear
     }
+    marketdat <- marketdat[[1]]
     marketdat <- market[market$date == year,]
     stockdat <- stockdat[stockdat$date == year,]
     smallersize <- min(c(length(marketdat[,1]), length(stockdat[,1])))
