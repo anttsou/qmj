@@ -11,15 +11,18 @@ tidyinfo <- function(){
   filepathb <- paste(filepath, "/balancesheets.RData", sep='')
   destpathb <- paste(destpath, "/tidybalance.RData", sep='')
   load(filepathb)
-  save(qmj::tidy_balancesheets(balancesheets), file=destpathb)
+  tidy_balance <- qmj::tidy_balancesheets(balancesheets)
+  save(tidy_balance, file=destpathb)
   
   filepathc <- paste(filepath, "/cashflows.RData", sep='')
   destpathc <- paste(destpath, "/tidycash.RData", sep='')
   load(filepathc)
-  save(qmj::tidy_cashflows(cashflows), file=destpathc)
+  tidy_cash <- qmj::tidy_cashflows(cashflows)
+  save(tidy_cash, file=destpathc)
   
   filepathi <- paste(filepath, "/incomestatements.RData", sep='')
   destpathi <- paste(destpath, "/tidyincome.RData", sep='')
   load(filepathi)
-  save(qmj::tidy_incomestatements(incomestatements), file=destpathi)
+  tidy_income <- qmj::tidy_incomestatements(incomestatements)
+  save(tidy_income, file=destpathi)
 }
