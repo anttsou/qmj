@@ -17,23 +17,27 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   
   filepath <- system.file("data", package="qmj")
   numCompanies <- length(x$tickers)
-  safety <- rep(0, numCompanies)
-  BAB <- rep(0, numCompanies)
-  IVOL <- rep(0, numCompanies)
-  LEV <- rep(0, numCompanies)
-  O <- rep(0, numCompanies)
-  Z <- rep(0, numCompanies)
-  EVOL <- rep(0, numCompanies)
+  allcompanies <- data.frame(x$tickers)
+  colnames(allcompanies) <- "ticker"
+  
+#   safety <- rep(0, numCompanies)
+#   BAB <- rep(0, numCompanies)
+#   IVOL <- rep(0, numCompanies)
+#   LEV <- rep(0, numCompanies)
+#   O <- rep(0, numCompanies)
+#   Z <- rep(0, numCompanies)
+#   EVOL <- rep(0, numCompanies)
   BS[is.na(BS)] <- 0
   IS[is.na(IS)] <- 0
   CF[is.na(CF)] <- 0
+  currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   daily$date <- sub("-.*","",daily$date)
   daily <- data.table(daily, key="ticker")
   ordereddaily <- daily[order(fin$date, decreasing=TRUE),]
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
   companiesstored <- names(splitindices)
   yearlyprices <- ordereddaily[J(unique(ticker)), mult="first"]
-  market <- daily[daily$ticker == "GSPC",]
+  market <- list(daily[daily$ticker == "GSPC",])
   
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1)
@@ -41,10 +45,7 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
     x.1[! x.1p %in% x.2p, ]
   }
   
-  allcompanies <- data.frame(x$tickers)
-  colnames(allcompanies) <- "ticker"
-  
-  fin <- merge(BS, IS, by=c("ticker", "year"))
+  fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
   fstyear <- fin[J(unique(ticker)), mult="first"]
@@ -81,9 +82,12 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
       as.numeric(as.character(ebitdascol))/1000000
     }
   }
-  calcME <- fuction(indexlist, tcso){
+  calcmean <- fuction(indexlist){
     indexlist <- as.numeric(indexlist)
-    mean(daily$close[indexlist])/tcso
+    mean(daily$close[indexlist])
+  }
+  marketequity <- function(closemeans, tcso){
+    closemeans/tcso
   }
   evol <- function(ni1, ni2, ni3, ni4, tlse1, tlse2, tlse3, tlse4,tl1, tl2, tl3, tl4, rps1, 
                  rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4){
@@ -93,28 +97,62 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
     val4 <- ni4/(tlse4 - tl4 - (rps4 + nrps4))
     sd(c(val1, val2, val3, val4), na.rm=TRUE)
   }
+  ivol <- function(refineddat, betas){
+    market <- refineddat[1]
+    market <- market$close
+    stock <- refineddat[2]
+    stock <- stock$close
+    excess_return <- mapply(exret, stock$close, betas, market$close)
+    sd(excess_return)
+  }
+  refine_ivol_data <- function(marketdat, stockindices){
+    stockindices <- as.numeric(stockindices)
+    stockdat <- daily[stockdat,]
+    if(sum(marketdat$date == currentyear) <= 150){
+      year <- currentyear - 1
+    } else{
+      year <- currentyear
+    }
+    marketdat <- market[market$date == year,]
+    stockdat <- stockdat[stockdat$date == year,]
+    smallersize <- min(c(length(marketdat[,1]), length(stockdat[,1])))
+    c(marketdat[1:smallersize,], stockdat[1:smallersize,])
+  }
 
-  ME <- mapply(calcME, splitindices, fstyear$TCSO)
+  #BAB scraped from web
+  BAB <- extrafin$betas
+  
+  refined_data <- mapply(refine_ivol_data, market, splitindices)
+  tempframe <- data.frame(companiesstored, refined_data)
+  colnames(tempframe) <- c("ticker", "refined")
+  tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)
+  IVOL <- mapply(ivol, refined_data, BAB)
+
+  LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
+
+  closingmeans <- sapply(splitindices, calcmean)
+  tempframe <- data.frame(companiesstored, closingmeans)
+  colnames(tempframe) <- c("ticker", "close")
+  tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)  
+  
+  ME <- mapply(marketequity, as.numeric(as.character(tempframe$close)), as.numeric(as.character(fstyear$TCSO)))
   EBITDAS <- sapply(extrafin$ebitdas, extrafinclean)
   WC <- as.numeric(as.character(fstyear$TCA)) - as.numeric(as.character(fstyear$TCL))
   RE <- as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(fstyear$DIVC))
   EBIT <- EBITDAS - as.numeric(as.character(fstyear$DP.DPL)) - as.numeric(as.character(fstyear$AM))
   SALE <- as.numeric(as.character(fstyear$TREV))
-
-  #BAB scraped from web
-  BAB <- extrafin$betas
-  LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
   Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(as.character(fstyear$TA)))
 
-minimum <- min(c(length(cBS$TLSE), length(cIS$NI)))
-tempvals <- numeric()
-for(n in 1:minimum) {
-  tempvals <- c(tempvals, as.numeric(cIS$NI[n])/(as.numeric(cBS$TLSE[n]) - 
-                                                   as.numeric(cBS$TL[n]) - 
-                                                   (as.numeric(cBS$RPS[n]) + as.numeric(cBS$NRPS[n]))))
-}
-  EVOL <- mapply(evol, fstyear)
-= sd(tempvals)
+  EVOL <- mapply(evol, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(sndyear$NI)),
+                as.numeric(as.character(thdyear$NI)), as.numeric(as.character(fthyear$NI)), 
+                as.numeric(as.character(fstyear$TLSE)), as.numeric(as.character(sndyear$TLSE)),
+                as.numeric(as.character(thdyear$TLSE)), as.numeric(as.character(fthyear$TLSE)),
+                as.numeric(as.character(fstyear$TL)), as.numeric(as.character(sndyear$TL)),
+                as.numeric(as.character(thdyear$TL)), as.numeric(as.character(fthyear$TL)),
+                as.numeric(as.character(fstyear$RPS)), as.numeric(as.character(sndyear$RPS)),
+                as.numeric(as.character(thdyear$RPS)), as.numeric(as.character(fthyear$RPS)),
+                as.numeric(as.character(fstyear$NRPS)), as.numeric(as.character(sndyear$NRPS)),
+                as.numeric(as.character(thdyear$NRPS)), as.numeric(as.character(fthyear$NRPS)))
 
   for(i in 1:numCompanies) {
     print(i/numCompanies)
