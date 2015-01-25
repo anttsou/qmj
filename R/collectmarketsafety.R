@@ -8,6 +8,7 @@
 #' @param BS A dataframe containing balance sheet information for every company.
 #' @param CF A dataframe containing cash flow information for every company.
 #' @param IS A dataframe containing income statement information for every company.
+#' @param daily A dataframe containing the daily market closing prices and returns. 
 #' @export
 
 collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
@@ -29,6 +30,7 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   daily$date <- sub("-.*","",daily$date)
   
   for(i in 1:numCompanies) {
+    print(i/numCompanies)
     cBS <- subset(BS,ticker == as.character(x$tickers[i]))
     cIS <- subset(IS,ticker == as.character(x$tickers[i]))
     cCF <- subset(CF,ticker == as.character(x$tickers[i]))

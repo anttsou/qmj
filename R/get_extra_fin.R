@@ -19,13 +19,14 @@ get_extra_fin <- function() {
   ebitdas <- character()
   splitfactors <- character()
   splitdates <- character()
-  for(i in tickers) {
-    newUrl <- paste(start,i,sep="")
+  for(i in 1:length(tickers)) {
+    print(i/length(tickers))
+    newUrl <- paste(start,tickers[i],sep="")
     con <- url(newUrl)
     htmlCode <- readLines(con)
     close(con)
     betas <- c(betas,as.numeric(sub("</td.*","",sub(".*Beta:</th><td class=\"yfnc_tabledata1\">","",htmlCode[191]))))
-    newUrl2 <- paste(start2,i,sep="")
+    newUrl2 <- paste(start2,tickers[i],sep="")
     con2 <- url(newUrl2)
     htmlCode2 <- readLines(con2)
     close(con2)

@@ -6,4 +6,5 @@ R/.Rhistory
 .DS_Store
 .Rproj.user
 .Rbuildignore
+.RData
 qmj.Rproj
