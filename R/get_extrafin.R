@@ -5,11 +5,11 @@
 #' yahoo finance's benchmark.
 #' @examples
 #' \donttest{
-#' get_extra_fin()
+#' get_extrafin()
 #' }
 #' @export
 
-get_extra_fin <- function() {
+get_extrafin <- function() {
   filepath <- system.file("data", package="qmj")
   filepath1 <- paste(filepath, "/companies.RData", sep='')
   load(filepath1)
