@@ -26,7 +26,7 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table::data.table(fin, key="ticker")
-  fin <- fin[data.table::CJ(unique(ticker)), mult="first"]
+  fin <- fin[data.table::CJ(unique(fin$ticker)), mult="first"]
   data.table::setkey(fin, "ticker")
   fin <- merge(allcompanies, fin, by="ticker", all.x = TRUE)
   

@@ -32,13 +32,13 @@ collectmarketpayout <- function(x, BS, IS){
   fin <- merge(BS, IS, by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
-  fstyear <- fin[CJ(unique(ticker)), mult="first"]
+  fstyear <- fin[CJ(unique(fin$ticker)), mult="first"]
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- fin[CJ(unique(ticker)), mult="first"]
+  sndyear <- fin[CJ(unique(fin$ticker)), mult="first"]
 
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- fin[CJ(unique(ticker)), mult="first"]
+  thdyear <- fin[CJ(unique(fin$ticker)), mult="first"]
 
   fthyear <- modifiedsetdiff(fin, thdyear)
   fthyear <- unique(fthyear)
