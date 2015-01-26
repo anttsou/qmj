@@ -288,5 +288,6 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   
   #safety <- BAB + IVOL + LEV + O + Z + EVOL
   safety <- BAB + LEV + O + Z + EVOL
-  scale(safety)
+  safety <- scale(safety)
+  data.frame(x$tickers, safety, BAB, LEV, O, Z, EVOL)
 }

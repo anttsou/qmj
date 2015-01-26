@@ -220,12 +220,6 @@ collectmarketpayout <- function(x, BS, IS){
 #   for(i in 1:numCompanies){
 #     payouts[i] <- EISS[i] + DISS[i] + NPOP[i]
 #   }
-  scale(payouts)
-  res <- data.frame(fstyear$ticker, payouts)
-  colnames(res) <- c("tickers", "payouts")
-  originalorder <- data.frame(x$tickers)
-  colnames(originalorder) <- "tickers"
-  res <- merge(originalorder, res, by="tickers", x.all = TRUE)
-  #res$payouts
-  res
+  payouts <- scale(payouts)
+  data.frame(x$tickers, payouts, EISS, DISS, NPOP)
 }

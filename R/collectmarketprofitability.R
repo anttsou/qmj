@@ -150,6 +150,5 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   profitability <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   scale(profitability)
 
-  as.vector(profitability)
-  #data.frame(x$names, x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
+  data.frame(x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }

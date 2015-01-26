@@ -15,6 +15,8 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
+  allcompanies <- data.frame(x$tickers)
+  colnames(allcompanies) <- "ticker"
   numCompanies <- length(x$tickers)
 #   growth <- rep(0, numCompanies)
 #   GPOA <- rep(0, numCompanies)
@@ -31,9 +33,12 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
   fstyear <- fin[CJ(unique(ticker)), mult="first"]
+  fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)  
+
   fin <- fin[order(fin$year, decreasing=FALSE),]
   setkey(fin, "ticker")
   lstyear <- fin[CJ(unique(ticker)), mult="first"]
+  lstyear <- merge(allcompanies, lstyear, by="ticker", all.x = TRUE)
   
   gpoa <- function(gprof1, gprof2, ta){
     (gprof1 - gprof2)/ta
@@ -158,11 +163,6 @@ collectmarketgrowth <- function(x, BS, CF, IS){
 #   for(i in 1:numCompanies){
 #     growth[i] <- GPOA[i] + ROE[i] + ROA[i] + CFOA[i] + GMAR[i] + ACC[i]
 #   }
-  scale(growth)
-  res <- data.frame(fstyear$ticker, growth)
-  colnames(res) <- c("tickers", "growth")
-  originalorder <- data.frame(x$tickers)
-  colnames(originalorder) <- "tickers"
-  res <- merge(originalorder, res, by="tickers")
-  res$growth
+  growth <- scale(growth)
+  data.frame(x$tickers, growth, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }
