@@ -7,8 +7,6 @@
 #' @export
 
 collectmarketdata <- function(){
-  ##Collect market data focuses on collecting needed
-  ##  means and sd's for use in other functions.
   filepath <- system.file(package="qmj")
   data(companies, package="qmj")
   data(tidybalance, package="qmj")
@@ -21,9 +19,7 @@ collectmarketdata <- function(){
   CF <- tidycash
   IS <- tidyincome
   daily <- tidydaily
-  #What to do with missing data?
-  # If we're missing a lot of data, then simply assigning 0's skews
-  # the mean and SD. However, short term solution to getting a result.
+  
   BS[is.na(BS)] <- 0
   CF[is.na(CF)] <- 0
   IS[is.na(IS)] <- 0
@@ -44,6 +40,4 @@ collectmarketdata <- function(){
                            payouts = payouts, 
                            quality = quality)
   marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE,na.rm=TRUE),]
-#   filepath2 <- paste(filepath, "/data/marketdata.RData", sep='')
-#   save(marketdata,file=filepath2)
 }
