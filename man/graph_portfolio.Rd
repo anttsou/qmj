@@ -13,4 +13,16 @@ graph_portfolio(type = "marketcap")
 Returns a graphical summary of the portfolio. Be aware, missing values, or insufficient information, will result in some values
 becoming 0.
 }
+\details{
+Possible types:
+\itemize{
+   \item marketcap : Displays quality vs. estimated market cap, returns a data frame with tickers, market cap, and quality.
+   \item summary : Displays information returned from get_portfolio, itself a numeric summary of the portfolio.
+   \item quality : Displays quality vs. index. Returns data frame with ticker and quality scores.
+   \item profitability : Displays profitability vs. index. Returns data frame with ticker and profitability scores.
+   \item safety : Displays safety vs. index. Returns data frame with ticker and safety scores.
+   \item growth : Displays growth vs. index. Returns data frame with ticker and growth scores.
+   \item payouts : Displays payouts vs. index. Returns data frame with ticker and payouts scores.
+ }
+}
 
