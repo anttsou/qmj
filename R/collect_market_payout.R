@@ -1,4 +1,4 @@
-#' collectmarketpayout
+#' Collects payout z-scores for companies
 #'
 #' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
 #' and an income statement, calculates EISS, DISS, NPOP
@@ -7,9 +7,14 @@
 #' @param x A dataframe of company names and tickers.
 #' @param BS A dataframe containing balance sheet information for every company.
 #' @param IS A dataframe containing income statement information for every company.
+#' @examples
+#' x <- data(companies)
+#' BS <- data(tidybalance)
+#' IS <- data(tidyincome)
+#' collect_market_payout(x, BS, IS)
 #' @export
 
-collectmarketpayout <- function(x, BS, IS){
+collect_market_payout <- function(x, BS, IS){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   

@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_extra_fin.R
 \name{get_extra_fin}
 \alias{get_extra_fin}
-\title{get_extra_fin}
+\title{Grabs beta scores for companies as well as their earnings
+before interest, taxes, depreciation, and amortization}
 \usage{
 get_extra_fin()
 }

@@ -1,4 +1,5 @@
-#' get_extra_fin
+#' Grabs beta scores for companies as well as their earnings 
+#' before interest, taxes, depreciation, and amortization
 #'
 #' Retrieves the beta of companies based on
 #' yahoo finance's benchmark.

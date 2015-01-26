@@ -10,7 +10,7 @@
 
 get_portfolio <- function(top=5, bottom=5) {
   filepath <- system.file(package="qmj")
-  marketdata <- qmj::collectmarketdata()
+  marketdata <- qmj::collect_market_data()
   if(length(marketdata$names) >= top + bottom) {
     cat("Top Companies by Measured Quality\n")
     cat(head(marketdata$names, n=top))
