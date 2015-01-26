@@ -71,7 +71,7 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
     -td/ta
   }
   exret <- function(subcomps, beta, marketclose){
-    subcomps - (0.0002 + beta*(marketclose - 0.0002))
+    subcomps - (beta*marketclose)
   }
   extrafinclean <- function(ebitdascol){
     if(grepl("B",as.character(ebitdascol))) {
