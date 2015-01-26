@@ -10,7 +10,7 @@
 
 get_portfolio <- function(top=5, bottom=5) {
   filepath <- system.file(package="qmj")
-  data(marketdata, package="qmj")
+  marketdata <- qmj::collectmarketdata()
   if(length(marketdata$names) >= top + bottom) {
     summarydata <- data.frame(Top.Companies.by.Measured.Quality = marketdata$names[1:top], 
                               Bottom.Companies.by.Measured.Quality = marketdata$names[length(marketdata$names) - bottom:

@@ -1,10 +1,9 @@
 Package: qmj
-Title: Implementation of Quality Minus Junk (Asness, Frazzini, Pederson)
+Title: Quality Minus Junk
 Version: 0.1.0
 Authors@R: c(
-	person("David", "Kane", role = "aut"),
-	person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")),
-	person("Ryan", "Kwon", email="rhk1@williams.edu", role=c("aut", "cre")))
+	person("Ryan", "Kwon", email="rhk1@williams.edu", role=c("aut", "cre")),
+	person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")))
 Description: An implementation of Quality Minus Junk (QMJ) in R. It allows the user
     to determine a quantifiable quality factor for individual companies and
 	securities, as well as to determine how well an overall portfolio adheres

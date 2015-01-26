@@ -15,14 +15,10 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
+  allcompanies <- data.frame(x$tickers)
+  colnames(allcompanies) <- "ticker"
   numCompanies <- length(x$tickers)
-#   growth <- rep(0, numCompanies)
-#   GPOA <- rep(0, numCompanies)
-#   ROE <- rep(0, numCompanies)
-#   ROA <- rep(0, numCompanies)
-#   CFOA <- rep(0, numCompanies)
-#   GMAR <- rep(0, numCompanies)
-#   ACC <- rep(0, numCompanies)
+  
   BS[is.na(BS)] <- 0
   IS[is.na(IS)] <- 0
   CF[is.na(CF)] <- 0
@@ -31,9 +27,12 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
   fstyear <- fin[CJ(unique(ticker)), mult="first"]
+  fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)  
+
   fin <- fin[order(fin$year, decreasing=FALSE),]
   setkey(fin, "ticker")
   lstyear <- fin[CJ(unique(ticker)), mult="first"]
+  lstyear <- merge(allcompanies, lstyear, by="ticker", all.x = TRUE)
   
   gpoa <- function(gprof1, gprof2, ta){
     (gprof1 - gprof2)/ta
@@ -76,61 +75,6 @@ collectmarketgrowth <- function(x, BS, CF, IS){
                 as.numeric(as.character(lstyear$DP.DPL)), as.numeric(as.character(lstyear$CWC)),
                 as.numeric(as.character(lstyear$TA)))
   
-#   for(i in 1:numCompanies){
-#     cBS <- subset(BS,ticker == as.character(x$tickers[i]))
-#     cIS <- subset(IS,ticker == as.character(x$tickers[i]))
-#     cCF <- subset(CF,ticker == as.character(x$tickers[i]))
-#     
-#     if(nrow(cBS) > 3 && nrow(cIS) > 3 && nrow(cCF) > 3) {
-#       ###GROWTH
-#       #GPOA
-#       #(5 year change in gross profits)/Total assets
-#       #GP - IS 6
-#       #Total assets - BS 18
-#       GPOA[i] <- (as.numeric(cIS$GPROF[1]) - as.numeric(cIS$GPROF[length(cIS$GPROF)]))/
-#                  as.numeric(cBS$TA[length(cBS$TA)])
-#     
-#       #(5 year change in Net income)/book equity
-#       #Net income - CF 2
-#       # Book equity 
-#       ROE[i] <- (as.numeric(cCF$NI[1]) - as.numeric(cCF$NI[length(cCF$NI)]))/
-#                 (as.numeric(cBS$TLSE[length(cBS$TLSE)]) - as.numeric(cBS$TL[length(cBS$TL)]) - 
-#                  as.numeric(cBS$RPS[length(cBS$RPS)]) + as.numeric(cBS$NRPS[length(cBS$NRPS)]))
-#       
-#       #(5 year change in net income)/total assets
-#       # Net income - CF 2
-#       # Total assets - BS 18
-#       ROA[i] <- (as.numeric(cCF$NI[1]) - as.numeric(cCF$NI[length(cCF$NI)]))/
-#                  as.numeric(cBS$TA[length(cBS$TA)])
-#       #(5 year change in cash flow over assets)
-#       #Change in cash flow = net income + depreciation - change in working capital - capital expenditure
-#       # IB (Net income) - CF 2
-#       # Depreciation - CF 3
-#       # Change in working capital - CF 7
-#       # Capital expenditure - CF 9
-#       #Total assets - BS 18
-#       changeCF1 <- as.numeric(cCF$NI[1]) + as.numeric(cCF$DP[1]) - as.numeric(cCF$CWC[1]) - 
-#                    as.numeric(cCF$CX[1])
-#       changeCF2 <- as.numeric(cCF$NI[length(cCF$NI)]) + as.numeric(cCF$DP[length(cCF$DP)]) - 
-#                    as.numeric(cCF$CWC[length(cCF$CWC)]) - as.numeric(cCF$CX[length(cCF$CX)])
-#       CFOA[i] <- (changeCF1 - changeCF2)/as.numeric(cBS$TA[length(cBS$TA)])
-#       #(5 year change in gross profit)/(total sales)
-#       # GP - IS 6
-#       # Total sales (total revenues) - IS 4
-#       GMAR[i] <- as.numeric(cIS$GPROF[1]) - as.numeric(cIS$GPROF[length(cIS$GPROF)])/
-#                  as.numeric(cIS$TREV[length(cIS$TREV)])
-#       
-#       #(5 year change in (low) accruals)/total assets
-#       # Low accruals = DP - (change in WC)
-#       # DP - CF 3
-#       #Change in working capital - CF 7
-#       #Total assets - BS 18
-#       accrual1 <- as.numeric(cCF$DP[1]) - as.numeric(cCF$CWC[1])
-#       accrual2 <- as.numeric(cCF$DP[length(cCF$DP)]) - as.numeric(cCF$CWC[length(cCF$CWC)])
-#       ACC[i] <- (accrual1 - accrual2)/as.numeric(cBS$TA[length(cBS$TA)])
-#     }
-#   }
-  
   GPOA[is.infinite(GPOA)] <- 0
   ROE[is.infinite(ROE)] <- 0
   ROA[is.infinite(ROA)] <- 0
@@ -155,14 +99,6 @@ collectmarketgrowth <- function(x, BS, CF, IS){
 
   growth <- GPOA + ROE + ROA + CFOA + GMAR + ACC
 
-#   for(i in 1:numCompanies){
-#     growth[i] <- GPOA[i] + ROE[i] + ROA[i] + CFOA[i] + GMAR[i] + ACC[i]
-#   }
-  scale(growth)
-  res <- data.frame(fstyear$ticker, growth)
-  colnames(res) <- c("tickers", "growth")
-  originalorder <- data.frame(x$tickers)
-  colnames(originalorder) <- "tickers"
-  res <- merge(originalorder, res, by="tickers")
-  res$growth
+  growth <- scale(growth)
+  data.frame(x$tickers, growth, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }
