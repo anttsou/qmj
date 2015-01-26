@@ -1,4 +1,4 @@
-#' Collects safety z-score for companies
+#' Collects safety z-scores for companies
 #'
 #' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
 #' and an income statement, calculates BAB, IVOL, LEV, O, Z, and EVOL.

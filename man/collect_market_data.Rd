@@ -2,7 +2,7 @@
 % Please edit documentation in R/collect_market_data.R
 \name{collect_market_data}
 \alias{collect_market_data}
-\title{Collects all relevant market data (growth, payout, profitability, and safety) and order companies
+\title{Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
 by descending quality.}
 \usage{
 collect_market_data()

@@ -1,4 +1,4 @@
-#' Collects profitability z-score for companies
+#' Collects profitability z-scores for companies
 #'
 #' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
 #' and an income statement, calculates GPOA, ROE, ROA, CFOA, GMAR, ACC,

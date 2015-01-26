@@ -2,7 +2,7 @@
 % Please edit documentation in R/collect_market_safety.R
 \name{collect_market_safety}
 \alias{collect_market_safety}
-\title{Collects safety z-score for companies}
+\title{Collects safety z-scores for companies}
 \usage{
 collect_market_safety(x, BS, CF, IS, extrafin, daily)
 }

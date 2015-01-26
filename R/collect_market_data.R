@@ -1,4 +1,4 @@
-#' Collects all relevant market data (growth, payout, profitability, and safety) and order companies
+#' Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
 #' by descending quality.
 #'
 #' Reads data from companies.csv and calculates market growth, payouts, safety, and profitability

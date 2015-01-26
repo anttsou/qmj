@@ -2,7 +2,7 @@
 % Please edit documentation in R/collect_market_profitability.R
 \name{collect_market_profitability}
 \alias{collect_market_profitability}
-\title{Collects profitability z-score for companies}
+\title{Collects profitability z-scores for companies}
 \usage{
 collect_market_profitability(x, BS, CF, IS)
 }
