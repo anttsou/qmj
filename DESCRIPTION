@@ -14,7 +14,8 @@ Imports:
 	PerformanceAnalytics,
 	xts,
 	stringr,
-	data.table
+	data.table,
+	ggplot2
 Depends: R (>= 3.1.1)
 License: MIT + file LICENSE
 LazyData: false

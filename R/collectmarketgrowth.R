@@ -12,6 +12,9 @@
 
 #use sapply to make columns numeric
 collectmarketgrowth <- function(x, BS, CF, IS){
+  #Is there a better way to do this than calling "library(data.table)?"
+  library(data.table)
+  
   numCompanies <- length(x$tickers)
 #   growth <- rep(0, numCompanies)
 #   GPOA <- rep(0, numCompanies)
@@ -27,10 +30,10 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
-  fstyear <- fin[J(unique(ticker)), mult="first"]
+  fstyear <- fin[CJ(unique(ticker)), mult="first"]
   fin <- fin[order(fin$year, decreasing=FALSE),]
   setkey(fin, "ticker")
-  lstyear <- fin[J(unique(ticker)), mult="first"]
+  lstyear <- fin[CJ(unique(ticker)), mult="first"]
   
   gpoa <- function(gprof1, gprof2, ta){
     (gprof1 - gprof2)/ta

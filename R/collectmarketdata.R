@@ -44,6 +44,6 @@ collectmarketdata <- function(){
                            payouts = payouts, 
                            quality = quality)
   marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE,na.rm=TRUE),]
-  filepath2 <- paste(filepath, "/data/marketdata.RData", sep='')
-  save(marketdata,file=filepath2)
+#   filepath2 <- paste(filepath, "/data/marketdata.RData", sep='')
+#   save(marketdata,file=filepath2)
 }

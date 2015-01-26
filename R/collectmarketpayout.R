@@ -10,9 +10,9 @@
 #' @export
 
 collectmarketpayout <- function(x, BS, IS){
-  # CollectMarketPayout collects data on overall payouts
-  ## In the market for individual companies for later processing.
-  ## x is the list of companies to be processed. BS, CF, IS are financial statements.
+  #Is there a better way to do this than calling "library(data.table)?"
+  library(data.table)
+  
   numCompanies <- length(x$tickers)
   payouts <- rep(0, numCompanies)
 #   EISS <- rep(0, numCompanies)
@@ -34,13 +34,13 @@ collectmarketpayout <- function(x, BS, IS){
   fin <- merge(BS, IS, by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
-  fstyear <- fin[J(unique(ticker)), mult="first"]
+  fstyear <- fin[CJ(unique(ticker)), mult="first"]
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- fin[J(unique(ticker)), mult="first"]
+  sndyear <- fin[CJ(unique(ticker)), mult="first"]
 
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- fin[J(unique(ticker)), mult="first"]
+  thdyear <- fin[CJ(unique(ticker)), mult="first"]
 
   fthyear <- modifiedsetdiff(fin, thdyear)
   fthyear <- unique(fthyear)
