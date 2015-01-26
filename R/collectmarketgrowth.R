@@ -26,12 +26,13 @@ collectmarketgrowth <- function(x, BS, CF, IS){
   fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
-  fstyear <- fin[CJ(unique(fin$ticker)), mult="first"]
+  fstyear <- unique(fin)
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)  
 
   fin <- fin[order(fin$year, decreasing=FALSE),]
   setkey(fin, "ticker")
-  lstyear <- fin[CJ(unique(fin$ticker)), mult="first"]
+  
+  lstyear <- unique(fin)
   lstyear <- merge(allcompanies, lstyear, by="ticker", all.x = TRUE)
   
   gpoa <- function(gprof1, gprof2, ta){
