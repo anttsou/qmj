@@ -10,9 +10,9 @@
 #' @export
 
 collectmarketpayout <- function(x, BS, IS){
-  # CollectMarketPayout collects data on overall payouts
-  ## In the market for individual companies for later processing.
-  ## x is the list of companies to be processed. BS, CF, IS are financial statements.
+  #Is there a better way to do this than calling "library(data.table)?"
+  library(data.table)
+  
   numCompanies <- length(x$tickers)
   payouts <- rep(0, numCompanies)
 #   EISS <- rep(0, numCompanies)

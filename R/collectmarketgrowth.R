@@ -12,6 +12,9 @@
 
 #use sapply to make columns numeric
 collectmarketgrowth <- function(x, BS, CF, IS){
+  #Is there a better way to do this than calling "library(data.table)?"
+  library(data.table)
+  
   numCompanies <- length(x$tickers)
 #   growth <- rep(0, numCompanies)
 #   GPOA <- rep(0, numCompanies)

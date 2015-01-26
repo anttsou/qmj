@@ -12,9 +12,9 @@
 
 #use sapply to make columns numeric
 collectmarketprofitability <- function(x, BS, CF, IS){
-  # CollectMarketProfitability collects data on overall profitability
-  ## In the market for individual companies for later processing.
-  ## x is the list of companies to be processed. BS, CF, IS are financial statements.
+  #Is there a better way to do this than calling "library(data.table)?"
+  library(data.table)
+  
   numCompanies <- length(x$tickers)
 #   profitability <- rep(0, numCompanies)
 #   
