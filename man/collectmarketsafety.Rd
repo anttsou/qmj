@@ -14,6 +14,8 @@ collectmarketsafety(x, BS, CF, IS, extrafin, daily)
 \item{CF}{A dataframe containing cash flow information for every company.}
 
 \item{IS}{A dataframe containing income statement information for every company.}
+
+\item{daily}{A dataframe containing the daily market closing prices and returns.}
 }
 \description{
 Given a list of companies (names and tickers), a balance sheet, a cash flow statement,

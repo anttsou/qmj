@@ -38,11 +38,11 @@ graph_portfolio <- function(type="marketcap"){
     }
     MC <- mapply(marketcap, as.numeric(as.character(tempframe$close)), as.numeric(as.character(fstyear$TCSO)))
     MC[is.na(MC)] <- 0
-    data <- collectmarketdata()
+    data <- qmj::collectmarketdata()
     quality <- data$quality
     quality[is.na(quality)] <- 0
     ggplot2::qplot(MC, quality, colour=quality, xlab="Estimated Market Cap", ylab="Quality Score")
-    
+    data.frame(companies$ticker, MC, quality)
   } else if(type == "summary"){
     
   } else {

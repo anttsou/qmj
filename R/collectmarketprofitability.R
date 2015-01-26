@@ -13,7 +13,7 @@
 #use sapply to make columns numeric
 collectmarketprofitability <- function(x, BS, CF, IS){
   #Is there a better way to do this than calling "library(data.table)?"
-  library(data.table)
+  #library(data.table)
   
   numCompanies <- length(x$tickers)
 #   profitability <- rep(0, numCompanies)
@@ -27,11 +27,15 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   BS[is.na(BS)] <- 0
   IS[is.na(IS)] <- 0
   CF[is.na(CF)] <- 0
-
+  
+  allcompanies <- data.frame(x$tickers)
+  colnames(allcompanies) <- "ticker"
   fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
-  fin <- data.table(fin, key="ticker")
-  fin <- fin[J(unique(ticker)), mult="first"]
+  fin <- data.table::data.table(fin, key="ticker")
+  fin <- fin[data.table::CJ(unique(ticker)), mult="first"]
+  data.table::setkey(fin, "ticker")
+  fin <- merge(allcompanies, fin, by="ticker", all.x = TRUE)
   
   gpoa <- function(gprof, ta){
     gprof/ta
@@ -146,11 +150,6 @@ collectmarketprofitability <- function(x, BS, CF, IS){
   profitability <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   scale(profitability)
 
-  res <- data.frame(fin$ticker, profitability)
-  colnames(res) <- c("tickers", "profitability")
-  originalorder <- data.frame(x$tickers)
-  colnames(originalorder) <- "tickers"
-  res <- merge(originalorder, res, by="tickers")
-  res$profitability
+  as.vector(profitability)
   #data.frame(x$names, x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }
