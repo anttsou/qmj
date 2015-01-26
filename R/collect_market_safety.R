@@ -43,7 +43,7 @@ collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
   companiesstored <- names(splitindices)
   setkey(ordereddaily, "ticker")
-  yearlyprices <- ordereddaily[CJ(unique(daily$ticker)), mult="first"]
+  yearlyprices <- unique(ordereddaily)
   market <- daily[daily$ticker == "GSPC",]
   marketlist <- list(daily[daily$ticker == "GSPC",])
   
@@ -56,13 +56,13 @@ collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
   fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
-  fstyear <- fin[CJ(unique(fin$ticker)), mult="first"]
+  fstyear <- unique(fin)
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- fin[CJ(unique(fin$ticker)), mult="first"]
+  sndyear <- unique(fin)
   
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- fin[CJ(unique(fin$ticker)), mult="first"]
+  thdyear <- unique(fin)
   
   fthyear <- modifiedsetdiff(fin, thdyear)
   fthyear <- unique(fthyear)
