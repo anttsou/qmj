@@ -36,16 +36,19 @@ collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
   BS[is.na(BS)] <- 0
   IS[is.na(IS)] <- 0
   CF[is.na(CF)] <- 0
+
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   daily$date <- sub("-.*","",daily$date)
   daily <- data.table(daily, key="ticker")
+  market <- daily[daily$ticker == "GSPC",]
+  marketlist <- list(daily[daily$ticker == "GSPC",])
   ordereddaily <- daily[order(daily$date, decreasing=TRUE),]
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
+  splitindices <- splitindices[-1]
   companiesstored <- names(splitindices)
   setkey(ordereddaily, "ticker")
   yearlyprices <- unique(ordereddaily)
-  market <- daily[daily$ticker == "GSPC",]
-  marketlist <- list(daily[daily$ticker == "GSPC",])
+  
   
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1)
@@ -92,7 +95,8 @@ collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
   }
   calcmean <- function(indexlist){
     indexlist <- as.numeric(indexlist)
-    mean(daily$close[indexlist])
+    closingprices <- as.numeric(as.character(daily$close[indexlist]))
+    mean(closingprices)
   }
   marketequity <- function(closemeans, tcso){
     closemeans/tcso
