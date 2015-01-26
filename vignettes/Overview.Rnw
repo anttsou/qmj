@@ -2,6 +2,14 @@
 \usepackage{listings}
 \begin{document}
 \SweaveOpts{concordance=TRUE}
+
+To install the package:
+
+<<Installing qmj>>=
+#library(devtools)
+#install_github("rynkwn/qmj")
+@
+
 \section*{Background}
 qmj implements the results and methodology of the paper \emph{Quality Minus Junk} by Clifford Asness, Andrea Frazzini, Lasse Pedersen. In their paper, they use several measures to calculate the relative profitability, growth, safety, and payouts of a company, which they use to provide an overall quality score for a company.
 
