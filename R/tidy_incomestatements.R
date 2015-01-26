@@ -1,7 +1,8 @@
-#' tidy_incomestatements
+#' Tidies raw incomestatement data and returns the tidied data frame
 #'
-#' Tidies given income statement data, formatted in typical style of quantmods viewFinancials function.
-#' 
+#' Tidies raw income statement data produced from quantmod and returns the tidied data frame. Raw income statement data
+#' must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
+#' @param x A list of raw incomestatement file data produced from quantmod
 #' @export
 
 tidy_incomestatements <- function(x) {

@@ -1,7 +1,9 @@
-#' tidy_cashflows
+#' Tidies raw cash flow data
 #'
-#' Tidies given cashflow data, formatted in typical style of quantmods viewFinancials function.
+#' Processes raw cash flow data from quantmod to return a tidied data frame. Raw cash flow data
+#' must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
 #' 
+#' @param x List of raw tidy cash flow data from quantmod
 #' @export
 
 tidy_cashflows <- function(x) {
