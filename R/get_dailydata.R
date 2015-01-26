@@ -1,11 +1,14 @@
-#' getdailydata
+#' Gets the daily prices and returns of companies for the past five years.
 #'
 #' Given a list of companies (names and tickers), writes .csv files for every company
 #' storing price returns.
 #' @param x A dataframe of company names and tickers.
+#' @examples
+#' x <- data(companies)
+#' \dontrun{get_dailydata(x)}
 #' @export
 
-getdailydata <- function(x){
+get_dailydata <- function(x){
   filepath <- system.file("extdata", package="qmj")
   numCompanies <- length(x$tickers)
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))

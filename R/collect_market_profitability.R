@@ -1,4 +1,4 @@
-#' collectmarketprofitability
+#' Collects profitability z-scores for companies
 #'
 #' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
 #' and an income statement, calculates GPOA, ROE, ROA, CFOA, GMAR, ACC,
@@ -8,10 +8,16 @@
 #' @param BS A dataframe containing balance sheet information for every company.
 #' @param CF A dataframe containing cash flow information for every company.
 #' @param IS A dataframe containing income statement information for every company.
+#' @examples
+#' x <- data(companies)
+#' BS <- data(tidybalance)
+#' CF <- data(tidycash)
+#' IS <- data(tidyincome)
+#' collect_market_profitability(x, BS, CF, IS)
 #' @export
 
 #use sapply to make columns numeric
-collectmarketprofitability <- function(x, BS, CF, IS){
+collect_market_profitability <- function(x, BS, CF, IS){
   #Is there a better way to do this than calling "library(data.table)?"
   #library(data.table)
   

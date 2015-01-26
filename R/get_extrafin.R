@@ -1,14 +1,15 @@
-#' get_extra_fin
+#' Grabs beta scores for companies as well as their earnings 
+#' before interest, taxes, depreciation, and amortization
 #'
 #' Retrieves the beta of companies based on
 #' yahoo finance's benchmark.
 #' @examples
 #' \donttest{
-#' get_extra_fin()
+#' get_extrafin()
 #' }
 #' @export
 
-get_extra_fin <- function() {
+get_extrafin <- function() {
   filepath <- system.file("data", package="qmj")
   filepath1 <- paste(filepath, "/companies.RData", sep='')
   load(filepath1)

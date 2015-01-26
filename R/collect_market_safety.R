@@ -1,4 +1,4 @@
-#' collectmarketsafety
+#' Collects safety z-scores for companies
 #'
 #' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
 #' and an income statement, calculates BAB, IVOL, LEV, O, Z, and EVOL.
@@ -9,9 +9,15 @@
 #' @param CF A dataframe containing cash flow information for every company.
 #' @param IS A dataframe containing income statement information for every company.
 #' @param daily A dataframe containing the daily market closing prices and returns. 
+#' @examples
+#' x <- data(companies)
+#' BS <- data(tidybalance)
+#' CF <- data(tidycash)
+#' IS <- data(tidyincome)
+#' \dontrun{collect_market_safety(x, BS, CF, IS)}
 #' @export
 
-collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
+collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
