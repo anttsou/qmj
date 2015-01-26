@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  25 JAN 2015 21:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  26 JAN 2015 08:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -285,72 +285,59 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 (./technical-concordance.tex)
-Overfull \hbox (6.6098pt too wide) in paragraph at lines 8--8
-\T1/aer/m/n/12 re-turn on eq-uity (ROE), re-turn on as-sets (ROA), cash flow ov
-er as-sets (CFOA),
- []
-
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 8.
+(Font)              <12> on input line 7.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 8.
+(Font)              <8> on input line 7.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 8.
-[1
+(Font)              <6> on input line 7.
+ [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-! Misplaced alignment tab character &.
-l.12 ...ores from Yahoo Finance, which uses the S&
-                                                  P 500 as its benchmark. Id...
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
+Underfull \hbox (badness 10000) in paragraph at lines 11--16
+
+ []
 
 
-Overfull \hbox (537.90793pt too wide) detected at line 12
-\OML/cmm/m/it/12 O  \OT1/cmr/m/n/12 =  \OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 (\OM
-S/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 1\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 32  \OMS/cm
-sy/m/n/12 ^^@  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 407  \OMS/cms
-y/m/n/12 ^^C  \OML/cmm/m/it/12 log\OT1/cmr/m/n/12 ([])  +  6\OML/cmm/m/it/12 :\
-OT1/cmr/m/n/12 03  \OMS/cmsy/m/n/12 ^^C  \OML/cmm/m/it/12 TLTA  \OMS/cmsy/m/n/1
-2 ^^@  \OT1/cmr/m/n/12 1\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 43  \OMS/cmsy/m/n/12 
-^^C  \OML/cmm/m/it/12 WCTA  \OT1/cmr/m/n/12 +  0\OML/cmm/m/it/12 :\OT1/cmr/m/n/
-12 076  \OMS/cmsy/m/n/12 ^^C  \OML/cmm/m/it/12 CLCA  \OMS/cmsy/m/n/12 ^^@  \OT1
-/cmr/m/n/12 1\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 72  \OMS/cmsy/m/n/12 ^^C  \OML/c
-mm/m/it/12 OENEG  \OMS/cmsy/m/n/12 ^^@  \OT1/cmr/m/n/12 2\OML/cmm/m/it/12 :\OT1
-/cmr/m/n/12 37  \OMS/cmsy/m/n/12 ^^C  \OML/cmm/m/it/12 NITA  \OMS/cmsy/m/n/12 ^
-^@  \OT1/cmr/m/n/12 1\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 83  \OMS/cmsy/m/n/12 ^^C
-  \OML/cmm/m/it/12 FUTL  \OT1/cmr/m/n/12 +  0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 
-285  \OMS/cmsy/m/n/12 ^^C  \OML/cmm/m/it/12 INTWO  \OMS/cmsy/m/n/12 ^^@  \OT1/c
-mr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 521  \OMS/cmsy/m/n/12 ^^C  \OML/cm
-m/m/it/12 CHIN\OT1/cmr/m/n/12 )
+Underfull \hbox (badness 10000) in paragraph at lines 11--16
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--16
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--16
+
  []
 
 [2] [3] [4] [5] (./technical.aux) ) 
 Here is how much of TeX's memory you used:
  3829 strings out of 493117
  55546 string characters out of 6135433
- 112546 words of memory out of 5000000
+ 113546 words of memory out of 5000000
  7244 multiletter control sequences out of 15000+600000
  13938 words of font info for 34 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,5n,32p,3617b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,5n,32p,2478b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2014/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy8.pfb>
-Output written on technical.pdf (5 pages, 102083 bytes).
+/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr6.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy6.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmsy8.pfb>
+Output written on technical.pdf (5 pages, 121755 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
- 36 compressed objects within 1 object stream
+ 65 PDF objects out of 1000 (max. 8388607)
+ 45 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  5 words of extra memory for PDF output out of 10000 (max. 10000000)
 

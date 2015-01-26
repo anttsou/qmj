@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  24 JAN 2015 20:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  26 JAN 2015 08:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -286,7 +286,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 (./Overview-concordance.tex)
-LaTeX Font Info:    Try loading font information for T1+aett on input line 17.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 10.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
@@ -296,18 +296,18 @@ File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 Overview.aux) ) 
 Here is how much of TeX's memory you used:
  3851 strings out of 493117
- 55960 string characters out of 6135433
+ 55972 string characters out of 6135433
  111546 words of memory out of 5000000
  7256 multiletter control sequences out of 15000+600000
  20405 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,4n,32p,355b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,4n,32p,355b,276s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmbx12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmr12.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmsltt10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmti12.pfb>
-Output written on Overview.pdf (2 pages, 56108 bytes).
+Output written on Overview.pdf (2 pages, 56495 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  18 compressed objects within 1 object stream
