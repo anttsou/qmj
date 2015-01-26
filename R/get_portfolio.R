@@ -12,11 +12,14 @@ get_portfolio <- function(top=5, bottom=5) {
   filepath <- system.file(package="qmj")
   marketdata <- qmj::collectmarketdata()
   if(length(marketdata$names) >= top + bottom) {
-    summarydata <- data.frame(Top.Companies.by.Measured.Quality = marketdata$names[1:top], 
-                              Bottom.Companies.by.Measured.Quality = marketdata$names[length(marketdata$names) - bottom:
-                                                                                      length(marketdata$names)], 
-                              Standard.Deviation.of.Quality.Scores = sd(marketdata$quality),
-                              Interquartile.Range.of.Quality.Scores = IQR(marketdata$quality))
+    cat("Top Companies by Measured Quality\n")
+    cat(head(marketdata$names, n=top))
+    cat("-----------------------------------")
+    cat("Bottom Companies by Measured Quality\n")
+    cat(tail(marketdata$names, n=bottom))
+    cat("-----------------------------------")
+    cat(paste("Standard Deviation of Quality Scores:", sd(marketdata$quality)))
+    cat(paste("Interquartile Range of Quality Scores:", IQR(marketdata$quality)))
   } else {
     stop("Portfolio does not have enough companies given values for parameters \"top\" and \"bottom\"")
   }

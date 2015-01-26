@@ -146,7 +146,7 @@ collectmarketsafety <- function(x, BS, CF, IS, extrafin, daily){
   ME <- mapply(marketequity, as.numeric(as.character(tempframe$close)), as.numeric(as.character(fstyear$TCSO)))
   EBITDAS <- sapply(extrafin$ebitdas, extrafinclean)
   WC <- as.numeric(as.character(fstyear$TCA)) - as.numeric(as.character(fstyear$TCL))
-  RE <- as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(fstyear$DIVC))
+  RE <- as.numeric(as.character(fstyear$NI)) - (as.numeric(as.character(fstyear$DIVC)) * as.numeric(as.character(fstyear$TCSO)))
   EBIT <- EBITDAS - as.numeric(as.character(fstyear$DP.DPL)) - as.numeric(as.character(fstyear$AM))
   SALE <- as.numeric(as.character(fstyear$TREV))
   Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(as.character(fstyear$TA)))
