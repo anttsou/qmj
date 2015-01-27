@@ -15,10 +15,11 @@ and shorting, or selling, low-quality stocks.
 The Purpose of qmj
 ========================================================
 Our package, qmj, is an implementation of AQR's paper, 
-$Quality Minus Junk$. However, AQR only looks into historical
+$Quality \  Minus \ Junk$. However, AQR only looks into historical
 portfolios, whereas qmj provides free software for measuring the 
-quality of stocks in today's market and can be easily updated to 
-always have the most recent information.
+quality of stocks in today's market, or as close to today as we 
+can get given publicly available information, and can be easily
+updated to have the most recent information.
 
 Using qmj, Help Files
 ========================================================
@@ -38,10 +39,13 @@ Collecting Data
 
 
 ```r
-# financials <- collect_market_data()
+#get_info()
+financials <- collect_market_data()
 ```
 
-This function calls three functions in qmj that separately grab balance sheets, income statements, and cash  flows and returns a tidy dataframe. 
+- get_info() will grab financial information from balance sheets, income statements, and balance sheets. 
+
+- collect_market_data() calls the functions in qmj that separately calculate profitability, growth, safety, and payouts, organizing stocks by descending order of quality. 
 
 Viewing Data
 ========================================================
