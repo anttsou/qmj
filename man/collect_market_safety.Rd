@@ -24,10 +24,14 @@ and determines the z-score of overall profitability based on the paper
 Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
-x <- data(companies)
-BS <- data(tidybalance)
-CF <- data(tidycash)
-IS <- data(tidyincome)
-\dontrun{collect_market_safety(x, BS, CF, IS)}
+data(companies)
+data(tidybalance)
+data(tidycash)
+data(tidyincome)
+x <- companies
+BS <- tidybalance
+CF <- tidycash
+IS <- tidyincome
+collect_market_safety(x, BS, CF, IS)
 }
 

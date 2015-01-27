@@ -8,9 +8,12 @@
 #' @param BS A dataframe containing balance sheet information for every company.
 #' @param IS A dataframe containing income statement information for every company.
 #' @examples
-#' x <- data(companies)
-#' BS <- data(tidybalance)
-#' IS <- data(tidyincome)
+#' data(companies)
+#' data(tidybalance)
+#' data(tidyincome)
+#' x <- companies
+#' BS <- tidybalance
+#' IS <- tidyincome
 #' collect_market_payout(x, BS, IS)
 #' @export
 

@@ -1,7 +1,7 @@
 #' Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
 #' by descending quality.
 #'
-#' Reads data from companies.csv and calculates market growth, payouts, safety, and profitability
+#' Calculates market growth, payouts, safety, and profitability of our list of companies
 #' for later processing.
 #' @examples
 #' collect_market_data()

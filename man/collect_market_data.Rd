@@ -8,7 +8,7 @@ by descending quality.}
 collect_market_data()
 }
 \description{
-Reads data from companies.csv and calculates market growth, payouts, safety, and profitability
+Calculates market growth, payouts, safety, and profitability of our list of companies
 for later processing.
 }
 \examples{

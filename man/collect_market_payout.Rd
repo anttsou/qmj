@@ -20,9 +20,12 @@ and determines the z-score of overall payout based on the paper
 Quality Minus Junk (Asness et al.) in Appendix page A3-4.
 }
 \examples{
-x <- data(companies)
-BS <- data(tidybalance)
-IS <- data(tidyincome)
+data(companies)
+data(tidybalance)
+data(tidyincome)
+x <- companies
+BS <- tidybalance
+IS <- tidyincome
 collect_market_payout(x, BS, IS)
 }
 
