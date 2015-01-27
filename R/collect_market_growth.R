@@ -105,7 +105,6 @@ collect_market_growth <- function(x, BS, CF, IS){
   ACC[is.nan(ACC)] <- 0
 
   growth <- GPOA + ROE + ROA + CFOA + GMAR + ACC
-
   growth <- scale(growth)
   data.frame(x$tickers, growth, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }
