@@ -25,20 +25,20 @@ collect_market_data <- function(){
   CF[is.na(CF)] <- 0
   IS[is.na(IS)] <- 0
   
-  profitability <- qmj::collect_market_profitability(companies, BS, CF, IS)$profitability
-  growth <- qmj::collect_market_growth(companies, BS, CF, IS)$growth
-  safety <- qmj::collect_market_safety(companies, BS, CF, IS, extrafin, daily)$safety
-  payouts <- qmj::collect_market_payout(companies, BS, IS)$payouts
+  profitability <- collect_market_profitability(companies, BS, CF, IS)$profitability
+  growth <- collect_market_growth(companies, BS, CF, IS)$growth
+  safety <- collect_market_safety(companies, BS, CF, IS, extrafin, daily)$safety
+  payouts <- collect_market_payout(companies, BS, IS)$payouts
   quality <- profitability + growth + safety + payouts
   
-  names <- companies$names
+  name <- companies$name
   tickers <- companies$tickers
-  marketdata <- data.frame(names = names, 
+  marketdata <- data.frame(name = name, 
                            tickers = tickers, 
                            profitability = profitability, 
                            growth = growth, 
                            safety = safety, 
                            payouts = payouts, 
                            quality = quality)
-  marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE,na.rm=TRUE),]
+  marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE),]
 }
