@@ -89,6 +89,11 @@ collect_market_profitability <- function(x, BS, CF, IS){
   
   profitability <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   profitability <- scale(profitability)
-
+  print(length(GPOA))
+  print(length(ROE))
+  print(length(ROA))
+  print(length(CFOA))
+  print(length(GMAR))
+  print(length(ACC))
   data.frame(x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }
