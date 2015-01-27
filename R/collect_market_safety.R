@@ -10,11 +10,15 @@
 #' @param IS A dataframe containing income statement information for every company.
 #' @param daily A dataframe containing the daily market closing prices and returns. 
 #' @examples
-#' x <- data(companies)
-#' BS <- data(tidybalance)
-#' CF <- data(tidycash)
-#' IS <- data(tidyincome)
-#' \dontrun{collect_market_safety(x, BS, CF, IS)}
+#' data(companies)
+#' data(tidybalance)
+#' data(tidycash)
+#' data(tidyincome)
+#' x <- companies
+#' BS <- tidybalance
+#' CF <- tidycash
+#' IS <- tidyincome
+#' collect_market_safety(x, BS, CF, IS)
 #' @export
 
 collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
