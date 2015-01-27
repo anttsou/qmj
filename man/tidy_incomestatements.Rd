@@ -2,11 +2,15 @@
 % Please edit documentation in R/tidy_incomestatements.R
 \name{tidy_incomestatements}
 \alias{tidy_incomestatements}
-\title{tidy_incomestatements}
+\title{Tidies raw incomestatement data and returns the tidied data frame}
 \usage{
 tidy_incomestatements(x)
 }
+\arguments{
+\item{x}{A list of raw incomestatement file data produced from quantmod}
+}
 \description{
-Tidies given income statement data, formatted in typical style of quantmods viewFinancials function.
+Tidies raw income statement data produced from quantmod and returns the tidied data frame. Raw income statement data
+must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
 }
 

@@ -1,7 +1,9 @@
-#' tidy_balancesheets
+#' Tidies raw balance sheet data
 #'
-#' Tidies given balancesheet data, formatted in typical style of quantmods viewFinancials function.
+#' Processes raw balance sheet data produced from quantmod into a tidy data frame. Raw balance sheet data
+#' must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
 #' 
+#' @param x List of raw balance sheet data from quantmod.
 #' @export
 
 tidy_balancesheets <- function(x) {

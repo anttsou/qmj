@@ -1,8 +1,9 @@
-#' tidy_dailydata
+#' Tidies raw daily data set
 #'
-#' Given the data frame organized similarly to that produced by getdailydata()
-#'  in the qmj library, tidies the data and returns the resultant data frame.
-#' @param x The resultant data frame from calling getdailydata(x).
+#' Tidies raw daily data and returns a tidied data frame. Companies which lack daily data are given a placeholder row containing
+#' only their ticker. Raw data set should be xts insofar as row.names are a series of dates, every column must have a
+#' ticker in their name, and the columns should be ordered "PRET" "CLOSE" "PRET" "CLOSE" ...
+#' @param x Raw daily data, as produced by get_dailydata()
 #' @export
 
 tidy_dailydata <- function(x){
