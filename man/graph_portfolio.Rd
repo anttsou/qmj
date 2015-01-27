@@ -4,7 +4,7 @@
 \alias{graph_portfolio}
 \title{Graphical summary of quality scores}
 \usage{
-graph_portfolio(type = "marketcap")
+graph_portfolio(type = "summary")
 }
 \arguments{
 \item{type}{Type that determines the graph created and the information presented.}
@@ -16,7 +16,7 @@ becoming 0.
 \details{
 Possible types:
 \itemize{
-   \item marketcap : Displays quality vs. estimated market cap, returns a data frame with tickers, market cap, and quality.
+   \item *In Development* marketcap : Displays quality vs. estimated market cap, returns a data frame with tickers, market cap, and quality.
    \item summary : Displays information returned from get_portfolio, itself a numeric summary of the portfolio.
    \item quality : Displays quality vs. index. Returns data frame with ticker and quality scores.
    \item profitability : Displays profitability vs. index. Returns data frame with ticker and profitability scores.
