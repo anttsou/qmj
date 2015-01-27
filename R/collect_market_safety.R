@@ -14,11 +14,15 @@
 #' data(tidybalance)
 #' data(tidycash)
 #' data(tidyincome)
+#' data(extrafin)
+#' data(tidydaily)
 #' x <- companies
 #' BS <- tidybalance
 #' CF <- tidycash
 #' IS <- tidyincome
-#' collect_market_safety(x, BS, CF, IS)
+#' extrafin <- extrafin
+#' daily <- tidydaily
+#' collect_market_safety(x, BS, CF, IS, extrafin, daily)
 #' @export
 
 collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
