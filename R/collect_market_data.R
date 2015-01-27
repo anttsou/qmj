@@ -40,5 +40,5 @@ collect_market_data <- function(){
                            safety = safety, 
                            payouts = payouts, 
                            quality = quality)
-  marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE),]
+  marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE, na.last=NA),]
 }
