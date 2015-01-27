@@ -3,6 +3,7 @@
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
+\section*{Installation}
 To install the package:
 
 <<Installing qmj>>=
