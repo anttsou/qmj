@@ -22,6 +22,7 @@ get_extrafin <- function() {
   splitdates <- character()
   for(i in 1:length(tickers)) {
     print(i/length(tickers))
+    print(tickers[i])
     newUrl <- paste(start,tickers[i],sep="")
     con <- url(newUrl)
     htmlCode <- readLines(con)

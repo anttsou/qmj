@@ -77,4 +77,14 @@ Updating daily data is a slightly more protracted process, and for that reason i
 
 The update dailydata function deliberately requires a parameter as opposed to the financial statement functions due to the amount of time necessary to read in and compile relevant stock data from our sources. ( Google finance, with the S\&P 500 being taken from Yahoo finance )
 
+\subsection*{Updating Extra Financials}
+Updating extra financials can be used to grab the most recent betas and earnings before interest, taxes, depreciation, and amortization ($EBITDA$). However, the current data in the package is quite recent, betas do not tend to fluctuate much, and $EBITDA$ are updated on an annual basis, so updating extra financials, a time-consuming process, should rarely be necessary. To update extra financials, call:
+
+\begin{Schunk}
+\begin{Sinput}
+> #get_extrafin()
+\end{Sinput}
+\end{Schunk}
+
+This function does not have parameters because when updating extra financials, it is vital that every company be updated since beta is relative, and thus modifying the beta of one company will affect the betas of other companies. 
 \end{document}
