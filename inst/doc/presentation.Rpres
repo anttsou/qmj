@@ -60,12 +60,6 @@ graph_portfolio()
 Viewing Data Cont'd
 ========================================================
 ```{r}
-graph_portfolio(type = "summary")
-```
-
-Viewing Data Cont'd
-========================================================
-```{r}
 graph_portfolio(type = "quality")
 ```
 
