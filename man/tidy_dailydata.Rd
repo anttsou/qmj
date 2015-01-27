@@ -2,15 +2,16 @@
 % Please edit documentation in R/tidy_dailydata.R
 \name{tidy_dailydata}
 \alias{tidy_dailydata}
-\title{tidy_dailydata}
+\title{Tidies raw daily data set}
 \usage{
 tidy_dailydata(x)
 }
 \arguments{
-\item{x}{The resultant data frame from calling getdailydata(x).}
+\item{x}{Raw daily data, as produced by get_dailydata()}
 }
 \description{
-Given the data frame organized similarly to that produced by getdailydata()
- in the qmj library, tidies the data and returns the resultant data frame.
+Tidies raw daily data and returns a tidied data frame. Companies which lack daily data are given a placeholder row containing
+only their ticker. Raw data set should be xts insofar as row.names are a series of dates, every column must have a
+ticker in their name, and the columns should be ordered "PRET" "CLOSE" "PRET" "CLOSE" ...
 }
 

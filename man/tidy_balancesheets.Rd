@@ -2,11 +2,15 @@
 % Please edit documentation in R/tidy_balancesheets.R
 \name{tidy_balancesheets}
 \alias{tidy_balancesheets}
-\title{tidy_balancesheets}
+\title{Tidies raw balance sheet data}
 \usage{
 tidy_balancesheets(x)
 }
+\arguments{
+\item{x}{List of raw balance sheet data from quantmod.}
+}
 \description{
-Tidies given balancesheet data, formatted in typical style of quantmods viewFinancials function.
+Processes raw balance sheet data produced from quantmod into a tidy data frame. Raw balance sheet data
+must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
 }
 

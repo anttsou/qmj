@@ -88,7 +88,7 @@ collect_market_profitability <- function(x, BS, CF, IS){
   ACC[is.nan(ACC)] <- 0
   
   profitability <- GPOA + ROE + ROA + CFOA + GMAR + ACC
-  scale(profitability)
+  profitability <- scale(profitability)
 
   data.frame(x$tickers, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }

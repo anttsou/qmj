@@ -2,11 +2,15 @@
 % Please edit documentation in R/tidy_cashflows.R
 \name{tidy_cashflows}
 \alias{tidy_cashflows}
-\title{tidy_cashflows}
+\title{Tidies raw cash flow data}
 \usage{
 tidy_cashflows(x)
 }
+\arguments{
+\item{x}{List of raw tidy cash flow data from quantmod}
+}
 \description{
-Tidies given cashflow data, formatted in typical style of quantmods viewFinancials function.
+Processes raw cash flow data from quantmod to return a tidied data frame. Raw cash flow data
+must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
 }
 
