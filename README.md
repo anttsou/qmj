@@ -9,9 +9,9 @@ To install the package:
   ```
 
 ##Background
-qmj implements the results and methodology of the paper \emph{Quality Minus Junk} by Clifford Asness, Andrea Frazzini, Lasse Pedersen. In their paper, they use several measures to calculate the relative profitability, growth, safety, and payouts of a company, which they use to provide an overall quality score for a company.
+qmj implements the results and methodology of the paper Quality Minus Junk by Clifford Asness, Andrea Frazzini, Lasse Pedersen. In their paper, they use several measures to calculate the relative profitability, growth, safety, and payouts of a company, which they use to provide an overall quality score for a company.
 
-This quality score is used to recommend which companies to buy and which to sell, by reasoning that quality companies are likely to increase in price in the future, while ``junk'' companies are likely to fall in price.
+This quality score is used to recommend which companies to buy and which to sell, by reasoning that quality companies are likely outperform the market, while "junk" companies are likely to underperform.
 
 Here we use the equations and methods described in the paper, coupled with data scraped from reputable online sources, in order to produce quality measurements for companies listed in the Russell 3000 Index.
 
@@ -59,10 +59,10 @@ Updating daily data is a slightly more protracted process, and for that reason i
   update_dailydata(companies)
   ```
 
-The update dailydata function deliberately requires a parameter as opposed to the financial statement functions due to the amount of time necessary to read in and compile relevant stock data from our sources. ( Google finance, with the S\&P 500 being taken from Yahoo finance )
+The update dailydata function deliberately requires a parameter as opposed to the financial statement functions due to the amount of time necessary to read in and compile relevant stock data from our sources. ( Google finance, with the S&P 500 being taken from Yahoo finance )
 
 ###Updating Extra Financials
-Updating extra financials can be used to grab the most recent betas and earnings before interest, taxes, depreciation, and amortization ($EBITDA$). However, the current data in the package is quite recent, betas do not tend to fluctuate much, and $EBITDA$ are updated on an annual basis, so updating extra financials, a time-consuming process, should rarely be necessary. To update extra financials, call:
+Updating extra financials can be used to grab the most recent betas and earnings before interest, taxes, depreciation, and amortization (EBITDA). However, the current data in the package is quite recent, betas do not tend to fluctuate much, and EBITDA are updated on an annual basis, so updating extra financials, a time-consuming process, should rarely be necessary. To update extra financials, call:
 
 ```{r}
   get_extrafin()
