@@ -46,8 +46,8 @@ If you're interested in inputting your own data, you must follow the organizatio
 ```{r}
   companies #Your custom data frame of company names and tickers.
   save_companies(companies)
-	getinfo()
-	tidyinfo()
+getinfo()
+tidyinfo()
   ```
 
 These commands will automatically retrieve relevant financial data from the web for your data frame of companies, store that data in the extdata folder of qmj, and then produce tidy versions of that data to be stored in the data folder.
