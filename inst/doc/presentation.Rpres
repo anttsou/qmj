@@ -41,7 +41,7 @@ Collecting Data
 financials <- collect_market_data()
 ```
 
-- get_info() will grab financial information from balance sheets, income statements, and balance sheets. 
+- get_info() will grab financial information from balance sheets, income statements, and cash flows. 
 
 - collect_market_data() calls the functions in qmj that separately calculate profitability, growth, safety, and payouts, organizing stocks by descending order of quality. 
 
@@ -75,28 +75,28 @@ We will take a look at our second vignette.
 
 Analyzing the Quality of Companies
 ========================================================
-Angie's List (ANGI) is an example of a high-quality company, or one with quality stocks, according to qmj. Let's look at its financials to understand why it gets such a high quality score. 
+Amerco (UHAL) is an example of a high-quality company, or one with quality stocks, according to qmj. Let's look at its financials to understand why it gets such a high quality score. 
 
 ```{r}
-fin.balance.quality <- subset(tidybalance,ticker =="ANGI")
-fin.income.quality <- subset(tidyincome,ticker =="ANGI")
-fin.cash.quality <- subset(tidycash,ticker == "ANGI")
+fin.balance.quality <- subset(tidybalance,ticker =="UHAL")
+fin.income.quality <- subset(tidyincome,ticker =="UHAL")
+fin.cash.quality <- subset(tidycash,ticker == "UHAL")
 ```
 
 Analyzing the Quality of Companies Cont'd
 ========================================================
-Insert company name here...(ticker) is an example of a low-quality company, or one with junk stocks. Let's look at its financials to understand why it gets such a low quality score. 
+Synergy Resources (SYRG) is an example of a low-quality company, or one with junk stocks. Let's look at its financials to understand why it gets such a low quality score. 
 
 ```{r}
-fin.balance.junk <- subset(tidybalance,ticker =="ANGI")
-fin.income.junk <- subset(tidyincome,ticker =="ANGI")
-fin.cash.junk <- subset(tidycash,ticker == "ANGI")
+fin.balance.junk <- subset(tidybalance,ticker =="SYRG")
+fin.income.junk <- subset(tidyincome,ticker =="SYRG")
+fin.cash.junk <- subset(tidycash,ticker == "SYRG")
 ```
 
 Making a Basic Portfolio
 ========================================================
 The code below returns the top 10 quality stocks and the bottom 10 junk stocks in our list of 3000 companies. By default, this function with return the top 5 quality stocks and the bottom 5 junk stocks. 
 ```{r}
-get_portfolio(top=10,bottom=10)
+get_portfolio(top=2,bottom=2)
 ```
 
