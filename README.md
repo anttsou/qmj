@@ -30,13 +30,13 @@ qmj currently works based on the data saved in the package. Consequently, if you
 
 	```{r}
 	collect_market_data()
-  ```
+	```
 
 If you're only interested in accessing certain quality factors, such as profitability, you're able to call:
 
 	```{r}
 	collect_market_profitability(companies, tidybalance, tidycash, tidyincome)
-  ```
+	```
 
 This will return a numeric vector containing profitability z-scores for the given companies, where the nth number corresponds to the nth company. 
 
@@ -48,7 +48,7 @@ If you're interested in inputting your own data, you must follow the organizatio
 	save_companies(companies)
 	getinfo()
 	tidyinfo()
-  ```
+	```
 
 These commands will automatically retrieve relevant financial data from the web for your data frame of companies, store that data in the extdata folder of qmj, and then produce tidy versions of that data to be stored in the data folder.
 
@@ -57,7 +57,7 @@ Updating daily data is a slightly more protracted process, and for that reason i
 
 	```{r}
 	update_dailydata(companies)
-  ```
+	```
 
 The update dailydata function deliberately requires a parameter as opposed to the financial statement functions due to the amount of time necessary to read in and compile relevant stock data from our sources. ( Google finance, with the S\&P 500 being taken from Yahoo finance )
 
@@ -66,6 +66,6 @@ Updating extra financials can be used to grab the most recent betas and earnings
 
 	```{r}
 	get_extrafin()
-  ```
+	```
 
 This function does not have parameters because when updating extra financials, it is vital that every company be updated since beta is relative, and thus modifying the beta of one company will affect the betas of other companies. 
