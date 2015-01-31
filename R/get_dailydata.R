@@ -30,6 +30,7 @@ get_dailydata <- function(x){
     companyTicker <- as.character(x$ticker[i])
     print(companyTicker)
     fileName <- paste(filepath, "/", companyTicker, ".RData", sep='')
+    listfiles[(i) + 1] <- fileName
     file <- paste(companyTicker, ".RData", sep='')
     if(is.element(file, filesInDest)){
       print(paste(companyTicker, "information found in extdata. Resuming Download.", sep=' '))
@@ -42,12 +43,10 @@ get_dailydata <- function(x){
         stockData <- stockData[desiredDates,4]
         priceData <- stockData
         stockData$pret <- pricereturns(stockData)
-        listfiles[(i) + 1] <- fileName
         
         save(stockData, file=fileName)
       } else{
         print(paste("Error retrieving data for ", companyTicker, sep=""))
-        listfiles[(i) + 1] <- fileName
         nullData <- data.frame(companyTicker, NA)
         colnames(nullData) <- c(companyTicker, companyTicker)
         save(nullData, file=fileName)
