@@ -4,16 +4,14 @@
 \alias{collect_market_safety}
 \title{Collects safety z-scores for companies}
 \usage{
-collect_market_safety(x, BS, CF, IS, extrafin, daily)
+collect_market_safety(x, financials, extrafin, daily)
 }
 \arguments{
 \item{x}{A dataframe of company names and tickers.}
 
-\item{BS}{A dataframe containing balance sheet information for every company.}
+\item{financials}{A dataframe containing financial statements for every company.}
 
-\item{CF}{A dataframe containing cash flow information for every company.}
-
-\item{IS}{A dataframe containing income statement information for every company.}
+\item{extrafin}{A dataframe containing a few extran financial statements not consistently found through other methods.}
 
 \item{daily}{A dataframe containing the daily market closing prices and returns.}
 }
@@ -25,17 +23,13 @@ Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
 data(companies)
-data(tidybalance)
-data(tidycash)
-data(tidyincome)
+data(financials)
 data(extrafin)
 data(tidydaily)
 x <- companies
-BS <- tidybalance
-CF <- tidycash
-IS <- tidyincome
+financials <- financials
 extrafin <- extrafin
 daily <- tidydaily
-collect_market_safety(x, BS, CF, IS, extrafin, daily)
+collect_market_safety(x, financials, extrafin, daily)
 }
 

@@ -5,13 +5,24 @@
 \title{Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
 by descending quality.}
 \usage{
-collect_market_data()
+collect_market_data(x, financials, extrafin, daily)
+}
+\arguments{
+\item{x}{A dataframe of company names and tickers.}
+
+\item{financials}{a formatted data frame containing financial information for the given companies.}
+
+\item{extrafin}{A dataframe containing a few extran financial statements not consistently found through other methods.}
+
+\item{daily}{A dataframe containing the daily market closing prices and returns.}
 }
 \description{
 Calculates market growth, payouts, safety, and profitability of our list of companies
 for later processing.
 }
 \examples{
-collect_market_data()
+data(companies)
+data(financials)
+collect_market_data(companies, financials)
 }
 

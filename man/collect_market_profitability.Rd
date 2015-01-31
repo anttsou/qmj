@@ -4,16 +4,12 @@
 \alias{collect_market_profitability}
 \title{Collects profitability z-scores for companies}
 \usage{
-collect_market_profitability(x, BS, CF, IS)
+collect_market_profitability(x, financials)
 }
 \arguments{
 \item{x}{A dataframe of company names and tickers.}
 
-\item{BS}{A dataframe containing balance sheet information for every company.}
-
-\item{CF}{A dataframe containing cash flow information for every company.}
-
-\item{IS}{A dataframe containing income statement information for every company.}
+\item{financials}{A dataframe containing financial statements for every company.}
 }
 \description{
 Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
@@ -23,13 +19,8 @@ Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
 data(companies)
-data(tidybalance)
-data(tidycash)
-data(tidyincome)
+data(financials)
 x <- companies
-BS <- tidybalance
-CF <- tidycash
-IS <- tidyincome
-collect_market_profitability(x, BS, CF, IS)
+collect_market_profitability(x, financials)
 }
 

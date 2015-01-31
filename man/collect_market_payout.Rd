@@ -4,14 +4,12 @@
 \alias{collect_market_payout}
 \title{Collects payout z-scores for companies}
 \usage{
-collect_market_payout(x, BS, IS)
+collect_market_payout(x, financials)
 }
 \arguments{
 \item{x}{A dataframe of company names and tickers.}
 
-\item{BS}{A dataframe containing balance sheet information for every company.}
-
-\item{IS}{A dataframe containing income statement information for every company.}
+\item{financials}{A dataframe containing financial statements for every company.}
 }
 \description{
 Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
@@ -21,11 +19,8 @@ Quality Minus Junk (Asness et al.) in Appendix page A3-4.
 }
 \examples{
 data(companies)
-data(tidybalance)
-data(tidyincome)
+data(financials)
 x <- companies
-BS <- tidybalance
-IS <- tidyincome
-collect_market_payout(x, BS, IS)
+collect_market_payout(x, financials)
 }
 
