@@ -133,6 +133,6 @@ getfinancials <- function(period) {
   }
   rawdata <- data.frame(matr)
   names(rawdata) <- namesvect2
-  write.csv(rawdata, file = "income_statement_test2.csv")
+#   write.csv(rawdata, file = "income_statement_test2.csv")
 }
 

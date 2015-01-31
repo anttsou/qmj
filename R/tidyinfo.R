@@ -5,24 +5,24 @@
 #' @export
 
 tidyinfo <- function(){
-  destpath <- system.file("data", package="qmj")
+#   destpath <- system.file("data", package="qmj")
   filepath <- system.file("extdata", package="qmj")
   
   filepathb <- paste(filepath, "/balancesheets.RData", sep='')
-  destpathb <- paste(destpath, "/tidybalance.RData", sep='')
+#   destpathb <- paste(destpath, "/tidybalance.RData", sep='')
   load(filepathb)
   tidybalance <- qmj::tidy_balancesheets(balancesheets)
-  save(tidybalance, file=destpathb)
+#   save(tidybalance, file=destpathb)
   
   filepathc <- paste(filepath, "/cashflows.RData", sep='')
-  destpathc <- paste(destpath, "/tidycash.RData", sep='')
+#   destpathc <- paste(destpath, "/tidycash.RData", sep='')
   load(filepathc)
   tidycash <- qmj::tidy_cashflows(cashflows)
-  save(tidycash, file=destpathc)
+#   save(tidycash, file=destpathc)
   
   filepathi <- paste(filepath, "/incomestatements.RData", sep='')
-  destpathi <- paste(destpath, "/tidyincome.RData", sep='')
+#   destpathi <- paste(destpath, "/tidyincome.RData", sep='')
   load(filepathi)
   tidyincome <- qmj::tidy_incomestatements(incomestatements)
-  save(tidyincome, file=destpathi)
+#   save(tidyincome, file=destpathi)
 }

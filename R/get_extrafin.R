@@ -49,6 +49,6 @@ get_extrafin <- function() {
                             betas = betas, 
                             ebitdas = ebitdas)
   filepath2 <- paste(filepath, "/extrafin.RData", sep='')
-  save(extrafin,file="~/econ20/R Paper/qmj/data/extrafin.RData")
-  save(extrafin, file=filepath2)
+#   save(extrafin,file="~/econ20/R Paper/qmj/data/extrafin.RData")
+#   save(extrafin, file=filepath2)
 }

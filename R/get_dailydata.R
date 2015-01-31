@@ -70,7 +70,7 @@ get_dailydata <- function(x){
   }
   file.remove(listfiles)
   dailydata <- data.frame(compiled)[,-1]
-  filepath2 <- paste(filepath, "/dailydata.RData", sep='')
-  save(dailydata, file="dailydata.RData")
+#   filepath2 <- paste(filepath, "/dailydata.RData", sep='')
+#   save(dailydata, file="dailydata.RData")
   dailydata
 }

@@ -16,5 +16,5 @@ update_dailydata <- function(x){
   
   dailydata <- getdailydata(companies)
   tidydaily <- tidy_dailydata(dailydata)
-  save(tidydaily, file=destpath)
+  #   save(tidydaily, file=destpath)
 }
