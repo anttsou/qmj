@@ -51,7 +51,6 @@ get_dailydata <- function(x){
         nullData <- data.frame(companyTicker, NA)
         colnames(nullData) <- c(companyTicker, companyTicker)
         save(nullData, file=fileName)
-        save(nullData, file=fileName2)
       }
     }
   }
