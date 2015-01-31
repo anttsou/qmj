@@ -5,35 +5,25 @@
 #' and determines the z-score of overall growth based on the paper
 #' Quality Minus Junk (Asness et al.) in Appendix page A2.
 #' @param x A dataframe of company names and tickers.
-#' @param BS A dataframe containing balance sheet information for every company.
-#' @param CF A dataframe containing cash flow information for every company.
-#' @param IS A dataframe containing income statement information for every company.
+#' @param financials A dataframe containing financial statements for every company.
 #' @examples
 #' data(companies)
-#' data(tidybalance)
-#' data(tidycash)
-#' data(tidyincome)
-#' x <- companies
-#' BS <- tidybalance
-#' CF <- tidycash
-#' IS <- tidyincome
-#' collect_market_growth(x, BS, CF, IS)
+#' data(financials)
+#' collect_market_growth(x, financials)
 #' @export
 
 #use sapply to make columns numeric
-collect_market_growth <- function(x, BS, CF, IS){
+collect_market_growth <- function(x, financials){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
-  allcompanies <- data.frame(x$tickers)
+  allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
   numCompanies <- length(x$tickers)
   
-  BS[is.na(BS)] <- 0
-  IS[is.na(IS)] <- 0
-  CF[is.na(CF)] <- 0
+  financials[is.na(financials)] <- 0
   
-  fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
+  fin <- financials
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
   fstyear <- unique(fin)
@@ -110,5 +100,5 @@ collect_market_growth <- function(x, BS, CF, IS){
 
   growth <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   growth <- scale(growth)
-  data.frame(x$tickers, growth, GPOA, ROE, ROA, CFOA, GMAR, ACC)
+  data.frame(x$ticker, growth, GPOA, ROE, ROA, CFOA, GMAR, ACC)
 }

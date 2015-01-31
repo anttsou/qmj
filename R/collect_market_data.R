@@ -3,38 +3,29 @@
 #'
 #' Calculates market growth, payouts, safety, and profitability of our list of companies
 #' for later processing.
+#' @param x A dataframe of company names and tickers.
+#' @param financials a formatted data frame containing financial information for the given companies.
+#' @param extrafin A dataframe containing a few extran financial statements not consistently found through other methods.
+#' @param daily A dataframe containing the daily market closing prices and returns. 
 #' @examples
-#' collect_market_data()
+#' data(companies)
+#' data(financials)
+#' collect_market_data(companies, financials)
 #' @export
 
-collect_market_data <- function(){
-  filepath <- system.file(package="qmj")
-  data(companies, package="qmj")
-  data(tidybalance, package="qmj")
-  data(tidycash, package="qmj")
-  data(tidyincome, package="qmj")
-  data(tidydaily, package="qmj")
-  data(extrafin, package="qmj")
-  numCompanies <- length(companies$tickers)
-  BS <- tidybalance
-  CF <- tidycash
-  IS <- tidyincome
-  daily <- tidydaily
+collect_market_data <- function(x, financials, extrafin, daily){
+  numx <- length(x$tickers)
   
-  BS[is.na(BS)] <- 0
-  CF[is.na(CF)] <- 0
-  IS[is.na(IS)] <- 0
-  
-  profitability <- collect_market_profitability(companies, BS, CF, IS)$profitability
-  growth <- collect_market_growth(companies, BS, CF, IS)$growth
-  safety <- collect_market_safety(companies, BS, CF, IS, extrafin, daily)$safety
-  payouts <- collect_market_payout(companies, BS, IS)$payouts
+  profitability <- collect_market_profitability(x, financials)$profitability
+  growth <- collect_market_growth(x, financials)$growth
+  safety <- collect_market_safety(x, financials, extrafin, daily)$safety
+  payouts <- collect_market_payout(x, financials)$payouts
   quality <- profitability + growth + safety + payouts
   
-  name <- companies$name
-  tickers <- companies$tickers
+  name <- x$name
+  ticker <- x$ticker
   marketdata <- data.frame(name = name, 
-                           tickers = tickers, 
+                           ticker = ticker, 
                            profitability = profitability, 
                            growth = growth, 
                            safety = safety, 

@@ -5,27 +5,21 @@
 #' and determines the z-score of overall payout based on the paper
 #' Quality Minus Junk (Asness et al.) in Appendix page A3-4.
 #' @param x A dataframe of company names and tickers.
-#' @param BS A dataframe containing balance sheet information for every company.
-#' @param IS A dataframe containing income statement information for every company.
+#' @param financials A dataframe containing financial statements for every company.
 #' @examples
 #' data(companies)
-#' data(tidybalance)
-#' data(tidyincome)
+#' data(financials)
 #' x <- companies
-#' BS <- tidybalance
-#' IS <- tidyincome
-#' collect_market_payout(x, BS, IS)
+#' collect_market_payout(x, financials)
 #' @export
 
-collect_market_payout <- function(x, BS, IS){
+collect_market_payout <- function(x, financials){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
-  numCompanies <- length(x$tickers)
-  payouts <- rep(0, numCompanies)
+  numCompanies <- length(x$ticker)
   
-  BS[is.na(BS)] <- 0
-  IS[is.na(IS)] <- 0
+  financials[is.na(financials)] <- 0
   
   #Function returns a structure that contains all elements in x.1 that are not in x.2
   modifiedsetdiff <- function(x.1,x.2,...){
@@ -34,10 +28,10 @@ collect_market_payout <- function(x, BS, IS){
     x.1[! x.1p %in% x.2p, ]
   }
   
-  allcompanies <- data.frame(x$tickers)
+  allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
 
-  fin <- merge(BS, IS, by=c("ticker", "year"))
+  fin <- financials
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
   fstyear <- unique(fin)
@@ -184,5 +178,5 @@ collect_market_payout <- function(x, BS, IS){
   payouts <- EISS + DISS + NPOP
   
   payouts <- scale(payouts)
-  data.frame(x$tickers, payouts, EISS, DISS, NPOP)
+  data.frame(x$ticker, payouts, EISS, DISS, NPOP)
 }

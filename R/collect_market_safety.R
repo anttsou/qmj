@@ -5,33 +5,28 @@
 #' and determines the z-score of overall profitability based on the paper
 #' Quality Minus Junk (Asness et al.) in Appendix page A2.
 #' @param x A dataframe of company names and tickers.
-#' @param BS A dataframe containing balance sheet information for every company.
-#' @param CF A dataframe containing cash flow information for every company.
-#' @param IS A dataframe containing income statement information for every company.
+#' @param financials A dataframe containing financial statements for every company.
+#' @param extrafin A dataframe containing a few extran financial statements not consistently found through other methods.
 #' @param daily A dataframe containing the daily market closing prices and returns. 
 #' @examples
 #' data(companies)
-#' data(tidybalance)
-#' data(tidycash)
-#' data(tidyincome)
+#' data(financials)
 #' data(extrafin)
 #' data(tidydaily)
 #' x <- companies
-#' BS <- tidybalance
-#' CF <- tidycash
-#' IS <- tidyincome
+#' financials <- financials
 #' extrafin <- extrafin
 #' daily <- tidydaily
-#' collect_market_safety(x, BS, CF, IS, extrafin, daily)
+#' collect_market_safety(x, financials, extrafin, daily)
 #' @export
 
-collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
+collect_market_safety <- function(x, financials, extrafin, daily){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
   filepath <- system.file("data", package="qmj")
-  numCompanies <- length(x$tickers)
-  allcompanies <- data.frame(x$tickers)
+  numCompanies <- length(x$ticker)
+  allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
   
 #   safety <- rep(0, numCompanies)
@@ -41,9 +36,7 @@ collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
 #   O <- rep(0, numCompanies)
 #   Z <- rep(0, numCompanies)
 #   EVOL <- rep(0, numCompanies)
-  BS[is.na(BS)] <- 0
-  IS[is.na(IS)] <- 0
-  CF[is.na(CF)] <- 0
+  financials[is.na(financials)] <- 0
 
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   daily$date <- sub("-.*","",daily$date)
@@ -64,7 +57,7 @@ collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
     x.1[! x.1p %in% x.2p, ]
   }
   
-  fin <- merge(BS, merge(CF, IS, by=c("ticker", "year")), by=c("ticker", "year"))
+  fin <- financials
   fin <- fin[order(fin$year, decreasing=TRUE),]
   fin <- data.table(fin, key="ticker")
   fstyear <- unique(fin)
@@ -222,5 +215,5 @@ collect_market_safety <- function(x, BS, CF, IS, extrafin, daily){
   #safety <- BAB + IVOL + LEV + O + Z + EVOL
   safety <- BAB + LEV + O + Z + EVOL
   safety <- scale(safety)
-  data.frame(x$tickers, safety, BAB, LEV, O, Z, EVOL)
+  data.frame(x$ticker, safety, BAB, LEV, O, Z, EVOL)
 }
