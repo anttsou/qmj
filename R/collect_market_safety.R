@@ -43,6 +43,13 @@ collect_market_safety <- function(x, financials, extrafin, daily){
   daily <- data.table(daily, key="ticker")
   market <- daily[daily$ticker == "GSPC",]
   marketlist <- list(daily[daily$ticker == "GSPC",])
+  year <- numeric()
+  if(sum(market$date == currentyear) <= 150){
+    year <- currentyear - 1
+  } else{
+    year <- currentyear
+  }
+  marketlistb <- market[grepl(year,market$date),]
   ordereddaily <- daily[order(daily$date, decreasing=TRUE),]
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
   splitindices <- splitindices[-1]
@@ -50,7 +57,16 @@ collect_market_safety <- function(x, financials, extrafin, daily){
   setkey(ordereddaily, "ticker")
   yearlyprices <- unique(ordereddaily)
   
-  
+  merger <- function(company_ticker) {
+    companylist <- daily[daily$ticker == company_ticker,]
+    colnames(companylist)[1] <- "ticker_2"
+    colnames(companylist)[3] <- "pret_2"
+    colnames(companylist)[4] <- "close_2"
+    final <- merge(marketlistb,companylist,by="date")
+    final <- final[complete.cases(final),]
+    cov(as.numeric(as.character(final$pret_2)),as.numeric(as.character(final$pret)))/
+      var(as.numeric(as.character(final$pret)))
+  }
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1)
     x.2p <- do.call("paste", x.2)
@@ -138,8 +154,8 @@ collect_market_safety <- function(x, financials, extrafin, daily){
     as.numeric(ni1 > 0 && ni2 > 0)
   }
 
-  #BAB scraped from web
-  BAB <- extrafin$betas
+  #BAB calculated in merger
+  BAB <- apply(merger,allcompanies$ticker)
   
 #   refined_data <- mapply(refine_ivol_data, market, splitindices)
 #   tempframe <- data.table(companiesstored, refined_data)
