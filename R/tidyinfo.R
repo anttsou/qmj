@@ -25,6 +25,7 @@ tidyinfo <- function(){
   load(filepathi)
   tidyincome <- qmj::tidy_incomestatements(incomestatements)
 #   save(tidyincome, file=destpathi)
-  fin <- merge(tidybalance, merge(tidycash, tidyincome, by=c("ticker", "year")), by=c("ticker", "year"))
-  fin
+
+  financials <- merge(tidybalance, merge(tidycash, tidyincome, by=c("ticker", "year")), by=c("ticker", "year"))
+  financials
 }
