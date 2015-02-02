@@ -17,10 +17,10 @@
 #' financials <- financials
 #' extrafin <- extrafin
 #' daily <- tidydaily
-#' market_safety(x, financials, extrafin, daily)
+#' collect_market_safety(x, financials, extrafin, daily)
 #' @export
 
-market_safety <- function(x, financials, extrafin, daily){
+collect_market_safety <- function(x, financials, extrafin, daily){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
@@ -29,15 +29,15 @@ market_safety <- function(x, financials, extrafin, daily){
   allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
   
-#   safety <- rep(0, numCompanies)
-#   BAB <- rep(0, numCompanies)
-#   IVOL <- rep(0, numCompanies)
-#   LEV <- rep(0, numCompanies)
-#   O <- rep(0, numCompanies)
-#   Z <- rep(0, numCompanies)
-#   EVOL <- rep(0, numCompanies)
+  #   safety <- rep(0, numCompanies)
+  #   BAB <- rep(0, numCompanies)
+  #   IVOL <- rep(0, numCompanies)
+  #   LEV <- rep(0, numCompanies)
+  #   O <- rep(0, numCompanies)
+  #   Z <- rep(0, numCompanies)
+  #   EVOL <- rep(0, numCompanies)
   financials[is.na(financials)] <- 0
-
+  
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   daily$date <- sub("-.*","",daily$date)
   daily <- data.table(daily, key="ticker")
@@ -67,7 +67,7 @@ market_safety <- function(x, financials, extrafin, daily){
     cov(as.numeric(as.character(final$pret_2)),as.numeric(as.character(final$pret)))/
       var(as.numeric(as.character(final$pret)))
   }
-
+  
   calc_ivol <- function(company_ticker) {
     companylist <- daily[daily$ticker == company_ticker,]
     colnames(companylist)[1] <- "ticker_2"
@@ -75,6 +75,8 @@ market_safety <- function(x, financials, extrafin, daily){
     colnames(companylist)[4] <- "close_2"
     final <- merge(marketlistb,companylist,by="date")
     final <- final[complete.cases(final),]
+    lmobj <- lm(as.numeric(as.character(final$pret_2))~as.numeric(as.character(final$pret)))
+    sd(residuals(lmobj))
   }
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1)
@@ -101,7 +103,7 @@ market_safety <- function(x, financials, extrafin, daily){
   sndyear <- merge(allcompanies, sndyear, by="ticker", all.x = TRUE)
   thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
   fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
-
+  
   lev <- function(td, ta){
     -td/ta
   }
@@ -128,7 +130,7 @@ market_safety <- function(x, financials, extrafin, daily){
     closemeans/tcso
   }
   evol <- function(ni1, ni2, ni3, ni4, tlse1, tlse2, tlse3, tlse4,tl1, tl2, tl3, tl4, rps1, 
-                 rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4){
+                   rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4){
     val1 <- ni1/(tlse1 - tl1 - (rps1 + nrps1))
     val2 <- ni2/(tlse2 - tl2 - (rps2 + nrps2))
     val3 <- ni3/(tlse3 - tl3 - (rps3 + nrps3))
@@ -162,18 +164,18 @@ market_safety <- function(x, financials, extrafin, daily){
   intwo <- function(ni1, ni2){
     as.numeric(ni1 > 0 && ni2 > 0)
   }
-
+  
   #BAB calculated in merger
   BAB <- apply(merger,allcompanies$ticker)
   
-#   refined_data <- mapply(refine_ivol_data, market, splitindices)
-#   tempframe <- data.table(companiesstored, refined_data)
-#   colnames(tempframe) <- c("ticker", "refined")
-#   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)
-#   IVOL <- mapply(ivol, tempframe$refined, BAB)
-#   print(head(IVOL))
+  #   refined_data <- mapply(refine_ivol_data, market, splitindices)
+  #   tempframe <- data.table(companiesstored, refined_data)
+  #   colnames(tempframe) <- c("ticker", "refined")
+  #   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)
+  IVOL <- apply(calc_ivol,allcompanies$ticker)
+  #   print(head(IVOL))
   LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
-
+  
   closingmeans <- sapply(splitindices, calcmean)
   tempframe <- data.frame(companiesstored, closingmeans)
   colnames(tempframe) <- c("ticker", "close")
@@ -186,18 +188,18 @@ market_safety <- function(x, financials, extrafin, daily){
   EBIT <- EBITDAS - as.numeric(as.character(fstyear$DP.DPL)) - as.numeric(as.character(fstyear$AM))
   SALE <- as.numeric(as.character(fstyear$TREV))
   Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(as.character(fstyear$TA)))
-
+  
   EVOL <- mapply(evol, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(sndyear$NI)),
-                as.numeric(as.character(thdyear$NI)), as.numeric(as.character(fthyear$NI)), 
-                as.numeric(as.character(fstyear$TLSE)), as.numeric(as.character(sndyear$TLSE)),
-                as.numeric(as.character(thdyear$TLSE)), as.numeric(as.character(fthyear$TLSE)),
-                as.numeric(as.character(fstyear$TL)), as.numeric(as.character(sndyear$TL)),
-                as.numeric(as.character(thdyear$TL)), as.numeric(as.character(fthyear$TL)),
-                as.numeric(as.character(fstyear$RPS)), as.numeric(as.character(sndyear$RPS)),
-                as.numeric(as.character(thdyear$RPS)), as.numeric(as.character(fthyear$RPS)),
-                as.numeric(as.character(fstyear$NRPS)), as.numeric(as.character(sndyear$NRPS)),
-                as.numeric(as.character(thdyear$NRPS)), as.numeric(as.character(fthyear$NRPS)))
-
+                 as.numeric(as.character(thdyear$NI)), as.numeric(as.character(fthyear$NI)), 
+                 as.numeric(as.character(fstyear$TLSE)), as.numeric(as.character(sndyear$TLSE)),
+                 as.numeric(as.character(thdyear$TLSE)), as.numeric(as.character(fthyear$TLSE)),
+                 as.numeric(as.character(fstyear$TL)), as.numeric(as.character(sndyear$TL)),
+                 as.numeric(as.character(thdyear$TL)), as.numeric(as.character(fthyear$TL)),
+                 as.numeric(as.character(fstyear$RPS)), as.numeric(as.character(sndyear$RPS)),
+                 as.numeric(as.character(thdyear$RPS)), as.numeric(as.character(fthyear$RPS)),
+                 as.numeric(as.character(fstyear$NRPS)), as.numeric(as.character(sndyear$NRPS)),
+                 as.numeric(as.character(thdyear$NRPS)), as.numeric(as.character(fthyear$NRPS)))
+  
   ADJASSET <- as.numeric(as.character(fstyear$TA)) + 0.1*(ME - (as.numeric(as.character(fstyear$TLSE))
                                                                 - as.numeric(as.character(fstyear$TL))
                                                                 - as.numeric(as.character(fstyear$RPS))
