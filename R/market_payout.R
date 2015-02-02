@@ -10,7 +10,7 @@
 #' data(companies)
 #' data(financials)
 #' x <- companies
-#' collect_market_payout(x, financials)
+#' market_payout(x, financials)
 #' @export
 
 market_payout <- function(x, financials){

@@ -9,7 +9,7 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' collect_market_growth(x, financials)
+#' market_growth(x, financials)
 #' @export
 
 #use sapply to make columns numeric
