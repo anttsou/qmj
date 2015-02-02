@@ -17,10 +17,10 @@
 #' financials <- financials
 #' extrafin <- extrafin
 #' daily <- tidydaily
-#' collect_market_safety(x, financials, extrafin, daily)
+#' market_safety(x, financials, extrafin, daily)
 #' @export
 
-collect_market_safety <- function(x, financials, extrafin, daily){
+market_safety <- function(x, financials, extrafin, daily){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
@@ -39,10 +39,11 @@ collect_market_safety <- function(x, financials, extrafin, daily){
   financials[is.na(financials)] <- 0
   
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
-  daily$date <- sub("-.*","",daily$date)
+  #daily$date <- sub("-.*","",daily$date)
   daily <- data.table(daily, key="ticker")
   market <- daily[daily$ticker == "GSPC",]
-  marketlist <- list(daily[daily$ticker == "GSPC",])
+  nogspc <- daily[daily$ticker != "GSPC",]
+  #marketlist <- list(daily[daily$ticker == "GSPC",])
   year <- numeric()
   if(sum(market$date == currentyear) <= 150){
     year <- currentyear - 1
@@ -50,6 +51,10 @@ collect_market_safety <- function(x, financials, extrafin, daily){
     year <- currentyear
   }
   marketlistb <- market[grepl(year,market$date),]
+  mergedail <- merge(marketlistb,nogspc,by="date")
+  print("start")
+  splitdail <- split(mergedail,mergedail$ticker.y)
+  print("end")
   ordereddaily <- daily[order(daily$date, decreasing=TRUE),]
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
   splitindices <- splitindices[-1]
@@ -57,25 +62,25 @@ collect_market_safety <- function(x, financials, extrafin, daily){
   setkey(ordereddaily, "ticker")
   yearlyprices <- unique(ordereddaily)
   
-  merger <- function(company_ticker) {
-    companylist <- daily[daily$ticker == company_ticker,]
-    colnames(companylist)[1] <- "ticker_2"
-    colnames(companylist)[3] <- "pret_2"
-    colnames(companylist)[4] <- "close_2"
-    final <- merge(marketlistb,companylist,by="date")
-    final <- final[complete.cases(final),]
-    cov(as.numeric(as.character(final$pret_2)),as.numeric(as.character(final$pret)))/
-      var(as.numeric(as.character(final$pret)))
+  merger <- function(company_index) {
+    print(company_index)
+    cov(as.numeric(as.character(splitdail[[company_index]]$pret.y)),
+        as.numeric(as.character(splitdail[[company_index]]$pret.x)))/
+      var(as.numeric(as.character(splitdail[[company_index]]$pret.x)))
   }
+#   merger <- function(company_ticker) {
+#     print(company_ticker)
+#     companylist <- daily[daily$ticker == company_ticker,]
+#     final <- merge(marketlistb,companylist,by="date")
+#     final <- final[complete.cases(final),]
+#     cov(as.numeric(as.character(final$pret.y)),as.numeric(as.character(final$pret.x)))/
+#       var(as.numeric(as.character(final$pret.x)))
+#   }
   
-  calc_ivol <- function(company_ticker) {
-    companylist <- daily[daily$ticker == company_ticker,]
-    colnames(companylist)[1] <- "ticker_2"
-    colnames(companylist)[3] <- "pret_2"
-    colnames(companylist)[4] <- "close_2"
-    final <- merge(marketlistb,companylist,by="date")
-    final <- final[complete.cases(final),]
-    lmobj <- lm(as.numeric(as.character(final$pret_2))~as.numeric(as.character(final$pret)))
+  calc_ivol <- function(company_index) {
+    print(company_index)
+    lmobj <- lm(as.numeric(as.character(splitdail[[company_index]]$pret.y))~
+                  as.numeric(as.character(splitdail[[company_index]]$pret.x)))
     sd(residuals(lmobj))
   }
   modifiedsetdiff <- function(x.1,x.2,...){
@@ -137,42 +142,21 @@ collect_market_safety <- function(x, financials, extrafin, daily){
     val4 <- ni4/(tlse4 - tl4 - (rps4 + nrps4))
     sd(c(val1, val2, val3, val4), na.rm=TRUE)
   }
-  ivol <- function(refineddat, betas){
-    market <- refineddat[[1]]
-    market <- as.numeric(as.character(market$close))
-    stock <- refineddat[[2]]
-    stock <- as.numeric(as.character(stock$close))
-    excess_return <- mapply(exret, stock, betas, market)
-    sd(excess_return)
-  }
-  refine_ivol_data <- function(marketdat, stockindices){
-    #stockindices <- as.numeric(stockindices)
-    stockdat <- daily[stockindices,]
-    if(sum(marketdat$date == currentyear) <= 150){
-      year <- currentyear - 1
-    } else{
-      year <- currentyear
-    }
-    #marketdat <- marketdat[[1]]
-    marketdat <- marketdat[marketdat$date == year,]
-    stockdat <- stockdat[stockdat$date == year,]
-    smallersize <- min(c(length(marketdat$date), length(stockdat$date)))
-    marketdat <- marketdat[1:smallersize,]
-    stockdat <- stockdat[1:smallersize,]
-    list(marketdat, stockdat)
-  }
+
   intwo <- function(ni1, ni2){
     as.numeric(ni1 > 0 && ni2 > 0)
   }
   
   #BAB calculated in merger
-  BAB <- apply(merger,allcompanies$ticker)
+  BAB <- sapply(1:length(splitdail), merger)
+  #BAB <- sapply(as.character(allcompanies$ticker), merger)
   
   #   refined_data <- mapply(refine_ivol_data, market, splitindices)
   #   tempframe <- data.table(companiesstored, refined_data)
   #   colnames(tempframe) <- c("ticker", "refined")
   #   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)
-  IVOL <- apply(calc_ivol,allcompanies$ticker)
+  IVOL <- sapply(1:length(splitdail),calc_ivol)
+  #IVOL <- sapply(as.character(allcompanies$ticker), calc_ivol)
   #   print(head(IVOL))
   LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
   
@@ -218,7 +202,7 @@ collect_market_safety <- function(x, financials, extrafin, daily){
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
   
   BAB[is.infinite(BAB)] <- 0
-  #IVOL[is.infinite(IVOL)] <- 0
+  IVOL[is.infinite(IVOL)] <- 0
   LEV[is.infinite(LEV)] <- 0
   O[is.infinite(O)] <- 0
   Z[is.infinite(Z)] <- 0
@@ -226,21 +210,20 @@ collect_market_safety <- function(x, financials, extrafin, daily){
   
   #Scale converts the individual scores for these values into z-scores.
   BAB <- scale(BAB)
-  #IVOL <- scale(IVOL)
+  IVOL <- scale(IVOL)
   LEV <- scale(LEV)
   O <- scale(O)
   Z <- scale(Z)
   EVOL <- scale(EVOL)
   
   BAB[is.na(BAB)] <- 0
-  #IVOL[is.nan(IVOL)] <- 0
+  IVOL[is.nan(IVOL)] <- 0
   LEV[is.na(LEV)] <- 0
   O[is.na(O)] <- 0
   Z[is.na(Z)] <- 0
   EVOL[is.na(EVOL)] <- 0
   
-  #safety <- BAB + IVOL + LEV + O + Z + EVOL
-  safety <- BAB + LEV + O + Z + EVOL
+  safety <- BAB + IVOL + LEV + O + Z + EVOL
   safety <- scale(safety)
-  data.frame(x$ticker, safety, BAB, LEV, O, Z, EVOL)
+  data.frame(x$ticker, safety, BAB, IVOL, LEV, O, Z, EVOL)
 }
