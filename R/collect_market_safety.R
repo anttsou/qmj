@@ -67,6 +67,15 @@ collect_market_safety <- function(x, financials, extrafin, daily){
     cov(as.numeric(as.character(final$pret_2)),as.numeric(as.character(final$pret)))/
       var(as.numeric(as.character(final$pret)))
   }
+
+  calc_ivol <- function(company_ticker) {
+    companylist <- daily[daily$ticker == company_ticker,]
+    colnames(companylist)[1] <- "ticker_2"
+    colnames(companylist)[3] <- "pret_2"
+    colnames(companylist)[4] <- "close_2"
+    final <- merge(marketlistb,companylist,by="date")
+    final <- final[complete.cases(final),]
+  }
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1)
     x.2p <- do.call("paste", x.2)
