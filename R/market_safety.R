@@ -17,7 +17,7 @@
 #' financials <- financials
 #' extrafin <- extrafin
 #' daily <- tidydaily
-#' collect_market_safety(x, financials, extrafin, daily)
+#' market_safety(x, financials, extrafin, daily)
 #' @export
 
 market_safety <- function(x, financials, extrafin, daily){
