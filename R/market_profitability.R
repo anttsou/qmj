@@ -10,11 +10,11 @@
 #' data(companies)
 #' data(financials)
 #' x <- companies
-#' collect_market_profitability(x, financials)
+#' market_profitability(x, financials)
 #' @export
 
 #use sapply to make columns numeric
-collect_market_profitability <- function(x, financials){
+market_profitability <- function(x, financials){
   #Is there a better way to do this than calling "library(data.table)?"
   #library(data.table)
   

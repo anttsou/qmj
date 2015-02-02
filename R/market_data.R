@@ -10,16 +10,16 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' collect_market_data(companies, financials)
+#' market_data(companies, financials)
 #' @export
 
-collect_market_data <- function(x, financials, extrafin, daily){
+market_data <- function(x, financials, extrafin, daily){
   numx <- length(x$tickers)
   
-  profitability <- collect_market_profitability(x, financials)$profitability
-  growth <- collect_market_growth(x, financials)$growth
-  safety <- collect_market_safety(x, financials, extrafin, daily)$safety
-  payouts <- collect_market_payout(x, financials)$payouts
+  profitability <- market_profitability(x, financials)$profitability
+  growth <- market_growth(x, financials)$growth
+  safety <- market_safety(x, financials, extrafin, daily)$safety
+  payouts <- market_payout(x, financials)$payouts
   quality <- profitability + growth + safety + payouts
   
   name <- x$name

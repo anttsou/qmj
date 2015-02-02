@@ -10,10 +10,10 @@
 #' data(companies)
 #' data(financials)
 #' x <- companies
-#' collect_market_payout(x, financials)
+#' market_payout(x, financials)
 #' @export
 
-collect_market_payout <- function(x, financials){
+market_payout <- function(x, financials){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   

@@ -9,11 +9,11 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' collect_market_growth(x, financials)
+#' market_growth(x, financials)
 #' @export
 
 #use sapply to make columns numeric
-collect_market_growth <- function(x, financials){
+market_growth <- function(x, financials){
   #Is there a better way to do this than calling "library(data.table)?"
   library(data.table)
   
