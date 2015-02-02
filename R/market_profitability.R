@@ -10,7 +10,7 @@
 #' data(companies)
 #' data(financials)
 #' x <- companies
-#' market_profitability(x, financials)
+#' collect_market_profitability(x, financials)
 #' @export
 
 #use sapply to make columns numeric

@@ -10,7 +10,7 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' market_data(companies, financials)
+#' collect_market_data(companies, financials)
 #' @export
 
 market_data <- function(x, financials, extrafin, daily){
