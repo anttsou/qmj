@@ -21,6 +21,6 @@ Quality Minus Junk (Asness et al.) in Appendix page A2.
 data(companies)
 data(financials)
 x <- companies
-collect_market_profitability(x, financials)
+market_profitability(x, financials)
 }
 

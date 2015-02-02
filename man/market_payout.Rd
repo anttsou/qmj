@@ -21,6 +21,6 @@ Quality Minus Junk (Asness et al.) in Appendix page A3-4.
 data(companies)
 data(financials)
 x <- companies
-collect_market_payout(x, financials)
+market_payout(x, financials)
 }
 
