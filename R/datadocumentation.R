@@ -37,3 +37,15 @@ NULL
 #' @docType data
 #' @keywords data
 NULL
+
+#' A dataframe quality scores for companies listed in the Russell 3000
+#'
+#' Displays overall quality scores as well as the scores for profitability, growth,
+#' safety, and payouts.
+#' 
+#' Last updated: January 2015
+#'
+#' @name quality
+#' @docType data
+#' @keywords data
+NULL
