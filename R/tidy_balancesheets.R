@@ -66,5 +66,5 @@ tidy_balancesheets <- function(x) {
     }
   }
   balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1,]
-  data.frame(balancesheets)
+  data.frame(balancesheets, stringsAsFactors=FALSE)
 }

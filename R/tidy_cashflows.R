@@ -42,5 +42,5 @@ tidy_cashflows <- function(x) {
     }
   }
   cashflows <- cashflows[rowSums(!is.na(cashflows)) >= 1,]
-  data.frame(cashflows)
+  data.frame(cashflows, stringsAsFactors=FALSE)
 }
