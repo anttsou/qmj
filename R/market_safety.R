@@ -17,10 +17,10 @@
 #' financials <- financials
 #' extrafin <- extrafin
 #' daily <- tidydaily
-#' collect_market_safety(x, financials, extrafin, daily)
+#' market_safety(x, financials, extrafin, daily)
 #' @export
 
-collect_market_safety <- function(x, financials, extrafin, daily){
+market_safety <- function(x, financials, extrafin, daily){
   #Is there a better way to do this than calling "library(data.table)?"
   #library(data.table)
   
