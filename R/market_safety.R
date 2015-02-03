@@ -84,26 +84,24 @@ market_safety <- function(x, financials, extrafin, daily){
     sd(residuals(lmobj))
   }
   modifiedsetdiff <- function(x.1,x.2,...){
-    x.1p <- do.call("paste", x.1)
-    x.2p <- do.call("paste", x.2)
+    x.1p <- do.call("paste", x.1[,1:5])
+    x.2p <- do.call("paste", x.2[,1:5])
     x.1[! x.1p %in% x.2p, ]
   }
   
   fin <- financials
-  fin <- arrange(fin, desc(year))
-  #fin <- fin[order(fin$year, decreasing=TRUE),]
-  #fin <- data.table(fin, key="ticker")
-  #fstyear <- unique(fin, stringsAsFactors=FALSE)
-  fstyear <- distinct_(fin, "ticker")
+  fin <- fin[order(fin$year, decreasing=TRUE),]
+  fin <- data.table(fin, key="ticker")
+  fstyear <- unique(fin)
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- distinct_(fin, "ticker")
+  sndyear <- unique(fin)
   
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- distinct_(fin, "ticker")
+  thdyear <- unique(fin)
   
   fthyear <- modifiedsetdiff(fin, thdyear)
-  fthyear <- distinct_(fin, "ticker")
+  fthyear <- unique(fthyear)
   
   #Forces all data frames to have the same number of rows.
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)
