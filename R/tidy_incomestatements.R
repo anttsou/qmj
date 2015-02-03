@@ -19,6 +19,11 @@ tidy_incomestatements <- function(x) {
     cdata <- x[[i]]
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata))
+    if(length(unique(years)) < length(years)){
+      for(j in 1:length(years)){
+        years[j] <- paste(years[j], ".", j, sep='')
+      }
+    }
     for(k in 1:length(colnames(cdata))){
       incomestatements[k + (i-1)*4,1] <- ticker
       incomestatements[k + (i-1)*4,2] <- years[k]
