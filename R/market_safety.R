@@ -23,7 +23,7 @@
 market_safety <- function(x, financials, extrafin, daily){
   #Is there a better way to do this than calling "library(data.table)?"
   #library(data.table)
-  
+
   filepath <- system.file("data", package="qmj")
   numCompanies <- length(x$ticker)
   allcompanies <- data.frame(x$ticker)
@@ -37,7 +37,9 @@ market_safety <- function(x, financials, extrafin, daily){
 #   Z <- rep(0, numCompanies)
 #   EVOL <- rep(0, numCompanies)
   financials[is.na(financials)] <- 0
-  
+  daily[is.na(daily)] <- 0
+  daily$pret[is.nan(as.numeric(daily$pret))] <- 0
+  daily$pret[is.infinite(as.numeric(daily$pret))] <- 0
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   #daily$date <- sub("-.*","",daily$date)
   daily <- data.table(daily, key="ticker")
@@ -62,11 +64,11 @@ market_safety <- function(x, financials, extrafin, daily){
   setkey(ordereddaily, "ticker")
   yearlyprices <- unique(ordereddaily)
   
-  merger <- function(company_index) {
-    print(company_index)
-    cov(as.numeric(as.character(splitdail[[company_index]]$pret.y)),
-        as.numeric(as.character(splitdail[[company_index]]$pret.x)))/
-      var(as.numeric(as.character(splitdail[[company_index]]$pret.x)))
+  merger <- function(company_ticker) {
+    print(splitdail[[company_ticker]]$ticker.y)
+    cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
+        as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
+      var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
   }
 #   merger <- function(company_ticker) {
 #     print(company_ticker)
@@ -77,11 +79,16 @@ market_safety <- function(x, financials, extrafin, daily){
 #       var(as.numeric(as.character(final$pret.x)))
 #   }
   
-  calc_ivol <- function(company_index) {
-    print(company_index)
-    lmobj <- lm(as.numeric(as.character(splitdail[[company_index]]$pret.y))~
-                  as.numeric(as.character(splitdail[[company_index]]$pret.x)))
-    sd(residuals(lmobj))
+  calc_ivol <- function(company_ticker) {
+    print(splitdail[[company_ticker]]$ticker.y)
+    #print(length(splitdail[[company_ticker]]))
+    if(length(splitdail[[company_ticker]]) > 0) {
+      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
+                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
+      sd(residuals(lmobj))
+    } else {
+      NA
+    }
   }
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1[,1:5])
@@ -149,14 +156,14 @@ market_safety <- function(x, financials, extrafin, daily){
   }
   
   #BAB calculated in merger
-  BAB <- sapply(1:length(splitdail), merger)
+  BAB <- sapply(x$ticker, merger)
   #BAB <- sapply(as.character(allcompanies$ticker), merger)
   
   #   refined_data <- mapply(refine_ivol_data, market, splitindices)
   #   tempframe <- data.table(companiesstored, refined_data)
   #   colnames(tempframe) <- c("ticker", "refined")
   #   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)
-  IVOL <- sapply(1:length(splitdail),calc_ivol)
+  IVOL <- sapply(x$ticker,calc_ivol)
   #IVOL <- sapply(as.character(allcompanies$ticker), calc_ivol)
   #   print(head(IVOL))
   LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
@@ -201,9 +208,9 @@ market_safety <- function(x, financials, extrafin, daily){
     (abs(as.numeric(as.character(fstyear$NI))) + abs(as.numeric(as.character(sndyear$NI))))
   O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
-  length(BAB) <- numCompanies
-  length(IVOL) <- numCompanies
-  length(LEV) <- numCompanies
+  #length(BAB) <- numCompanies
+  #length(IVOL) <- numCompanies
+  #length(LEV) <- numCompanies
   BAB[is.infinite(BAB)] <- 0
   IVOL[is.infinite(IVOL)] <- 0
   LEV[is.infinite(LEV)] <- 0
@@ -240,5 +247,12 @@ market_safety <- function(x, financials, extrafin, daily){
 #   print(head(EVOL))
   safety <- BAB[,1] + IVOL[,1] + LEV[,1] + O[,1] + Z[,1] + EVOL[,1]
   safety <- scale(safety)
-  data.frame(x$ticker, safety, BAB[,1], IVOL[,1], LEV[,1], O[,1], Z[,1], EVOL[,1])
+  data.frame(ticker = x$ticker, 
+             safety = safety, 
+             BAB = BAB[,1], 
+             IVOL = IVOL[,1],
+             LEV = LEV[,1], 
+             O = O[,1], 
+             Z = Z[,1], 
+             EVOL = EVOL[,1])
 }
