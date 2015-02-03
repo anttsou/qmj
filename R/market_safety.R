@@ -89,16 +89,16 @@ market_safety <- function(x, financials, extrafin, daily){
   #fin <- fin[order(fin$year, decreasing=TRUE),]
   #fin <- data.table(fin, key="ticker")
   #fstyear <- unique(fin, stringsAsFactors=FALSE)
-  fstyear <- distinct_(fin, fin$ticker)
+  fstyear <- distinct_(fin, "ticker")
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- unique(fin)
+  sndyear <- distinct_(fin, "ticker")
   
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- unique(fin)
+  thdyear <- distinct_(fin, "ticker")
   
   fthyear <- modifiedsetdiff(fin, thdyear)
-  fthyear <- unique(fthyear)
+  fthyear <- distinct_(fin, "ticker")
   
   #Forces all data frames to have the same number of rows.
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)

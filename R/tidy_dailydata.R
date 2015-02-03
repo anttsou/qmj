@@ -13,8 +13,9 @@ tidy_dailydata <- function(x){
   colnames(tidymatrix) <- c("ticker", "date", "pret", "close")
   dates <- rownames(x)
   for(i in 1:numCompanies){
-    print(paste(i/numCompanies, "% complete", sep=''))
-    ticker <- gsub("\\..*","",names(x)[2*i - 1])
+    print(paste(i/numCompanies, " complete", sep=''))
+    ticker <- gsub(".Close","",names(x)[2*i - 1])
+    ticker <- gsub(".Adjusted", "", ticker)
     col1 <- x[,(2*i)-1]
     col2 <- x[,(2*i)]
     nas <- which(!is.na(col1))
@@ -24,8 +25,8 @@ tidy_dailydata <- function(x){
     for(k in 1:length(col1)){
       tidymatrix[k + ((i-1) * numDaysInTwoYears), 1] <- ticker
       tidymatrix[k + ((i-1) * numDaysInTwoYears), 2] <- cDates[k]
-      tidymatrix[k + ((i-1) * numDaysInTwoYears), 3] <- col1[k]
-      tidymatrix[k + ((i-1) * numDaysInTwoYears), 4] <- col2[k]
+      tidymatrix[k + ((i-1) * numDaysInTwoYears), 4] <- col1[k]
+      tidymatrix[k + ((i-1) * numDaysInTwoYears), 3] <- col2[k]
     }
   }
   tidyresult <- as.data.frame(tidymatrix, stringsAsFactors=FALSE)

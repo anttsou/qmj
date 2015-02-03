@@ -27,5 +27,5 @@ tidyinfo <- function(){
 #   save(tidyincome, file=destpathi)
 
   financials <- merge(tidybalance, merge(tidycash, tidyincome, by=c("ticker", "year")), by=c("ticker", "year"))
-  financials
+  unique(financials)
 }

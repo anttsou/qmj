@@ -57,7 +57,7 @@ get_dailydata <- function(x){
   compiled <- matrix()
   load(listfiles[1])
   compiled = cbind(compiled, stockData)
-  for(i in 2:numCompanies){
+  for(i in 2:(numCompanies+1)){
     load(listfiles[i])
     compiled = cbind(compiled, stockData)
   }
