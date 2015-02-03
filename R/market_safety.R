@@ -30,12 +30,12 @@ market_safety <- function(x, financials, extrafin, daily){
   colnames(allcompanies) <- "ticker"
   
   #   safety <- rep(0, numCompanies)
-  #   BAB <- rep(0, numCompanies)
-  #   IVOL <- rep(0, numCompanies)
-  #   LEV <- rep(0, numCompanies)
-  #   O <- rep(0, numCompanies)
-  #   Z <- rep(0, numCompanies)
-  #   EVOL <- rep(0, numCompanies)
+#   BAB <- rep(0, numCompanies)
+#   IVOL <- rep(0, numCompanies)
+#   LEV <- rep(0, numCompanies)
+#   O <- rep(0, numCompanies)
+#   Z <- rep(0, numCompanies)
+#   EVOL <- rep(0, numCompanies)
   financials[is.na(financials)] <- 0
   
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
@@ -90,11 +90,11 @@ market_safety <- function(x, financials, extrafin, daily){
   }
   
   fin <- financials
-  fin <- arrange(fin, desc(year))
-  #fin <- fin[order(fin$year, decreasing=TRUE),]
-  #fin <- data.table(fin, key="ticker")
-  #fstyear <- unique(fin, stringsAsFactors=FALSE)
-  fstyear <- distinct_(fin, fin$ticker)
+  #fin <- arrange(fin, desc(year))
+  fin <- fin[order(fin$year, decreasing=TRUE),]
+  fin <- data.table(fin, key="ticker")
+  fstyear <- unique(fin, stringsAsFactors=FALSE)
+  #fstyear <- distinct_(fin, fin$ticker)
   
   fin <- modifiedsetdiff(fin, fstyear)
   sndyear <- unique(fin)
@@ -202,7 +202,9 @@ market_safety <- function(x, financials, extrafin, daily){
     (abs(as.numeric(as.character(fstyear$NI))) + abs(as.numeric(as.character(sndyear$NI))))
   O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
-  
+  length(BAB) <- numCompanies
+  length(IVOL) <- numCompanies
+  length(LEV) <- numCompanies
   BAB[is.infinite(BAB)] <- 0
   IVOL[is.infinite(IVOL)] <- 0
   LEV[is.infinite(LEV)] <- 0
@@ -225,7 +227,19 @@ market_safety <- function(x, financials, extrafin, daily){
   Z[is.na(Z)] <- 0
   EVOL[is.na(EVOL)] <- 0
   
-  safety <- BAB + IVOL + LEV + O + Z + EVOL
+#   print(class(BAB))
+#   print(class(IVOL))
+#   print(class(LEV))
+#   print(class(O))
+#   print(class(Z))
+#   print(class(EVOL))
+#   print(head(BAB))
+#   print(head(IVOL))
+#   print(head(LEV))
+#   print(head(O))
+#   print(head(Z))
+#   print(head(EVOL))
+  safety <- BAB[,1] + IVOL[,1] + LEV[,1] + O[,1] + Z[,1] + EVOL[,1]
   safety <- scale(safety)
-  data.frame(x$ticker, safety, BAB, IVOL, LEV, O, Z, EVOL)
+  data.frame(x$ticker, safety, BAB[,1], IVOL[,1], LEV[,1], O[,1], Z[,1], EVOL[,1])
 }
