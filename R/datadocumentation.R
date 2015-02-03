@@ -1,8 +1,6 @@
-#' Balancesheets of all companies
+#' Financial statements of all companies for the past four years
 #'
-#' A dataset containing all balancesheets, if available,
-#'  for all companies in the companies.RData file. Among other things,
-#'  stores:
+#' A data frame containing all 
 #'  \itemize{
 #'    \item Cash & Equivalents.
 #'    \item Short Term Investments.

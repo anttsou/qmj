@@ -14,7 +14,8 @@ Imports:
 	xts,
 	stringr,
 	data.table,
-	ggplot2
+	ggplot2,
+	dplyr
 Depends: R (>= 3.1.1),
 	data.table
 License: GPL-3
