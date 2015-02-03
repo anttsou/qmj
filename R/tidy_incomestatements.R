@@ -74,5 +74,5 @@ tidy_incomestatements <- function(x) {
     }
   }
   incomestatements <- incomestatements[rowSums(!is.na(incomestatements)) >= 1,]
-  data.frame(incomestatements)
+  data.frame(incomestatements, stringsAsFactors=FALSE)
 }

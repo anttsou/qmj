@@ -30,6 +30,6 @@ x <- companies
 financials <- financials
 extrafin <- extrafin
 daily <- tidydaily
-collect_market_safety(x, financials, extrafin, daily)
+market_safety(x, financials, extrafin, daily)
 }
 

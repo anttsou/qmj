@@ -20,6 +20,6 @@ Quality Minus Junk (Asness et al.) in Appendix page A2.
 \examples{
 data(companies)
 data(financials)
-collect_market_growth(x, financials)
+market_growth(x, financials)
 }
 

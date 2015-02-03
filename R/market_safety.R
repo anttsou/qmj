@@ -22,7 +22,7 @@
 
 market_safety <- function(x, financials, extrafin, daily){
   #Is there a better way to do this than calling "library(data.table)?"
-  library(data.table)
+  #library(data.table)
   
   filepath <- system.file("data", package="qmj")
   numCompanies <- length(x$ticker)
@@ -90,9 +90,11 @@ market_safety <- function(x, financials, extrafin, daily){
   }
   
   fin <- financials
-  fin <- fin[order(fin$year, decreasing=TRUE),]
-  fin <- data.table(fin, key="ticker")
-  fstyear <- unique(fin)
+  fin <- arrange(fin, desc(year))
+  #fin <- fin[order(fin$year, decreasing=TRUE),]
+  #fin <- data.table(fin, key="ticker")
+  #fstyear <- unique(fin, stringsAsFactors=FALSE)
+  fstyear <- distinct_(fin, fin$ticker)
   
   fin <- modifiedsetdiff(fin, fstyear)
   sndyear <- unique(fin)
@@ -166,10 +168,10 @@ market_safety <- function(x, financials, extrafin, daily){
   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)  
   
   ME <- mapply(marketequity, as.numeric(as.character(tempframe$close)), as.numeric(as.character(fstyear$TCSO)))
-  EBITDAS <- sapply(extrafin$ebitdas, extrafinclean)
+  #EBITDAS <- as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(fstyear$))
   WC <- as.numeric(as.character(fstyear$TCA)) - as.numeric(as.character(fstyear$TCL))
   RE <- as.numeric(as.character(fstyear$NI)) - (as.numeric(as.character(fstyear$DIVC)) * as.numeric(as.character(fstyear$TCSO)))
-  EBIT <- EBITDAS - as.numeric(as.character(fstyear$DP.DPL)) - as.numeric(as.character(fstyear$AM))
+  EBIT <- as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(fstyear$DO)) + (as.numeric(as.character(fstyear$IBT)) - as.numeric(as.character(fstyear$IAT))) + as.numeric(as.character(fstyear$NINT))
   SALE <- as.numeric(as.character(fstyear$TREV))
   Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(as.character(fstyear$TA)))
   

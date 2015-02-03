@@ -11,19 +11,19 @@ tidyinfo <- function(){
   filepathb <- paste(filepath, "/balancesheets.RData", sep='')
 #   destpathb <- paste(destpath, "/tidybalance.RData", sep='')
   load(filepathb)
-  tidybalance <- qmj::tidy_balancesheets(balancesheets)
+  tidybalance <- tidy_balancesheets(balancesheets)
 #   save(tidybalance, file=destpathb)
   
   filepathc <- paste(filepath, "/cashflows.RData", sep='')
 #   destpathc <- paste(destpath, "/tidycash.RData", sep='')
   load(filepathc)
-  tidycash <- qmj::tidy_cashflows(cashflows)
+  tidycash <- tidy_cashflows(cashflows)
 #   save(tidycash, file=destpathc)
   
   filepathi <- paste(filepath, "/incomestatements.RData", sep='')
 #   destpathi <- paste(destpath, "/tidyincome.RData", sep='')
   load(filepathi)
-  tidyincome <- qmj::tidy_incomestatements(incomestatements)
+  tidyincome <- tidy_incomestatements(incomestatements)
 #   save(tidyincome, file=destpathi)
 
   financials <- merge(tidybalance, merge(tidycash, tidyincome, by=c("ticker", "year")), by=c("ticker", "year"))

@@ -20,6 +20,7 @@ get_dailydata <- function(x){
   priceData <- stockData[,1]
   #Calculates price returns. Not total returns.
   stockData$pret <- pricereturns(stockData)
+  stockData <- stockData[-1,]
   fileName <- paste(filepath, "/", "GSPC.RData", sep='')
   listfiles[1] <- fileName
   
@@ -43,7 +44,7 @@ get_dailydata <- function(x){
         stockData <- stockData[desiredDates,4]
         priceData <- stockData
         stockData$pret <- pricereturns(stockData)
-        
+        stockData <- stockData[-1,]
         save(stockData, file=fileName)
       } else{
         print(paste("Error retrieving data for ", companyTicker, sep=""))
@@ -61,7 +62,7 @@ get_dailydata <- function(x){
     compiled = cbind(compiled, stockData)
   }
   file.remove(listfiles)
-  dailydata <- data.frame(compiled)[,-1]
+  dailydata <- data.frame(compiled, stringsAsFactors=FALSE)[,-1]
 #   filepath2 <- paste(filepath, "/dailydata.RData", sep='')
 #   save(dailydata, file="dailydata.RData")
   dailydata

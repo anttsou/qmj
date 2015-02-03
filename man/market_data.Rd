@@ -23,6 +23,6 @@ for later processing.
 \examples{
 data(companies)
 data(financials)
-collect_market_data(companies, financials)
+market_data(companies, financials)
 }
 
