@@ -22,11 +22,6 @@ tidy_dailydata <- function(x){
     cDates <- dates[nas]
     col1 <- col1[nas]
     col2 <- col2[nas]
-    if(length(col1) == 0){
-      col1 <- c(NA)
-      col2 <- c(NA)
-      cDates <- c(NA)
-    }
     for(k in 1:length(col1)){
       tidymatrix[k + ((i-1) * numDaysInTwoYears), 1] <- ticker
       tidymatrix[k + ((i-1) * numDaysInTwoYears), 2] <- cDates[k]
