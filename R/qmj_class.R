@@ -11,24 +11,29 @@ qmj <- setClass(
   prototype = list(
     ticker = "AAPL",
     profitability = function() {
-      data(profitability)
-      profitability
+      #data(profitability)
+      #profitability
+      data.frame()
     }, 
     growth = function() {
-      data(growth)
-      growth
+      #data(growth)
+      #growth
+      data.frame()
     },
     safety = function() {
-      data(safety)
-      safety
+      #data(safety)
+      #safety
+      data.frame()
     },
     payouts = function() {
-      data(payouts)
-      payouts
+      #data(payouts)
+      #payouts
+      data.frame()
     },
     quality = function() {
-      data(quality)
-      quality
+      #data(quality)
+      #quality
+      data.frame()
     }),
   validity = function(object)
   {
