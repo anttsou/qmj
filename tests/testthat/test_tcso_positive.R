@@ -5,5 +5,5 @@ test_that("tcso is positive", {
   data(daily)
   temp <- financials
   temp <- rbind(temp,rep(-1,length(colnames(temp))))
-  expect_warning(market_data(x,temp,extrafin,daily),"Negative TCSO exists.")
+  expect_warning(qmj::market_data(x,temp,extrafin,daily),"Negative TCSO exists.")
 })

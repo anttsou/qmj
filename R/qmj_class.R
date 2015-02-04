@@ -1,13 +1,14 @@
 qmj <- setClass(
-  "Company",
+  "qmj",
   slots = c(
     ticker = "character",
-    profitability = "character",
-    growth = "character",
-    safety = "character",
-    payouts = "character",
-    quality = "character"
+    profitability = "data.frame",
+    growth = "data.frame",
+    safety = "data.frame",
+    payouts = "data.frame",
+    quality = "data.frame"
   ),
+  contains = "data.frame",
   prototype = list(
     ticker = "AAPL",
     profitability = function() {
