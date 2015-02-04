@@ -3,5 +3,5 @@ test_that("companies list has ticker column", {
   data(financials)
   data(extrafin)
   data(daily)
-  expect_warning(market_data(x,financials,extrafin,daily),"companies parameter requires ticker column.")
+  expect_warning(qmj::market_data(x,financials,extrafin,daily),"companies parameter requires ticker column.")
 })
