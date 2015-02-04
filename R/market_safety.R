@@ -60,11 +60,6 @@ market_safety <- function(x, financials, daily){
   setkey(ordereddaily, "ticker")
   yearlyprices <- unique(ordereddaily)
   
-  merger <- function(company_ticker) {
-    cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
-        as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
-      var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
-  }
 #   merger <- function(company_ticker) {
 #     print(company_ticker)
 #     companylist <- daily[daily$ticker == company_ticker,]
@@ -74,16 +69,6 @@ market_safety <- function(x, financials, daily){
 #       var(as.numeric(as.character(final$pret.x)))
 #   }
   
-  calc_ivol <- function(company_ticker) {
-    #print(length(splitdail[[company_ticker]]))
-    if(length(splitdail[[company_ticker]]) > 0) {
-      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
-                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
-      sd(residuals(lmobj))
-    } else {
-      NA
-    }
-  }
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1[,1:5])
     x.2p <- do.call("paste", x.2[,1:5])
@@ -111,22 +96,27 @@ market_safety <- function(x, financials, daily){
   thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
   fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
   
+
+  merger <- function(company_ticker) {
+    cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
+        as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
+      var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
+  }
+  calc_ivol <- function(company_ticker) {
+    #print(length(splitdail[[company_ticker]]))
+    if(length(splitdail[[company_ticker]]) > 0) {
+      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
+                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
+      sd(residuals(lmobj))
+    } else {
+      NA
+    }
+  }
   lev <- function(td, ta){
     -td/ta
   }
   exret <- function(subcomps, beta, marketclose){
     subcomps - (beta*marketclose)
-  }
-  extrafinclean <- function(ebitdascol){
-    if(grepl("B",as.character(ebitdascol))) {
-      as.numeric(sub("B.*","",as.character(ebitdascol)))*1000
-    } else if(grepl("M",as.character(ebitdascol))) {
-      as.numeric(sub("M.*","",as.character(ebitdascol)))
-    } else if(grepl("K",as.character(ebitdascol))) {
-      as.numeric(sub("K.*","",as.character(ebitdascol)))/1000
-    } else {
-      as.numeric(as.character(ebitdascol))/1000000
-    }
   }
   calcmean <- function(indexlist){
     indexlist <- as.numeric(indexlist)

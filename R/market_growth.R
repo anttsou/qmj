@@ -100,5 +100,11 @@ market_growth <- function(x, financials){
 
   growth <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   growth <- scale(growth)
-  data.frame(x$ticker, growth, GPOA, ROE, ROA, CFOA, GMAR, ACC)
+  data.frame(ticker = x$ticker, 
+             growth = growth, 
+             GPOA = GPOA, 
+             ROE = ROA,
+             CFOA = CFOA, 
+             GMAR = GMAR,
+             ACC = ACC)
 }

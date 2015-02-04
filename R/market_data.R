@@ -17,7 +17,7 @@ market_data <- function(x, financials, daily){
   
   profitability <- market_profitability(x, financials)$profitability
   growth <- market_growth(x, financials)$growth
-  safety <- market_safety(x, financials, extrafin, daily)$safety
+  safety <- market_safety(x, financials, daily)$safety
   payouts <- market_payout(x, financials)$payouts
   quality <- profitability + growth + safety + payouts
   
@@ -30,5 +30,5 @@ market_data <- function(x, financials, daily){
                            safety = safety, 
                            payouts = payouts, 
                            quality = quality)
-  marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE, na.last=NA),]
+  marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE, na.last=TRUE),]
 }
