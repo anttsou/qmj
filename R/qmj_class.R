@@ -1,5 +1,5 @@
 qmj <- setClass(
-  "Company",
+  "qmj",
   slots = c(
     ticker = "character",
     profitability = "data.frame",
@@ -8,32 +8,28 @@ qmj <- setClass(
     payouts = "data.frame",
     quality = "data.frame"
   ),
+  contains = "data.frame",
   prototype = list(
     ticker = "AAPL",
     profitability = function() {
-      #data(profitability)
-      #profitability
-      data.frame()
+      data(profitability)
+      profitability
     }, 
     growth = function() {
-      #data(growth)
-      #growth
-      data.frame()
+      data(growth)
+      growth
     },
     safety = function() {
-      #data(safety)
-      #safety
-      data.frame()
+      data(safety)
+      safety
     },
     payouts = function() {
-      #data(payouts)
-      #payouts
-      data.frame()
+      data(payouts)
+      payouts
     },
     quality = function() {
-      #data(quality)
-      #quality
-      data.frame()
+      data(quality)
+      quality
     }),
   validity = function(object)
   {
