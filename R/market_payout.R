@@ -14,9 +14,6 @@
 #' @export
 
 market_payout <- function(x, financials){
-  #Is there a better way to do this than calling "library(data.table)?"
-  library(data.table)
-  
   numCompanies <- length(x$ticker)
   
   financials[is.na(financials)] <- 0
@@ -32,18 +29,17 @@ market_payout <- function(x, financials){
   colnames(allcompanies) <- "ticker"
 
   fin <- financials
-  fin <- fin[order(fin$year, decreasing=TRUE),]
-  fin <- data.table(fin, key="ticker")
-  fstyear <- unique(fin)
+  fin <- arrange(financials, desc(year))
+  fstyear <- distinct_(fin, "ticker")
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- unique(fin)
-
+  sndyear <- distinct_(fin, "ticker")
+  
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- unique(fin)
-
+  thdyear <- distinct_(fin, "ticker")
+  
   fthyear <- modifiedsetdiff(fin, thdyear)
-  fthyear <- unique(fthyear)
+  fthyear <- distinct_(fthyear, "ticker")
   
   #Forces all data frames to have the same number of rows.
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)

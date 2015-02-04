@@ -14,10 +14,7 @@
 #' @export
 
 #use sapply to make columns numeric
-market_profitability <- function(x, financials){
-  #Is there a better way to do this than calling "library(data.table)?"
-  #library(data.table)
-  
+market_profitability <- function(x, financials){  
   numCompanies <- length(x$ticker)
   
   financials[is.na(financials)] <- 0
@@ -25,11 +22,8 @@ market_profitability <- function(x, financials){
   allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
   fin <- financials
-  fin <- fin[order(fin$year, decreasing=TRUE),]
-  fin <- data.table::data.table(fin, key="ticker")
-  fin <- unique(fin)
-  #fin <- fin[data.table::CJ(unique(fin$ticker)), mult="first"]
-  data.table::setkey(fin, "ticker")
+  fin <- arrange(fin, desc(year))
+  fin <- distinct_(fin, "ticker")
   fin <- merge(allcompanies, fin, by="ticker", all.x = TRUE)
   
   gpoa <- function(gprof, ta){

@@ -19,30 +19,20 @@
 #' @export
 
 market_safety <- function(x, financials, daily){
-  #Is there a better way to do this than calling "library(data.table)?"
-  #library(data.table)
-
   filepath <- system.file("data", package="qmj")
   numCompanies <- length(x$ticker)
   allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
   
-  #   safety <- rep(0, numCompanies)
-#   BAB <- rep(0, numCompanies)
-#   IVOL <- rep(0, numCompanies)
-#   LEV <- rep(0, numCompanies)
-#   O <- rep(0, numCompanies)
-#   Z <- rep(0, numCompanies)
-#   EVOL <- rep(0, numCompanies)
   financials[is.na(financials)] <- 0
   daily[is.na(daily)] <- 0
   daily$pret[is.nan(as.numeric(daily$pret))] <- 0
   daily$pret[is.infinite(as.numeric(daily$pret))] <- 0
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   #daily$date <- sub("-.*","",daily$date)
-  daily <- data.table(daily, key="ticker")
-  market <- daily[daily$ticker == "GSPC",]
-  nogspc <- daily[daily$ticker != "GSPC",]
+  market <- filter(daily, ticker == "GSPC")
+    #daily[daily$ticker == "GSPC",]
+  nogspc <- filter(daily, ticker != "GSPC")
   #marketlist <- list(daily[daily$ticker == "GSPC",])
   year <- numeric()
   if(sum(market$date == currentyear) <= 150){
@@ -53,21 +43,14 @@ market_safety <- function(x, financials, daily){
   marketlistb <- market[grepl(year,market$date),]
   mergedail <- merge(marketlistb,nogspc,by="date")
   splitdail <- split(mergedail,mergedail$ticker.y)
-  ordereddaily <- daily[order(daily$date, decreasing=TRUE),]
+  ordereddaily <- arrange(daily, desc(date))
+    #daily[order(daily$date, decreasing=TRUE),]
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
   splitindices <- splitindices[-1]
   companiesstored <- names(splitindices)
-  setkey(ordereddaily, "ticker")
-  yearlyprices <- unique(ordereddaily)
-  
-#   merger <- function(company_ticker) {
-#     print(company_ticker)
-#     companylist <- daily[daily$ticker == company_ticker,]
-#     final <- merge(marketlistb,companylist,by="date")
-#     final <- final[complete.cases(final),]
-#     cov(as.numeric(as.character(final$pret.y)),as.numeric(as.character(final$pret.x)))/
-#       var(as.numeric(as.character(final$pret.x)))
-#   }
+  #setkey(ordereddaily, "ticker")
+  yearlyprices <- distinct_(ordereddaily, "ticker")
+    #unique(ordereddaily)
   
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1[,1:5])
@@ -76,8 +59,6 @@ market_safety <- function(x, financials, daily){
   }
   
   fin <- financials
-  #fin <- fin[order(fin$year, decreasing=TRUE),]
-  #fin <- data.table(fin, key="ticker")
   fin <- arrange(financials, desc(year))
   fstyear <- distinct_(fin, "ticker")
   
@@ -143,10 +124,6 @@ market_safety <- function(x, financials, daily){
   BAB <- sapply(x$ticker, merger)
   #BAB <- sapply(as.character(allcompanies$ticker), merger)
   
-  #   refined_data <- mapply(refine_ivol_data, market, splitindices)
-  #   tempframe <- data.table(companiesstored, refined_data)
-  #   colnames(tempframe) <- c("ticker", "refined")
-  #   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)
   IVOL <- sapply(x$ticker,calc_ivol)
   #IVOL <- sapply(as.character(allcompanies$ticker), calc_ivol)
   #   print(head(IVOL))

@@ -13,7 +13,6 @@ Imports:
 	PerformanceAnalytics,
 	xts,
 	stringr,
-	data.table,
 	ggplot2,
 	dplyr
 Depends: R (>= 3.1.1),

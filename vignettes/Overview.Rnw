@@ -25,13 +25,14 @@ In order to start you off, qmj comes equipped with several data sets, including 
 library(qmj)
 data(companies) #Stores company names and tickers from the Russell 3000 index
 data(financials) #Stores financial documents for the given list of companies.
+data(prices) # Stores price returns and closing stock prices for the past two years.
 data(qualityscores) #Stores the quality scores and the scores of its components.
 @
 
-If you want a quality measurement call:
+If you want to measure quality call:
 
 <<Getting Quality>>=
-#market_data(companies, financials, daily)
+#market_data(companies, financials, prices)
 @
 
 If you're only interested in accessing certain quality factors, such as profitability, as well as what makes it up (such as gross profits over assets (GPOA), or cash flow over assets (CFOA)) you're able to call:
@@ -43,32 +44,23 @@ If you're only interested in accessing certain quality factors, such as profitab
 This will return a numeric vector containing profitability z-scores for the given companies, where the nth number corresponds to the nth company. 
 
 \section*{Updating your Data}
-If you're interested in inputting your own data, you must follow the organization of the tidy data sets, though these can be generated from a user-created company data file as follows:
+If you're interested in inputting your own data, you can generate financial statements for a data frame of companies as follows:
 
 <<Updating your Data>>=
-#companies #Your custom data frame of company names and tickers.
-#save_companies(companies)
-#getinfo()
-#tidyinfo()
+#companies #Your custom data frame of company names and tickers. The column name for tickers must be "ticker"
+#rawdata <- getinfo(companies) #Retrieves raw financial statements from google finance through the quantmod package.
+#financials <- tidyinfo(rawdata) #Renders raw data in a usable format.
 @
 
-These commands will automatically retrieve relevant financial data from the web for your data frame of companies, store that data in the extdata folder of qmj, and then produce tidy versions of that data to be stored in the data folder.
+These functions will automatically retrieve relevant financial data from the web for your data frame of companies, and then allows you to pass in your new financials variable for the various quality functions.
 
-\subsection*{Updating Daily Data}
-Updating daily data is a slightly more protracted process, and for that reason is separated from the other functions that automatically collect financial statements. To update daily data, which is necessary for calculating safety measurements, call:
+\subsection*{Updating Prices}
+Updating prices is a separate, lengthy process, and for that reason is separated from the other functions that automatically collect financial statements. To update prices, which is necessary for calculating safety measurements, call:
 
 <<Updating Daily Data>>=
-#update_dailydata(companies)
+# rawprices <- get_prices(companies)
+# prices <- tidy_prices(rawprices)
 @
 
-The update dailydata function deliberately requires a parameter as opposed to the financial statement functions due to the amount of time necessary to read in and compile relevant stock data from our sources. ( Google finance, with the S\&P 500 being taken from Yahoo finance )
-
-\subsection*{Updating Extra Financials}
-Updating extra financials can be used to grab the most recent betas and earnings before interest, taxes, depreciation, and amortization ($EBITDA$). However, the current data in the package is quite recent, betas do not tend to fluctuate much, and $EBITDA$ are updated on an annual basis, so updating extra financials, a time-consuming process, should rarely be necessary. To update extra financials, call:
-
-<<Updating Extra Financials>>=
-#get_extrafin()
-@
-
-This function does not have parameters because when updating extra financials, it is vital that every company be updated since beta is relative, and thus modifying the beta of one company will affect the betas of other companies. 
+The get\_prices function is able to save its progress as it temporarily saves its download data to the extdata folder in the package's folder. Data is retrieved from Google finance, with the S\&P 500 being taken from Yahoo finance.
 \end{document}
