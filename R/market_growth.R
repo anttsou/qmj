@@ -14,9 +14,6 @@
 
 #use sapply to make columns numeric
 market_growth <- function(x, financials){
-  #Is there a better way to do this than calling "library(data.table)?"
-  library(data.table)
-  
   allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
   numCompanies <- length(x$tickers)
@@ -24,15 +21,13 @@ market_growth <- function(x, financials){
   financials[is.na(financials)] <- 0
   
   fin <- financials
-  fin <- fin[order(fin$year, decreasing=TRUE),]
-  fin <- data.table(fin, key="ticker")
-  fstyear <- unique(fin)
+  fin <- arrange(fin, desc(year))
+  
+  fstyear <- distinct_(fin, "ticker")
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)  
 
-  fin <- fin[order(fin$year, decreasing=FALSE),]
-  setkey(fin, "ticker")
-  
-  lstyear <- unique(fin)
+  fin <- arrange(fin, year)
+  lstyear <- distinct_(fin, "ticker")
   lstyear <- merge(allcompanies, lstyear, by="ticker", all.x = TRUE)
   
   gpoa <- function(gprof1, gprof2, ta){
