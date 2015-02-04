@@ -17,5 +17,6 @@ Imports:
 	dplyr
 Depends: R (>= 3.1.1),
 	data.table
+Suggests: testthat
 License: GPL-3
 LazyData: false
