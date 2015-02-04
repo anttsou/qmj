@@ -149,7 +149,10 @@ setMethod(f="plot_quality",
                       signature="qmj",
                       definition=function(theObject)
                       {
-                        return
+                        market_dat <- market_data()
+                        quality <- market_dat$quality
+                        dat <- theObject@quality == 
+                        
                       }
                       )
 
