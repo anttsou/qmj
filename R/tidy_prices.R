@@ -1,12 +1,11 @@
-#' Tidies raw daily data set
+#' Tidies raw prices data set
 #'
-#' Tidies raw daily data and returns a tidied data frame. Companies which lack daily data are given a placeholder row containing
-#' only their ticker. Raw data set should be xts insofar as row.names are a series of dates, every column must have a
-#' ticker in their name, and the columns should be ordered "PRET" "CLOSE" "PRET" "CLOSE" ...
-#' @param x Raw daily data, as produced by get_dailydata()
+#' Tidies raw prices and returns a tidied, usable data frame. Raw data should be structured identically to that produced
+#' by get_prices(), as this function depends on that structure.
+#' @param x Raw daily data, as produced by get_prices()
 #' @export
 
-tidy_dailydata <- function(x){
+tidy_prices <- function(x){
   numCompanies <- (length(names(x))/2)
   numDaysInTwoYears <- 732
   tidymatrix <- matrix(nrow=(numDaysInTwoYears * numCompanies), ncol=4)

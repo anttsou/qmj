@@ -1,14 +1,15 @@
-#' Gets the daily prices and returns of companies for the past five years.
+#' Gets the daily prices and returns of companies for the past two years.
 #'
-#' Given a list of companies (names and tickers), writes .csv files for every company
-#' storing price returns.
+#' Given a list of companies (names and tickers), writes .RData files for every company in the /extdata folder
+#' in the package folder. If canceled partway through, function is able to find and re-read this data, allowing
+#' resumption of progress.
 #' @param x A dataframe of company names and tickers.
 #' @examples
 #' x <- data(companies)
-#' \dontrun{get_dailydata(x)}
+#' \dontrun{get_prices(x)}
 #' @export
 
-get_dailydata <- function(x){
+get_prices <- function(x){
   filepath <- system.file("extdata", package="qmj")
   numCompanies <- length(x$ticker)
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))
@@ -64,8 +65,8 @@ get_dailydata <- function(x){
     } 
   }
   file.remove(listfiles)
-  dailydata <- data.frame(compiled, stringsAsFactors=FALSE)[,-1]
-  #   filepath2 <- paste(filepath, "/dailydata.RData", sep='')
-  #   save(dailydata, file="dailydata.RData")
-  dailydata
+  prices <- data.frame(compiled, stringsAsFactors=FALSE)[,-1]
+  #   filepath2 <- paste(filepath, "/prices.RData", sep='')
+  #   save(prices, file="prices.RData")
+  prices
 }
