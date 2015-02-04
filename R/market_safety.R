@@ -98,16 +98,16 @@ market_safety <- function(x, financials, daily){
   
 
   merger <- function(company_ticker) {
-    cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
+    -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
         as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
-      var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
+      var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
   }
   calc_ivol <- function(company_ticker) {
     #print(length(splitdail[[company_ticker]]))
     if(length(splitdail[[company_ticker]]) > 0) {
       lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
                     as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
-      sd(residuals(lmobj))
+      -(sd(residuals(lmobj)))
     } else {
       NA
     }

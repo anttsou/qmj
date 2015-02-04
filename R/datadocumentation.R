@@ -38,14 +38,38 @@ NULL
 #' @keywords data
 NULL
 
-#' A dataframe quality scores for companies listed in the Russell 3000
+#' A dataframe of quality scores for companies listed in the Russell 3000
 #'
 #' Displays overall quality scores as well as the scores for profitability, growth,
-#' safety, and payouts.
+#' safety, and payouts. Companies are sorted in order of quality score, with NAs stored
+#' at the end of the data set. 
+#' 
+#' If partial information exists (i.e., a profitability score
+#' was able to be calculated), then those scores are kept for that company, even if
+#' insufficient information exists to produce a quality score.
 #' 
 #' Last updated: January 2015
 #'
 #' @name quality
+#' @docType data
+#' @keywords data
+NULL
+
+#' A dataframe of safety scores for companies listed in the Russell 3000
+#'
+#' Displays safety scores as well as its components, this includes:
+#' \itemize{
+#'    \item BAB = Beta, calculated by comparison with the S&P 500
+#'    \item IVOL = Idiosyncratic Volatility, also calculated using the S&P 500
+#'    \item LEV = Leverage
+#'    \item O = Ohlson O-Score.
+#'    \item Z = Altman Z-Score
+#'    \item EVOL = Standard deviation of quarterly 
+#'    
+#'  }
+#' Last updated: January 2015
+#'
+#' @name safety
 #' @docType data
 #' @keywords data
 NULL
