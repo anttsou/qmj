@@ -5,7 +5,6 @@
 #' for later processing.
 #' @param x A dataframe of company names and tickers.
 #' @param financials a formatted data frame containing financial information for the given companies.
-#' @param extrafin A dataframe containing a few extran financial statements not consistently found through other methods.
 #' @param daily A dataframe containing the daily market closing prices and returns. 
 #' @examples
 #' data(companies)
@@ -13,7 +12,7 @@
 #' market_data(companies, financials)
 #' @export
 
-market_data <- function(x, financials, extrafin, daily){
+market_data <- function(x, financials, daily){
   numx <- length(x$tickers)
   
   profitability <- market_profitability(x, financials)$profitability
