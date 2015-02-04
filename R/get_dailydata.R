@@ -29,37 +29,39 @@ get_dailydata <- function(x){
   filesInDest <- list.files(path=filepath)
   for(i in 1:numCompanies){
     companyTicker <- as.character(x$ticker[i])
-    print(companyTicker)
-    fileName <- paste(filepath, "/", companyTicker, ".RData", sep='')
-    listfiles[(i) + 1] <- fileName
+    
     file <- paste(companyTicker, ".RData", sep='')
+    fileName <- paste(filepath, "/", companyTicker, ".RData", sep='')
     if(is.element(file, filesInDest)){
       print(paste(companyTicker, "information found in extdata. Resuming Download.", sep=' '))
+      listfiles[i+1] <- fileName
     } else{
       stockData <- tryCatch(
         quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE),
         error=function(e) e
       )
       if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1){
+        print(companyTicker)
         stockData <- stockData[desiredDates,4]
         priceData <- stockData
         stockData$pret <- pricereturns(stockData)
         stockData <- stockData[-1,]
+        listfiles[(i) + 1] <- fileName
         save(stockData, file=fileName)
       } else{
         print(paste("Error retrieving data for ", companyTicker, sep=""))
-        nullData <- data.frame(companyTicker, NA)
-        colnames(nullData) <- c(companyTicker, companyTicker)
-        save(nullData, file=fileName)
       }
     }
   }
+  listfiles <- listfiles[listfiles != ""]
   compiled <- matrix()
   load(listfiles[1])
   compiled = cbind(compiled, stockData)
-  for(i in 2:(numCompanies+1)){
-    load(listfiles[i])
-    compiled = cbind(compiled, stockData)
+  if(length(listfiles) > 1){
+    for(i in 2:(length(listfiles))){
+      load(listfiles[i])
+      compiled = cbind(compiled, stockData)
+    } 
   }
   file.remove(listfiles)
   dailydata <- data.frame(compiled, stringsAsFactors=FALSE)[,-1]
