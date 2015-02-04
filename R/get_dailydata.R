@@ -8,7 +8,7 @@
 #' \dontrun{get_dailydata(x)}
 #' @export
 
-get_dailydata <- function(x){
+get_dailydata <- function(x) {
   filepath <- system.file("extdata", package="qmj")
   numCompanies <- length(x$ticker)
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))

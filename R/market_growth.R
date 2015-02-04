@@ -1,3 +1,4 @@
+
 #' Collects growth z-scores for companies
 #'
 #' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
