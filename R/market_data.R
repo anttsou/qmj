@@ -5,7 +5,6 @@
 #' for later processing.
 #' @param x A dataframe of company names and tickers.
 #' @param financials a formatted data frame containing financial information for the given companies.
-#' @param extrafin A dataframe containing a few extran financial statements not consistently found through other methods.
 #' @param daily A dataframe containing the daily market closing prices and returns. 
 #' @examples
 #' data(companies)
@@ -13,12 +12,12 @@
 #' market_data(companies, financials)
 #' @export
 
-market_data <- function(x, financials, extrafin, daily){
+market_data <- function(x, financials, daily){
   numx <- length(x$tickers)
   
   profitability <- market_profitability(x, financials)$profitability
   growth <- market_growth(x, financials)$growth
-  safety <- market_safety(x, financials, extrafin, daily)$safety
+  safety <- market_safety(x, financials, daily)$safety
   payouts <- market_payout(x, financials)$payouts
   quality <- profitability + growth + safety + payouts
   
@@ -31,5 +30,5 @@ market_data <- function(x, financials, extrafin, daily){
                            safety = safety, 
                            payouts = payouts, 
                            quality = quality)
-  marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE, na.last=NA),]
+  marketdata <- marketdata[order(marketdata$quality,decreasing=TRUE, na.last=TRUE),]
 }

@@ -5,14 +5,12 @@
 \title{Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
 by descending quality.}
 \usage{
-market_data(x, financials, extrafin, daily)
+market_data(x, financials, daily)
 }
 \arguments{
 \item{x}{A dataframe of company names and tickers.}
 
 \item{financials}{a formatted data frame containing financial information for the given companies.}
-
-\item{extrafin}{A dataframe containing a few extran financial statements not consistently found through other methods.}
 
 \item{daily}{A dataframe containing the daily market closing prices and returns.}
 }

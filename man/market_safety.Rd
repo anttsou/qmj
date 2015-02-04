@@ -4,14 +4,12 @@
 \alias{market_safety}
 \title{Collects safety z-scores for companies}
 \usage{
-market_safety(x, financials, extrafin, daily)
+market_safety(x, financials, daily)
 }
 \arguments{
 \item{x}{A dataframe of company names and tickers.}
 
 \item{financials}{A dataframe containing financial statements for every company.}
-
-\item{extrafin}{A dataframe containing a few extran financial statements not consistently found through other methods.}
 
 \item{daily}{A dataframe containing the daily market closing prices and returns.}
 }
@@ -28,8 +26,7 @@ data(extrafin)
 data(tidydaily)
 x <- companies
 financials <- financials
-extrafin <- extrafin
 daily <- tidydaily
-market_safety(x, financials, extrafin, daily)
+market_safety(x, financials, daily)
 }
 

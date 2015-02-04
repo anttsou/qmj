@@ -3,12 +3,17 @@
 \docType{data}
 \name{quality}
 \alias{quality}
-\title{A dataframe quality scores for companies listed in the Russell 3000}
+\title{A dataframe of quality scores for companies listed in the Russell 3000}
 \description{
 Displays overall quality scores as well as the scores for profitability, growth,
-safety, and payouts.
+safety, and payouts. Companies are sorted in order of quality score, with NAs stored
+at the end of the data set.
 }
 \details{
+If partial information exists (i.e., a profitability score
+was able to be calculated), then those scores are kept for that company, even if
+insufficient information exists to produce a quality score.
+
 Last updated: January 2015
 }
 \keyword{data}

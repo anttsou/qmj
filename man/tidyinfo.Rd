@@ -4,7 +4,10 @@
 \alias{tidyinfo}
 \title{Tidies raw financial data.}
 \usage{
-tidyinfo()
+tidyinfo(x)
+}
+\arguments{
+\item{x}{A list of lists of financial statements. Generated from get_info(companies).}
 }
 \description{
 Reads in raw financial data in the /extdata folder of the qmj package,

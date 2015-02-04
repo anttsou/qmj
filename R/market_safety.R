@@ -6,7 +6,6 @@
 #' Quality Minus Junk (Asness et al.) in Appendix page A2.
 #' @param x A dataframe of company names and tickers.
 #' @param financials A dataframe containing financial statements for every company.
-#' @param extrafin A dataframe containing a few extran financial statements not consistently found through other methods.
 #' @param daily A dataframe containing the daily market closing prices and returns. 
 #' @examples
 #' data(companies)
@@ -15,12 +14,11 @@
 #' data(tidydaily)
 #' x <- companies
 #' financials <- financials
-#' extrafin <- extrafin
 #' daily <- tidydaily
-#' market_safety(x, financials, extrafin, daily)
+#' market_safety(x, financials, daily)
 #' @export
 
-market_safety <- function(x, financials, extrafin, daily){
+market_safety <- function(x, financials, daily){
   #Is there a better way to do this than calling "library(data.table)?"
   #library(data.table)
 
@@ -54,9 +52,7 @@ market_safety <- function(x, financials, extrafin, daily){
   }
   marketlistb <- market[grepl(year,market$date),]
   mergedail <- merge(marketlistb,nogspc,by="date")
-  print("start")
   splitdail <- split(mergedail,mergedail$ticker.y)
-  print("end")
   ordereddaily <- daily[order(daily$date, decreasing=TRUE),]
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
   splitindices <- splitindices[-1]
@@ -64,12 +60,6 @@ market_safety <- function(x, financials, extrafin, daily){
   setkey(ordereddaily, "ticker")
   yearlyprices <- unique(ordereddaily)
   
-  merger <- function(company_ticker) {
-    print(splitdail[[company_ticker]]$ticker.y)
-    cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
-        as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
-      var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
-  }
 #   merger <- function(company_ticker) {
 #     print(company_ticker)
 #     companylist <- daily[daily$ticker == company_ticker,]
@@ -79,17 +69,6 @@ market_safety <- function(x, financials, extrafin, daily){
 #       var(as.numeric(as.character(final$pret.x)))
 #   }
   
-  calc_ivol <- function(company_ticker) {
-    print(splitdail[[company_ticker]]$ticker.y)
-    #print(length(splitdail[[company_ticker]]))
-    if(length(splitdail[[company_ticker]]) > 0) {
-      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
-                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
-      sd(residuals(lmobj))
-    } else {
-      NA
-    }
-  }
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1[,1:5])
     x.2p <- do.call("paste", x.2[,1:5])
@@ -117,22 +96,27 @@ market_safety <- function(x, financials, extrafin, daily){
   thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
   fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
   
+
+  merger <- function(company_ticker) {
+    -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
+        as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
+      var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
+  }
+  calc_ivol <- function(company_ticker) {
+    #print(length(splitdail[[company_ticker]]))
+    if(length(splitdail[[company_ticker]]) > 0) {
+      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
+                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
+      -(sd(residuals(lmobj)))
+    } else {
+      NA
+    }
+  }
   lev <- function(td, ta){
     -td/ta
   }
   exret <- function(subcomps, beta, marketclose){
     subcomps - (beta*marketclose)
-  }
-  extrafinclean <- function(ebitdascol){
-    if(grepl("B",as.character(ebitdascol))) {
-      as.numeric(sub("B.*","",as.character(ebitdascol)))*1000
-    } else if(grepl("M",as.character(ebitdascol))) {
-      as.numeric(sub("M.*","",as.character(ebitdascol)))
-    } else if(grepl("K",as.character(ebitdascol))) {
-      as.numeric(sub("K.*","",as.character(ebitdascol)))/1000
-    } else {
-      as.numeric(as.character(ebitdascol))/1000000
-    }
   }
   calcmean <- function(indexlist){
     indexlist <- as.numeric(indexlist)
@@ -245,14 +229,14 @@ market_safety <- function(x, financials, extrafin, daily){
 #   print(head(O))
 #   print(head(Z))
 #   print(head(EVOL))
-  safety <- BAB[,1] + IVOL[,1] + LEV[,1] + O[,1] + Z[,1] + EVOL[,1]
+  safety <- BAB + IVOL + LEV + O + Z + EVOL
   safety <- scale(safety)
   data.frame(ticker = x$ticker, 
              safety = safety, 
-             BAB = BAB[,1], 
-             IVOL = IVOL[,1],
-             LEV = LEV[,1], 
-             O = O[,1], 
-             Z = Z[,1], 
-             EVOL = EVOL[,1])
+             BAB = BAB, 
+             IVOL = IVOL,
+             LEV = LEV, 
+             O = O, 
+             Z = Z, 
+             EVOL = EVOL)
 }

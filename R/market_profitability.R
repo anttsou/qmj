@@ -84,5 +84,11 @@ market_profitability <- function(x, financials){
   
   profitability <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   profitability <- scale(profitability)
-  data.frame(x$ticker, profitability, GPOA, ROE, ROA, CFOA, GMAR, ACC)
+  data.frame(ticker = x$ticker, 
+             profitability = profitability, 
+             GPOA = GPOA, 
+             ROE = ROA,
+             CFOA = CFOA, 
+             GMAR = GMAR,
+             ACC = ACC)
 }

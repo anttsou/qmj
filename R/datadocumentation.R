@@ -38,14 +38,96 @@ NULL
 #' @keywords data
 NULL
 
-#' A dataframe quality scores for companies listed in the Russell 3000
+#' A dataframe of quality scores for companies listed in the Russell 3000
 #'
 #' Displays overall quality scores as well as the scores for profitability, growth,
-#' safety, and payouts.
+#' safety, and payouts. Companies are sorted in order of quality score, with NAs stored
+#' at the end of the data set. 
+#' 
+#' If partial information exists (i.e., a profitability score
+#' was able to be calculated), then those scores are kept for that company, even if
+#' insufficient information exists to produce a quality score.
 #' 
 #' Last updated: January 2015
 #'
 #' @name quality
+#' @docType data
+#' @keywords data
+NULL
+
+#' A dataframe of safety scores for companies listed in the Russell 3000
+#'
+#' Displays safety scores as well as its components, this includes:
+#' \itemize{
+#'    \item BAB = Beta, calculated by comparison with the S&P 500
+#'    \item IVOL = Idiosyncratic Volatility, also calculated using the S&P 500
+#'    \item LEV = Leverage
+#'    \item O = Ohlson O-Score.
+#'    \item Z = Altman Z-Score
+#'    \item EVOL = Standard deviation of annual ROE over the past four years.
+#'  }
+#'  
+#'  More information may be found on the Technical vignette.
+#' Last updated: January 2015
+#'
+#' @name safety
+#' @docType data
+#' @keywords data
+NULL
+
+#' A dataframe of profitability scores for companies listed in the Russell 3000
+#'
+#' Displays profitability scores as well as its components, this includes:
+#' \itemize{
+#'    \item GPOA = Gross Profits over Assets
+#'    \item ROE = Return on Equity
+#'    \item ROA = Return on Assets
+#'    \item CFOA = Cash Flow over Assets
+#'    \item GMAR = Gross Margin
+#'    \item ACC = Accruals
+#'  }
+#'  
+#'  More information may be found on the Technical vignette.
+#' Last updated: January 2015
+#'
+#' @name profitability
+#' @docType data
+#' @keywords data
+NULL
+
+#' A dataframe of growth scores for companies listed in the Russell 3000
+#'
+#' Displays growth scores as well as its components, this includes:
+#' \itemize{
+#'    \item GPOA =  Four year growth in Gross Profits over Assets
+#'    \item ROE = Four year growth in Return on Equity
+#'    \item ROA = Four year growth in Return on Assets
+#'    \item CFOA = Four year growth in Cash Flow over Assets
+#'    \item GMAR = Four year growth in Gross Margin
+#'    \item ACC = Four year growth in Accruals
+#'  }
+#'  
+#'  More information may be found on the Technical vignette.
+#' Last updated: January 2015
+#'
+#' @name growth
+#' @docType data
+#' @keywords data
+NULL
+
+#' A dataframe of payout scores for companies listed in the Russell 3000
+#'
+#' Displays payout scores as well as its components, this includes:
+#' \itemize{
+#'    \item EISS = Minus one-year percent change in split-adjusted number of shares.
+#'    \item DISS = Minus one-year percent change in total debt.
+#'    \item NPOP = Sum of total net payout over the past 4 years divided by total profits over the past 4 years.
+#'  }
+#'  
+#'  More information may be found on the Technical vignette.
+#' Last updated: January 2015
+#'
+#' @name payouts
 #' @docType data
 #' @keywords data
 NULL
