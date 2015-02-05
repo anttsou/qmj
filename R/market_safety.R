@@ -29,11 +29,9 @@ market_safety <- function(x, financials, daily){
   daily$pret[is.nan(as.numeric(daily$pret))] <- 0
   daily$pret[is.infinite(as.numeric(daily$pret))] <- 0
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
-  #daily$date <- sub("-.*","",daily$date)
   market <- filter(daily, ticker == "GSPC")
     #daily[daily$ticker == "GSPC",]
   nogspc <- filter(daily, ticker != "GSPC")
-  #marketlist <- list(daily[daily$ticker == "GSPC",])
   year <- numeric()
   if(sum(market$date == currentyear) <= 150){
     year <- currentyear - 1
@@ -194,18 +192,6 @@ market_safety <- function(x, financials, daily){
   Z[is.na(Z)] <- 0
   EVOL[is.na(EVOL)] <- 0
   
-#   print(class(BAB))
-#   print(class(IVOL))
-#   print(class(LEV))
-#   print(class(O))
-#   print(class(Z))
-#   print(class(EVOL))
-#   print(head(BAB))
-#   print(head(IVOL))
-#   print(head(LEV))
-#   print(head(O))
-#   print(head(Z))
-#   print(head(EVOL))
   safety <- BAB + IVOL + LEV + O + Z + EVOL
   safety <- scale(safety)
   data.frame(ticker = x$ticker, 
