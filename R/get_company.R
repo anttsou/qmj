@@ -5,5 +5,6 @@ get_company <- function(companies,ticker,financials,prices) {
   safety <- market_safety(sub.comp,financials,prices)
   payouts <- market_payout(sub.comp,financials)
   quality <- profitability + growth + safety + payouts
+  #add all of the values that go into each component
   #company <- new("Company",...)
 }
