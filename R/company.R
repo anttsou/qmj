@@ -1,36 +1,39 @@
-qmj <- setClass(
-  "qmj",
+company <- setClass(
+  "company",
   slots = c(
     ticker = "character",
-    profitability = "data.frame",
-    growth = "data.frame",
-    safety = "data.frame",
-    payouts = "data.frame",
-    quality = "data.frame"
+    profitability = "numeric",
+    pGPOA = "numeric",
+    pROE = "numeric",
+    pROA = "numeric",
+    pCFOA = "numeric",
+    pGMAR = "numeric",
+    pACC = "numeric",
+    growth = "numeric",
+    gGPOA = "numeric",
+    gROE = "numeric",
+    gROA = "numeric",
+    gCFOA = "numeric",
+    gGMAR = "numeric",
+    gACC = "numeric",
+    safety = "numeric",
+    sBAB = "numeric",
+    sIVOL = "numeric",
+    sLEV = "numeric",
+    sO = "numeric",
+    sZ = "numeric",
+    sEVOL = "numeric",
+    payouts = "numeric",
+    pEISS = "numeric",
+    pDISS = "numeric",
+    pNPOP = "numeric",
+    quality = "numeric"    
   ),
   contains = "data.frame",
   prototype = list(
     ticker = "AAPL",
-    profitability = function() {
-      data(profitability)
-      profitability
-    }, 
-    growth = function() {
-      data(growth)
-      growth
-    },
-    safety = function() {
-      data(safety)
-      safety
-    },
-    payouts = function() {
-      data(payouts)
-      payouts
-    },
-    quality = function() {
-      data(quality)
-      quality
-    }),
+    profitability = 0
+    ),
   validity = function(object)
   {
     if(!grepl("[A-Z][^a-z]", object@ticker)) {
@@ -150,7 +153,10 @@ setMethod(f="plot_quality",
                       signature="qmj",
                       definition=function(theObject)
                       {
-                        return
+                        market_dat <- market_data()
+                        quality <- market_dat$quality
+                        theObject
+                        
                       }
                       )
 
@@ -168,5 +174,3 @@ setMethod(f="summarize",
                         return
                       }
                       )
-
-
