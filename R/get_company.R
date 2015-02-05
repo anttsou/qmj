@@ -4,7 +4,60 @@ get_company <- function(companies,ticker,financials,prices) {
   growth <- market_growth(sub.comp,financials)
   safety <- market_safety(sub.comp,financials,prices)
   payouts <- market_payout(sub.comp,financials)
-  quality <- profitability + growth + safety + payouts
+  quality <- profitability$profitability + growth$growth + safety$safety + payouts$payouts
   #add all of the values that go into each component
-  #company <- new("Company",...)
+  pGPOA = "numeric",
+  pROE = "numeric",
+  pROA = "numeric",
+  pCFOA = "numeric",
+  pGMAR = "numeric",
+  pACC = "numeric",
+  growth = "numeric",
+  gGPOA = "numeric",
+  gROE = "numeric",
+  gROA = "numeric",
+  gCFOA = "numeric",
+  gGMAR = "numeric",
+  gACC = "numeric",
+  safety = "numeric",
+  sBAB = "numeric",
+  sIVOL = "numeric",
+  sLEV = "numeric",
+  sO = "numeric",
+  sZ = "numeric",
+  sEVOL = "numeric",
+  payouts = "numeric",
+  pEISS = "numeric",
+  pDISS = "numeric",
+  pNPOP = "numeric",
+  quality = "numeric"
+  company <- new("Company",
+                 ticker = ticker, 
+                 profitability = profitability$profitability, 
+                 pGPOA = profitability$GPOA,
+                 pROE = profitability$ROE,
+                 pROA = profitability$ROA,
+                 pCFOA = profitability$CFOA,
+                 pGMAR = profitability$GMAR,
+                 pACC = profitability$ACC,
+                 growth = growth$growth,
+                 gGPOA = growth$GPOA,
+                 gROE = growth$ROE,
+                 gROA = growth$ROA,
+                 gCFOA = growth$CFOA,
+                 gGMAR = growth$GMAR,
+                 gACC = growth$ACC,
+                 safety = safety$safety,
+                 sBAB = safety$BAB,
+                 sIVOL = safety$IVOL,
+                 sLEV = safety$LEV,
+                 sO = safety$O,
+                 sZ = safety$Z,
+                 sEVOL = safety$EVOL,
+                 payouts = payouts$payouts,
+                 pEISS = payouts$EISS,
+                 pDISS = payouts$DISS,
+                 pNPOP = payouts$NPOP,
+                 quality = quality)
+  company
 }
