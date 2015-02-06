@@ -174,7 +174,6 @@ market_payout <- function(x, financials){
   payouts <- EISS + DISS + NPOP
   
   payouts <- scale(payouts)
-  data.frame(x$ticker, payouts, EISS, DISS, NPOP)
   data.frame(ticker = x$ticker, 
              payouts = payouts, 
              EISS = EISS, 

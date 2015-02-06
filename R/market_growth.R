@@ -99,7 +99,8 @@ market_growth <- function(x, financials){
   data.frame(ticker = x$ticker, 
              growth = growth, 
              GPOA = GPOA, 
-             ROE = ROA,
+             ROE = ROE,
+             ROA = ROA,
              CFOA = CFOA, 
              GMAR = GMAR,
              ACC = ACC)

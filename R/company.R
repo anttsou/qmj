@@ -29,10 +29,34 @@ company <- setClass(
     pNPOP = "numeric",
     quality = "numeric"    
   ),
-  contains = "data.frame",
   prototype = list(
-    ticker = "AAPL",
+    ticker = "NA",
     profitability = 0
+    pGPOA = "0",
+    pROE = "0",
+    pROA = "0",
+    pCFOA = "0",
+    pGMAR = "0",
+    pACC = "0",
+    growth = "0",
+    gGPOA = "0",
+    gROE = "0",
+    gROA = "0",
+    gCFOA = "0",
+    gGMAR = "0",
+    gACC = "0",
+    safety = "0",
+    sBAB = "0",
+    sIVOL = "0",
+    sLEV = "0",
+    sO = "0",
+    sZ = "0",
+    sEVOL = "0",
+    payouts = "0",
+    pEISS = "0",
+    pDISS = "0",
+    pNPOP = "0",
+    quality = "0"
     ),
   validity = function(object)
   {
@@ -68,9 +92,23 @@ setMethod(f="view_profitability",
                       signature="qmj",
                       definition=function(theObject)
                       {
-                        temp.prof <- theObject@profitability
-                        temp.tick <- theObject@ticker
-                        return(temp.prof[temp.prof$ticker==temp.tick,])
+                        tick <- theObject@ticker
+                        prof <- theObject@profitability
+                        gpoa <- theObject@pGPOA
+                        roe <- theObject@pROE
+                        roa <- theObject@pROA
+                        cfoa <- theObject@pCFOA
+                        gmar <- theObject@pGMAR
+                        acc <- theObject@pACC
+                        
+                        return data.frame(ticker = tick, 
+                                   profitability = prof, 
+                                   GPOA = gpoa, 
+                                   ROE = roe,
+                                   ROA = roa,
+                                   CFOA = cfoa, 
+                                   GMAR = gmar,
+                                   ACC = acc)
                       }
                       )
 
@@ -85,9 +123,23 @@ setMethod(f="view_growth",
                       signature="qmj",
                       definition=function(theObject)
                       {
-                        temp.grow <- theObject@growth
-                        temp.tick <- theObject@ticker
-                        return(temp.grow[temp.grow$ticker==temp.tick,])
+                        tick <- theObject@ticker
+                        prof <- theObject@growth
+                        gpoa <- theObject@gGPOA
+                        roe <- theObject@gROE
+                        roa <- theObject@gROA
+                        cfoa <- theObject@gCFOA
+                        gmar <- theObject@gGMAR
+                        acc <- theObject@gACC
+                        
+                        return data.frame(ticker = tick, 
+                                          growth = prof, 
+                                          GPOA = gpoa, 
+                                          ROE = roe,
+                                          ROA = roa,
+                                          CFOA = cfoa, 
+                                          GMAR = gmar,
+                                          ACC = acc)
                       }
                       )
 
@@ -102,9 +154,22 @@ setMethod(f="view_safety",
                       signature="qmj",
                       definition=function(theObject)
                       {
-                        temp.safe <- theObject@safety
-                        temp.tick <- theObject@ticker
-                        return(temp.safe[temp.safe$ticker==temp.tick,])
+                        tick <- theObject@ticker
+                        safety <- theObject@safety
+                        bab <- theObject@sBAB
+                        ivol <- theObject@sIVOL
+                        lev <- theObject@sLEV
+                        o <- theObject@sO
+                        z <- theObject@sZ
+                        evol <- theObject@sEVOL
+                        return data.frame(ticker = tick, 
+                                   safety = safety, 
+                                   BAB = bab, 
+                                   IVOL = ivol,
+                                   LEV = lev, 
+                                   O = o, 
+                                   Z = z, 
+                                   EVOL = evol)
                       }
                       )
 
@@ -119,9 +184,16 @@ setMethod(f="view_payouts",
                       signature="qmj",
                       definition=function(theObject)
                       {
-                        temp.pay <- theObject@payouts
-                        temp.tick <- theObject@ticker
-                        return(temp.pay[temp.pay$ticker==temp.tick,])
+                        tick <- theObject@ticker
+                        payouts <- theObject@payouts
+                        eiss <- theObject@pEISS
+                        diss <- theObject@pDISS
+                        npop <- theObject@pNPOP
+                        return data.frame(ticker = tick, 
+                                   payouts = payouts, 
+                                   EISS = eiss, 
+                                   DISS = diss,
+                                   NPOP = npop)
                       }
                       )
 
@@ -136,9 +208,19 @@ setMethod(f="view_quality",
                       signature="qmj",
                       definition=function(theObject)
                       {
-                        temp.qual <- theObject@quality
-                        temp.tick <- theObject@ticker
-                        return(temp.qual[temp.qual$ticker==temp.tick,])
+                        tick <- theObject@ticker
+                        quality <- theObject@quality
+                        profitability <- theObject@profitability
+                        growth <- theObject@growth
+                        safety <- theObject@safety
+                        payouts <- theObject@payouts
+                        
+                        return data.frame(ticker = tick,
+                                          quality = quality,
+                                          profitability = profitability,
+                                          growth = growth,
+                                          safety = safety,
+                                          payouts = payouts)
                       }
                       )
 
