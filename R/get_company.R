@@ -5,32 +5,8 @@ get_company <- function(companies,ticker,financials,prices) {
   safety <- market_safety(sub.comp,financials,prices)
   payouts <- market_payout(sub.comp,financials)
   quality <- profitability$profitability + growth$growth + safety$safety + payouts$payouts
+  
   #add all of the values that go into each component
-  pGPOA = "numeric",
-  pROE = "numeric",
-  pROA = "numeric",
-  pCFOA = "numeric",
-  pGMAR = "numeric",
-  pACC = "numeric",
-  growth = "numeric",
-  gGPOA = "numeric",
-  gROE = "numeric",
-  gROA = "numeric",
-  gCFOA = "numeric",
-  gGMAR = "numeric",
-  gACC = "numeric",
-  safety = "numeric",
-  sBAB = "numeric",
-  sIVOL = "numeric",
-  sLEV = "numeric",
-  sO = "numeric",
-  sZ = "numeric",
-  sEVOL = "numeric",
-  payouts = "numeric",
-  pEISS = "numeric",
-  pDISS = "numeric",
-  pNPOP = "numeric",
-  quality = "numeric"
   company <- new("Company",
                  ticker = ticker, 
                  profitability = profitability$profitability, 
