@@ -81,7 +81,8 @@ market_profitability <- function(x, financials){
   data.frame(ticker = x$ticker, 
              profitability = profitability, 
              GPOA = GPOA, 
-             ROE = ROA,
+             ROE = ROE,
+             ROA = ROA,
              CFOA = CFOA, 
              GMAR = GMAR,
              ACC = ACC)
