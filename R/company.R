@@ -217,7 +217,7 @@ setGeneric(name="plot_quality",
                       ) 
 
 setMethod(f="plot_quality",
-                      signature="Company",
+                      signature=c("Company", "data.frame"),
                       definition=function(theObject, quality_data_frame)
                       {
                         quality <- theObject@quality
@@ -251,7 +251,7 @@ setGeneric(name="summarize",
                       ) 
 
 setMethod(f="summarize",
-                      signature="Company",
+                      signature=c("Company", "data.frame", "data.frame"),
                       definition=function(theObject, financials, prices)
                       {
                         cat("Information for: ", theObject@ticker)
