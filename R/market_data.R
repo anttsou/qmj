@@ -13,7 +13,6 @@
 #' @export
 
 market_data <- function(x, financials, daily){
-  numx <- length(x$tickers)
   
   profitability <- market_profitability(x, financials)$profitability
   growth <- market_growth(x, financials)$growth
