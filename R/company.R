@@ -132,14 +132,14 @@ setMethod(f="view_growth",
                         gmar <- theObject@gGMAR
                         acc <- theObject@gACC
                         
-                        return data.frame(ticker = tick, 
+                        return(data.frame(ticker = tick, 
                                           growth = prof, 
                                           GPOA = gpoa, 
                                           ROE = roe,
                                           ROA = roa,
                                           CFOA = cfoa, 
                                           GMAR = gmar,
-                                          ACC = acc)
+                                          ACC = acc))
                       }
                       )
 
@@ -162,14 +162,14 @@ setMethod(f="view_safety",
                         o <- theObject@sO
                         z <- theObject@sZ
                         evol <- theObject@sEVOL
-                        return data.frame(ticker = tick, 
+                        return(data.frame(ticker = tick, 
                                    safety = safety, 
                                    BAB = bab, 
                                    IVOL = ivol,
                                    LEV = lev, 
                                    O = o, 
                                    Z = z, 
-                                   EVOL = evol)
+                                   EVOL = evol))
                       }
                       )
 
@@ -189,11 +189,11 @@ setMethod(f="view_payouts",
                         eiss <- theObject@pEISS
                         diss <- theObject@pDISS
                         npop <- theObject@pNPOP
-                        return data.frame(ticker = tick, 
+                        return(data.frame(ticker = tick, 
                                    payouts = payouts, 
                                    EISS = eiss, 
                                    DISS = diss,
-                                   NPOP = npop)
+                                   NPOP = npop))
                       }
                       )
 
@@ -215,12 +215,12 @@ setMethod(f="view_quality",
                         safety <- theObject@safety
                         payouts <- theObject@payouts
                         
-                        return data.frame(ticker = tick,
+                        return(data.frame(ticker = tick,
                                           quality = quality,
                                           profitability = profitability,
                                           growth = growth,
                                           safety = safety,
-                                          payouts = payouts)
+                                          payouts = payouts))
                       }
                       )
 
