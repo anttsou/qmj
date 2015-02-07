@@ -233,11 +233,27 @@ setGeneric(name="plot_quality",
 
 setMethod(f="plot_quality",
                       signature="qmj",
-                      definition=function(theObject)
+                      definition=function(theObject, quality_data_frame)
                       {
-                        market_dat <- market_data()
-                        quality <- market_dat$quality
-                        theObject
+                        quality <- theObject@quality
+                        market_quality <- quality_data_frame$quality
+                        market_quality <- c(market_quality, quality)
+                        market_quality <- market_quality[order(market_quality, na.last=NA, decreasing=TRUE)]
+                        
+                        market_range <- range(market_quality)
+                        quality_range <- abs(market_range[2] - market_range[1])
+                        pbinwidth <- (quality_range)/(length(market_quality) / 10)
+                        
+                        #Find bin whose max value is just greater than my quality. This should be the right bin.
+                        min <- market_range[1]
+                        numBins <- ceiling((quality - min)/pbinwidth)
+                        maxVal <- (numBins * pbinwidth) + min
+                        minVal <- ((numBins - 1) * pbinwidth) + min
+                        df <- data.frame(quality = market_quality)
+                        cond <- df$quality < maxVal & df$quality > minVal
+                        ggplot2::ggplot(df, aes(x=quality)) +
+                          geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                          geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
                         
                       }
                       )
