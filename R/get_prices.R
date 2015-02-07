@@ -51,6 +51,8 @@ get_prices <- function(x){
         save(stockData, file=fileName)
       } else{
         print(paste("Error retrieving data for ", companyTicker, sep=""))
+        warning("Some ticker(s) do not have daily data. 
+                 NAs have been introduced as a result.")
       }
     }
   }
