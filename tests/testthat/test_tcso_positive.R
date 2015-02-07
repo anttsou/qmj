@@ -1,9 +1,10 @@
 test_that("tcso is positive", {
   data(companies)
   data(financials)
-  data(extrafin)
-  data(daily)
+  data(prices)
   temp <- financials
   temp <- rbind(temp,rep(-1,length(colnames(temp))))
-  expect_warning(qmj::market_data(x,temp,extrafin,daily),"Negative TCSO exists.")
+  print(which(temp$TCSO < 0))
+  qmj::market_data(companies,temp,prices)
+  #expect_error(qmj::market_data(companies,temp,prices))
 })

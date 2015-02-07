@@ -23,7 +23,6 @@ market_safety <- function(x, financials, daily){
   numCompanies <- length(x$ticker)
   allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
-  
   financials[is.na(financials)] <- 0
   daily[is.na(daily)] <- 0
   daily$pret[is.nan(as.numeric(daily$pret))] <- 0

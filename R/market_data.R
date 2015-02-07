@@ -13,7 +13,12 @@
 #' @export
 
 market_data <- function(x, financials, daily){
-  
+  if(length(x$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
+  if(length(which(financials$TCSO < 0))) {
+    stop("Negative TCSO exists.")
+  }
   profitability <- market_profitability(x, financials)$profitability
   growth <- market_growth(x, financials)$growth
   safety <- market_safety(x, financials, daily)$safety
