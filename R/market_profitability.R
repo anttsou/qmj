@@ -14,7 +14,10 @@
 #' @export
 
 #use sapply to make columns numeric
-market_profitability <- function(x, financials){  
+market_profitability <- function(x, financials){ 
+  if(length(x$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
   numCompanies <- length(x$ticker)
   
   financials[is.na(financials)] <- 0

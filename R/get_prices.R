@@ -10,6 +10,9 @@
 #' @export
 
 get_prices <- function(x){
+  if(length(x$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
   filepath <- system.file("extdata", package="qmj")
   numCompanies <- length(x$ticker)
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))
@@ -51,8 +54,7 @@ get_prices <- function(x){
         save(stockData, file=fileName)
       } else{
         print(paste("Error retrieving data for ", companyTicker, sep=""))
-        warning("Some ticker(s) do not have daily data. 
-                 NAs have been introduced as a result.")
+        warning(paste("No daily data for",companyTicker,sep=" "))
       }
     }
   }
