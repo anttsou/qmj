@@ -210,7 +210,7 @@ setMethod(f="view_quality",
                       )
 
 setGeneric(name="plot_quality",
-                      def=function(theObject)
+                      def=function(theObject, quality_data_frame)
                       {
                         standardGeneric("plot_quality")
                       }
@@ -244,7 +244,7 @@ setMethod(f="plot_quality",
                       )
 
 setGeneric(name="summarize",
-                      def=function(theObject)
+                      def=function(theObject, financials, prices)
                       {
                         standardGeneric("summarize")
                       }
