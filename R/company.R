@@ -101,14 +101,14 @@ setMethod(f="view_profitability",
                         gmar <- theObject@pGMAR
                         acc <- theObject@pACC
                         
-                        return data.frame(ticker = tick, 
+                        return(data.frame(ticker = tick, 
                                    profitability = prof, 
                                    GPOA = gpoa, 
                                    ROE = roe,
                                    ROA = roa,
                                    CFOA = cfoa, 
                                    GMAR = gmar,
-                                   ACC = acc)
+                                   ACC = acc))
                       }
                       )
 
