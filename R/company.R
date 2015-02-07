@@ -32,51 +32,36 @@ Company <- setClass(
   prototype = list(
     ticker = "NA",
     profitability = 0,
-    pGPOA = "0",
-    pROE = "0",
-    pROA = "0",
-    pCFOA = "0",
-    pGMAR = "0",
-    pACC = "0",
-    growth = "0",
-    gGPOA = "0",
-    gROE = "0",
-    gROA = "0",
-    gCFOA = "0",
-    gGMAR = "0",
-    gACC = "0",
-    safety = "0",
-    sBAB = "0",
-    sIVOL = "0",
-    sLEV = "0",
-    sO = "0",
-    sZ = "0",
-    sEVOL = "0",
-    payouts = "0",
-    pEISS = "0",
-    pDISS = "0",
-    pNPOP = "0",
-    quality = "0"
+    pGPOA = 0,
+    pROE = 0,
+    pROA = 0,
+    pCFOA = 0,
+    pGMAR = 0,
+    pACC = 0,
+    growth = 0,
+    gGPOA = 0,
+    gROE = 0,
+    gROA = 0,
+    gCFOA = 0,
+    gGMAR = 0,
+    gACC = 0,
+    safety = 0,
+    sBAB = 0,
+    sIVOL = 0,
+    sLEV = 0,
+    sO = 0,
+    sZ = 0,
+    sEVOL = 0,
+    payouts = 0,
+    pEISS = 0,
+    pDISS = 0,
+    pNPOP = 0,
+    quality = 0
     ),
   validity = function(object)
   {
     if(!grepl("[A-Z][^a-z]", object@ticker)) {
       return("An invalid ticker was given.")
-    }
-    if(!identical(colnames(object@profitability),c("ticker","profitability","GPOA","ROE","ROA","CFOA","GMAR","ACC"))) {
-      return("An invalid profitability data frame was given.")
-    }
-    if(!identical(colnames(object@growth),c("ticker","growth","GPOA","ROE","ROA","CFOA","GMAR","ACC"))) {
-      return("An invalid growth data frame was given.")
-    }
-    if(!identical(colnames(object@safety), c("ticker","safety","BAB","IVOL","LEV","O","Z","EVOL"))) {
-      return("An invalid profitability data frame was given.")
-    }
-    if(!identical(colnames(object@payouts), c("ticker","payouts","EISS","DISS","NPOP"))) {
-      return("An invalid payouts data frame was given.")
-    }
-    if(!identical(colnames(object@quality), c("name","ticker","profitability","safety","payouts","quality"))) {
-      return("An invalid quality data frame was given.")
     }
     return(TRUE)
   })
