@@ -74,7 +74,7 @@ setGeneric(name="view_profitability",
                       )
 
 setMethod(f="view_profitability",
-                      signature="qmj",
+                      signature="Company",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -105,7 +105,7 @@ setGeneric(name="view_growth",
                       )
 
 setMethod(f="view_growth",
-                      signature="qmj",
+                      signature="Company",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -136,7 +136,7 @@ setGeneric(name="view_safety",
                       )
 
 setMethod(f="view_safety",
-                      signature="qmj",
+                      signature="Company",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -166,7 +166,7 @@ setGeneric(name="view_payouts",
                       )
 
 setMethod(f="view_payouts",
-                      signature="qmj",
+                      signature="Company",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -190,7 +190,7 @@ setGeneric(name="view_quality",
                       ) 
 
 setMethod(f="view_quality",
-                      signature="qmj",
+                      signature="Company",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -217,7 +217,7 @@ setGeneric(name="plot_quality",
                       ) 
 
 setMethod(f="plot_quality",
-                      signature="qmj",
+                      signature="Company",
                       definition=function(theObject, quality_data_frame)
                       {
                         quality <- theObject@quality
@@ -251,7 +251,7 @@ setGeneric(name="summarize",
                       ) 
 
 setMethod(f="summarize",
-                      signature="qmj",
+                      signature="Company",
                       definition=function(theObject, financials, prices)
                       {
                         cat("Information for: ", theObject@ticker)
