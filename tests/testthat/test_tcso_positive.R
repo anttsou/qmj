@@ -5,8 +5,8 @@ test_that("tcso is positive", {
   temp <- financials
   temp <- rbind(temp,rep(-1,length(colnames(temp))))
   expect_error(qmj::market_data(companies,temp,prices))
-  expect_error(qmj::market_profitability(x,temp))
-  expect_error(qmj::market_growth(x,temp))
-  expect_error(qmj::market_safety(x,temp,prices))
-  expect_error(qmj::market_payout(x,temp))
+  expect_error(qmj::market_profitability(companies,temp))
+  expect_error(qmj::market_growth(companies,temp))
+  expect_error(qmj::market_safety(companies,temp,prices))
+  expect_error(qmj::market_payout(companies,temp))
 })
