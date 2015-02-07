@@ -31,7 +31,7 @@ Company <- setClass(
   ),
   prototype = list(
     ticker = "NA",
-    profitability = 0
+    profitability = 0,
     pGPOA = "0",
     pROE = "0",
     pROA = "0",
