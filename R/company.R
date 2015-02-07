@@ -1,5 +1,5 @@
-company <- setClass(
-  "company",
+Company <- setClass(
+  "Company",
   slots = c(
     ticker = "character",
     profitability = "numeric",
@@ -267,8 +267,43 @@ setGeneric(name="summarize",
 
 setMethod(f="summarize",
                       signature="qmj",
-                      definition=function(theObject)
+                      definition=function(theObject, financials, prices)
                       {
-                        return
+                        cat("Information for: ", theObject@ticker)
+                        cat("\n_______________________________________\n")
+                        cat("Quality Score: ", theObject@quality)
+                        cat("\n_______________________________________\n")
+                        profitability <- data.frame(profitability = theObject@profitability,
+                                                    GPOA = theObject@pGPOA,
+                                                    ROE = theObject@pROE,
+                                                    ROA = theObject@pROA,
+                                                    CFOA = theObject@pCFOA,
+                                                    GMAR = theObject@pGMAR,
+                                                    ACC = theObject@pACC)
+                        cat(profitability, "\n\n")
+                        
+                        growth <- data.frame(growth = theObject@growth,
+                                             GPOA = theObject@gGPOA,
+                                             ROE = theObject@gROE,
+                                             ROA = theObject@gROA,
+                                             CFOA = theObject@gCFOA,
+                                             GMAR = theObject@gGMAR,
+                                             ACC = theObject@gACC)
+                        cat(growth, "\n\n")
+                        
+                        safety <- data.frame(safety = theObject@safety,
+                                             BAB = theObject@sBAB,
+                                             IVOL = theObject@sIVOL,
+                                             LEV = theObject@sLEV,
+                                             OhlsonOScore = theObject@sO,
+                                             AltmanZScore = theObject@sZ)
+                        cat(safety, "\n\n")
+                        
+                        payouts <- data.frame(payouts = theObject@payouts,
+                                                    EISS = theObject@pEISS,
+                                                    DISS = theObject@pDISS,
+                                                    NPOP = theObject@pNPOP)
+                        cat(payouts)
+                        cat("\n_______________________________________\n")
                       }
                       )
