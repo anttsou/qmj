@@ -19,6 +19,9 @@
 #' @export
 
 market_safety <- function(x, financials, daily){
+  if(length(which(financials$TCSO < 0))) {
+    stop("Negative TCSO exists.")
+  }
   filepath <- system.file("data", package="qmj")
   numCompanies <- length(x$ticker)
   allcompanies <- data.frame(x$ticker)
