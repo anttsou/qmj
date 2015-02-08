@@ -2,10 +2,10 @@
 
 export(create_companies)
 export(filter_companies)
-export(get_companies)
 export(get_company)
 export(get_info)
 export(get_portfolio)
+export(get_portfolios)
 export(get_prices)
 export(get_raw_financials)
 export(get_raw_prices)
