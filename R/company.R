@@ -60,7 +60,7 @@ Company <- setClass(
     ),
   validity = function(object)
   {
-    if(!grepl("[A-Z][^a-z]", object@ticker)) {
+    if(object@ticker != toupper(object@ticker)) {
       return("An invalid ticker was given.")
     }
     return(TRUE)
@@ -265,7 +265,8 @@ setMethod(f="summarize",
                                                     CFOA = theObject@pCFOA,
                                                     GMAR = theObject@pGMAR,
                                                     ACC = theObject@pACC)
-                        cat(profitability, "\n\n")
+                        print.data.frame(profitability)
+                        cat("\n\n")
                         
                         growth <- data.frame(growth = theObject@growth,
                                              GPOA = theObject@gGPOA,
@@ -274,7 +275,8 @@ setMethod(f="summarize",
                                              CFOA = theObject@gCFOA,
                                              GMAR = theObject@gGMAR,
                                              ACC = theObject@gACC)
-                        cat(growth, "\n\n")
+                        print.data.frame(growth)
+                        cat("\n\n")
                         
                         safety <- data.frame(safety = theObject@safety,
                                              BAB = theObject@sBAB,
@@ -282,13 +284,14 @@ setMethod(f="summarize",
                                              LEV = theObject@sLEV,
                                              OhlsonOScore = theObject@sO,
                                              AltmanZScore = theObject@sZ)
-                        cat(safety, "\n\n")
+                        print.data.frame(safety)
+                        cat("\n\n")
                         
                         payouts <- data.frame(payouts = theObject@payouts,
                                                     EISS = theObject@pEISS,
                                                     DISS = theObject@pDISS,
                                                     NPOP = theObject@pNPOP)
-                        cat(payouts)
+                        print.data.frame(payouts)
                         cat("\n_______________________________________\n")
                       }
                       )
