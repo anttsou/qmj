@@ -15,6 +15,12 @@
 
 #use sapply to make columns numeric
 market_growth <- function(x, financials){
+  if(length(x$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
+  if(length(which(financials$TCSO < 0))) {
+    stop("Negative TCSO exists.")
+  }
   allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
   numCompanies <- length(x$tickers)

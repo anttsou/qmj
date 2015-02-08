@@ -19,6 +19,9 @@
 #' @export
 
 market_safety <- function(x, financials, daily){
+  if(length(x$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
   if(length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
@@ -79,17 +82,21 @@ market_safety <- function(x, financials, daily){
   
 
   merger <- function(company_ticker) {
-    -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
+    result <- -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
         as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
       var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
+    if(is.na(result)) {
+      warning(paste(paste("BAB for",company_ticker,sep=" "),"generated NA",sep=" "))
+    }
+    result
   }
   calc_ivol <- function(company_ticker) {
-    #print(length(splitdail[[company_ticker]]))
     if(length(splitdail[[company_ticker]]) > 0) {
       lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
                     as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
       -(sd(residuals(lmobj)))
     } else {
+      warning(paste(paste("IVOL for",company_ticker,sep=" "),"generated NA",sep=" "))
       NA
     }
   }

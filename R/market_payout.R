@@ -14,6 +14,12 @@
 #' @export
 
 market_payout <- function(x, financials){
+  if(length(x$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
+  if(length(which(financials$TCSO < 0))) {
+    stop("Negative TCSO exists.")
+  }
   numCompanies <- length(x$ticker)
   
   financials[is.na(financials)] <- 0
