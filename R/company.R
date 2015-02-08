@@ -66,6 +66,21 @@ Company <- setClass(
     return(TRUE)
   })
 
+setGeneric(name="view_ticker",
+           def=function(theObject)
+           {
+             standardGeneric("view_ticker")
+           }
+)
+
+setMethod(f="view_ticker",
+          signature="Company",
+          definition=function(theObject)
+          {
+            return(theObject@ticker)
+          }
+)
+
 setGeneric(name="view_profitability",
                       def=function(theObject)
                       {

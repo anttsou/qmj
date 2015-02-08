@@ -1,3 +1,13 @@
+#' Returns a specific Company object (Company Portfolio)
+#'
+#' Given a data frame of companies, a ticker, a data frame with financial statements, and a data frame of prices, creates
+#' a particular company portfolio and returns the result.
+#' @param companies A data frame of companies.
+#' @param ticker A company ticker as a Character. Must already be present in the companies data frame.
+#' @param financials a formatted data frame containing financial information for the given companies.
+#' @param prices A dataframe containing the daily market closing prices and returns. 
+#' @export
+
 get_company <- function(companies,ticker,financials,prices) {
   sub.comp <- companies[companies$ticker==ticker,]
   profitability <- market_profitability(sub.comp,financials)
