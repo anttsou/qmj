@@ -131,3 +131,14 @@ NULL
 #' @docType data
 #' @keywords data
 NULL
+
+#' A list of Company Portfolios
+#'
+#' A list of company portfolios. These portfolios allow for much more in-depth analysis of a specific company
+#' using the summarize, plot_quality, and view functions. (view_profitability, view_growth, view_safety, view_payouts)
+#' Last updated: January 2015
+#'
+#' @name portfolios
+#' @docType data
+#' @keywords data
+NULL

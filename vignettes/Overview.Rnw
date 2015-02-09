@@ -26,7 +26,7 @@ library(qmj)
 data(companies) #Stores company names and tickers from the Russell 3000 index
 data(financials) #Stores financial documents for the given list of companies.
 data(prices) # Stores price returns and closing stock prices for the past two years.
-data(qualityscores) #Stores the quality scores and the scores of its components.
+data(quality) #Stores the quality scores and the scores of its components.
 @
 
 If you want to measure quality call:
@@ -42,6 +42,14 @@ If you're only interested in accessing certain quality factors, such as profitab
 @
 
 This will return a numeric vector containing profitability z-scores for the given companies, where the nth number corresponds to the nth company. 
+
+\section*{Analyzing a Specific Company}
+The qmj package has stored a large number of Company Portfolios, stored as such:
+<<Getting Portfolios>>=
+data(portfolios)
+@
+
+
 
 \section*{Updating your Data}
 If you're interested in inputting your own data, you can generate financial statements for a data frame of companies as follows:
