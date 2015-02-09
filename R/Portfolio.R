@@ -1,3 +1,41 @@
+#' Portfolio
+#'
+#' The Portfolio object contains all details related to a company's quality score,
+#' and also provides some tools for analyzing a specific company in more detail.
+#'
+#' \section{Slots}{
+#'    \describe{
+#'      \item{\code{ticker}:}{Object of class \code{"character"}.}
+#'      \item{\code{pGPOA}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{pROE}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{pROA}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{pCFOA}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{pACC}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{growth}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{gGPOA}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{gROE}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{gROA}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{gCFOA}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{gGMAR}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{gACC}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{safety}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{sBAB}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{sIVOL}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{sLEV}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{sO}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{sZ}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{sEVOL}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{payouts}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{pEISS}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{pDISS}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{pNPOP}:}{Object of class \code{"numeric"}.}
+#'      \item{\code{quality}:}{Object of class \code{"numeric"}.}
+#'    }
+#'  }
+#' @name Portfolio-class
+#' @rdname Portfolio-class
+#' @exportClass Portfolio
+
 Portfolio <- setClass(
   "Portfolio",
   slots = c(
