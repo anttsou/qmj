@@ -259,15 +259,15 @@ setMethod(f="plot_quality",
                       )
 
 setGeneric(name="summarize",
-                      def=function(theObject, financials, prices)
+                      def=function(theObject)
                       {
                         standardGeneric("summarize")
                       }
                       ) 
 
 setMethod(f="summarize",
-                      signature=c("Company", "data.frame", "data.frame"),
-                      definition=function(theObject, financials, prices)
+                      signature=c("Company"),
+                      definition=function(theObject)
                       {
                         cat("Information for: ", theObject@ticker)
                         cat("\n_______________________________________\n")
