@@ -1,26 +1,49 @@
-#' Summary of quality scores
+#' Returns a specific portfolio
 #'
-#' Returns, by default, the top five and the bottom five companies ordered by
-#' calculated quality score. Also returns the standard deviation of quality scores
-#' and the interquartile range.
-#' 
-#' @param top The number of top ranked companies to be returned.
-#' @param bottom The number of bottom ranked companies to be returned.
+#' Given a data frame of companies, a ticker, a data frame with financial statements, and a data frame of prices, creates
+#' a particular company portfolio and returns the result.
+#' @param companies A data frame of companies.
+#' @param ticker A company ticker as a Character. Must already be present in the companies data frame.
+#' @param financials a formatted data frame containing financial information for the given companies.
+#' @param prices A dataframe containing the daily market closing prices and returns. 
 #' @export
 
-get_portfolio <- function(top=5, bottom=5) {
-  filepath <- system.file(package="qmj")
-  marketdata <- collect_market_data()
-  if(length(marketdata$name) >= top + bottom) {
-    cat("Top Companies by Measured Quality\n\n")
-    cat(head(as.character(marketdata$tickers), n=top), sep="\n")
-    cat("-----------------------------------\n")
-    cat("Bottom Companies by Measured Quality\n")
-    cat(tail(as.character(marketdata$tickers), n=bottom), sep="\n")
-    cat("-----------------------------------\n")
-    cat(paste("Standard Deviation of Quality Scores:", sd(marketdata$quality, na.rm=TRUE), "\n"))
-    cat(paste("Interquartile Range of Quality Scores:", IQR(marketdata$quality, na.rm=TRUE), "\n"))
-  } else {
-    stop("Portfolio does not have enough companies given values for parameters \"top\" and \"bottom\"")
-  }
+get_portfolio <- function(companies,ticker,financials,prices) {
+  sub.comp <- companies[companies$ticker==ticker,]
+  profitability <- market_profitability(sub.comp,financials)
+  growth <- market_growth(sub.comp,financials)
+  safety <- market_safety(sub.comp,financials,prices)
+  payouts <- market_payout(sub.comp,financials)
+  quality <- profitability$profitability + growth$growth + safety$safety + payouts$payouts
+  
+  #add all of the values that go into each component
+  portfolio <- Portfolio(
+                     ticker = ticker, 
+                     profitability = profitability$profitability, 
+                     pGPOA = profitability$GPOA,
+                     pROE = profitability$ROE,
+                     pROA = profitability$ROA,
+                     pCFOA = profitability$CFOA,
+                     pGMAR = profitability$GMAR,
+                     pACC = profitability$ACC,
+                     growth = growth$growth,
+                     gGPOA = growth$GPOA,
+                     gROE = growth$ROE,
+                     gROA = growth$ROA,
+                     gCFOA = growth$CFOA,
+                     gGMAR = growth$GMAR,
+                     gACC = growth$ACC,
+                     safety = safety$safety,
+                     sBAB = safety$BAB,
+                     sIVOL = safety$IVOL,
+                     sLEV = safety$LEV,
+                     sO = safety$O,
+                     sZ = safety$Z,
+                     sEVOL = safety$EVOL,
+                     payouts = payouts$payouts,
+                     pEISS = payouts$EISS,
+                     pDISS = payouts$DISS,
+                     pNPOP = payouts$NPOP,
+                     quality = quality)
+  portfolio
 }

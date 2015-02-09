@@ -2,18 +2,21 @@
 % Please edit documentation in R/get_portfolio.R
 \name{get_portfolio}
 \alias{get_portfolio}
-\title{Summary of quality scores}
+\title{Returns a specific portfolio}
 \usage{
-get_portfolio(top = 5, bottom = 5)
+get_portfolio(companies, ticker, financials, prices)
 }
 \arguments{
-\item{top}{The number of top ranked companies to be returned.}
+\item{companies}{A data frame of companies.}
 
-\item{bottom}{The number of bottom ranked companies to be returned.}
+\item{ticker}{A company ticker as a Character. Must already be present in the companies data frame.}
+
+\item{financials}{a formatted data frame containing financial information for the given companies.}
+
+\item{prices}{A dataframe containing the daily market closing prices and returns.}
 }
 \description{
-Returns, by default, the top five and the bottom five companies ordered by
-calculated quality score. Also returns the standard deviation of quality scores
-and the interquartile range.
+Given a data frame of companies, a ticker, a data frame with financial statements, and a data frame of prices, creates
+a particular company portfolio and returns the result.
 }
 
