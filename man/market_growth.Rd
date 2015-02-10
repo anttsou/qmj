@@ -7,19 +7,19 @@
 market_growth(x, financials)
 }
 \arguments{
-\item{x}{A dataframe of company names and tickers.}
+\item{financials}{A data frame containing financial statements for every company.}
 
-\item{financials}{A dataframe containing financial statements for every company.}
+\item{companies}{A data frame of company names and tickers.}
 }
 \description{
-Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
-and an income statement, calculates GPOA, ROE, ROA, CFOA, GMAR, ACC
-and determines the z-score of overall growth based on the paper
+Given a data frame of companies (names and tickers) and a data frame of financial statements,
+calculates GPOA, ROE, ROA, CFOA, GMAR, ACC over a four-year time span
+and determines the z-score of overall growth for each company based on the paper
 Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
 data(companies)
 data(financials)
-market_growth(x, financials)
+market_growth(companies, financials)
 }
 

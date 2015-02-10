@@ -1,16 +1,14 @@
 #' Collects profitability z-scores for companies
 #'
-#' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
-#' and an income statement, calculates GPOA, ROE, ROA, CFOA, GMAR, ACC,
-#' and determines the z-score of overall profitability based on the paper
-#' Quality Minus Junk (Asness et al.) in Appendix page A2.
-#' @param x A dataframe of company names and tickers.
-#' @param financials A dataframe containing financial statements for every company.
+#' Given a data frame of companies (names and tickers) and a data frame of financial statements, 
+#' calculates GPOA, ROE, ROA, CFOA, GMAR, ACC and determines the z-score of overall profitability 
+#' for each company based on the paper Quality Minus Junk (Asness et al.) in Appendix page A2.
+#' @param companies A data frame of company names and tickers.
+#' @param financials A data frame containing financial statements for every company.
 #' @examples
 #' data(companies)
 #' data(financials)
-#' x <- companies
-#' market_profitability(x, financials)
+#' market_profitability(companies, financials)
 #' @export
 
 #use sapply to make columns numeric

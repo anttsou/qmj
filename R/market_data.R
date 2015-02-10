@@ -3,9 +3,9 @@
 #'
 #' Calculates market growth, payouts, safety, and profitability of our list of companies
 #' for later processing.
-#' @param x A dataframe of company names and tickers.
-#' @param financials a formatted data frame containing financial information for the given companies.
-#' @param daily A dataframe containing the daily market closing prices and returns. 
+#' @param companies A data frame of company names and tickers.
+#' @param financials A data frame containing financial information for the given companies.
+#' @param daily A data frame containing the daily market closing prices and returns. 
 #' @examples
 #' data(companies)
 #' data(financials)

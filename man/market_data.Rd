@@ -8,11 +8,11 @@ by descending quality.}
 market_data(x, financials, daily)
 }
 \arguments{
-\item{x}{A dataframe of company names and tickers.}
+\item{financials}{A data frame containing financial information for the given companies.}
 
-\item{financials}{a formatted data frame containing financial information for the given companies.}
+\item{daily}{A data frame containing the daily market closing prices and returns.}
 
-\item{daily}{A dataframe containing the daily market closing prices and returns.}
+\item{companies}{A data frame of company names and tickers.}
 }
 \description{
 Calculates market growth, payouts, safety, and profitability of our list of companies
