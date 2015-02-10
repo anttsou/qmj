@@ -1,16 +1,14 @@
 #' Collects payout z-scores for companies
 #'
-#' Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
-#' and an income statement, calculates EISS, DISS, NPOP
-#' and determines the z-score of overall payout based on the paper
+#' Given a data frame of companies (names and tickers) and a data frame of financial statements, 
+#' calculates EISS, DISS, NPOP and determines the z-score of overall payout for each company based on the paper
 #' Quality Minus Junk (Asness et al.) in Appendix page A3-4.
-#' @param x A dataframe of company names and tickers.
-#' @param financials A dataframe containing financial statements for every company.
+#' @param companies A data frame of company names and tickers.
+#' @param financials A data frame containing financial statements for every company.
 #' @examples
 #' data(companies)
 #' data(financials)
-#' x <- companies
-#' market_payout(x, financials)
+#' market_payout(companies, financials)
 #' @export
 
 market_payout <- function(x, financials){
