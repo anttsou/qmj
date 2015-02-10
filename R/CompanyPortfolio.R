@@ -1,6 +1,6 @@
-#' Portfolio
+#' CompanyPortfolio
 #'
-#' The Portfolio object contains all details related to a company's quality score,
+#' The CompanyPortfolio object contains all details related to a company's quality score,
 #' and also provides some tools for analyzing a specific company in more detail.
 #'
 #' \section{Slots}{
@@ -32,12 +32,12 @@
 #'      \item{\code{quality}:}{Object of class \code{"numeric"}.}
 #'    }
 #'  }
-#' @name Portfolio-class
-#' @rdname Portfolio-class
-#' @exportClass Portfolio
+#' @name CompanyPortfolio-class
+#' @rdname CompanyPortfolio-class
+#' @exportClass CompanyPortfolio
 
-Portfolio <- setClass(
-  "Portfolio",
+CompanyPortfolio <- setClass(
+  "CompanyPortfolio",
   slots = c(
     ticker = "character",
     profitability = "numeric",
@@ -112,7 +112,7 @@ setGeneric(name="view_ticker",
 )
 
 setMethod(f="view_ticker",
-          signature="Portfolio",
+          signature="CompanyPortfolio",
           definition=function(theObject)
           {
             return(theObject@ticker)
@@ -127,7 +127,7 @@ setGeneric(name="view_profitability",
                       )
 
 setMethod(f="view_profitability",
-                      signature="Portfolio",
+                      signature="CompanyPortfolio",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -158,7 +158,7 @@ setGeneric(name="view_growth",
                       )
 
 setMethod(f="view_growth",
-                      signature="Portfolio",
+                      signature="CompanyPortfolio",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -189,7 +189,7 @@ setGeneric(name="view_safety",
                       )
 
 setMethod(f="view_safety",
-                      signature="Portfolio",
+                      signature="CompanyPortfolio",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -219,7 +219,7 @@ setGeneric(name="view_payouts",
                       )
 
 setMethod(f="view_payouts",
-                      signature="Portfolio",
+                      signature="CompanyPortfolio",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -243,7 +243,7 @@ setGeneric(name="view_quality",
                       ) 
 
 setMethod(f="view_quality",
-                      signature="Portfolio",
+                      signature="CompanyPortfolio",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -270,7 +270,7 @@ setGeneric(name="plot_quality",
                       ) 
 
 setMethod(f="plot_quality",
-                      signature=c("Portfolio", "data.frame"),
+                      signature=c("CompanyPortfolio", "data.frame"),
                       definition=function(theObject, quality_data_frame)
                       {
                         quality <- theObject@quality
@@ -304,7 +304,7 @@ setGeneric(name="summarize",
                       ) 
 
 setMethod(f="summarize",
-                      signature=c("Portfolio"),
+                      signature=c("CompanyPortfolio"),
                       definition=function(theObject)
                       {
                         cat("Information for: ", theObject@ticker)
