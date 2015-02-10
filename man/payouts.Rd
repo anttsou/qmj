@@ -4,17 +4,15 @@
 \name{payouts}
 \alias{payouts}
 \title{A dataframe of payout scores for companies listed in the Russell 3000}
-\description{
-Displays payout scores as well as its components, this includes:
+\format{A data frame with 2999 rows and 5 variables:
 \itemize{
    \item EISS = Minus one-year percent change in split-adjusted number of shares.
    \item DISS = Minus one-year percent change in total debt.
    \item NPOP = Sum of total net payout over the past 4 years divided by total profits over the past 4 years.
- }
-}
-\details{
-More information may be found on the Technical vignette.
-Last updated: January 2015
+ }}
+\description{
+Displays growth scores as well as its components for companies in the Russell 3000.
+More information may be found on the technical vignette.
 }
 \keyword{data}
 

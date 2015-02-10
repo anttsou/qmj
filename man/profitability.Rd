@@ -4,8 +4,7 @@
 \name{profitability}
 \alias{profitability}
 \title{A dataframe of profitability scores for companies listed in the Russell 3000}
-\description{
-Displays profitability scores as well as its components, this includes:
+\format{A data frame with 2999 rows and 7 variables:
 \itemize{
    \item GPOA = Gross Profits over Assets
    \item ROE = Return on Equity
@@ -13,10 +12,12 @@ Displays profitability scores as well as its components, this includes:
    \item CFOA = Cash Flow over Assets
    \item GMAR = Gross Margin
    \item ACC = Accruals
- }
+ }}
+\description{
+Displays profitability scores as well as its components for companies in the Russell 3000.
+More information may be found on the technical vignette.
 }
 \details{
-More information may be found on the Technical vignette.
 Last updated: January 2015
 }
 \keyword{data}

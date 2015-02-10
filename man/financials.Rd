@@ -3,13 +3,8 @@
 \docType{data}
 \name{financials}
 \alias{financials}
-\title{Financial statements of all companies for the past four years}
-\description{
-A data frame containing all financial statements (balancesheets,
-cashflows, and income statements) for the past four years if available.
-}
-\details{
-Data is gathered from Google Finance. Data set contains:
+\title{Financial statements of all companies in the Russell 3000 index for the past four years}
+\format{A data frame with 11,112 rows and 21 variables
  \itemize{
    \item AM = Amortization
    \item CWC = Changes in Working Capital
@@ -32,7 +27,20 @@ Data is gathered from Google Finance. Data set contains:
    \item TL = Total Liabilities
    \item TLSE = Total Liabilities and Shareholders' Equity
    \item TREV = Total Revenue
- }
+ }}
+\source{
+Google Finance, accessed through quantmod
+}
+\description{
+A data frame containing all financial statements (balancesheets,
+cashflows, and income statements) for the past four years if available.
+}
+\details{
+Some companies may store "weird" data, such as having information solely for the years 1997-2001, or by having multiple
+annual reports within the same year (such as one report being filed in March of 2013, and another filed in December of 2013). In the case of companies
+reporting multiple annual data from the same year, the years of their reports are suffixed with their order. For
+example, GOOG may have data from 2013.1, 2013.2, 2012.3, 2011.4. This means Google's most recent data set is from
+2013 (2013.1), another data set was published in 2013 (2013.2), and the remaining years are also suffixed for convenience.
 }
 \keyword{data}
 

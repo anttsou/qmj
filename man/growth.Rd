@@ -4,8 +4,7 @@
 \name{growth}
 \alias{growth}
 \title{A dataframe of growth scores for companies listed in the Russell 3000}
-\description{
-Displays growth scores as well as its components, this includes:
+\format{A data frame with 2999 rows and 7 variables:
 \itemize{
    \item GPOA =  Four year growth in Gross Profits over Assets
    \item ROE = Four year growth in Return on Equity
@@ -13,11 +12,10 @@ Displays growth scores as well as its components, this includes:
    \item CFOA = Four year growth in Cash Flow over Assets
    \item GMAR = Four year growth in Gross Margin
    \item ACC = Four year growth in Accruals
- }
-}
-\details{
-More information may be found on the Technical vignette.
-Last updated: January 2015
+ }}
+\description{
+Displays growth scores as well as its components for companies in the Russell 3000.
+More information may be found on the technical vignette.
 }
 \keyword{data}
 
