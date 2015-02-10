@@ -22,7 +22,7 @@ In order to start you off, qmj comes equipped with several data sets, including 
 	data(companies) #Stores company names and tickers from the Russell 3000 index
 	data(financials) #Stores financial documents for the given list of companies.
 	data(prices) # Stores price returns and closing stock prices for the past two years.
-	data(qualityscores) #Stores the quality scores and the scores of its components.
+	data(quality) #Stores the quality scores and the scores of its components.
   ```
 
 qmj currently works based on the data saved in the package. Consequently, if you want a quality measurement of the companies currently stored in the package, call:
@@ -39,6 +39,26 @@ If you're only interested in accessing certain quality factors, such as profitab
 
 This will return a numeric vector containing profitability z-scores for the given companies, where the nth number corresponds to the nth company. 
 
+##Analyzing a Specific Company
+The qmj package has stored a large number of Company Portfolios, which can be used to analyze a single company more closely. Some examples of analysis follow:
+
+```{r}
+  portfolios <- data(portfolios)
+  first_portfolio <- portfolios[[1]]
+  summarize(first_portfolio) # Displays key information about this company portfolio.
+  ```
+  
+  ```{r}
+  quality <- data(quality)
+  plot_quality(first_portfolio, quality) # Displays a histogram of quality values. The bin that contains this company is drawn in yellow.
+  ```
+
+```{r}
+  desired_companies <- c("GOOG", "IBM", "FLWS")
+  desired_portfolios <- get_portfolios(desired_companies, portfolios) # Returns a list containing the given Company Portfolios in order.
+  summarize(desired_portfolios[[1]])
+  ```
+  
 ##Updating your Data
 If you're interested in inputting your own data, you can generate financial statements for a data frame of companies as follows:
 

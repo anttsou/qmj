@@ -1,6 +1,6 @@
-#' CompanyPortfolio
+#' qmjAnalysis
 #'
-#' The CompanyPortfolio object contains all details related to a company's quality score,
+#' The qmjAnalysis object contains all details related to a company's quality score,
 #' and also provides some tools for analyzing a specific company in more detail.
 #'
 #' \section{Slots}{
@@ -32,13 +32,13 @@
 #'      \item{\code{quality}:}{Object of class \code{"numeric"}.}
 #'    }
 #'  }
-#' @name CompanyPortfolio
-#' @rdname CompanyPortfolio
-#' @aliases CompanyPortfolio-class
-#' @exportClass CompanyPortfolio
+#' @name qmjAnalysis
+#' @rdname qmjAnalysis
+#' @aliases qmjAnalysis-class
+#' @exportClass qmjAnalysis
 
-CompanyPortfolio <- setClass(
-  "CompanyPortfolio",
+qmjAnalysis <- setClass(
+  "qmjAnalysis",
   slots = c(
     ticker = "character",
     profitability = "numeric",
@@ -113,7 +113,7 @@ setGeneric(name="view_ticker",
 )
 
 setMethod(f="view_ticker",
-          signature="CompanyPortfolio",
+          signature="qmjAnalysis",
           definition=function(theObject)
           {
             return(theObject@ticker)
@@ -128,7 +128,7 @@ setGeneric(name="view_profitability",
                       )
 
 setMethod(f="view_profitability",
-                      signature="CompanyPortfolio",
+                      signature="qmjAnalysis",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -159,7 +159,7 @@ setGeneric(name="view_growth",
                       )
 
 setMethod(f="view_growth",
-                      signature="CompanyPortfolio",
+                      signature="qmjAnalysis",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -190,7 +190,7 @@ setGeneric(name="view_safety",
                       )
 
 setMethod(f="view_safety",
-                      signature="CompanyPortfolio",
+                      signature="qmjAnalysis",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -220,7 +220,7 @@ setGeneric(name="view_payouts",
                       )
 
 setMethod(f="view_payouts",
-                      signature="CompanyPortfolio",
+                      signature="qmjAnalysis",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -244,7 +244,7 @@ setGeneric(name="view_quality",
                       ) 
 
 setMethod(f="view_quality",
-                      signature="CompanyPortfolio",
+                      signature="qmjAnalysis",
                       definition=function(theObject)
                       {
                         tick <- theObject@ticker
@@ -271,7 +271,7 @@ setGeneric(name="plot_quality",
                       ) 
 
 setMethod(f="plot_quality",
-                      signature=c("CompanyPortfolio", "data.frame"),
+                      signature=c("qmjAnalysis", "data.frame"),
                       definition=function(theObject, quality_data_frame)
                       {
                         quality <- theObject@quality
@@ -305,7 +305,7 @@ setGeneric(name="summarize",
                       ) 
 
 setMethod(f="summarize",
-                      signature=c("CompanyPortfolio"),
+                      signature=c("qmjAnalysis"),
                       definition=function(theObject)
                       {
                         cat("Information for: ", theObject@ticker)
