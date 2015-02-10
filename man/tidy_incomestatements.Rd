@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy_incomestatements.R
 \name{tidy_incomestatements}
 \alias{tidy_incomestatements}
-\title{Tidies raw incomestatement data and returns the tidied data frame}
+\title{Makes raw incomestatement data usable and readable.}
 \usage{
 tidy_incomestatements(x)
 }
@@ -20,7 +20,16 @@ must be formatted in a list such that every element is a data frame or matrix co
 \code{tidy_incomestatements} produces a data frame that is "tidy" or more readily readable by a user and usable by other functions
 within this package.
 }
+\examples{
+\dontrun{
+companies <- data(companies)
+raw_data <- get_info(companies)
+tidyincome <- tidy_incomestatements(x[[2]])
+}
+}
 \seealso{
+\code{\link{get_info}}
+
 \code{\link{tidy_prices}}
 
 \code{\link{tidy_cashflows}}

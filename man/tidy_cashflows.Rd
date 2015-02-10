@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy_cashflows.R
 \name{tidy_cashflows}
 \alias{tidy_cashflows}
-\title{Tidies raw cash flow data}
+\title{Makes raw cash flow data usable and readable.}
 \usage{
 tidy_cashflows(x)
 }
@@ -20,11 +20,20 @@ must be formatted in a list such that every element is a data frame or matrix co
 \code{tidy_cashflows} produces a data frame that is "tidy" or more readily readable by a user and usable by other functions
 within this package.
 }
+\examples{
+\dontrun{
+companies <- data(companies)
+raw_data <- get_info(companies)
+tidycash <- tidy_cashflows(x[[1]])
+}
+}
 \seealso{
+\code{\link{get_info}}
+
 \code{\link{tidy_prices}}
 
-\code{\link{tidy_incomestatements}}
-
 \code{\link{tidy_balancesheets}}
+
+\code{\link{tidy_incomestatements}}
 }
 

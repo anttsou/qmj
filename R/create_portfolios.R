@@ -12,7 +12,7 @@ create_portfolios <- function(x, financials, prices){
                              growth, gGPOA, gROE, gROA, gCFOA, gGMAR, gACC, safety,
                              sBAB, sIVOL, sLEV, sO, sZ, sEVOL, payouts, pEISS, pDISS, pNPOP,
                              quality){
-    Portfolio(ticker = ticker, 
+    CompanyPortfolio(ticker = ticker, 
                    profitability = profitability, 
                    pGPOA = pGPOA,
                    pROE = pROE,
