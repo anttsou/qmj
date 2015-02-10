@@ -1,14 +1,20 @@
-#' Returns a specific portfolio
+#' Returns a qmjAnalysis object for a specific company.
 #'
-#' Given a data frame of companies, a ticker, a data frame with financial statements, and a data frame of prices, creates
-#' a particular company portfolio and returns the result.
+#' Given a data frame of companies, a ticker, a data frame of financial statements, and a data frame of prices, creates
+#' a particular company qmjAnalysis object for the company of the corresponding ticker.
 #' @param companies A data frame of companies.
 #' @param ticker A company ticker as a Character. Must already be present in the companies data frame.
-#' @param financials a formatted data frame containing financial information for the given companies.
-#' @param prices A dataframe containing the daily market closing prices and returns. 
+#' @param financials A data frame containing financial information for the given companies.
+#' @param prices A data frame containing the daily market closing prices and returns. 
+#' @examples
+#' data(companies)
+#' ticker <- "AAPL"
+#' data(financials)
+#' data(prices)
+#' get_qmjAnalysis(companies,ticker,financials,prices)
 #' @export
 
-get_portfolio <- function(companies,ticker,financials,prices) {
+get_qmjAnalysis <- function(companies,ticker,financials,prices) {
   sub.comp <- companies[companies$ticker==ticker,]
   profitability <- market_profitability(sub.comp,financials)
   growth <- market_growth(sub.comp,financials)
@@ -17,7 +23,7 @@ get_portfolio <- function(companies,ticker,financials,prices) {
   quality <- profitability$profitability + growth$growth + safety$safety + payouts$payouts
   
   #add all of the values that go into each component
-  portfolio <- Portfolio(
+  analysis <- qmjAnalysis(
                      ticker = ticker, 
                      profitability = profitability$profitability, 
                      pGPOA = profitability$GPOA,
@@ -45,5 +51,5 @@ get_portfolio <- function(companies,ticker,financials,prices) {
                      pDISS = payouts$DISS,
                      pNPOP = payouts$NPOP,
                      quality = quality)
-  portfolio
+  analysis
 }
