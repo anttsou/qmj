@@ -2,9 +2,14 @@
 #'
 #' Creates a list of portfolios, which allow for much greater analysis of
 #' individual companies.
-#' @param x A dataframe of company names and tickers.
-#' @param financials a formatted data frame containing financial information for the given companies.
-#' @param prices A dataframe containing the daily market closing prices and returns. 
+#' @param companies A data frame of company names and tickers.
+#' @param financials A data frame containing financial information for the given companies.
+#' @param prices A data frame containing the daily market closing prices and returns. 
+#' @examples
+#' data(companies)
+#' data(financials)
+#' data(prices)
+#' create_portfolios(companies,financials,prices)
 #' @export
 
 create_portfolios <- function(x, financials, prices){

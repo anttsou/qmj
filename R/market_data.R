@@ -6,6 +6,10 @@
 #' @param companies A data frame of company names and tickers.
 #' @param financials A data frame containing financial information for the given companies.
 #' @param daily A data frame containing the daily market closing prices and returns. 
+#' @seealso \code{\link{market_profitability}}
+#' @seealso \code{\link{market_growth}}
+#' @seealso \code{\link{market_safety}}
+#' @seealso \code{\link{market_payout}}
 #' @examples
 #' data(companies)
 #' data(financials)

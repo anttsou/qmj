@@ -7,6 +7,10 @@
 #' Quality Minus Junk (Asness et al.) in Appendix page A2.
 #' @param companies A data frame of company names and tickers.
 #' @param financials A data frame containing financial statements for every company.
+#' @seealso \code{\link{market_data}}
+#' @seealso \code{\link{market_profitability}}
+#' @seealso \code{\link{market_safety}}
+#' @seealso \code{\link{market_payout}}
 #' @examples
 #' data(companies)
 #' data(financials)

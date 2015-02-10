@@ -25,4 +25,13 @@ data(financials)
 data(prices)
 market_safety(companies, financials, prices)
 }
+\seealso{
+\code{\link{market_data}}
+
+\code{\link{market_profitability}}
+
+\code{\link{market_growth}}
+
+\code{\link{market_payout}}
+}
 
