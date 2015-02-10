@@ -22,4 +22,13 @@ data(companies)
 data(financials)
 market_growth(companies, financials)
 }
+\seealso{
+\code{\link{market_data}}
+
+\code{\link{market_profitability}}
+
+\code{\link{market_safety}}
+
+\code{\link{market_payout}}
+}
 
