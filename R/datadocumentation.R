@@ -9,7 +9,7 @@
 #' example, GOOG may have data from 2013.1, 2013.2, 2012.3, 2011.4. This means Google's most recent data set is from
 #' 2013 (2013.1), another data set was published in 2013 (2013.2), and the remaining years are also suffixed for convenience.
 #' 
-#' @format A data frame with 11,112 rows and 21 variables
+#' @format A data frame with 11,112 rows and 23 variables
 #'  \itemize{
 #'    \item AM = Amortization
 #'    \item CWC = Changes in Working Capital
