@@ -4,7 +4,7 @@
 \name{financials}
 \alias{financials}
 \title{Financial statements of all companies in the Russell 3000 index for the past four years}
-\format{A data frame with 11,112 rows and 21 variables
+\format{A data frame with 11,112 rows and 23 variables
  \itemize{
    \item AM = Amortization
    \item CWC = Changes in Working Capital
