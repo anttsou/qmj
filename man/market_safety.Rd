@@ -7,26 +7,22 @@
 market_safety(x, financials, daily)
 }
 \arguments{
-\item{x}{A dataframe of company names and tickers.}
+\item{financials}{A data frame containing financial statements for every company.}
 
-\item{financials}{A dataframe containing financial statements for every company.}
+\item{companies}{A data frame of company names and tickers.}
 
-\item{daily}{A dataframe containing the daily market closing prices and returns.}
+\item{prices}{A data frame containing the daily market closing prices and returns.}
 }
 \description{
-Given a list of companies (names and tickers), a balance sheet, a cash flow statement,
-and an income statement, calculates BAB, IVOL, LEV, O, Z, and EVOL.
-and determines the z-score of overall profitability based on the paper
+Given a data frame of companies (names and tickers), a data frame of financial
+statements, and a data frame of daily price data, calculates BAB, IVOL, LEV, O, Z, and EVOL
+and determines the z-scores of overall safety for each company based on the paper
 Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
 data(companies)
 data(financials)
-data(extrafin)
-data(tidydaily)
-x <- companies
-financials <- financials
-daily <- tidydaily
-market_safety(x, financials, daily)
+data(prices)
+market_safety(companies, financials, prices)
 }
 
