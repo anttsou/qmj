@@ -20,4 +20,7 @@ data(companies)
 get_info(companies)
 }
 }
+\seealso{
+\code{\link{get_prices}}
+}
 

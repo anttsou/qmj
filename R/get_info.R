@@ -4,6 +4,7 @@
 #' getcompanies() and writes associated cashflow statements, 
 #' income statements, and balance sheets into a data frame.
 #' @param companies A data frame of companies. Must have a ticker column.
+#' @seealso \code{\link{get_prices}}
 #' @examples
 #' \dontrun{
 #' data(companies)
