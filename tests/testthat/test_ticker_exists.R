@@ -2,6 +2,7 @@ test_that("companies list has ticker column", {
   x <- data.frame(name = "test")
   data(financials)
   data(prices)
+  expect_error(qmj::get_info(x))
   expect_error(qmj::get_prices(x))
   expect_error(qmj::market_data(x,financials,prices))
   expect_error(qmj::market_profitability(x,financials))
