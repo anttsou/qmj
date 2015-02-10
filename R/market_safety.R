@@ -142,7 +142,6 @@ market_safety <- function(x, financials, daily){
   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)  
   
   ME <- mapply(marketequity, as.numeric(as.character(tempframe$close)), as.numeric(as.character(fstyear$TCSO)))
-  #EBITDAS <- as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(fstyear$))
   WC <- as.numeric(as.character(fstyear$TCA)) - as.numeric(as.character(fstyear$TCL))
   RE <- as.numeric(as.character(fstyear$NI)) - (as.numeric(as.character(fstyear$DIVC)) * as.numeric(as.character(fstyear$TCSO)))
   EBIT <- as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(fstyear$DO)) + (as.numeric(as.character(fstyear$IBT)) - as.numeric(as.character(fstyear$IAT))) + as.numeric(as.character(fstyear$NINT))
