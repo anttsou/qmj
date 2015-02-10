@@ -9,7 +9,7 @@ filter_companies(data, filter, remove = TRUE, isolate = FALSE)
 \arguments{
 \item{data}{The qualiy data frame produced by market_data.}
 
-\item{filter}{What driver to search for. Valid inputs are "profitability", "growth", "payouts" and "safety".}
+\item{filter}{What driver to search for. Valid inputs are "profitability", "growth", "payouts", "safety", and "all", which filters companies that are driven by any component.}
 
 \item{remove}{A logical value. If true, removes companies from data frame that are driven by the given filter. Mutually exclusive with the isolate parameter.}
 
