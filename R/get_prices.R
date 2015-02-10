@@ -4,6 +4,7 @@
 #' in the package folder. If canceled partway through, function is able to find and re-read this data, allowing
 #' resumption of progress.
 #' @param companies A data frame of company names and tickers.
+#' @seealso \code{\link{get_info}}
 #' @examples
 #' data(companies)
 #' \dontrun{get_prices(companies)}

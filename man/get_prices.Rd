@@ -18,4 +18,7 @@ resumption of progress.
 data(companies)
 \dontrun{get_prices(companies)}
 }
+\seealso{
+\code{\link{get_info}}
+}
 
