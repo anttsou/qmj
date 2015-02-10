@@ -4,8 +4,7 @@
 \name{safety}
 \alias{safety}
 \title{A dataframe of safety scores for companies listed in the Russell 3000}
-\description{
-Displays safety scores as well as its components, this includes:
+\format{A data frame with 2999 rows and 8 variables:
 \itemize{
    \item BAB = Beta, calculated by comparison with the S&P 500
    \item IVOL = Idiosyncratic Volatility, also calculated using the S&P 500
@@ -13,9 +12,9 @@ Displays safety scores as well as its components, this includes:
    \item O = Ohlson O-Score.
    \item Z = Altman Z-Score
    \item EVOL = Standard deviation of annual ROE over the past four years.
- }
-}
-\details{
+ }}
+\description{
+Displays safety scores as well as its components for companies in the Russell 3000.
 More information may be found on the Technical vignette.
 Last updated: January 2015
 }
