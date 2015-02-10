@@ -7,14 +7,20 @@
 create_portfolios(x, financials, prices)
 }
 \arguments{
-\item{x}{A dataframe of company names and tickers.}
+\item{financials}{A data frame containing financial information for the given companies.}
 
-\item{financials}{a formatted data frame containing financial information for the given companies.}
+\item{prices}{A data frame containing the daily market closing prices and returns.}
 
-\item{prices}{A dataframe containing the daily market closing prices and returns.}
+\item{companies}{A data frame of company names and tickers.}
 }
 \description{
 Creates a list of portfolios, which allow for much greater analysis of
 individual companies.
+}
+\examples{
+data(companies)
+data(financials)
+data(prices)
+create_portfolios(companies,financials,prices)
 }
 
