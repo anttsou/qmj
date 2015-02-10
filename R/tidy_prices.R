@@ -2,7 +2,14 @@
 #'
 #' Tidies raw prices and returns a tidied, usable data frame. Raw data should be structured identically to that produced
 #' by get_prices(), as this function depends on that structure.
+#' 
+#' \code{tidy_prices} produces a data frame that is "tidy" or more readily readable by a user and usable by other functions
+#' within this package.
 #' @param x Raw daily data, as produced by get_prices()
+#' @return Returns a data set that's been "tidied" up for use by other functions in this package.
+#' @seealso \code{\link{tidy_incomestatements}}
+#' @seealso \code{\link{tidy_cashflows}}
+#' @seealso \code{\link{tidy_balancesheets}}
 #' @export
 
 tidy_prices <- function(x){

@@ -7,10 +7,24 @@
 tidy_cashflows(x)
 }
 \arguments{
-\item{x}{List of raw tidy cash flow data from quantmod}
+\item{x}{A list of raw cash flow data produced from quantmod}
+}
+\value{
+Returns a data set that's been "tidied" up for use by other functions in this package.
 }
 \description{
 Processes raw cash flow data from quantmod to return a tidied data frame. Raw cash flow data
 must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
+}
+\details{
+\code{tidy_cashflows} produces a data frame that is "tidy" or more readily readable by a user and usable by other functions
+within this package.
+}
+\seealso{
+\code{\link{tidy_prices}}
+
+\code{\link{tidy_incomestatements}}
+
+\code{\link{tidy_balancesheets}}
 }
 
