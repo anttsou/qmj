@@ -15,7 +15,7 @@
  }}
 \description{
 Displays safety scores as well as its components for companies in the Russell 3000.
-More information may be found on the Technical vignette.
+More information may be found on the technical vignette.
 Last updated: January 2015
 }
 \keyword{data}
