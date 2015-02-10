@@ -4,6 +4,10 @@
 \name{prices}
 \alias{prices}
 \title{A dataframe of price returns and closing prices for companies}
+\format{A data frame with 1,475,934 rows and 4 variables}
+\source{
+Google Finance, accessed through quantmod
+}
 \description{
 Stores price returns and closing prices for the past two years (if available) for the Russell 3000 Index companies
 as well as the S&P 500, to serve as a benchmark.

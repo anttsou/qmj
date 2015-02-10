@@ -47,7 +47,9 @@ NULL
 #'
 #' Stores price returns and closing prices for the past two years (if available) for the Russell 3000 Index companies
 #' as well as the S&P 500, to serve as a benchmark.
-#'
+#' 
+#' @format A data frame with 1,475,934 rows and 4 variables
+#' @source Google Finance, accessed through quantmod
 #' @name prices
 #' @docType data
 #' @keywords data
@@ -65,6 +67,8 @@ NULL
 #' 
 #' Last updated: January 2015
 #'
+#' @format A data frame with 2999 rows and 7 variables
+#'
 #' @name quality
 #' @docType data
 #' @keywords data
@@ -72,7 +76,11 @@ NULL
 
 #' A dataframe of safety scores for companies listed in the Russell 3000
 #'
-#' Displays safety scores as well as its components, this includes:
+#' Displays safety scores as well as its components for companies in the Russell 3000.
+#' More information may be found on the Technical vignette.
+#' Last updated: January 2015
+#' 
+#' @format A data frame with 2999 rows and 8 variables:
 #' \itemize{
 #'    \item BAB = Beta, calculated by comparison with the S&P 500
 #'    \item IVOL = Idiosyncratic Volatility, also calculated using the S&P 500
@@ -82,9 +90,6 @@ NULL
 #'    \item EVOL = Standard deviation of annual ROE over the past four years.
 #'  }
 #'  
-#'  More information may be found on the Technical vignette.
-#' Last updated: January 2015
-#'
 #' @name safety
 #' @docType data
 #' @keywords data
