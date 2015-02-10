@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy_balancesheets.R
 \name{tidy_balancesheets}
 \alias{tidy_balancesheets}
-\title{Tidies raw balance sheet data}
+\title{Makes raw balancesheet data usable and readable.}
 \usage{
 tidy_balancesheets(x)
 }
@@ -20,11 +20,20 @@ must be formatted in a list such that every element is a data frame or matrix co
 \code{tidy_balancesheets} produces a data frame that is "tidy" or more readily readable by a user and usable by other functions
 within this package.
 }
+\examples{
+\dontrun{
+companies <- data(companies)
+raw_data <- get_info(companies)
+tidybalance <- tidy_balancesheets(raw_data[[3]])
+}
+}
 \seealso{
+\code{\link{get_info}}
+
 \code{\link{tidy_prices}}
 
-\code{\link{tidy_incomestatements}}
-
 \code{\link{tidy_cashflows}}
+
+\code{\link{tidy_incomestatements}}
 }
 

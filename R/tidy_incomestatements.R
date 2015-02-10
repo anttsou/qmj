@@ -1,4 +1,4 @@
-#' Tidies raw incomestatement data and returns the tidied data frame
+#' Makes raw incomestatement data usable and readable.
 #'
 #' Tidies raw income statement data produced from quantmod and returns the tidied data frame. Raw income statement data
 #' must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
@@ -7,9 +7,16 @@
 #' within this package.
 #' @param x A list of raw incomestatement file data produced from quantmod
 #' @return Returns a data set that's been "tidied" up for use by other functions in this package.
+#' @seealso \code{\link{get_info}}
 #' @seealso \code{\link{tidy_prices}}
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_balancesheets}}
+#' @examples
+#' \dontrun{
+#' companies <- data(companies)
+#' raw_data <- get_info(companies)
+#' tidyincome <- tidy_incomestatements(x[[2]])
+#' }
 #' @export
 
 tidy_incomestatements <- function(x) {

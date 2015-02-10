@@ -1,4 +1,4 @@
-#' Tidies raw cash flow data
+#' Makes raw cash flow data usable and readable.
 #'
 #' Processes raw cash flow data from quantmod to return a tidied data frame. Raw cash flow data
 #' must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
@@ -7,9 +7,16 @@
 #' within this package.
 #' @param x A list of raw cash flow data produced from quantmod
 #' @return Returns a data set that's been "tidied" up for use by other functions in this package.
+#' @seealso \code{\link{get_info}}
 #' @seealso \code{\link{tidy_prices}}
-#' @seealso \code{\link{tidy_incomestatements}}
 #' @seealso \code{\link{tidy_balancesheets}}
+#' @seealso \code{\link{tidy_incomestatements}}
+#' @examples
+#' \dontrun{
+#' companies <- data(companies)
+#' raw_data <- get_info(companies)
+#' tidycash <- tidy_cashflows(x[[1]])
+#' }
 #' @export
 
 tidy_cashflows <- function(x) {

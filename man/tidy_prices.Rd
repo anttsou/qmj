@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy_prices.R
 \name{tidy_prices}
 \alias{tidy_prices}
-\title{Tidies raw prices data set}
+\title{Makes prices data usable and readable.}
 \usage{
 tidy_prices(x)
 }
@@ -20,11 +20,14 @@ by get_prices(), as this function depends on that structure.
 \code{tidy_prices} produces a data frame that is "tidy" or more readily readable by a user and usable by other functions
 within this package.
 }
+\examples{
+\dontrun{
+companies <- data(companies)
+raw_price_data <- get_prices(companies)
+prices <- tidy_prices(raw_price_data)
+}
+}
 \seealso{
-\code{\link{tidy_incomestatements}}
-
-\code{\link{tidy_cashflows}}
-
-\code{\link{tidy_balancesheets}}
+\code{\link{get_prices}}
 }
 
