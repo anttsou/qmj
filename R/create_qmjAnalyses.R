@@ -1,6 +1,6 @@
-#' Creates a list of portfolios.
+#' Creates a list of qmjAnalyses.
 #'
-#' Creates a list of portfolios, which allow for much greater analysis of
+#' Creates a list of qmjAnalyses, which allow for much greater analysis of
 #' individual companies.
 #' @param companies A data frame of company names and tickers.
 #' @param financials A data frame containing financial information for the given companies.
@@ -9,41 +9,41 @@
 #' data(companies)
 #' data(financials)
 #' data(prices)
-#' create_portfolios(companies,financials,prices)
+#' create_qmjAnalyses(companies,financials,prices)
 #' @export
 
-create_portfolios <- function(x, financials, prices){
-  create_portfolio <- function(ticker, profitability, pGPOA, pROE, pROA, pCFOA, pGMAR, pACC,
+create_qmjAnalyses <- function(x, financials, prices){
+  create_qmjAnalysis <- function(ticker, profitability, pGPOA, pROE, pROA, pCFOA, pGMAR, pACC,
                              growth, gGPOA, gROE, gROA, gCFOA, gGMAR, gACC, safety,
                              sBAB, sIVOL, sLEV, sO, sZ, sEVOL, payouts, pEISS, pDISS, pNPOP,
                              quality){
-    CompanyPortfolio(ticker = ticker, 
-                   profitability = profitability, 
-                   pGPOA = pGPOA,
-                   pROE = pROE,
-                   pROA = pROA,
-                   pCFOA = pCFOA,
-                   pGMAR = pGMAR,
-                   pACC = pACC,
-                   growth = growth,
-                   gGPOA = gGPOA,
-                   gROE = gROE,
-                   gROA = gROA,
-                   gCFOA = gCFOA,
-                   gGMAR = gGMAR,
-                   gACC = gACC,
-                   safety = safety,
-                   sBAB = sBAB,
-                   sIVOL = sIVOL,
-                   sLEV = sLEV,
-                   sO = sO,
-                   sZ = sZ,
-                   sEVOL = sEVOL,
-                   payouts = payouts,
-                   pEISS = pEISS,
-                   pDISS = pDISS,
-                   pNPOP = pNPOP,
-                   quality = quality)
+    qmjAnalysis(ticker = ticker, 
+                profitability = profitability, 
+                pGPOA = pGPOA,
+                pROE = pROE,
+                pROA = pROA,
+                pCFOA = pCFOA,
+                pGMAR = pGMAR,
+                pACC = pACC,
+                growth = growth,
+                gGPOA = gGPOA,
+                gROE = gROE,
+                gROA = gROA,
+                gCFOA = gCFOA,
+                gGMAR = gGMAR,
+                gACC = gACC,
+                safety = safety,
+                sBAB = sBAB,
+                sIVOL = sIVOL,
+                sLEV = sLEV,
+                sO = sO,
+                sZ = sZ,
+                sEVOL = sEVOL,
+                payouts = payouts,
+                pEISS = pEISS,
+                pDISS = pDISS,
+                pNPOP = pNPOP,
+                quality = quality)
   }
   
   data_profitability <- market_profitability(x, financials)
@@ -52,7 +52,7 @@ create_portfolios <- function(x, financials, prices){
   data_payouts <- market_payout(x, financials)
   quality <- data_profitability$profitability + data_growth$growth + data_safety$safety + data_payouts$payouts
   
-  mapply(create_portfolio, x$ticker, data_profitability$profitability, data_profitability$GPOA, data_profitability$ROE,
+  mapply(create_qmjAnalysis, x$ticker, data_profitability$profitability, data_profitability$GPOA, data_profitability$ROE,
          data_profitability$ROA, data_profitability$CFOA, data_profitability$GMAR, data_profitability$ACC, data_growth$growth,
          data_growth$GPOA, data_growth$ROE, data_growth$ROA, data_growth$CFOA, data_growth$GMAR, data_growth$ACC,
          data_safety$safety, data_safety$BAB, data_safety$IVOL, data_safety$LEV, data_safety$O, data_safety$Z,
