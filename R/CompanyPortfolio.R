@@ -32,8 +32,9 @@
 #'      \item{\code{quality}:}{Object of class \code{"numeric"}.}
 #'    }
 #'  }
-#' @name CompanyPortfolio-class
-#' @rdname CompanyPortfolio-class
+#' @name CompanyPortfolio
+#' @rdname CompanyPortfolio
+#' @aliases CompanyPortfolio-class
 #' @exportClass CompanyPortfolio
 
 CompanyPortfolio <- setClass(

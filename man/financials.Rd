@@ -7,18 +7,32 @@
 \description{
 A data frame containing all financial statements (balancesheets,
 cashflows, and income statements) for the past four years if available.
-Data
 }
 \details{
 Data is gathered from Google Finance. Data set contains:
  \itemize{
-   \item CE = Cash & Equivalents.
-   \item STI = Short Term Investments.
-   \item CSTI = Cash and Short Term Investments
-   \item AR = Accounts Receivable - Trade, Net
-   \item RE = Receivables - Other
-
-}
+   \item AM = Amortization
+   \item CWC = Changes in Working Capital
+   \item CX = Capital Expenditures
+   \item DIVC = Dividends per Share
+   \item DO = Discontinued Operations
+   \item DP.DPL = Depreciation/Depletion
+   \item GPROF = Gross Profits
+   \item IAT = Income After Taxes
+   \item IBT = Income Before Taxes
+   \item NI = Net Income
+   \item NINT = Interest and Expense - Net Operating
+   \item NRPS = Non-redeemable Preferred Stock
+   \item RPS = Redeemable Preferred Stock
+   \item TA = Total Assets
+   \item TCA = Total Current Assets
+   \item TCL = Total Current Liabilities
+   \item TCSO = Total Common Shares Outstanding
+   \item TD = Total Debt
+   \item TL = Total Liabilities
+   \item TLSE = Total Liabilities and Shareholders' Equity
+   \item TREV = Total Revenue
+ }
 }
 \keyword{data}
 

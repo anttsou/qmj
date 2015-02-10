@@ -3,7 +3,13 @@
 #' Processes raw balance sheet data produced from quantmod into a tidy data frame. Raw balance sheet data
 #' must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
 #' 
-#' @param x List of raw balance sheet data from quantmod.
+#' \code{tidy_balancesheets} produces a data frame that is "tidy" or more readily readable by a user and usable by other functions
+#' within this package.
+#' @param x A list of raw cash flow data produced from quantmod
+#' @return Returns a data set that's been "tidied" up for use by other functions in this package.
+#' @seealso \code{\link{tidy_prices}}
+#' @seealso \code{\link{tidy_incomestatements}}
+#' @seealso \code{\link{tidy_cashflows}}
 #' @export
 
 tidy_balancesheets <- function(x) {

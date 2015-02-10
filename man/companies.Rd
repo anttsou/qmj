@@ -5,7 +5,7 @@
 \alias{companies}
 \title{A list of all companies of interest}
 \description{
-Stores sample set of companies (namely, all those starting with the letter "A" as found on investorguide.com)
+Stores the names and tickers for all companies in the Russell 3000 Index.
 }
 \keyword{data}
 
