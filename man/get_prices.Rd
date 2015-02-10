@@ -7,15 +7,15 @@
 get_prices(x)
 }
 \arguments{
-\item{x}{A dataframe of company names and tickers.}
+\item{companies}{A data frame of company names and tickers.}
 }
 \description{
-Given a list of companies (names and tickers), writes .RData files for every company in the /extdata folder
+Given a data frame of companies (names and tickers), writes .RData files for every company in the /extdata folder
 in the package folder. If canceled partway through, function is able to find and re-read this data, allowing
 resumption of progress.
 }
 \examples{
-x <- data(companies)
-\dontrun{get_prices(x)}
+data(companies)
+\dontrun{get_prices(companies)}
 }
 
