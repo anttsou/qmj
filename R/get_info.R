@@ -12,6 +12,9 @@
 #' @export
 
 get_info <- function(x) {
+  if(length(x$ticker) == 0) {
+    stop("parameter requires a ticker column.")
+  }
   filepath <- system.file("data", package="qmj")
   tickers <- as.character(x$ticker)
   cashflows <- list()
