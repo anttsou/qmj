@@ -111,7 +111,7 @@ qmj <- setClass(
 #' view_ticker(qmjs[[1]])
 #' }
 #' @rdname view_ticker
-#' @exportMethod view_ticker
+#' @export view_ticker
 setGeneric(name="view_ticker",
            def=function(theObject)
            {
