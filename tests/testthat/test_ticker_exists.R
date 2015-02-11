@@ -8,5 +8,5 @@ test_that("companies list has ticker column", {
   expect_error(qmj::market_profitability(x,financials))
   expect_error(qmj::market_growth(x,financials))
   expect_error(qmj::market_safety(x,financials,prices))
-  expect_error(qmj::market_payout(x,financials))
+  expect_error(qmj::market_payouts(x,financials))
 })

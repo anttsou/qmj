@@ -8,5 +8,5 @@ test_that("tcso is positive", {
   expect_error(qmj::market_profitability(companies,temp))
   expect_error(qmj::market_growth(companies,temp))
   expect_error(qmj::market_safety(companies,temp,prices))
-  expect_error(qmj::market_payout(companies,temp))
+  expect_error(qmj::market_payouts(companies,temp))
 })
