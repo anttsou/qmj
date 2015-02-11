@@ -7,6 +7,8 @@
 \title{Return the ticker of the qmj object.}
 \usage{
 view_ticker(theObject)
+
+\S4method{view_ticker}{qmj}(theObject)
 }
 \value{
 The ticker of the qmj object as a character.

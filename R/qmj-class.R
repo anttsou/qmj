@@ -30,9 +30,8 @@
 #' @slot pDISS Object of class \code{"numeric"}. Net debt issuance for payouts calculation.
 #' @slot pNPOP Object of class \code{"numeric"}. Total net payouts over profits for payouts calculation.
 #' @slot quality Object of class \code{"numeric"}. The quality score.
-#' @name qmj
+#' @name qmj-class
 #' @rdname qmj-class
-#' @aliases qmj-class
 #' @exportClass qmj
 
 qmj <- setClass(
@@ -104,17 +103,15 @@ qmj <- setClass(
   })
 
 #' @title Return the ticker of the qmj object.
-#' @aliases view_ticker,qmj-method
 #' @return The ticker of the qmj object as a character.
-#' @export
-#' @docType methods
-#' @rdname view_ticker-methods
 #' 
 #' @examples
 #' \dontrun{
 #' qmjs <- data(qmjs)
 #' view_ticker(qmjs[[1]])
 #' }
+#' @rdname view_ticker-methods
+#' @exportMethod view_ticker
 setGeneric(name="view_ticker",
            def=function(theObject)
            {
@@ -122,6 +119,8 @@ setGeneric(name="view_ticker",
            }
 )
 
+#' @rdname view_ticker-methods
+#' @aliases view_ticker,qmj-method
 setMethod(f="view_ticker",
           signature="qmj",
           definition=function(theObject)
@@ -131,17 +130,16 @@ setMethod(f="view_ticker",
 )
 
 #' @title Returns the profitability of the qmj object.
-#' @aliases view_profitability,qmj-method
 #' @return A data frame with 1 row and 8 variables that describes profitability of the qmj object.
-#' @export
-#' @docType methods
-#' @rdname view_profitability-methods
 #' 
 #' @examples
 #' \dontrun{
 #' qmjs <- data(qmjs)
 #' view_profitability(qmjs[[1]])
 #' }
+
+#' @rdname view_profitability-methods
+#' @exportMethod view_profitability
 setGeneric(name="view_profitability",
                       def=function(theObject)
                       {
@@ -149,6 +147,8 @@ setGeneric(name="view_profitability",
                       }
                       )
 
+#' @rdname view_profitability-methods
+#' @aliases view_profitability,qmj-method
 setMethod(f="view_profitability",
                       signature="qmj",
                       definition=function(theObject)

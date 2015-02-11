@@ -7,6 +7,8 @@
 \title{Returns the profitability of the qmj object.}
 \usage{
 view_profitability(theObject)
+
+\S4method{view_profitability}{qmj}(theObject)
 }
 \value{
 A data frame with 1 row and 8 variables that describes profitability of the qmj object.
