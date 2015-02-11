@@ -58,7 +58,7 @@ summarize(first_qmj) # Displays key information about this qmj object.
 #perform some analysis.
 data(safety)
 ```
-```{r simpleplot}
+```{r fig.width=7, fig.width=6}
 plot_safety(first_qmj, safety)
 ```
 
@@ -67,7 +67,7 @@ plot_safety(first_qmj, safety)
 data(quality)
 second_qmj <- qmjs[[2]]
 ```
-```{r simpleplot}
+```{r fig.width=7, fig.height=6}
 plot_quality(second_qmj, quality)
 ```
 
