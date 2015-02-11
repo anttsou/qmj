@@ -1,4 +1,4 @@
-#' Gets raw price data.
+#' Gets raw price data from the extdata folder of the package.
 #'
 #' Retrieves raw data for stock price returns and closing prices. Returns a data frame, where columns
 #' are associated with a company's calculated price return and its recorded closing price for the date.

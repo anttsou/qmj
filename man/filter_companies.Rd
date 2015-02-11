@@ -2,7 +2,7 @@
 % Please edit documentation in R/filter_companies.R
 \name{filter_companies}
 \alias{filter_companies}
-\title{Filters quality data to isolate companies which have quality scores that are primarily "driven" by a single component.}
+\title{Filters quality data to isolate or remove companies which have quality scores that are primarily "driven" by a single component.}
 \usage{
 filter_companies(data, filter, remove = TRUE, isolate = FALSE)
 }

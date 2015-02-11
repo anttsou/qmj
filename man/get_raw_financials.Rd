@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_raw_financials.R
 \name{get_raw_financials}
 \alias{get_raw_financials}
-\title{Gets raw financial statements.}
+\title{Gets raw financial statements from the extdata folder of the package.}
 \usage{
 get_raw_financials()
 }

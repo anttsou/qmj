@@ -21,17 +21,20 @@
 
 tidy_balancesheets <- function(x) {
   numCompanies <- length(x)
-  balancesheets <- matrix(nrow=numCompanies * 4, ncol=44)
+  balancesheets <- matrix(nrow=numCompanies * 4, ncol=44) #Pre-allocate space for matrix for speed reasons.
   
+  #These are the categories we expect from the raw data.
   colnames(balancesheets) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", 
                                "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", 
                                "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", 
                                "CS", "APIC", "RE", "TS", "OE", "TE", "TLSE", "SO", "TCSO")
   for(i in 1:numCompanies){
-    cdata <- x[[i]]
-    ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
-    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata))
+    cdata <- x[[i]] #Extract this specific company's data from the raw list.
+    ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract the ticker from the first column.
+    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extract the years these financial statements were filed.
     if(length(unique(years)) < length(years)){
+      #If more than one financial statement is filed in a single year, assign a suffix to all years in order to preserve order
+      #and avoid duplicates.
       for(j in 1:length(years)){
         years[j] <- paste(years[j], ".", j, sep='')
       }
@@ -83,6 +86,6 @@ tidy_balancesheets <- function(x) {
       balancesheets[k + (i-1)*4,44] <- cdata[42,k]
     }
   }
-  balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1,]
+  balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1,] #Remove all rows that are solely NAs.
   data.frame(balancesheets, stringsAsFactors=FALSE)
 }

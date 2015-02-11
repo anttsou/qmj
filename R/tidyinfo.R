@@ -10,7 +10,7 @@
 #' @seealso \code{\link{tidy_incomestatements}}
 #' @examples
 #' \dontrun{
-#' companies <- data(companies)
+#' data(companies)
 #' raw_data <- get_info(companies)
 #' financials <- tidyinfo(raw_data)
 #' 
@@ -21,12 +21,15 @@
 #' @export
 
 tidyinfo <- function(x){
-  tidybalance <- tidy_balancesheets(x[[3]])
+  #Index is the current structure of the output of the get_info function.
   tidycash <- tidy_cashflows(x[[1]])
   tidyincome <- tidy_incomestatements(x[[2]])
+  tidybalance <- tidy_balancesheets(x[[3]])
 
   financials <- merge(tidybalance, merge(tidycash, tidyincome, by=c("ticker", "year")), by=c("ticker", "year"))
   financials <- unique(financials)
+  
+  #The columns below are the only ones used in our formulas, and so the other columns are culled out.
   keep <- c("ticker","year","AM","CWC","CX","DIVC",
             "DO","DP.DPL","GPROF","IAT","IBT","NI",
               "NINT","NRPS","RPS","TA","TCA","TCL",
