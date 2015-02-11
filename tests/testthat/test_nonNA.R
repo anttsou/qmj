@@ -1,4 +1,4 @@
-test_that("calculation returns non-NA value") {
+test_that("calculation returns non-NA value", {
   data(companies)
   data(financials)
   data(prices)
@@ -6,4 +6,4 @@ test_that("calculation returns non-NA value") {
   temp$name[5] <- "test"
   temp$ticker[5] <- "TICK9"
   expect_warning(qmj::market_safety(temp,financials,prices))
-}
+})
