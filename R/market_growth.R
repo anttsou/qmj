@@ -65,8 +65,8 @@ market_growth <- function(x, financials){
   }
   GPOA <- mapply(gpoa, as.numeric(as.character(fstyear$GPROF)), as.numeric(as.character(lstyear$GPROF)), 
                  as.numeric(as.character(lstyear$TA)))
-  #Note: ROE is almost entirely NA's.
-  ROE <- mapply(roe, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(fstyear$NI)), 
+
+  ROE <- mapply(roe, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(lstyear$NI)), 
                 as.numeric(as.character(lstyear$TLSE)), as.numeric(as.character(lstyear$TL)), 
                 as.numeric(as.character(lstyear$RPS)), as.numeric(as.character(lstyear$NRPS)))
   ROA <- mapply(roa, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(lstyear$NI)), 
