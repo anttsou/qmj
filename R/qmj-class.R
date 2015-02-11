@@ -33,7 +33,7 @@
 #' @name qmj
 #' @rdname qmj-class
 #' @aliases qmj-class
-#' @exportClass 
+#' @exportClass qmj
 
 qmj <- setClass(
   "qmj",
