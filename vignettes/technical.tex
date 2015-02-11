@@ -1,7 +1,8 @@
 \documentclass[12pt]{article}
 \usepackage{listings}
+\usepackage{Sweave}
 \begin{document}
-\SweaveOpts{concordance=TRUE}
+\input{technical-concordance}
 \section*{Profitability}
 Profitability is composed of six variables: gross profits over assets ($GPOA$), return on equity ($ROE$), return on assets ($ROA$), cash flow over assets ($CFOA$), gross margin ($GMAR$), and accruals ($ACC$). $GPOA$ is calculated as gross profits ($GPROF$) over total assets ($TA$). $$GPOA \ = \ \frac{GPROF}{TA}$$ $ROE$ is calculated as net income ($NI$) over book equity ($BE$), which is shareholders' equity (the difference of Total Liabilities and Shareholders' Equity ($TLSE$) with Total Liabilities ($TL$)) - preferred stock (the sum of redeemable preferred stock ($RPS$) and non redeemable preferred stock ($NRPS$)). $$ROE \ = \ \frac{NI}{BE}$$ $ROA$ is calculated as $NI$ over $TA$. $$ROA \ = \ \frac{NI}{TA}$$ $CFOA$ is calculated as $NI$ + depreciation ($DP.DPL$) - changes in working capital ($CWC$) - capital expenditures ($CX$) all over $TA$. $$CFOA \ = \ \frac{NI \ + \ DP.DPL \ - \ CWC \ - \ CX}{TA}$$ $GMAR$ is calculated as $GPROF$ over total revenue ($TREV$). $$GMAR \ = \ \frac{GPROF}{TREV}$$ Finally, $ACC$ is calculated as $DP.DPL$ - $CWC$ all over $TA$. $$ACC \ = \ \frac{DP.DPL \ - \ CWC}{TA}$$ We then standardize all components of profitability to z-scores and then standardize all profitability scores into z-scores. $$Profitability \ = \ z(z_{gpoa} \ + \ z_{roe} \ + \ z_{roa} \ + \ z_{cfoa} \ + \ z_{gmar} \ + \ z_{acc})$$
 \section*{Growth}
