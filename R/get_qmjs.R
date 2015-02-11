@@ -15,6 +15,8 @@ get_qmjs <- function(tickers, qmjs){
     view_ticker(qmj)
   }
   
+  # subset the qmjs dataset to include the companies
+  # with the input tickers
   qmj_tickers <- sapply(qmjs, get_ticker)
   indices <- match(tickers, qmj_tickers)
   qmjs[indices]

@@ -13,6 +13,8 @@
 #' @export
 
 create_qmjs <- function(x, financials, prices){
+  
+  # creates a new qmj object.
   create_qmj <- function(ticker, profitability, pGPOA, pROE, pROA, pCFOA, pGMAR, pACC,
                          growth, gGPOA, gROE, gROA, gCFOA, gGMAR, gACC, safety,
                          sBAB, sIVOL, sLEV, sO, sZ, sEVOL, payouts, pEISS, pDISS, pNPOP,
@@ -52,6 +54,7 @@ create_qmjs <- function(x, financials, prices){
   data_payouts <- market_payout(x, financials)
   quality <- data_profitability$profitability + data_growth$growth + data_safety$safety + data_payouts$payouts
   
+  #applies process of creating new qmj object to every company
   mapply(create_qmj, x$ticker, data_profitability$profitability, data_profitability$GPOA, data_profitability$ROE,
          data_profitability$ROA, data_profitability$CFOA, data_profitability$GMAR, data_profitability$ACC, data_growth$growth,
          data_growth$GPOA, data_growth$ROE, data_growth$ROA, data_growth$CFOA, data_growth$GMAR, data_growth$ACC,
