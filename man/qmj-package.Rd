@@ -3,22 +3,31 @@
 \docType{package}
 \name{qmj-package}
 \alias{qmj-package}
-\title{Quality Minus Junk}
+\title{Exploring a quality minus junk approach to evaluating stocks}
 \description{
-Calculates and manipulates data on the quality of companies.
+The qmj package calculates quality scores for the companies in the Russell 3000 Index based
+on the paper \emph{Quality Minus Junk} by Clifford Asness, Andrea Frazzini, and Lasse Pedersen.
 }
 \details{
-*This package is currently still in early development.* \cr
-  RECOMMENDATION FOR EARLY USE: \cr
-  \itemize{
-  \item All functions and datasets are documented, and are freely available for use.
-  \item getcompanies() is an alternative way of accessing the companies.RData data.
-  \item collectmarketdata() provides an early look into *very rough* initial calculations
-  for quality in the sample companies.
-  \item *Warning*: Do not call getcashflows, getincomestatements, or getbalancesheets.
-  While these functions correctly work, the functions do require several minutes to
-  fully finish downloading the relevant financial documents from the web, returning
-  a large matrix containing the desired documents.
-  }
+Quality is a measure of a company's profitability, growth, safety, and payouts. By using publicly
+available data for company balance sheets, income statements, and cash flows, the qmj package
+calculates relative quality z-scores for companies.
+
+All functions and datasets are documented, and are freely available for use.
+Index of datasets:
+\itemize{
+\item companies - all publicly traded companies in the Russell 3000 Index
+\item financials - financial statements for companies in the companies dataset
+\item profitability - most recently measured profitability z-scores and their components
+\item growth - most recently measured growth z-scores and their components
+\item safety - most recently measured safety z-scores and their components
+\item payouts - most recently measured payouts z-scores and their components
+\item quality - most recently measure quality z-scores and their components
+\item qmjs - objects of class qmj, providing utility functions for further analysis of company quality
+\item prices - daily prices and price returns for the past two years
+}
+}
+\references{
+Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. "Quality Minus Junk." AQR (2014)
 }
 
