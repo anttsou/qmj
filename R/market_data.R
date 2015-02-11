@@ -9,7 +9,7 @@
 #' @seealso \code{\link{market_profitability}}
 #' @seealso \code{\link{market_growth}}
 #' @seealso \code{\link{market_safety}}
-#' @seealso \code{\link{market_payout}}
+#' @seealso \code{\link{market_payouts}}
 #' @examples
 #' data(companies)
 #' data(financials)

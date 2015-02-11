@@ -51,7 +51,7 @@ create_qmjs <- function(x, financials, prices){
   data_profitability <- market_profitability(x, financials)
   data_growth <- market_growth(x, financials)
   data_safety <- market_safety(x, financials, prices)
-  data_payouts <- market_payout(x, financials)
+  data_payouts <- market_payouts(x, financials)
   quality <- data_profitability$profitability + data_growth$growth + data_safety$safety + data_payouts$payouts
   
   #applies process of creating new qmj object to every company

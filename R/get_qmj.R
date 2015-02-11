@@ -22,7 +22,7 @@ get_qmj <- function(companies,ticker,financials,prices) {
   profitability <- market_profitability(sub.comp,financials)
   growth <- market_growth(sub.comp,financials)
   safety <- market_safety(sub.comp,financials,prices)
-  payouts <- market_payout(sub.comp,financials)
+  payouts <- market_payouts(sub.comp,financials)
   
   #sums the scores
   quality <- profitability$profitability + growth$growth + safety$safety + payouts$payouts
