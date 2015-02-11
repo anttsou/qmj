@@ -15,6 +15,7 @@ get_prices <- function(x){
     stop("first parameter requires a ticker column.")
   }
   
+  #' @describeIn pricereturns Calculates price returns for an xts object.
   pricereturns <- function(x){
     closingprices <- as.numeric(x[,1])
     numEntries <- length(closingprices)

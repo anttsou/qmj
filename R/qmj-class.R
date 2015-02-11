@@ -1,41 +1,37 @@
-#' qmj
+#' The qmj object allows for more in-depth analysis of a single company.
 #'
 #' The qmj object contains all details related to a company's quality score,
 #' and also provides some tools for analyzing a specific company in more detail.
 #'
-#' \section{Slots}{
-#'    \describe{
-#'      \item{\code{ticker}:}{Object of class \code{"character"}.}
-#'      \item{\code{profitability}:}{Object of class \code{"numeric"}. The profitability score.}
-#'      \item{\code{pGPOA}:}{Object of class \code{"numeric"}. Gross profits over assets for profitability calculation.}
-#'      \item{\code{pROE}:}{Object of class \code{"numeric"}. Return on equity for profitability calculation.}
-#'      \item{\code{pROA}:}{Object of class \code{"numeric"}. Return on assets for profitability calculation.}
-#'      \item{\code{pCFOA}:}{Object of class \code{"numeric"}. Cash flow over assets for profitability calculation.}
-#'      \item{\code{pGMAR}:}{Object of class \code{"numeric"}. Gross margin for profitability calcuation.}
-#'      \item{\code{pACC}:}{Object of class \code{"numeric"}. Low accruals for profitability calculation.}
-#'      \item{\code{growth}:}{Object of class \code{"numeric"}. The growth score.}
-#'      \item{\code{gGPOA}:}{Object of class \code{"numeric"}. Change in gross profits for growth calculation.}
-#'      \item{\code{gROE}:}{Object of class \code{"numeric"}. Change in return on equity for growth calculation.}
-#'      \item{\code{gROA}:}{Object of class \code{"numeric"}. Change in return on assets for growth calculation.}
-#'      \item{\code{gCFOA}:}{Object of class \code{"numeric"}. Change in cash flow over assets for growth calculation.}
-#'      \item{\code{gGMAR}:}{Object of class \code{"numeric"}. Change in gross margin for growth calculation.}
-#'      \item{\code{gACC}:}{Object of class \code{"numeric"}. Change in low accruals for growth calculation.}
-#'      \item{\code{safety}:}{Object of class \code{"numeric"}. THe safety score.}
-#'      \item{\code{sBAB}:}{Object of class \code{"numeric"}. The calculated beta relative to the S&P 500.}
-#'      \item{\code{sIVOL}:}{Object of class \code{"numeric"}. The calculated IVOL relative to the S&P 500.}
-#'      \item{\code{sLEV}:}{Object of class \code{"numeric"}. The low leverage for safety calculation.}
-#'      \item{\code{sO}:}{Object of class \code{"numeric"}. The Ohlson's O score for safety calculation.}
-#'      \item{\code{sZ}:}{Object of class \code{"numeric"}. The Altman's Z score for safety calculation.}
-#'      \item{\code{sEVOL}:}{Object of class \code{"numeric"}. The low earnings volatility for safety calculation.}
-#'      \item{\code{payouts}:}{Object of class \code{"numeric"}. The payouts score.}
-#'      \item{\code{pEISS}:}{Object of class \code{"numeric"}. Net equity issuance for payouts calculation.}
-#'      \item{\code{pDISS}:}{Object of class \code{"numeric"}. Net debt issuance for payouts calculation.}
-#'      \item{\code{pNPOP}:}{Object of class \code{"numeric"}. Total net payouts over profits for payouts calculation.}
-#'      \item{\code{quality}:}{Object of class \code{"numeric"}. The quality score.}
-#'    }
-#'  }
+#' @slot ticker Object of class \code{"character"}
+#' @slot profitability Object of class \code{"numeric"}. The profitability score.
+#' @slot pGPOA Object of class \code{"numeric"}. Gross profits over assets for profitability calculation.
+#' @slot pROE Object of class \code{"numeric"}. Return on equity for profitability calculation.
+#' @slot pROA Object of class \code{"numeric"}. Return on assets for profitability calculation.
+#' @slot pCFOA Object of class \code{"numeric"}. Cash flow over assets for profitability calculation.
+#' @slot pGMAR Object of class \code{"numeric"}. Gross margin for profitability calcuation.
+#' @slot pACC Object of class \code{"numeric"}. Low accruals for profitability calculation.
+#' @slot growth Object of class \code{"numeric"}. The growth score.
+#' @slot gGPOA Object of class \code{"numeric"}. Change in gross profits for growth calculation.
+#' @slot gROE Object of class \code{"numeric"}. Change in return on equity for growth calculation.
+#' @slot gROA Object of class \code{"numeric"}. Change in return on assets for growth calculation.
+#' @slot gCFOA Object of class \code{"numeric"}. Change in cash flow over assets for growth calculation.
+#' @slot gGMAR Object of class \code{"numeric"}. Change in gross margin for growth calculation.
+#' @slot gACC Object of class \code{"numeric"}. Change in low accruals for growth calculation.
+#' @slot safety Object of class \code{"numeric"}. THe safety score.
+#' @slot sBAB Object of class \code{"numeric"}. The calculated beta relative to the S&P 500.
+#' @slot sIVOL Object of class \code{"numeric"}. The calculated IVOL relative to the S&P 500.
+#' @slot sLEV Object of class \code{"numeric"}. The low leverage for safety calculation.
+#' @slot sO Object of class \code{"numeric"}. The Ohlson's O score for safety calculation.
+#' @slot sZ Object of class \code{"numeric"}. The Altman's Z score for safety calculation.
+#' @slot sEVOL Object of class \code{"numeric"}. The low earnings volatility for safety calculation.
+#' @slot payouts Object of class \code{"numeric"}. The payouts score.
+#' @slot pEISS Object of class \code{"numeric"}. Net equity issuance for payouts calculation.
+#' @slot pDISS Object of class \code{"numeric"}. Net debt issuance for payouts calculation.
+#' @slot pNPOP Object of class \code{"numeric"}. Total net payouts over profits for payouts calculation.
+#' @slot quality Object of class \code{"numeric"}. The quality score.
 #' @name qmj
-#' @rdname qmj
+#' @rdname qmj-class
 #' @aliases qmj-class
 #' @exportClass qmj
 
