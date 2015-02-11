@@ -105,6 +105,17 @@ qmj <- setClass(
     return(TRUE)
   })
 
+#' @return The ticker of the qmj object as a character.
+#' 
+#' @export
+#' @docType methods
+#' @rdname view_ticker-methods
+#' 
+#' @examples
+#' \dontrun{
+#' qmjs <- data(qmjs)
+#' view_ticker(qmjs[[1]])
+#' }
 setGeneric(name="view_ticker",
            def=function(theObject)
            {
@@ -120,6 +131,17 @@ setMethod(f="view_ticker",
           }
 )
 
+#' @return A data frame with 1 row and 8 variables that describes profitability of the qmj object.
+#' 
+#' @export
+#' @docType methods
+#' @rdname view_profitability-methods
+#' 
+#' @examples
+#' \dontrun{
+#' qmjs <- data(qmjs)
+#' view_profitability(qmjs[[1]])
+#' }
 setGeneric(name="view_profitability",
                       def=function(theObject)
                       {
@@ -151,6 +173,17 @@ setMethod(f="view_profitability",
                       }
                       )
 
+#' @return A data frame with 1 row and 8 variables that describes growth of the qmj object.
+#' 
+#' @export
+#' @docType methods
+#' @rdname view_growth-methods
+#' 
+#' @examples
+#' \dontrun{
+#' qmjs <- data(qmjs)
+#' view_growth(qmjs[[1]])
+#' }
 setGeneric(name="view_growth",
                       def=function(theObject)
                       {
@@ -182,6 +215,17 @@ setMethod(f="view_growth",
                       }
                       )
 
+#' @return A data frame with 1 row and 8 variables that describes the safety of the qmj object.
+#' 
+#' @export
+#' @docType methods
+#' @rdname view_safety-methods
+#' 
+#' @examples
+#' \dontrun{
+#' qmjs <- data(qmjs)
+#' view_safety(qmjs[[1]])
+#' }
 setGeneric(name="view_safety",
                       def=function(theObject)
                       {
@@ -212,6 +256,17 @@ setMethod(f="view_safety",
                       }
                       )
 
+#' @return A data frame with 1 row and 5 variables that describes the payouts of the qmj object.
+#' 
+#' @export
+#' @docType methods
+#' @rdname view_payouts-methods
+#' 
+#' @examples
+#' \dontrun{
+#' qmjs <- data(qmjs)
+#' view_payouts(qmjs[[1]])
+#' }
 setGeneric(name="view_payouts",
                       def=function(theObject)
                       {
@@ -236,6 +291,17 @@ setMethod(f="view_payouts",
                       }
                       )
 
+#' @return A data frame with 1 row and 6 variables that describes the quality score of the qmj object.
+#' 
+#' @export
+#' @docType methods
+#' @rdname view_quality-methods
+#' 
+#' @examples
+#' \dontrun{
+#' qmjs <- data(qmjs)
+#' view_quality(qmjs[[1]])
+#' }
 setGeneric(name="view_quality",
                       def=function(theObject)
                       {
@@ -263,6 +329,18 @@ setMethod(f="view_quality",
                       }
                       )
 
+#' @return Displays a quality histogram, highlighting the bin containing the chosen qmj object/company.
+#' 
+#' @export
+#' @docType methods
+#' @rdname plot_quality-methods
+#' 
+#' @examples
+#' \dontrun{
+#' qmjs <- data(qmjs)
+#' quality <- data(quality)
+#' plot_quality(qmjs[[1]], quality)
+#' }
 setGeneric(name="plot_quality",
                       def=function(theObject, quality_data_frame)
                       {
@@ -297,6 +375,17 @@ setMethod(f="plot_quality",
                       }
                       )
 
+#' @return Prints all components and scores of the qmj object.
+#' 
+#' @export
+#' @docType methods
+#' @rdname summarize-methods
+#' 
+#' @examples
+#' \dontrun{
+#' qmjs <- data(qmjs)
+#' summarize(qmjs[[1]])
+#' }
 setGeneric(name="summarize",
                       def=function(theObject)
                       {
