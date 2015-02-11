@@ -57,15 +57,21 @@ summarize(first_qmj) # Displays key information about this qmj object.
 #We're clearly missing some interesting data, but we can still 
 #perform some analysis.
 data(safety)
-
+```
+```{r simpleplot}
 plot_safety(first_qmj, safety)
+```
 
+```{r}
 #Now let's look at a graph for quality.
 data(quality)
 second_qmj <- qmjs[[2]]
-
+```
+```{r simpleplot}
 plot_quality(second_qmj, quality)
+```
 
+```{r}
 #What if I'm only interested in looking closely at a few companies? 
 #Well, voila.
 desired_companies <- c("GOOG", "IBM", "FLWS") #Returns a list containing the given qmj objects in order.
