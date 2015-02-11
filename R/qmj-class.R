@@ -30,7 +30,7 @@
 #' @slot pDISS Object of class \code{"numeric"}. Net debt issuance for payouts calculation.
 #' @slot pNPOP Object of class \code{"numeric"}. Total net payouts over profits for payouts calculation.
 #' @slot quality Object of class \code{"numeric"}. The quality score.
-#' @name qmj-class
+#' @name qmj
 #' @rdname qmj-class
 #' @aliases qmj-class
 #' @exportClass qmj

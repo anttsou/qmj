@@ -175,9 +175,9 @@ market_payout <- function(x, financials){
   DISS <- scale(DISS)
   NPOP <- scale(NPOP)
   
-  EISS[is.na(EISS)] <- 0
-  DISS[is.na(DISS)] <- 0
-  NPOP[is.na(NPOP)] <- 0
+  EISS[is.nan(EISS)] <- 0
+  DISS[is.nan(DISS)] <- 0
+  NPOP[is.nan(NPOP)] <- 0
   
   payouts <- EISS + DISS + NPOP
   
