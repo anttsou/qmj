@@ -12,10 +12,10 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' market_payout(companies, financials)
+#' market_payouts(companies, financials)
 #' @export
 
-market_payout <- function(x, financials){
+market_payouts <- function(x, financials){
   if(length(x$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
