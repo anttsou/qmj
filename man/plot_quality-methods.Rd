@@ -18,7 +18,7 @@ Plots the relative quality of the qmj object.
 \dontrun{
 qmjs <- data(qmjs)
 quality <- data(quality)
-plot_quality(qmjs[[1]], quality)
+plot_quality(qmjs[[2]], quality)
 }
 }
 
