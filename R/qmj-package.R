@@ -16,5 +16,5 @@
 #'   }
 #' 
 #' @docType package
-#' @name qmj
+#' @name qmj-package
 NULL
