@@ -55,6 +55,7 @@ market_payouts <- function(x, financials){
   thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
   fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
   
+  #functions calculate individual components of payouts
   eiss <- function(tcso1, tcso2){
     -log(tcso1/tcso2)
   }
@@ -151,6 +152,7 @@ market_payouts <- function(x, financials){
     totalNetPayouts/totalProfits
   }
   
+  #apply the calculation functions to all companies without needing a slow loop.
   EISS <- mapply(eiss, as.numeric(as.character(fstyear$TCSO)), as.numeric(as.character(sndyear$TCSO)))
   DISS <- mapply(diss, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(sndyear$TD)))
   NPOP <- mapply(npop, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(sndyear$NI)),
@@ -166,15 +168,17 @@ market_payouts <- function(x, financials){
                  as.numeric(as.character(fstyear$GPROF)), as.numeric(as.character(sndyear$GPROF)),
                  as.numeric(as.character(thdyear$GPROF)), as.numeric(as.character(fthyear$GPROF)))
 
+  #removes potential errors from Inf values
   EISS[is.infinite(EISS)] <- 0
   DISS[is.infinite(DISS)] <- 0
   NPOP[is.infinite(NPOP)] <- 0
   
-  #Scale converts the individual scores for these values into z-scores.
+  #scale converts the individual scores for these values into z-scores.
   EISS <- scale(EISS)
   DISS <- scale(DISS)
   NPOP <- scale(NPOP)
   
+  #removes potential errors from nan values
   EISS[is.nan(EISS)] <- 0
   DISS[is.nan(DISS)] <- 0
   NPOP[is.nan(NPOP)] <- 0
