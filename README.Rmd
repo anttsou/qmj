@@ -68,6 +68,7 @@ data(quality)
 second_qmj <- qmjs[[2]]
 ```
 ```{r fig.width=7, fig.height=6}
+library(ggplot2)
 plot_quality(second_qmj, quality)
 ```
 
