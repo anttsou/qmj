@@ -74,7 +74,7 @@ market_safety <- function(x, financials, daily){
   thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
   fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
   
-
+  #functions calculate individual components of safety
   merger <- function(company_ticker) {
     result <- -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
         as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
@@ -119,6 +119,7 @@ market_safety <- function(x, financials, daily){
     as.numeric(ni1 > 0 && ni2 > 0)
   }
 
+  #apply the calculation functions to all companies without needing a slow loop.
   BAB <- sapply(x$ticker, merger)
  
   IVOL <- sapply(x$ticker,calc_ivol)
@@ -165,6 +166,7 @@ market_safety <- function(x, financials, daily){
   O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
 
+  #removes potential errors from Inf values
   BAB[is.infinite(BAB)] <- 0
   IVOL[is.infinite(IVOL)] <- 0
   LEV[is.infinite(LEV)] <- 0
@@ -180,6 +182,7 @@ market_safety <- function(x, financials, daily){
   Z <- scale(Z)
   EVOL <- scale(EVOL)
   
+  #removes potential errors from nan values
   BAB[is.nan(BAB)] <- 0
   IVOL[is.nan(IVOL)] <- 0
   LEV[is.nan(LEV)] <- 0
