@@ -35,7 +35,6 @@ market_safety <- function(x, financials, daily){
   daily$pret[is.infinite(as.numeric(daily$pret))] <- 0
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   market <- filter(daily, ticker == "GSPC")
-    #daily[daily$ticker == "GSPC",]
   nogspc <- filter(daily, ticker != "GSPC")
   year <- numeric()
   if(sum(market$date == currentyear) <= 150){
@@ -46,14 +45,9 @@ market_safety <- function(x, financials, daily){
   marketlistb <- market[grepl(year,market$date),]
   mergedail <- merge(marketlistb,nogspc,by="date")
   splitdail <- split(mergedail,mergedail$ticker.y)
-  ordereddaily <- arrange(daily, desc(date))
-    #daily[order(daily$date, decreasing=TRUE),]
   splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
   splitindices <- splitindices[-1]
   companiesstored <- names(splitindices)
-  #setkey(ordereddaily, "ticker")
-  yearlyprices <- distinct_(ordereddaily, "ticker")
-    #unique(ordereddaily)
   
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1[,1:5])
@@ -103,9 +97,7 @@ market_safety <- function(x, financials, daily){
   lev <- function(td, ta){
     -td/ta
   }
-  exret <- function(subcomps, beta, marketclose){
-    subcomps - (beta*marketclose)
-  }
+
   calcmean <- function(indexlist){
     indexlist <- as.numeric(indexlist)
     closingprices <- as.numeric(as.character(daily$close[indexlist]))
@@ -126,14 +118,11 @@ market_safety <- function(x, financials, daily){
   intwo <- function(ni1, ni2){
     as.numeric(ni1 > 0 && ni2 > 0)
   }
-  
-  #BAB calculated in merger
+
   BAB <- sapply(x$ticker, merger)
-  #BAB <- sapply(as.character(allcompanies$ticker), merger)
-  
+ 
   IVOL <- sapply(x$ticker,calc_ivol)
-  #IVOL <- sapply(as.character(allcompanies$ticker), calc_ivol)
-  #   print(head(IVOL))
+
   LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
   
   closingmeans <- sapply(splitindices, calcmean)
@@ -175,9 +164,7 @@ market_safety <- function(x, financials, daily){
     (abs(as.numeric(as.character(fstyear$NI))) + abs(as.numeric(as.character(sndyear$NI))))
   O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
-  #length(BAB) <- numCompanies
-  #length(IVOL) <- numCompanies
-  #length(LEV) <- numCompanies
+
   BAB[is.infinite(BAB)] <- 0
   IVOL[is.infinite(IVOL)] <- 0
   LEV[is.infinite(LEV)] <- 0
@@ -193,12 +180,12 @@ market_safety <- function(x, financials, daily){
   Z <- scale(Z)
   EVOL <- scale(EVOL)
   
-  BAB[is.na(BAB)] <- 0
+  BAB[is.nan(BAB)] <- 0
   IVOL[is.nan(IVOL)] <- 0
-  LEV[is.na(LEV)] <- 0
-  O[is.na(O)] <- 0
-  Z[is.na(Z)] <- 0
-  EVOL[is.na(EVOL)] <- 0
+  LEV[is.nan(LEV)] <- 0
+  O[is.nan(O)] <- 0
+  Z[is.nan(Z)] <- 0
+  EVOL[is.nan(EVOL)] <- 0
   
   safety <- BAB + IVOL + LEV + O + Z + EVOL
   safety <- scale(safety)
