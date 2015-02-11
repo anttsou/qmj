@@ -344,7 +344,7 @@ setMethod(f="view_quality",
 #' \dontrun{
 #' qmjs <- data(qmjs)
 #' quality <- data(quality)
-#' plot_quality(qmjs[[1]], quality)
+#' plot_quality(qmjs[[2]], quality)
 #' }
 setGeneric(name="plot_quality",
                       def=function(theObject, quality_data_frame)
@@ -358,27 +358,255 @@ setMethod(f="plot_quality",
                       definition=function(theObject, quality_data_frame)
                       {
                         quality <- theObject@quality
-                        market_quality <- quality_data_frame$quality
-                        market_quality <- c(market_quality, quality)
-                        market_quality <- market_quality[order(market_quality, na.last=NA, decreasing=TRUE)]
-                        
-                        market_range <- range(market_quality)
-                        quality_range <- abs(market_range[2] - market_range[1])
-                        pbinwidth <- (quality_range)/(length(market_quality) / 10)
-                        
-                        #Find bin whose max value is just greater than my quality. This should be the right bin.
-                        min <- market_range[1]
-                        numBins <- ceiling((quality - min)/pbinwidth)
-                        maxVal <- (numBins * pbinwidth) + min
-                        minVal <- ((numBins - 1) * pbinwidth) + min
-                        df <- data.frame(quality = market_quality)
-                        cond <- df$quality < maxVal & df$quality > minVal
-                        ggplot2::ggplot(df, aes(x=quality)) +
-                          geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
-                          geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
-                        
+                        if(is.na(quality)){
+                          print(paste('Error!', theObject@ticker, "has quality NA.", sep=' '))
+                        } else{
+                          market_quality <- quality_data_frame$quality
+                          market_quality <- c(market_quality, quality)
+                          market_quality <- market_quality[order(market_quality, na.last=NA, decreasing=TRUE)]
+                          
+                          market_range <- range(market_quality)
+                          quality_range <- abs(market_range[2] - market_range[1])
+                          pbinwidth <- (quality_range)/(length(market_quality) / 10)
+                          
+                          #Find bin whose max value is just greater than my quality. This should be the right bin.
+                          min <- market_range[1]
+                          numBins <- ceiling((quality - min)/pbinwidth)
+                          maxVal <- (numBins * pbinwidth) + min
+                          minVal <- ((numBins - 1) * pbinwidth) + min
+                          df <- data.frame(quality = market_quality)
+                          cond <- df$quality < maxVal & df$quality > minVal
+                          
+                          print("Selected object is in the yellow bin.")
+                          ggplot2::ggplot(df, aes(x=quality)) +
+                            ggtitle("Quality Histogram") + 
+                            xlab("Quality Scores") +
+                            ylab("Frequency") +
+                            geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                            geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+                        }
                       }
                       )
+
+#' @title Plots the relative profitability of the qmj object.
+#' @aliases plot_profitability,qmj-method
+#' @return Displays a profitability histogram, highlighting the bin containing the chosen qmj object/company.
+#' @export
+#' @docType methods
+#' @rdname plot_profitability-methods
+#' 
+#' @examples
+#' \dontrun{
+#' data(qmjs)
+#' data(profitability)
+#' plot_profitability(qmjs[[1]], profitability)
+#' }
+setGeneric(name="plot_profitability",
+           def=function(theObject, profitability_data_frame)
+           {
+             standardGeneric("plot_profitability")
+           }
+) 
+
+setMethod(f="plot_profitability",
+          signature=c("qmj", "data.frame"),
+          definition=function(theObject, profitability_data_frame)
+          {
+            profitability <- theObject@profitability
+            if(is.na(profitability)){
+              print(paste('Error!', theObject@ticker, "has profitability NA.", sep=' '))
+            } else {
+              market_profitability <- profitability_data_frame$profitability
+              market_profitability <- c(market_profitability, profitability)
+              market_profitability <- market_profitability[order(market_profitability, na.last=NA, decreasing=TRUE)]
+              
+              market_range <- range(market_profitability)
+              profitability_range <- abs(market_range[2] - market_range[1])
+              pbinwidth <- (profitability_range)/(length(market_profitability) / 10)
+              
+              #Find bin whose max value is just greater than my profitability. This should be the right bin.
+              min <- market_range[1]
+              numBins <- ceiling((profitability - min)/pbinwidth)
+              maxVal <- (numBins * pbinwidth) + min
+              minVal <- ((numBins - 1) * pbinwidth) + min
+              df <- data.frame(profitability = market_profitability)
+              cond <- df$profitability < maxVal & df$profitability > minVal
+              
+              print("Selected object is in the yellow bin.")
+              ggplot2::ggplot(df, aes(x=profitability)) +
+                ggtitle("Profitability Histogram") + 
+                xlab("Profitability Scores") +
+                ylab("Frequency") +
+                geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+            }
+          }
+)
+
+#' @title Plots the relative safety of the qmj object.
+#' @aliases plot_safety,qmj-method
+#' @return Displays a safety histogram, highlighting the bin containing the chosen qmj object/company.
+#' @export
+#' @docType methods
+#' @rdname plot_safety-methods
+#' 
+#' @examples
+#' \dontrun{
+#' data(qmjs)
+#' data(safety)
+#' plot_safety(qmjs[[2]], safety)
+#' }
+setGeneric(name="plot_safety",
+           def=function(theObject, safety_data_frame)
+           {
+             standardGeneric("plot_safety")
+           }
+) 
+
+setMethod(f="plot_safety",
+          signature=c("qmj", "data.frame"),
+          definition=function(theObject, safety_data_frame)
+          {
+            safety <- theObject@safety
+            if(is.na(safety)){
+              print(paste('Error!', theObject@ticker, "has safety NA.", sep=' '))
+            } else {
+              market_safety <- safety_data_frame$safety
+              market_safety <- c(market_safety, safety)
+              market_safety <- market_safety[order(market_safety, na.last=NA, decreasing=TRUE)]
+              
+              market_range <- range(market_safety)
+              safety_range <- abs(market_range[2] - market_range[1])
+              pbinwidth <- (safety_range)/(length(market_safety) / 10)
+              
+              #Find bin whose max value is just greater than my safety. This should be the right bin.
+              min <- market_range[1]
+              numBins <- ceiling((safety - min)/pbinwidth)
+              maxVal <- (numBins * pbinwidth) + min
+              minVal <- ((numBins - 1) * pbinwidth) + min
+              df <- data.frame(safety = market_safety)
+              cond <- df$safety < maxVal & df$safety > minVal
+              
+              print("Selected object is in the yellow bin.")
+              ggplot2::ggplot(df, aes(x=safety)) +
+                ggtitle("Safety Histogram") + 
+                xlab("Safety Scores") +
+                ylab("Frequency") +
+                geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+            }
+          }
+)
+
+#' @title Plots the relative growth of the qmj object.
+#' @aliases plot_growth,qmj-method
+#' @return Displays a growth histogram, highlighting the bin containing the chosen qmj object/company.
+#' @export
+#' @docType methods
+#' @rdname plot_growth-methods
+#' 
+#' @examples
+#' \dontrun{
+#' data(qmjs)
+#' data(growth)
+#' plot_growth(qmjs[[1]], growth)
+#' }
+setGeneric(name="plot_growth",
+           def=function(theObject, growth_data_frame)
+           {
+             standardGeneric("plot_growth")
+           }
+) 
+
+setMethod(f="plot_growth",
+          signature=c("qmj", "data.frame"),
+          definition=function(theObject, growth_data_frame)
+          {
+            growth <- theObject@growth
+            if(is.na(growth)){
+              print(paste('Error!', theObject@ticker, "has growth NA.", sep=' '))
+            } else {
+              market_growth <- growth_data_frame$growth
+              market_growth <- c(market_growth, growth)
+              market_growth <- market_growth[order(market_growth, na.last=NA, decreasing=TRUE)]
+              
+              market_range <- range(market_growth)
+              growth_range <- abs(market_range[2] - market_range[1])
+              pbinwidth <- (growth_range)/(length(market_growth) / 10)
+              
+              #Find bin whose max value is just greater than my growth. This should be the right bin.
+              min <- market_range[1]
+              numBins <- ceiling((growth - min)/pbinwidth)
+              maxVal <- (numBins * pbinwidth) + min
+              minVal <- ((numBins - 1) * pbinwidth) + min
+              df <- data.frame(growth = market_growth)
+              cond <- df$growth < maxVal & df$growth > minVal
+              
+              print("Selected object is in the yellow bin.")
+              ggplot2::ggplot(df, aes(x=growth)) +
+                ggtitle("Growth Histogram") + 
+                xlab("Growth Scores") +
+                ylab("Frequency") +
+                geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+            }
+          }
+)
+
+#' @title Plots the relative payouts of the qmj object.
+#' @aliases plot_payouts,qmj-method
+#' @return Displays a payouts histogram, highlighting the bin containing the chosen qmj object/company.
+#' @export
+#' @docType methods
+#' @rdname plot_payouts-methods
+#' 
+#' @examples
+#' \dontrun{
+#' data(qmjs)
+#' data(payouts)
+#' plot_payouts(qmjs[[1]], payouts)
+#' }
+setGeneric(name="plot_payouts",
+           def=function(theObject, payouts_data_frame)
+           {
+             standardGeneric("plot_payouts")
+           }
+) 
+
+setMethod(f="plot_payouts",
+          signature=c("qmj", "data.frame"),
+          definition=function(theObject, payouts_data_frame)
+          {
+            payouts <- theObject@payouts
+            if(is.na(payouts)){
+              print(paste('Error!', theObject@ticker, "has payouts NA.", sep=' '))
+            } else {
+              market_payouts <- payouts_data_frame$payouts
+              market_payouts <- c(market_payouts, payouts)
+              market_payouts <- market_payouts[order(market_payouts, na.last=NA, decreasing=TRUE)]
+              
+              market_range <- range(market_payouts)
+              payouts_range <- abs(market_range[2] - market_range[1])
+              pbinwidth <- (payouts_range)/(length(market_payouts) / 10)
+              
+              #Find bin whose max value is just greater than my payouts. This should be the right bin.
+              min <- market_range[1]
+              numBins <- ceiling((payouts - min)/pbinwidth)
+              maxVal <- (numBins * pbinwidth) + min
+              minVal <- ((numBins - 1) * pbinwidth) + min
+              df <- data.frame(payouts = market_payouts)
+              cond <- df$payouts < maxVal & df$payouts > minVal
+              
+              print("Selected object is in the yellow bin.")
+              ggplot2::ggplot(df, aes(x=payouts)) +
+                ggtitle("Payouts Histogram") + 
+                xlab("Payout Scores") +
+                ylab("Frequency") +
+                geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+            }
+          }
+)
 
 #' @title Summarizes all information about the qmj object.
 #' @aliases summarize,qmj-method
