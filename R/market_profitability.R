@@ -15,7 +15,6 @@
 #' market_profitability(companies, financials)
 #' @export
 
-#use sapply to make columns numeric
 market_profitability <- function(x, financials){ 
   if(length(x$ticker) == 0) {
     stop("first parameter requires a ticker column.")
@@ -25,6 +24,7 @@ market_profitability <- function(x, financials){
   }
   numCompanies <- length(x$ticker)
   
+  #set unavailable financial info to 0
   financials[is.na(financials)] <- 0
   
   allcompanies <- data.frame(x$ticker)
@@ -34,6 +34,7 @@ market_profitability <- function(x, financials){
   fin <- distinct_(fin, "ticker")
   fin <- merge(allcompanies, fin, by="ticker", all.x = TRUE)
   
+  #functions calculate individual components of profitability
   gpoa <- function(gprof, ta){
     gprof/ta
   }
@@ -62,6 +63,7 @@ market_profitability <- function(x, financials){
   GMAR <- mapply(gmar, as.numeric(as.character(fin$GPROF)), as.numeric(as.character(fin$TREV)))
   ACC <- mapply(acc, as.numeric(as.character(fin$DP.DPL)), as.numeric(as.character(fin$CWC)), as.numeric(as.character(fin$TA)))
   
+  #removes potential errors from Inf values
   GPOA[is.infinite(GPOA)] <- 0
   ROE[is.infinite(ROE)] <- 0
   ROA[is.infinite(ROA)] <- 0
@@ -77,6 +79,7 @@ market_profitability <- function(x, financials){
   GMAR <- scale(GMAR)
   ACC <- scale(ACC)
 
+  #removes potential errors in nan values
   GPOA[is.nan(GPOA)] <- 0
   ROE[is.nan(ROE)] <- 0
   ROA[is.nan(ROA)] <- 0

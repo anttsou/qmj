@@ -17,7 +17,6 @@
 #' market_growth(companies, financials)
 #' @export
 
-#use sapply to make columns numeric
 market_growth <- function(x, financials){
   if(length(x$ticker) == 0) {
     stop("first parameter requires a ticker column.")
@@ -29,6 +28,7 @@ market_growth <- function(x, financials){
   colnames(allcompanies) <- "ticker"
   numCompanies <- length(x$tickers)
   
+  #set unavailable financial info to 0
   financials[is.na(financials)] <- 0
   
   fin <- financials
@@ -41,12 +41,15 @@ market_growth <- function(x, financials){
   lstyear <- distinct_(fin, "ticker")
   lstyear <- merge(allcompanies, lstyear, by="ticker", all.x = TRUE)
   
+  #functions calculate individual components of growth
   gpoa <- function(gprof1, gprof2, ta){
     (gprof1 - gprof2)/ta
   }
+  
   roe <- function(ni1, ni2, tlse, tl, rps, nrps){
     (ni1 - ni2)/(tlse - tl - rps + nrps)
   }
+  
   roa <- function(ni1, ni2, ta){
     (ni1 - ni2)/ta
   }
@@ -63,6 +66,8 @@ market_growth <- function(x, financials){
     accrual2 <- dp2 - cwc2
     (accrual1 - accrual2)/ta 
   }
+  
+  #apply the calculation functions to all companies without using a slow loop.
   GPOA <- mapply(gpoa, as.numeric(as.character(fstyear$GPROF)), as.numeric(as.character(lstyear$GPROF)), 
                  as.numeric(as.character(lstyear$TA)))
 
@@ -82,6 +87,7 @@ market_growth <- function(x, financials){
                 as.numeric(as.character(lstyear$DP.DPL)), as.numeric(as.character(lstyear$CWC)),
                 as.numeric(as.character(lstyear$TA)))
   
+  #remove potential errors from Inf values
   GPOA[is.infinite(GPOA)] <- 0
   ROE[is.infinite(ROE)] <- 0
   ROA[is.infinite(ROA)] <- 0
@@ -89,14 +95,15 @@ market_growth <- function(x, financials){
   GMAR[is.infinite(GMAR)] <- 0
   ACC[is.infinite(ACC)] <- 0
   
-  #Scale converts the individual scores for these values into z-scores.
+  #scale converts the individual scores for these values into z-scores.
   GPOA <- scale(GPOA)
   ROE <- scale(ROE)
   ROA <- scale(ROA)
   CFOA <- scale(CFOA)
   GMAR <- scale(GMAR)
   ACC <- scale(ACC)
-
+  
+  #remove potential errors from nan values
   GPOA[is.nan(GPOA)] <- 0
   ROE[is.nan(ROE)] <- 0
   ROA[is.nan(ROA)] <- 0
