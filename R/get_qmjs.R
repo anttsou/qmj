@@ -7,7 +7,7 @@
 #' @examples
 #' tickers <- c("AAPL","GOOG")
 #' data(qmjs)
-#' get_qmj(tickers,qmjs)
+#' get_qmjs(tickers,qmjs)
 #' @export
 
 get_qmjs <- function(tickers, qmjs){
