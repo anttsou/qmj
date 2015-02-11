@@ -29,8 +29,13 @@ market_safety <- function(x, financials, daily){
   numCompanies <- length(x$ticker)
   allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
+  
+  #set unavailable financial info to 0
   financials[is.na(financials)] <- 0
+  
+  #set unavailable price data to 0
   daily[is.na(daily)] <- 0
+  
   daily$pret[is.nan(as.numeric(daily$pret))] <- 0
   daily$pret[is.infinite(as.numeric(daily$pret))] <- 0
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))

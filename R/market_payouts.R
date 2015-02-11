@@ -24,6 +24,7 @@ market_payouts <- function(x, financials){
   }
   numCompanies <- length(x$ticker)
   
+  #set unavailable financial info to 0
   financials[is.na(financials)] <- 0
   
   #Function returns a structure that contains all elements in x.1 that are not in x.2
