@@ -17,7 +17,7 @@ Returns a data set that is usable by the other functions of this package, as wel
 }
 \examples{
 \dontrun{
-companies <- data(companies)
+data(companies)
 raw_data <- get_info(companies)
 financials <- tidyinfo(raw_data)
 

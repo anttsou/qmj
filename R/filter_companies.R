@@ -1,4 +1,4 @@
-#' Filters quality data to isolate companies which have quality scores that are primarily "driven" by a single component.
+#' Filters quality data to isolate or remove companies which have quality scores that are primarily "driven" by a single component.
 #'
 #' Taking in the quality data frame and a filter parameter, returns companies that are defined to be driven by that particular
 #' factor. For a company to be driven by a particular component, at least 50% of its quality score must be due to that particular
@@ -14,6 +14,7 @@
 #' @export
 
 filter_companies <- function(data, filter, remove=TRUE, isolate=FALSE){
+  #Helper functions perform a simple arithmetic operation to determine if a given component is >= 50% of a given quality score.
   prof_filter <- function(profitability, quality){
     if(is.na(profitability) || is.na(quality)){
       FALSE
@@ -59,6 +60,8 @@ filter_companies <- function(data, filter, remove=TRUE, isolate=FALSE){
     }
   }
   
+  #If statements below handle filter choices, as well as if a user chooses a non-valid filter choice.
+  #In each case, drivenindices is a vector of logicals that determine which companies to remove or isolate, based on user choice.
   if(filter == "profitability"){
     drivenindices <- mapply(prof_filter, data$profitability, data$quality)
     if(remove){

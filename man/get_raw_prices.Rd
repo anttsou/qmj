@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_raw_prices.R
 \name{get_raw_prices}
 \alias{get_raw_prices}
-\title{Gets raw price data.}
+\title{Gets raw price data from the extdata folder of the package.}
 \usage{
 get_raw_prices()
 }

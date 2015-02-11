@@ -21,19 +21,23 @@
 
 tidy_incomestatements <- function(x) {
   numCompanies <- length(x)
-  incomestatements <- matrix(nrow=numCompanies*4, ncol=51)
+  incomestatements <- matrix(nrow=numCompanies*4, ncol=51) #Pre-allocates matrix for speed considerations.
   
+  # These are the categories we expect from the raw data.
   colnames(incomestatements) <- c("ticker", "year", "REV", "OREV", "TREV", "CREV", "GPROF", 
                                   "SGAE", "RD", "DP.AM", "NINT", "UI", "OOE", "TOE", "OI", "INT", "GSA", "OTH", "IBT", 
                                   "IAT", "MI", "EIA", "NIBEI", "AC", "DO", "EI", "NI", "PD", "IACEEI", "IACIEI", 
                                   "BWAS", "BEPSEEI", "BEPSIEI", "DILADJ", "DILWAS", "DILEPSEEI", "DILEPSIEI", 
                                   "DIVC", "GDIV", "NIASBCE", "BEPSSBCE", "DEPSSBCE", "DPSUP", "TSI", "NIBT", "ESIIT", 
                                   "ITISI", "NIAT", "NIAC", "BNEPS", "DNEPS")
+  
   for(i in 1:numCompanies){
-    cdata <- x[[i]]
-    ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
-    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata))
+    cdata <- x[[i]] #Extracts this specific company's information from the raw data. Format is matrix.
+    ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract ticker from the first column of the data.
+    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extracts the years each annual statements is dated.
     if(length(unique(years)) < length(years)){
+      #If more than one annual statement is posted in a single year by the company, assign a suffix to deal with duplicates
+      #during merging.
       for(j in 1:length(years)){
         years[j] <- paste(years[j], ".", j, sep='')
       }
@@ -92,6 +96,6 @@ tidy_incomestatements <- function(x) {
       incomestatements[k + (i-1)*4,51] <- cdata[49,k]
     }
   }
-  incomestatements <- incomestatements[rowSums(!is.na(incomestatements)) >= 1,]
+  incomestatements <- incomestatements[rowSums(!is.na(incomestatements)) >= 1,] #Remove rows which are entirely NA from the pre-allocated matrix.
   data.frame(incomestatements, stringsAsFactors=FALSE)
 }

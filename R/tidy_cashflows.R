@@ -21,15 +21,18 @@
 
 tidy_cashflows <- function(x) {
   numCompanies <- length(x)
-  cashflows <- matrix(nrow=numCompanies*4, ncol=21)
+  cashflows <- matrix(nrow=numCompanies*4, ncol=21) #Pre-allocate space for speed reasons.
   
+  #These are the categories we expect from the raw data.
   colnames(cashflows) <- c("ticker", "year", "NI.SL", "DP.DPL", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", 
                            "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP")
   for(i in 1:numCompanies){
-    cdata <- x[[i]]
-    ticker <- gsub('[0-9 ]', '', colnames(cdata))[1]
-    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata))
+    cdata <- x[[i]] #Extract this specific company's data from the raw data list.
+    ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract the company's ticker from a column.
+    years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extract the years in which the annual statements have been filed.
     if(length(unique(years)) < length(years)){
+      #If more than one annual statement is published in a single year, add a suffix to all years in order to maintain order and remove
+      #duplicate years during a later merging process.
       for(j in 1:length(years)){
         years[j] <- paste(years[j], ".", j, sep='')
       }
@@ -59,6 +62,6 @@ tidy_cashflows <- function(x) {
 
     }
   }
-  cashflows <- cashflows[rowSums(!is.na(cashflows)) >= 1,]
+  cashflows <- cashflows[rowSums(!is.na(cashflows)) >= 1,] #Remove rows which are entirely NAs.
   data.frame(cashflows, stringsAsFactors=FALSE)
 }
