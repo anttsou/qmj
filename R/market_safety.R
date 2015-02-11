@@ -172,7 +172,7 @@ market_safety <- function(x, financials, daily){
   Z[is.infinite(Z)] <- 0
   EVOL[is.infinite(EVOL)] <- 0
   
-  #Scale converts the individual scores for these values into z-scores.
+  #scale converts the individual scores for these values into z-scores.
   BAB <- scale(BAB)
   IVOL <- scale(IVOL)
   LEV <- scale(LEV)
