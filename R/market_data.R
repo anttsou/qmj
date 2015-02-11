@@ -26,7 +26,7 @@ market_data <- function(x, financials, daily){
   profitability <- market_profitability(x, financials)$profitability
   growth <- market_growth(x, financials)$growth
   safety <- market_safety(x, financials, daily)$safety
-  payouts <- market_payout(x, financials)$payouts
+  payouts <- market_payouts(x, financials)$payouts
   quality <- profitability + growth + safety + payouts
   
   name <- x$name
