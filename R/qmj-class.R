@@ -110,7 +110,7 @@ qmj <- setClass(
 #' qmjs <- data(qmjs)
 #' view_ticker(qmjs[[1]])
 #' }
-#' @rdname view_ticker-methods
+#' @rdname view_ticker
 #' @exportMethod view_ticker
 setGeneric(name="view_ticker",
            def=function(theObject)
@@ -119,7 +119,7 @@ setGeneric(name="view_ticker",
            }
 )
 
-#' @rdname view_ticker-methods
+#' @rdname view_ticker
 setMethod(f="view_ticker",
           signature="qmj",
           definition=function(theObject)
