@@ -15,14 +15,19 @@
 #' @export
 
 get_qmj <- function(companies,ticker,financials,prices) {
+  #subset the companies to include only the inputted ticker
   sub.comp <- companies[companies$ticker==ticker,]
+  
+  #calls the functions that calculate profitability, growth, safety, and payouts
   profitability <- market_profitability(sub.comp,financials)
   growth <- market_growth(sub.comp,financials)
   safety <- market_safety(sub.comp,financials,prices)
   payouts <- market_payout(sub.comp,financials)
+  
+  #sums the scores
   quality <- profitability$profitability + growth$growth + safety$safety + payouts$payouts
   
-  #add all of the values that go into each component
+  #create a new qmj object with all of the quality values and components
   analysis <- qmj(
                   ticker = ticker, 
                   profitability = profitability$profitability, 
