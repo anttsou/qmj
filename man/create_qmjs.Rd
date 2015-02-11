@@ -7,11 +7,11 @@
 create_qmjs(x, financials, prices)
 }
 \arguments{
+\item{x}{A data frame of company names and tickers.}
+
 \item{financials}{A data frame containing financial information for the given companies.}
 
 \item{prices}{A data frame containing the daily market closing prices and returns.}
-
-\item{companies}{A data frame of company names and tickers.}
 }
 \description{
 Creates a list of qmjs, which allow for much greater analysis of

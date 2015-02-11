@@ -7,7 +7,7 @@
 get_info(x)
 }
 \arguments{
-\item{companies}{A data frame of companies. Must have a ticker column.}
+\item{x}{A data frame of companies. Must have a ticker column.}
 }
 \description{
 Retrieves data for the data frame of companies and generates a list with three elements. Each element

@@ -2,7 +2,7 @@
 #'
 #' Creates a list of qmjs, which allow for much greater analysis of
 #' individual companies.
-#' @param companies A data frame of company names and tickers.
+#' @param x A data frame of company names and tickers.
 #' @param financials A data frame containing financial information for the given companies.
 #' @param prices A data frame containing the daily market closing prices and returns. 
 #' @examples
