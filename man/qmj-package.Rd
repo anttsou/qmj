@@ -11,7 +11,8 @@ on the paper \emph{Quality Minus Junk} by Clifford Asness, Andrea Frazzini, and 
 \details{
 Quality is a measure of a company's profitability, growth, safety, and payouts. By using publicly
 available data for company balance sheets, income statements, and cash flows, the qmj package
-calculates relative quality z-scores for companies.
+calculates relative quality z-scores for companies. Utility functions in the class qmj also allow
+users to further analyze the quality of stocks.
 
 All functions and datasets are documented, and are freely available for use.
 Index of datasets:
