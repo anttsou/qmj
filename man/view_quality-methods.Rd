@@ -3,11 +3,16 @@
 \docType{methods}
 \name{view_quality}
 \alias{view_quality}
+\alias{view_quality,qmj-method}
+\title{Returns the quality of the qmj object.}
 \usage{
 view_quality(theObject)
 }
 \value{
 A data frame with 1 row and 6 variables that describes the quality score of the qmj object.
+}
+\description{
+Returns the quality of the qmj object.
 }
 \examples{
 \dontrun{

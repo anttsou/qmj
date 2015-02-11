@@ -3,11 +3,16 @@
 \docType{methods}
 \name{view_profitability}
 \alias{view_profitability}
+\alias{view_profitability,qmj-method}
+\title{Returns the profitability of the qmj object.}
 \usage{
 view_profitability(theObject)
 }
 \value{
 A data frame with 1 row and 8 variables that describes profitability of the qmj object.
+}
+\description{
+Returns the profitability of the qmj object.
 }
 \examples{
 \dontrun{

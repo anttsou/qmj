@@ -3,11 +3,16 @@
 \docType{methods}
 \name{view_growth}
 \alias{view_growth}
+\alias{view_growth,qmj-method}
+\title{Returns the growth of the qmj object.}
 \usage{
 view_growth(theObject)
 }
 \value{
 A data frame with 1 row and 8 variables that describes growth of the qmj object.
+}
+\description{
+Returns the growth of the qmj object.
 }
 \examples{
 \dontrun{
