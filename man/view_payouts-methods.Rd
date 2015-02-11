@@ -3,11 +3,16 @@
 \docType{methods}
 \name{view_payouts}
 \alias{view_payouts}
+\alias{view_payouts,qmj-method}
+\title{Returns the payouts of the qmj object.}
 \usage{
 view_payouts(theObject)
 }
 \value{
 A data frame with 1 row and 5 variables that describes the payouts of the qmj object.
+}
+\description{
+Returns the payouts of the qmj object.
 }
 \examples{
 \dontrun{

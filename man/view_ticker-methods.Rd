@@ -3,11 +3,16 @@
 \docType{methods}
 \name{view_ticker}
 \alias{view_ticker}
+\alias{view_ticker,qmj-method}
+\title{Return the ticker of the qmj object.}
 \usage{
 view_ticker(theObject)
 }
 \value{
 The ticker of the qmj object as a character.
+}
+\description{
+Return the ticker of the qmj object.
 }
 \examples{
 \dontrun{

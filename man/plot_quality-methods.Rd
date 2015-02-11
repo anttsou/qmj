@@ -3,11 +3,16 @@
 \docType{methods}
 \name{plot_quality}
 \alias{plot_quality}
+\alias{plot_quality,qmj-method}
+\title{Plots the relative quality of the qmj object.}
 \usage{
 plot_quality(theObject, quality_data_frame)
 }
 \value{
 Displays a quality histogram, highlighting the bin containing the chosen qmj object/company.
+}
+\description{
+Plots the relative quality of the qmj object.
 }
 \examples{
 \dontrun{

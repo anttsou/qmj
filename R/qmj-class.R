@@ -107,8 +107,9 @@ qmj <- setClass(
     return(TRUE)
   })
 
+#' @title Return the ticker of the qmj object.
+#' @aliases view_ticker,qmj-method
 #' @return The ticker of the qmj object as a character.
-#' 
 #' @export
 #' @docType methods
 #' @rdname view_ticker-methods
@@ -133,8 +134,9 @@ setMethod(f="view_ticker",
           }
 )
 
+#' @title Returns the profitability of the qmj object.
+#' @aliases view_profitability,qmj-method
 #' @return A data frame with 1 row and 8 variables that describes profitability of the qmj object.
-#' 
 #' @export
 #' @docType methods
 #' @rdname view_profitability-methods
@@ -175,8 +177,9 @@ setMethod(f="view_profitability",
                       }
                       )
 
+#' @title Returns the growth of the qmj object.
+#' @aliases view_growth,qmj-method
 #' @return A data frame with 1 row and 8 variables that describes growth of the qmj object.
-#' 
 #' @export
 #' @docType methods
 #' @rdname view_growth-methods
@@ -217,8 +220,9 @@ setMethod(f="view_growth",
                       }
                       )
 
+#' @title Returns the safety of the qmj object.
+#' @aliases view_safety,qmj-method
 #' @return A data frame with 1 row and 8 variables that describes the safety of the qmj object.
-#' 
 #' @export
 #' @docType methods
 #' @rdname view_safety-methods
@@ -258,8 +262,9 @@ setMethod(f="view_safety",
                       }
                       )
 
+#' @title Returns the payouts of the qmj object.
+#' @aliases view_payouts,qmj-method
 #' @return A data frame with 1 row and 5 variables that describes the payouts of the qmj object.
-#' 
 #' @export
 #' @docType methods
 #' @rdname view_payouts-methods
@@ -293,8 +298,9 @@ setMethod(f="view_payouts",
                       }
                       )
 
+#' @title Returns the quality of the qmj object.
+#' @aliases view_quality,qmj-method
 #' @return A data frame with 1 row and 6 variables that describes the quality score of the qmj object.
-#' 
 #' @export
 #' @docType methods
 #' @rdname view_quality-methods
@@ -331,8 +337,9 @@ setMethod(f="view_quality",
                       }
                       )
 
+#' @title Plots the relative quality of the qmj object.
+#' @aliases plot_quality,qmj-method
 #' @return Displays a quality histogram, highlighting the bin containing the chosen qmj object/company.
-#' 
 #' @export
 #' @docType methods
 #' @rdname plot_quality-methods
@@ -377,8 +384,9 @@ setMethod(f="plot_quality",
                       }
                       )
 
+#' @title Summarizes all information about the qmj object.
+#' @aliases summarize,qmj-method
 #' @return Prints all components and scores of the qmj object.
-#' 
 #' @export
 #' @docType methods
 #' @rdname summarize-methods

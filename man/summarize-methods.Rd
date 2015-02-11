@@ -3,11 +3,16 @@
 \docType{methods}
 \name{summarize}
 \alias{summarize}
+\alias{summarize,qmj-method}
+\title{Summarizes all information about the qmj object.}
 \usage{
 summarize(theObject)
 }
 \value{
 Prints all components and scores of the qmj object.
+}
+\description{
+Summarizes all information about the qmj object.
 }
 \examples{
 \dontrun{

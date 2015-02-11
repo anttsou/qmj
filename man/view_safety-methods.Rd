@@ -3,11 +3,16 @@
 \docType{methods}
 \name{view_safety}
 \alias{view_safety}
+\alias{view_safety,qmj-method}
+\title{Returns the safety of the qmj object.}
 \usage{
 view_safety(theObject)
 }
 \value{
 A data frame with 1 row and 8 variables that describes the safety of the qmj object.
+}
+\description{
+Returns the safety of the qmj object.
 }
 \examples{
 \dontrun{
