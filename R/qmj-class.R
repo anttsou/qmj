@@ -120,7 +120,6 @@ setGeneric(name="view_ticker",
 )
 
 #' @rdname view_ticker-methods
-#' @aliases view_ticker,qmj-method
 setMethod(f="view_ticker",
           signature="qmj",
           definition=function(theObject)
