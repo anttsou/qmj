@@ -49,7 +49,7 @@ Though \textbf{qmj} keeps datasets updated, it has a few functions that can extr
 \textbf{tidy\_prices()} takes as input the result of \textbf{get\_prices()}, which is assigned here as \textbf{raw\_prices}, and organizes the data into columns for ticker, date, price, and price return. \textbf{tidyinfo()} takes as input the result of \textbf{get\_info()}, which is assigned here as \textbf{raw\_data}, and organizes the data into columns for ticker, year, and various items found in company financial statements such as total assets and net income. The column names themselves are abbreviations that are used in the Appendix. 
 
 \section*{Analyzing A Single Company}
-Several functions exist in order to provide more indepth analysis of a single company. Below, the \textit{qmjs} data set stores qmj objects. Each represents details about a specific company and provides tools for analyzing that company relative to others in the universe. See the \textit{See Also} section of the help page for qmj (?qmj) in order to get a full list of these functions.
+Several functions exist in order to provide more in-depth analysis of a single company. Below, the \textit{qmjs} data set stores qmj objects. Each represents details about a specific company and provides tools for analyzing that company relative to others in the universe. See the \textit{See Also} section of the help page for qmj (?qmj) in order to get a full list of these functions.
 
 <<Getting and analyzing qmj objects>>=
 data(qmjs)
@@ -87,8 +87,8 @@ head(sans_growth)
 If desirable, we may also select specifically for those companies which are driven by a particular component. Note that \textit{remove} is, by default, set to TRUE, and \textit{isolate}, is set to FALSE.
 
 <<>>=
-driven_by_profit <- filter_companies(quality, filter="profitability", remove=FALSE, isolate=TRUE)
-head(driven_by_profit)
+cpayouts <- filter_companies(quality, filter="payouts", remove=FALSE, isolate=TRUE)
+head(cpayouts)
 @
 
 Or, we can select for all companies which are not driven by any component score.
