@@ -32,6 +32,6 @@ market_safety(companies, financials, prices)
 
 \code{\link{market_growth}}
 
-\code{\link{market_payout}}
+\code{\link{market_payouts}}
 }
 

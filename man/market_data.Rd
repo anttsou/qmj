@@ -10,9 +10,9 @@ market_data(x, financials, daily)
 \arguments{
 \item{financials}{A data frame containing financial information for the given companies.}
 
-\item{daily}{A data frame containing the daily market closing prices and returns.}
-
 \item{companies}{A data frame of company names and tickers.}
+
+\item{prices}{A data frame containing the daily market closing prices and returns.}
 }
 \description{
 Calculates market growth, payouts, safety, and profitability of our list of companies
@@ -21,7 +21,8 @@ for later processing.
 \examples{
 data(companies)
 data(financials)
-market_data(companies, financials)
+data(prices)
+market_data(companies, financials, prices)
 }
 \seealso{
 \code{\link{market_profitability}}
@@ -30,6 +31,6 @@ market_data(companies, financials)
 
 \code{\link{market_safety}}
 
-\code{\link{market_payout}}
+\code{\link{market_payouts}}
 }
 
