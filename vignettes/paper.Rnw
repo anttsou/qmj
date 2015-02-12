@@ -57,7 +57,7 @@ rhk1@williams.edu
 at6@williams.edu
 
 \section*{Bibliography}
-Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. "Quality Minus Junk." AQR (2014)
+Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. ``Quality Minus Junk." AQR (2013)
 \section*{Appendix}
 We calculate quality scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. We attempt to perform the same calculations as AQR does, but we have a few adjustments given the availability of data from public sources. 
 \subsection*{Profitability}
