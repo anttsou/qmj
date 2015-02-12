@@ -38,6 +38,22 @@ data(payouts)
 data(safety)
 @
 
+Though \textbf{qmj} keeps datasets updated, it has a few functions that can extract information directly from Google Finance to grab the most recent data. 
+
+<<get functions>>=
+#raw_prices <- get_prices(companies)
+#raw_data <- get_info(companies)
+@
+
+\textbf{get\_prices()} takes a data frame of companies, organized by name and ticker, and returns the daily prices and returns for the past two years including the most recent trading day. \textbf{get\_info()} also takes a data frame of companies, organized by name and ticker, and grabs the most recent company 10-K financial statements. Thus, \textbf{get\_info()} does not need to be called often since it will only grab new data once per year. Both functions will return a data frame that can be organized easily. An easy way to make the data more readable is through tidy functions in the \textbf{qmj} package. 
+
+<<tidy functions>>=
+#clean_prices <- tidy_prices(raw_prices)
+#clean_data <- tidyinfo(raw_data)
+@
+
+\textbf{tidy\_prices()} takes as input the result of \textbf{get\_prices()}, which is assigned here as \textbf{raw\_prices}, and organizes the data into columns for ticker, date, price, and price return. \textbf{tidyinfo()} takes as input the result of \textbf{get\_info()}, which is assigned here as \textbf{raw\_data}, and organizes the data into columns for ticker, year, and various items found in company financial statements such as total assets and net income. The column names themselves are abbreviations that are used in the Appendix. 
+
 \section*{Conclusion}
 
 In the \textbf{qmj} package, we automate AQR's method of assigning quality scores for publicly traded companies in today's market. The package itself provides convenient datasets and utility functions, and it also takes advantage of R's robust nature to allow seamless interaction with functions in the base R package and other packages.

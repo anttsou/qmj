@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  12 FEB 2015 00:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  12 FEB 2015 00:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -272,23 +272,23 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    Try loading font information for T1+aett on input line 24.
  (/usr/local/texlive/2014/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-)
-Underfull \hbox (badness 10000) in paragraph at lines 48--71
+) [1]
+Underfull \hbox (badness 10000) in paragraph at lines 68--91
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--71
+Underfull \hbox (badness 10000) in paragraph at lines 68--91
 
  []
 
-[1]
+[2]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 77.
+(Font)              <7> on input line 97.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 77.
- [2]
-Overfull \hbox (42.6065pt too wide) detected at line 79
+(Font)              <5> on input line 97.
+ [3]
+Overfull \hbox (42.6065pt too wide) detected at line 99
 \OML/cmm/m/it/10 Growth  \OT1/cmr/m/n/10 =  \OML/cmm/m/it/10 z\OT1/cmr/m/n/10 (
 \OML/cmm/m/it/10 z[]  \OT1/cmr/m/n/10 +  \OML/cmm/m/it/10 z[]  \OT1/cmr/m/n/10 
 +  \OML/cmm/m/it/10 z[]  \OT1/cmr/m/n/10 +  \OML/cmm/m/it/10 z[]  \OT1/cmr/m/n/
@@ -297,26 +297,26 @@ Overfull \hbox (42.6065pt too wide) detected at line 79
  []
 
 
-Overfull \hbox (2.08284pt too wide) in paragraph at lines 81--81
+Overfull \hbox (2.08284pt too wide) in paragraph at lines 101--101
 \T1/aer/m/n/10 Safety is com-posed of six vari-ables: beta ($\OML/cmm/m/it/10 B
 AB$\T1/aer/m/n/10 ), id-iosyn-cratic volatil-ity ($\OML/cmm/m/it/10 IVOL$\T1/ae
 r/m/n/10 ),
  []
 
 
-Overfull \hbox (8.20078pt too wide) in paragraph at lines 81--81
+Overfull \hbox (8.20078pt too wide) in paragraph at lines 101--101
 \T1/aer/m/n/10 lever-age ($\OML/cmm/m/it/10 LEV$\T1/aer/m/n/10 ), Ohlson's O ($
 \OML/cmm/m/it/10 O$\T1/aer/m/n/10 ), Alt-man's Z ($\OML/cmm/m/it/10 Z$\T1/aer/m
 /n/10 ), and earn-ings volatil-ity ($\OML/cmm/m/it/10 EVOL$\T1/aer/m/n/10 ).
  []
 
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 81--83
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--103
 
  []
 
 [4]
-Overfull \hbox (2.99405pt too wide) in paragraph at lines 86--86
+Overfull \hbox (2.99405pt too wide) in paragraph at lines 106--106
 \T1/aer/m/n/10 Operations($\OML/cmm/m/it/10 DO$\T1/aer/m/n/10 ) + ($\OML/cmm/m/
 it/10 IBT$ \T1/aer/m/n/10 - in-come af-ter tax ($\OML/cmm/m/it/10 IAT$\T1/aer/m
 /n/10 )) + in-ter-est ex-pense ($\OML/cmm/m/it/10 NINT$\T1/aer/m/n/10 )), 
@@ -325,8 +325,8 @@ it/10 IBT$ \T1/aer/m/n/10 - in-come af-ter tax ($\OML/cmm/m/it/10 IAT$\T1/aer/m
 [5] [6] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
  2712 strings out of 493117
- 38876 string characters out of 6135433
- 93063 words of memory out of 5000000
+ 38900 string characters out of 6135433
+ 94063 words of memory out of 5000000
  6110 multiletter control sequences out of 15000+600000
  29035 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -347,7 +347,7 @@ pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
 fb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
 /usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on paper.pdf (7 pages, 190469 bytes).
+Output written on paper.pdf (7 pages, 195721 bytes).
 PDF statistics:
  93 PDF objects out of 1000 (max. 8388607)
  66 compressed objects within 1 object stream
