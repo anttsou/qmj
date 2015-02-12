@@ -30,6 +30,66 @@ head(quality,n=5)
 
 \textit{companies} stores names and tickers from the Russell 3000 Index component list, \textit{financials}stores, whenever possible, the four most recent years of financial data (balance sheets, income statements, and cash flow statements) which are relevant to our calculations. \textit{prices} stores closing stock prices and calculated price returns for each company as well as the S\&P 500 for the past two years, and \textit{quality} is the list of quality scores, as well as the component scores, of each of our companies.
 
+
+\section*{Analyzing A Single Company}
+Several functions exist in order to provide more indepth analysis of a single company. Below, the \textit{qmjs} data set stores qmj objects. Each represents details about a specific company and provides tools for analyzing that company relative to others in the universe. See the \textit{See Also} section of the help page for qmj (?qmj) in order to get a full list of these functions.
+
+<<Getting and analyzing qmj objects>>=
+data(qmjs)
+first_qmj <- qmjs[[1]]
+summarize(first_qmj) 
+@
+
+If we desire, we can also plot the safety of this company relative to others in the universe.
+
+<<fig=true>>=
+data(safety)
+plot_safety(first_qmj, safety)
+@
+
+Functions also exist in order to easily retrieve a specific set of companies.
+
+<<>>=
+data(qmjs)
+tickers <- c("GOOG", "IBM", "AAPL")
+selected_qmjs <- get_qmjs(tickers, qmjs)
+summarize(selected_qmjs[[2]])
+@
+
+\section*{Analyzing the Universe (Of Companies)}
+In the quality data set, it can quickly be seen that the growth score for Angies List Inc. is abnormally high, and accounts for virtually all of its quality score. In many cases, it is undesirable to consider companies with high quality scores that are ``driven'' (here defined as composing at least half the quality score) by a single component score. \textbf{qmj} provides a filter.
+
+<<>>=
+data(quality)
+head(quality)
+
+sans_growth <- filter_companies(quality, filter="growth")
+head(sans_growth)
+@
+
+If desirable, we may also select specifically for those companies which are driven by a particular component. Note that \textit{remove} is, by default, set to TRUE, and \textit{isolate}, is set to FALSE.
+
+<<>>=
+driven_by_profit <- filter_companies(quality, filter="profitability", remove=FALSE, isolate=TRUE)
+head(driven_by_profit)
+@
+
+Or, we can select for all companies which are not driven by any component score.
+
+<<>>=
+well_rounded <- filter_companies(quality, filter="all")
+head(well_rounded)
+@
+
+It may also be desirable to look at quality scores specific to a subset of our extant universe. For example, it may be desirable to focus on a specific industry, instead of the entire market.
+
+<<>>=
+data(companies)
+subset_companies <- companies[1:35,]
+subset_qualities <- market_data[]
+@
+
+
 \section*{Conclusion}
 
 In the \textbf{qmj} package, we automate AQR's method of assigning quality scores for publicly traded companies in today's market. The package itself provides convenient datasets and utility functions, and it also takes advantage of R's robust nature to allow seamless interaction with functions in the base R package and other packages.

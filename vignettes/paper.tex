@@ -6,10 +6,9 @@
 \begin{document}
 \input{paper-concordance}
 \maketitle
-<<<<<<< HEAD
 
 \section*{Abstract}
-The qmj package produces quality scores for companies based on the work of Asness et. al (2013). It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payouts, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
+The \textbf{qmj} package produces quality scores for companies based on the work of Asness et. al (2013). It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payouts, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
 
 \section*{Introduction}
 \textbf{qmj} implements the methodology of the work of \emph{Asness et. al} (2013). Within the paper, Asness uses several financial measures to calculate the relative profitability, growth, safety, and payouts of a company within a given universe, which they use to provide an overall quality score for a company.
@@ -20,26 +19,10 @@ This quality score is used as the basis of a portfolio which longs quality compa
 
 \section*{Data}
 We demonstrate the use of \textbf{qmj} first based on the already installed data, using a universe comprised of all companies in the Russell 3000 Index as of February 1, 2015.
-=======
-
-\section{Abstract}
-The qmj package produces quality scores for companies based on the work of Asness et. al (2013). It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payouts, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
-
-\section*{Introduction}
-\textbf{qmj} implements the methodology of the work of \emph{Asness et. al} (2013). Within the paper, Asness uses several financial measures to calculate the relative profitability, growth, safety, and payouts of a company within a given universe, which they use to provide an overall quality score for a company.
-
-This quality score is used as the basis of a portfolio which longs quality companies, which are likely to outperform the market, while ``junk'' companies shorted as they are expected to underperform relative to the market.
-
-\textbf{qmj} provides tools to practically apply their results, coming equipped with pre-compiled recent data in addition to providing tools to automatically update or analyze that information.
-
-\section*{Data}
-We demonstrate the use of \textbf{qmj} based on a subset of companies from the Russell 3000 Index. 
->>>>>>> 5e61fbcf837e9dc6db8d8587c5ae4c5491ef5d3b
 
 \begin{Schunk}
 \begin{Sinput}
 > library(qmj)
-<<<<<<< HEAD
 > data(companies) 
 > data(financials) 
 > data(prices) 
@@ -63,27 +46,87 @@ We demonstrate the use of \textbf{qmj} based on a subset of companies from the R
 \end{Schunk}
 
 \textit{companies} stores names and tickers from the Russell 3000 Index component list, \textit{financials}stores, whenever possible, the four most recent years of financial data (balance sheets, income statements, and cash flow statements) which are relevant to our calculations. \textit{prices} stores closing stock prices and calculated price returns for each company as well as the S\&P 500 for the past two years, and \textit{quality} is the list of quality scores, as well as the component scores, of each of our companies.
-=======
-> data(companies) #Stores company names and tickers from the 
-> #Russell 3000 index
-> data(financials) #Stores financial documents for the given 
-> #list of companies.
-> data(prices) # Stores price returns and closing stock prices 
-> #for the past two years.
-> data(quality) #Stores the quality scores and the scores of 
-> #its components.
-\end{Sinput}
-\end{Schunk}
+
+
+\section*{Analyzing A Single Company}
+Several functions exist in order to provide more indepth analysis of a single company. Below, the \textit{qmjs} data set stores qmj objects. Each represents details about a specific company and provides tools for analyzing that company relative to others in the universe. See the \textit{See Also} section of the help page for qmj (?qmj) in order to get a full list of these functions.
+
 \begin{Schunk}
 \begin{Sinput}
-> #And more detailed data sets into what makes up quality
-> data(profitability)
-> data(growth)
-> data(payouts)
-> data(safety)
+> data(qmjs)
+> first_qmj <- qmjs[[1]]
+> summarize(first_qmj) 
 \end{Sinput}
+\begin{Soutput}
+Information for:  FLWS
+_______________________________________
+Quality Score:  0.3588747
+_______________________________________
+  profitability     GPOA         ROE       ROA      CFOA      GMAR       ACC
+1     0.2911018 0.262272 -0.01867136 0.2019969 0.1198031 0.2308763 0.1606091
+
+
+       growth        GPOA ROE        ROA        CFOA        GMAR        ACC
+1 -0.03357491 -0.03355643   0 0.02050147 -0.01102495 -0.05582183 0.01561731
+
+
+       safety      BAB       IVOL          LEV OhlsonOScore AltmanZScore
+1 -0.08842572 0.142523 -0.2184943 -0.009880442            0            0
+
+
+    payouts      EISS       DISS       NPOP
+1 0.1897736 0.1998357 0.09870005 0.01514234
+
+_______________________________________
+\end{Soutput}
 \end{Schunk}
->>>>>>> 5e61fbcf837e9dc6db8d8587c5ae4c5491ef5d3b
+
+If we desire, we can also plot the safety of this company relative to others in the universe.
+
+\begin{Schunk}
+\begin{Sinput}
+> data(safety)
+> plot_safety(first_qmj, safety)
+\end{Sinput}
+\begin{Soutput}
+[1] "Selected object is in the yellow bin."
+\end{Soutput}
+\end{Schunk}
+\includegraphics{paper-003}
+
+Functions also exist in order to easily retrieve a specific set of companies.
+
+\begin{Schunk}
+\begin{Sinput}
+> data(qmjs)
+> tickers <- c("GOOG", "IBM", "AAPL")
+> selected_qmjs <- get_qmjs(tickers, qmjs)
+> summarize(selected_qmjs[[2]])
+\end{Sinput}
+\begin{Soutput}
+Information for:  IBM
+_______________________________________
+Quality Score:  1.329808
+_______________________________________
+  profitability      GPOA        ROE       ROA     CFOA       GMAR       ACC
+1     0.6367209 0.9048216 0.04271614 0.2893791 0.363422 0.07793538 0.4147032
+
+
+       growth        GPOA ROE       ROA       CFOA        GMAR        ACC
+1 -0.03430372 -0.03446951   0 0.0226805 -0.0122254 -0.05639716 0.01473173
+
+
+     safety       BAB      IVOL        LEV OhlsonOScore AltmanZScore
+1 0.5893127 0.9511291 0.7477697 -0.1908257   -0.1430004    0.3368653
+
+
+    payouts     EISS      DISS       NPOP
+1 0.1380777 0.456594 -0.242883 0.01451857
+
+_______________________________________
+\end{Soutput}
+\end{Schunk}
+
 
 \section*{Conclusion}
 
@@ -112,7 +155,7 @@ rhk1@williams.edu
 at6@williams.edu
 
 \section*{Bibliography}
-Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. ``Quality Minus Junk." AQR (2014)
+Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. ``Quality Minus Junk." AQR (2013)
 \section*{Appendix}
 We calculate quality scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. We attempt to perform the same calculations as AQR does, but we have a few adjustments given the availability of data from public sources. 
 \subsection*{Profitability}

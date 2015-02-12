@@ -14,6 +14,9 @@
 #' @export
 
 filter_companies <- function(data, filter, remove=TRUE, isolate=FALSE){
+  if(remove == isolate){
+    stop("Both the remove and isolate parameters are set to either true or false in filter_companies. They must have different logical values.")
+  }
   #Helper functions perform a simple arithmetic operation to determine if a given component is >= 50% of a given quality score.
   prof_filter <- function(profitability, quality){
     if(is.na(profitability) || is.na(quality)){
