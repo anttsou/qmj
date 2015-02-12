@@ -6,8 +6,8 @@
 \SweaveOpts{concordance=TRUE}
 \maketitle
 
-\section{Abstract}
-The qmj package produces quality scores for companies based on the work of Asness et. al (2013). It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payouts, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
+\section*{Abstract}
+The \textbf{qmj} package produces quality scores for companies based on the work of Asness et. al (2013). It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payouts, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
 
 \section*{Introduction}
 \textbf{qmj} implements the methodology of the work of \emph{Asness et. al} (2013). Within the paper, Asness uses several financial measures to calculate the relative profitability, growth, safety, and payouts of a company within a given universe, which they use to provide an overall quality score for a company.
@@ -17,25 +17,15 @@ This quality score is used as the basis of a portfolio which longs quality compa
 \textbf{qmj} provides tools to practically apply their results, coming equipped with pre-compiled recent data in addition to providing tools to automatically update or analyze that information.
 
 \section*{Data}
-We demonstrate the use of \textbf{qmj} based on a subset of companies from the Russell 3000 Index. 
+We demonstrate the use of \textbf{qmj} first based on the already installed data, using a universe comprised of all companies in the Russell 3000 Index as of February 1, 2015.
 
 <<Package Datasets>>=
 library(qmj)
-data(companies) #Stores company names and tickers from the 
-#Russell 3000 index
-data(financials) #Stores financial documents for the given 
-#list of companies.
-data(prices) # Stores price returns and closing stock prices 
-#for the past two years.
-data(quality) #Stores the quality scores and the scores of 
-#its components.
-@
-<<Package Datasets>>=
-#And more detailed data sets into what makes up quality
-data(profitability)
-data(growth)
-data(payouts)
-data(safety)
+data(companies) 
+data(financials) 
+data(prices) 
+data(quality)
+head(quality,n=5)
 @
 
 Though \textbf{qmj} keeps datasets updated, it has a few functions that can extract information directly from Google Finance to grab the most recent data. 
@@ -53,6 +43,8 @@ Though \textbf{qmj} keeps datasets updated, it has a few functions that can extr
 @
 
 \textbf{tidy\_prices()} takes as input the result of \textbf{get\_prices()}, which is assigned here as \textbf{raw\_prices}, and organizes the data into columns for ticker, date, price, and price return. \textbf{tidyinfo()} takes as input the result of \textbf{get\_info()}, which is assigned here as \textbf{raw\_data}, and organizes the data into columns for ticker, year, and various items found in company financial statements such as total assets and net income. The column names themselves are abbreviations that are used in the Appendix. 
+
+\textit{companies} stores names and tickers from the Russell 3000 Index component list, \textit{financials}stores, whenever possible, the four most recent years of financial data (balance sheets, income statements, and cash flow statements) which are relevant to our calculations. \textit{prices} stores closing stock prices and calculated price returns for each company as well as the S\&P 500 for the past two years, and \textit{quality} is the list of quality scores, as well as the component scores, of each of our companies.
 
 \section*{Conclusion}
 
