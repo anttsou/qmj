@@ -1,4 +1,29 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  12 FEB 2015 00:14
+=======
+<<<<<<< HEAD
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.1.21)  11 FEB 2015 23:47
+entering extended mode
+**paper.tex
+("C:\Users\Inanity\Documents\econ20\R Paper\Discrete\vignettes\paper.tex"
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2013-05-26, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\article.cls"
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\size10.clo"
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+=======
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  12 FEB 2015 00:10
+>>>>>>> 5e217cda5f860adf7c354e87b88256abf7099788
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -10,6 +35,7 @@ Babel <3.9k> and hyphenation patterns for 78 languages loaded.
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+>>>>>>> eb2579c12852abb8686cb1a74a3155acd63994cb
 )
 \c@part=\count79
 \c@section=\count80
@@ -23,6 +49,47 @@ File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
+<<<<<<< HEAD
+(C:/PROGRA~1/R/R-31~1.2/share/texmf/tex/latex\Sweave.sty
+Package: Sweave 
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\ifthen.sty"
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("C:\Program Files (x86)\MiKTeX\tex\latex\graphics\graphicx.sty"
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\graphics\keyval.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+("C:\Program Files (x86)\MiKTeX\tex\latex\graphics\graphics.sty"
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files (x86)\MiKTeX\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files (x86)\MiKTeX\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+("C:\Program Files (x86)\MiKTeX\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count87
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+("C:\Program Files (x86)\MiKTeX\tex\latex\fancyvrb\fancyvrb.sty"
+=======
 (/usr/local/texlive/2014/texmf-dist/tex/latex/listings/listings.sty
 (/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
@@ -87,10 +154,20 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@width=\dimen108
 )
 (/usr/local/texlive/2014/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+>>>>>>> eb2579c12852abb8686cb1a74a3155acd63994cb
 Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
+<<<<<<< HEAD
+\FV@CodeLineNo=\count88
+\FV@InFile=\read1
+\FV@TabBox=\box26
+\c@FancyVerbLine=\count89
+\FV@StepNumber=\count90
+\FV@OutFile=\write3
+) ("C:\Program Files (x86)\MiKTeX\tex\latex\base\textcomp.sty"
+=======
 \FV@CodeLineNo=\count96
 \FV@InFile=\read1
 \FV@TabBox=\box28
@@ -99,6 +176,7 @@ Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix
 \FV@OutFile=\write3
 )
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/textcomp.sty
+>>>>>>> eb2579c12852abb8686cb1a74a3155acd63994cb
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -112,8 +190,12 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             Family '?' is the default used for unknown fonts.
 (textcomp)             See the documentation for details.
 Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
+<<<<<<< HEAD
+ ("C:\Program Files (x86)\MiKTeX\tex\latex\base\ts1enc.def"
+=======
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/ts1enc.def
+>>>>>>> eb2579c12852abb8686cb1a74a3155acd63994cb
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 )
 LaTeX Info: Redefining \oldstylenums on input line 266.
@@ -179,6 +261,22 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 338.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 339.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 340.
 )
+<<<<<<< HEAD
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\fontenc.sty"
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\t1enc.def"
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+))
+("C:\Program Files (x86)\MiKTeX\tex\latex\ae\ae.sty"
+Package: ae 2001/02/12 1.3 Almost European Computer Modern
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\fontenc.sty"
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\t1enc.def"
+=======
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
@@ -193,11 +291,117 @@ Package: ae 2001/02/12 1.3 Almost European Computer Modern
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1enc.def
+>>>>>>> eb2579c12852abb8686cb1a74a3155acd63994cb
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 )
 LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
 
+<<<<<<< HEAD
+("C:\Program Files (x86)\MiKTeX\tex\latex\ae\t1aer.fd"
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+))))
+("C:\Users\Inanity\Documents\econ20\R Paper\Discrete\vignettes\paper.aux")
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 5.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 5.
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\ts1cmr.fd"
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 5.
+
+("C:\Program Files (x86)\MiKTeX\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count91
+\scratchdimen=\dimen105
+\scratchbox=\box27
+\nofMPsegments=\count92
+\nofMParguments=\count93
+\everyMPshowfont=\toks15
+\MPscratchCnt=\count94
+\MPscratchDim=\dimen106
+\MPnumerator=\count95
+\makeMPintoPDFobject=\count96
+\everyMPtoPDFconversion=\toks16
+)
+("C:\Users\Inanity\Documents\econ20\R Paper\Discrete\vignettes\paper-concordanc
+e.tex")
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 7.
+ [1
+
+{C:/Users/Inanity/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+LaTeX Font Info:    Try loading font information for T1+aett on input line 20.
+("C:\Program Files (x86)\MiKTeX\tex\latex\ae\t1aett.fd"
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+) [1]
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 89.
+
+
+(C:/PROGRA~1/R/R-31~1.2/share/texmf/tex/latex\ts1aett.fd
+File: ts1aett.fd 
+)
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 89.
+
+
+("C:\Program Files (x86)\MiKTeX\tex\latex\base\ts1cmtt.fd"
+File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `TS1/aett/m/sl' in size <10> not available
+(Font)              Font shape `TS1/cmtt/m/sl' tried instead on input line 89.
+
+<paper-006.pdf, id=15, 433.62pt x 433.62pt>
+File: paper-006.pdf Graphic file (type pdf)
+ <use paper-006.pdf>
+Package pdftex.def Info: paper-006.pdf used on input line 102.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [2]
+<paper-008.pdf, id=21, 433.62pt x 433.62pt>
+File: paper-008.pdf Graphic file (type pdf)
+ <use paper-008.pdf>
+Package pdftex.def Info: paper-008.pdf used on input line 119.
+(pdftex.def)             Requested size: 276.00105pt x 276.0139pt.
+ [3 <C:/Users/Inanity/Documents/econ20/R Paper/Discrete/vignettes/paper-006.pdf
+>] [4 <C:/Users/Inanity/Documents/econ20/R Paper/Discrete/vignettes/paper-008.p
+df>] [5]
+[6] [7] ("C:\Users\Inanity\Documents\econ20\R Paper\Discrete\vignettes\paper.au
+x") ) 
+Here is how much of TeX's memory you used:
+ 2384 strings out of 493921
+ 33479 string characters out of 3146474
+ 78065 words of memory out of 3000000
+ 5638 multiletter control sequences out of 15000+200000
+ 26715 words of font info for 59 fonts, out of 3000000 for 9000
+ 841 hyphenation exceptions out of 8191
+ 35i,6n,21p,352b,292s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\Inanity\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dp
+i600\tcst1000.pk><C:/Program Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/
+cmbx12.pfb><C:/Program Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.
+pfb><C:/Program Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:
+/Program Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Progra
+m Files (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmsltt10.pfb><C:/Program Fi
+les (x86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x
+86)/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on paper.pdf (8 pages, 133000 bytes).
+PDF statistics:
+ 75 PDF objects out of 1000 (max. 8388607)
+=======
 (/usr/local/texlive/2014/texmf-dist/tex/latex/ae/t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))) (./paper.aux)
@@ -390,6 +594,7 @@ Output written on paper.pdf (13 pages, 196993 bytes).
 PDF statistics:
  121 PDF objects out of 1000 (max. 8388607)
  85 compressed objects within 1 object stream
+>>>>>>> eb2579c12852abb8686cb1a74a3155acd63994cb
  0 named destinations out of 1000 (max. 500000)
  15 words of extra memory for PDF output out of 10000 (max. 10000000)
 
