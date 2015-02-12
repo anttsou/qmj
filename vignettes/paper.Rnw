@@ -85,10 +85,13 @@ It may also be desirable to look at quality scores specific to a subset of our e
 
 <<>>=
 data(companies)
-subset_companies <- companies[1:35,]
-subset_qualities <- market_data[]
-@
+data(financials)
+data(prices)
 
+subset_companies <- companies[1:35,]
+subset_qualities <- market_data(subset_companies, financials, prices)
+head(subset_qualities)
+@
 
 \section*{Conclusion}
 

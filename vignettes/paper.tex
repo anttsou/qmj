@@ -127,6 +127,130 @@ _______________________________________
 \end{Soutput}
 \end{Schunk}
 
+\section*{Analyzing the Universe (Of Companies)}
+In the quality data set, it can quickly be seen that the growth score for Angies List Inc. is abnormally high, and accounts for virtually all of its quality score. In many cases, it is undesirable to consider companies with high quality scores that are ``driven'' (here defined as composing at least half the quality score) by a single component score. \textbf{qmj} provides a filter.
+
+\begin{Schunk}
+\begin{Sinput}
+> data(quality)
+> head(quality)
+\end{Sinput}
+\begin{Soutput}
+                     name ticker profitability      growth      safety
+1         ANGIES LIST INC   ANGI    -0.1575365 24.55764246 -0.89076389
+2 SEACOAST BANKING CORP F   SBCF    -0.9552288 21.17749195  0.23623565
+3                  AMERCO   UHAL    -0.3350943 19.25596295 -0.16064717
+4   GUIDANCE SOFTWARE INC   GUID     0.2245725 13.61798234  0.09569998
+5       BROWN & BROWN INC    BRO     0.1484205 -0.04063592 11.76587071
+6 CAPITOL FEDERAL FINL IN   CFFN     5.7540587 -0.04904148  5.73770806
+     payouts  quality
+1 -1.8699982 21.63934
+2 -1.0820805 19.37642
+3 -1.9855567 16.77466
+4 -1.5591484 12.37911
+5  0.2254432 12.09910
+6  0.2292110 11.67194
+\end{Soutput}
+\begin{Sinput}
+> sans_growth <- filter_companies(quality, filter="growth")
+> head(sans_growth)
+\end{Sinput}
+\begin{Soutput}
+                      name ticker profitability      growth     safety
+5        BROWN & BROWN INC    BRO     0.1484205 -0.04063592 11.7658707
+6  CAPITOL FEDERAL FINL IN   CFFN     5.7540587 -0.04904148  5.7377081
+8      CENTURY ALUMINUM CO   CENX    -0.1912805  3.43982232  6.1767505
+9  CORRECTIONS CORP OF AME    CXW    -0.3283571  3.22020489  4.1009744
+10    ROUSE PROPERTIES INC    RSE     3.6209141  0.04701919  1.8876675
+11       PATTERSON COS INC   PDCO    -0.7411908 -0.05296278  0.1659304
+      payouts   quality
+5   0.2254432 12.099098
+6   0.2292110 11.671936
+8  -0.1956603  9.229632
+9   0.1910389  7.183861
+10  0.9855644  6.541165
+11  6.7805708  6.152348
+\end{Soutput}
+\end{Schunk}
+
+If desirable, we may also select specifically for those companies which are driven by a particular component. Note that \textit{remove} is, by default, set to TRUE, and \textit{isolate}, is set to FALSE.
+
+\begin{Schunk}
+\begin{Sinput}
+> driven_by_profit <- filter_companies(quality, filter="profitability", remove=FALSE, isolate=TRUE)
+> head(driven_by_profit)
+\end{Sinput}
+\begin{Soutput}
+                      name ticker profitability      growth     safety
+10    ROUSE PROPERTIES INC    RSE      3.620914  0.04701919  1.8876675
+14           MARINEMAX INC    HZO      2.705818 -0.01095467  1.1415603
+25    TRW AUTOMOTIVE HLDGS    TRW      2.618192 -0.03051664  1.5530658
+26          TESLA MTRS INC   TSLA      4.609760 -0.03092323 -0.5101186
+27 SBA COMMUNICATIONS CORP   SBAC      2.312696 -0.02110655  1.7126875
+31        BANCORPSOUTH INC    BXS      3.183034 -0.11750128  0.7686165
+     payouts  quality
+10 0.9855644 6.541165
+14 1.5434407 5.379865
+25 0.1615215 4.302262
+26 0.1859741 4.254693
+27 0.1624351 4.166712
+31 0.1812339 4.015383
+\end{Soutput}
+\end{Schunk}
+
+Or, we can select for all companies which are not driven by any component score.
+
+\begin{Schunk}
+\begin{Sinput}
+> well_rounded <- filter_companies(quality, filter="all")
+> head(well_rounded)
+\end{Sinput}
+\begin{Soutput}
+                      name ticker profitability      growth    safety   payouts
+6  CAPITOL FEDERAL FINL IN   CFFN     5.7540587 -0.04904148 5.7377081 0.2292110
+21 HANNON ARMSTRONG SUSTAI   HASI     1.2166640 -0.02772366 1.7356800 1.7275803
+22  ADAMAS PHARMACEUTICALS   ADMS     1.6916207  0.50007697 2.2264045 0.2107355
+24   OPLINK COMMUNICATIONS   OPLK     0.9992939  1.89816751 1.2105671 0.2178525
+33              WATSCO INC    WSO     1.9397013 -0.01815565 1.8758314 0.1712876
+34          P C CONNECTION   PCCC     1.4991871 -0.01996304 0.5011669 1.9790272
+     quality
+6  11.671936
+21  4.652201
+22  4.628838
+24  4.325881
+33  3.968665
+34  3.959418
+\end{Soutput}
+\end{Schunk}
+
+It may also be desirable to look at quality scores specific to a subset of our extant universe. For example, it may be desirable to focus on a specific industry, instead of the entire market.
+
+\begin{Schunk}
+\begin{Sinput}
+> data(companies)
+> data(financials)
+> data(prices)
+> subset_companies <- companies[1:35,]
+> subset_qualities <- market_data(subset_companies, financials, prices)
+> head(subset_qualities)
+\end{Sinput}
+\begin{Soutput}
+                  name ticker profitability     growth     safety    payouts
+1  ACADIA REALTY TRUST    AKR     0.4454608  1.9089319  1.5526137 1.31478094
+2  ABBOTT LABORATORIES    ABT     1.7678451 -0.1095279  1.7803241 0.05153694
+3 ACADIA HEALTHCARE CO   ACHC     1.1669597  0.5217762  0.3551660 1.00840842
+4      1ST SOURCE CORP   SRCE     0.4229837  0.1556518  1.5151657 0.77935661
+5 ACACIA RESEARCH CORP   ACTG    -0.1253302  0.3120711 -0.5093214 2.97055627
+6               2U INC   TWOU     0.7175041  0.7028707  0.6442629 0.01594466
+   quality
+1 5.221787
+2 3.490178
+3 3.052310
+4 2.873158
+5 2.647976
+6 2.080582
+\end{Soutput}
+\end{Schunk}
 
 \section*{Conclusion}
 
