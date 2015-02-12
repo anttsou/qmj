@@ -2,6 +2,19 @@
 #'
 #' The qmj object contains all details related to a company's quality score,
 #' and also provides some tools for analyzing a specific company in more detail.
+#' 
+#' @seealso \code{\link{view_ticker}}
+#' @seealso \code{\link{view_quality}}
+#' @seealso \code{\link{view_growth}}
+#' @seealso \code{\link{view_safety}}
+#' @seealso \code{\link{view_profitability}}
+#' @seealso \code{\link{view_payouts}}
+#' @seealso \code{\link{plot_quality}}
+#' @seealso \code{\link{plot_growth}}
+#' @seealso \code{\link{plot_safety}}
+#' @seealso \code{\link{plot_profitability}}
+#' @seealso \code{\link{plot_payouts}}
+#' @seealso \code{\link{summarize}}
 #'
 #' @slot ticker Object of class \code{"character"}
 #' @slot profitability Object of class \code{"numeric"}. The profitability score.

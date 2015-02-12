@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_qmjs.R
 \name{get_qmjs}
 \alias{get_qmjs}
-\title{Returns specific qmj objects in the existing data set of qmj.}
+\title{Returns specific qmj objects from a list of qmj objects.}
 \usage{
 get_qmjs(tickers, qmjs)
 }
@@ -12,7 +12,7 @@ get_qmjs(tickers, qmjs)
 \item{qmjs}{A list of qmjs, i.e. qmj objects.}
 }
 \description{
-Given a vector of tickers and a data frame of qmjs, returns
+Given a vector of tickers and a list of qmjs, returns
 particular company qmjs based on inputted tickers.
 }
 \examples{

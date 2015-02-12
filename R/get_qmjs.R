@@ -1,6 +1,6 @@
-#' Returns specific qmj objects in the existing data set of qmj.
+#' Returns specific qmj objects from a list of qmj objects.
 #'
-#' Given a vector of tickers and a data frame of qmjs, returns
+#' Given a vector of tickers and a list of qmjs, returns
 #' particular company qmjs based on inputted tickers.
 #' @param tickers A single ticker or vector of tickers that the user desires qmjs for.
 #' @param qmjs A list of qmjs, i.e. qmj objects.

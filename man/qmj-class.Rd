@@ -66,4 +66,29 @@ and also provides some tools for analyzing a specific company in more detail.
 
 \item{\code{quality}}{Object of class \code{"numeric"}. The quality score.}
 }}
+\seealso{
+\code{\link{view_ticker}}
+
+\code{\link{view_quality}}
+
+\code{\link{view_growth}}
+
+\code{\link{view_safety}}
+
+\code{\link{view_profitability}}
+
+\code{\link{view_payouts}}
+
+\code{\link{plot_quality}}
+
+\code{\link{plot_growth}}
+
+\code{\link{plot_safety}}
+
+\code{\link{plot_profitability}}
+
+\code{\link{plot_payouts}}
+
+\code{\link{summarize}}
+}
 

@@ -2,7 +2,7 @@
 #'
 #' Retrieves data for the data frame of companies and generates a list with three elements. Each element
 #' is a large list containing all the balance sheets, income statements, or cash flow statements for all companies.
-#' @param companies A data frame of companies. Must have a ticker column.
+#' @param x A data frame of companies. Must have a ticker column.
 #' @seealso \code{\link{get_prices}}
 #' @examples
 #' \dontrun{
