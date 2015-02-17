@@ -1,4 +1,4 @@
-#' A dataframe of price returns and closing prices for companies
+#' A dataframe of price returns and closing prices for companies in the Russell 3000 Index
 #'
 #' Stores price returns and closing prices for the past two years (if available) for the Russell 3000 Index companies
 #' as well as the S&P 500 (uniquely taken from Yahoo finance), to serve as a benchmark.

@@ -1,4 +1,4 @@
-#' A list of all companies in the Russell 3000 Index.
+#' A list of all companies in the Russell 3000 Index
 #'
 #' Stores the names and tickers for all companies in the Russell 3000 Index as of January 2015.
 #' The list from which the data was culled was last updated 6/27/2014.
