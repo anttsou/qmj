@@ -12,7 +12,7 @@
 
 get_prices <- function(x){
   if(length(x$ticker) == 0) {
-    stop("first parameter requires a ticker column.")
+    stop("parameter requires a ticker column.")
   }
   
   #' @describeIn pricereturns Calculates price returns for an xts object.
