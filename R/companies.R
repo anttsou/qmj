@@ -1,0 +1,14 @@
+#' A list of all companies in the Russell 3000 Index.
+#'
+#' Stores the names and tickers for all companies in the Russell 3000 Index as of January 2015.
+#' The list from which the data was culled was last updated 6/27/2014.
+#' @format A data frame with 2999 rows and 2 variables.
+#' \itemize{
+#'    \item name = The name of the company.
+#'    \item ticker = The ticker of the company.
+#'  }
+#' @source \url{https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}
+#' @name companies
+#' @docType data
+#' @keywords data
+NULL

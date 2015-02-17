@@ -1,5 +1,5 @@
 \documentclass[titlepage]{article}
-\author{Ryan Kwon, Anthoney Tsou}
+\author{Ryan Kwon `17, Anthoney Tsou `17}
 \title{An Implementation of Quality Minus Junk}
 \date{February 11, 2015}
 \begin{document}

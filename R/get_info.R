@@ -2,6 +2,8 @@
 #'
 #' Retrieves data for the data frame of companies and generates a list with three elements. Each element
 #' is a large list containing all the balance sheets, income statements, or cash flow statements for all companies.
+#' Also writes .RData files for every company in the /extdata folder in the package folder. 
+#' If canceled partway through, function is able to find and re-read this data, allowing resumption of progress.
 #' @param x A data frame of companies. Must have a ticker column.
 #' @seealso \code{\link{get_prices}}
 #' @examples

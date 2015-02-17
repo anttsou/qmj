@@ -1,0 +1,41 @@
+#' Financial statements of all companies in the Russell 3000 index for the past four years
+#'
+#' A data frame containing all financial statements (balancesheets,
+#' cashflows, and income statements) for the past four years if available. 
+#' 
+#' Some companies may store "weird" data, such as having information solely for the years 1997-2001, or by having multiple 
+#' annual reports within the same year (such as one report being filed in March of 2013, and another filed in December of 2013). In the case of companies
+#' reporting multiple annual data from the same year, the years of their reports are suffixed with their order. For
+#' example, GOOG may have data from 2013.1, 2013.2, 2012.3, 2011.4. This means Google's most recent data set is from
+#' 2013 (2013.1), another data set was published in 2013 (2013.2), and the remaining years are also suffixed for convenience.
+#' 
+#' @format A data frame with 11,112 rows and 23 variables
+#'  \itemize{
+#'    \item AM = Amortization
+#'    \item CWC = Changes in Working Capital
+#'    \item CX = Capital Expenditures
+#'    \item DIVC = Dividends per Share
+#'    \item DO = Discontinued Operations
+#'    \item DP.DPL = Depreciation/Depletion
+#'    \item GPROF = Gross Profits
+#'    \item IAT = Income After Taxes
+#'    \item IBT = Income Before Taxes
+#'    \item NI = Net Income
+#'    \item NINT = Interest and Expense - Net Operating
+#'    \item NRPS = Non-redeemable Preferred Stock
+#'    \item RPS = Redeemable Preferred Stock
+#'    \item TA = Total Assets
+#'    \item TCA = Total Current Assets
+#'    \item TCL = Total Current Liabilities
+#'    \item TCSO = Total Common Shares Outstanding
+#'    \item TD = Total Debt
+#'    \item TL = Total Liabilities
+#'    \item TLSE = Total Liabilities and Shareholders' Equity
+#'    \item TREV = Total Revenue
+#'  }
+#'  
+#' @source Google Finance, accessed through quantmod
+#' @name financials
+#' @docType data
+#' @keywords data
+NULL
