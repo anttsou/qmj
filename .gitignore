@@ -7,4 +7,7 @@ R/.Rhistory
 .Rproj.user
 .Rbuildignore
 .RData
+.gz
+.tex
+.log
 qmj.Rproj

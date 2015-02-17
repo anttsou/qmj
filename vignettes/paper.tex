@@ -70,7 +70,7 @@ Though \textbf{qmj} keeps datasets updated, it has a few functions that can extr
 \textbf{tidy\_prices()} takes as input the result of \textbf{get\_prices()}, which is assigned here as \textbf{raw\_prices}, and organizes the data into columns for ticker, date, price, and price return. \textbf{tidyinfo()} takes as input the result of \textbf{get\_info()}, which is assigned here as \textbf{raw\_data}, and organizes the data into columns for ticker, year, and various items found in company financial statements such as total assets and net income. The column names themselves are abbreviations that are used in the Appendix. 
 
 \section*{Analyzing A Single Company}
-Several functions exist in order to provide more indepth analysis of a single company. Below, the \textit{qmjs} data set stores qmj objects. Each represents details about a specific company and provides tools for analyzing that company relative to others in the universe. See the \textit{See Also} section of the help page for qmj (?qmj) in order to get a full list of these functions.
+Several functions exist in order to provide more in-depth analysis of a single company. Below, the \textit{qmjs} data set stores qmj objects. Each represents details about a specific company and provides tools for analyzing that company relative to others in the universe. See the \textit{See Also} section of the help page for qmj (?qmj) in order to get a full list of these functions.
 
 \begin{Schunk}
 \begin{Sinput}
@@ -198,24 +198,24 @@ If desirable, we may also select specifically for those companies which are driv
 
 \begin{Schunk}
 \begin{Sinput}
-> driven_by_profit <- filter_companies(quality, filter="profitability", remove=FALSE, isolate=TRUE)
-> head(driven_by_profit)
+> cpayouts <- filter_companies(quality, filter="payouts", remove=FALSE, isolate=TRUE)
+> head(cpayouts)
 \end{Sinput}
 \begin{Soutput}
-                      name ticker profitability      growth     safety
-10    ROUSE PROPERTIES INC    RSE      3.620914  0.04701919  1.8876675
-14           MARINEMAX INC    HZO      2.705818 -0.01095467  1.1415603
-25    TRW AUTOMOTIVE HLDGS    TRW      2.618192 -0.03051664  1.5530658
-26          TESLA MTRS INC   TSLA      4.609760 -0.03092323 -0.5101186
-27 SBA COMMUNICATIONS CORP   SBAC      2.312696 -0.02110655  1.7126875
-31        BANCORPSOUTH INC    BXS      3.183034 -0.11750128  0.7686165
-     payouts  quality
-10 0.9855644 6.541165
-14 1.5434407 5.379865
-25 0.1615215 4.302262
-26 0.1859741 4.254693
-27 0.1624351 4.166712
-31 0.1812339 4.015383
+                     name ticker profitability      growth     safety  payouts
+11      PATTERSON COS INC   PDCO    -0.7411908 -0.05296278  0.1659304 6.780571
+18    K2M GROUP HLDGS INC   KTWO     0.1662615 -0.04428798  0.7886706 3.924977
+23 COLUMBUS MCKINNON CORP   CMCO     1.4823464 -0.03893369 -0.0214868 3.169407
+30    BOINGO WIRELESS INC   WIFI    -0.5336345 -0.02986170  0.9288261 3.662658
+32  SENSIENT TECHNOLOGIES    SXT     0.5314965 -0.02496078  0.4431197 3.038672
+36  CALLIDUS SOFTWARE INC   CALD    -0.1358786 -0.04343564 -0.4134318 4.510160
+    quality
+11 6.152348
+18 4.835621
+23 4.591333
+30 4.027988
+32 3.988327
+36 3.917414
 \end{Soutput}
 \end{Schunk}
 
