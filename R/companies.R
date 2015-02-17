@@ -17,8 +17,8 @@
 #' 
 #' @format A data frame with 2999 rows and 2 variables.
 #' \itemize{
-#'    \item name = The name of the company.
-#'    \item ticker = The ticker of the company.
+#'    \item name = The name of the company. Of class \code{"character"}.
+#'    \item ticker = The ticker of the company. Of class \code{"character"}.
 #'  }
 #' @source \url{https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}
 #' @name companies
