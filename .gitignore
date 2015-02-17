@@ -10,4 +10,5 @@ R/.Rhistory
 vignettes/*.gz
 vignettes/*.tex
 vignettes/*.log
+vignettes/*.pdf
 qmj.Rproj
