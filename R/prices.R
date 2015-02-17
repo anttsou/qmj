@@ -1,7 +1,19 @@
-#' A dataframe of price returns and closing prices for companies
+#' A dataframe of price returns and closing prices for companies in the Russell 3000 Index
 #'
 #' Stores price returns and closing prices for the past two years (if available) for the Russell 3000 Index companies
 #' as well as the S&P 500 (uniquely taken from Yahoo finance), to serve as a benchmark.
+#' 
+#' The Russell 3000 Index is an equity index that tracks the performance of the 3000 largest
+#' US companies as measured by market cap. The component companies that make up this index are
+#' reconstituted once a year, usually between May and June. At this reconstitution, all companies
+#' are reranked based on their market caps for the year, and any companies which become "ineligible" by,
+#' for example, going bankrupt, becoming acquired, or becoming private, are replaced at this time.
+#' 
+#' This Index was chosen because the majority of the information used in this package relies on
+#' data sources that are US-centric, in addition to giving reasonable output by using companies which
+#' are at least of sufficient size to produce less erroneous items
+#' (such as a tiny company doubling in profitability, though the actual change is very small in magnitude)
+#' as well as producing items which are more likely to interest the user.
 #' 
 #' @format A data frame with 1,475,934 rows and 4 variables
 #' @source Google Finance, accessed through quantmod

@@ -9,6 +9,18 @@
 #' example, GOOG may have data from 2013.1, 2013.2, 2012.3, 2011.4. This means Google's most recent data set is from
 #' 2013 (2013.1), another data set was published in 2013 (2013.2), and the remaining years are also suffixed for convenience.
 #' 
+#' The Russell 3000 Index is an equity index that tracks the performance of the 3000 largest
+#' US companies as measured by market cap. The component companies that make up this index are
+#' reconstituted once a year, usually between May and June. At this reconstitution, all companies
+#' are reranked based on their market caps for the year, and any companies which become "ineligible" by,
+#' for example, going bankrupt, becoming acquired, or becoming private, are replaced at this time.
+#' 
+#' This Index was chosen because the majority of the information used in this package relies on
+#' data sources that are US-centric, in addition to giving reasonable output by using companies which
+#' are at least of sufficient size to produce less erroneous items
+#' (such as a tiny company doubling in profitability, though the actual change is very small in magnitude)
+#' as well as producing items which are more likely to interest the user.
+#' 
 #' @format A data frame with 11,112 rows and 23 variables
 #'  \itemize{
 #'    \item AM = Amortization
