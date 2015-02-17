@@ -7,7 +7,7 @@ R/.Rhistory
 .Rproj.user
 .Rbuildignore
 .RData
-vignettes/.gz
-vignettes/.tex
-vignettes/.log
+vignettes/*.gz
+vignettes/*.tex
+vignettes/*.log
 qmj.Rproj
