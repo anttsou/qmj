@@ -15,6 +15,11 @@
 #' (such as a tiny company doubling in profitability, though the actual change is very small in magnitude)
 #' as well as producing items which are more likely to interest the user.
 #' 
+#' Companies crucially provides tickers to many functions in the package, allowing the package to connect
+#' financial statements and price information to a specific company. It is also the basis of the many "get"
+#' functions of the package, which retrieves and then formats data from the web. Companies is the "base" data
+#' that produces financials, prices, and ultimately quality scores.
+#' 
 #' @format A data frame with 2999 rows and 2 variables.
 #' \itemize{
 #'    \item name = The name of the company. Of class \code{"character"}.
@@ -22,6 +27,24 @@
 #'  }
 #' @source \url{https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}
 #' @name companies
+#' @seealso \code{\link{financials}}
+#' @seealso \code{\link{prices}}
+#' @seealso \code{\link{quality}}
+#' @seealso \code{\link{get_info}}
+#' @seealso \code{\link{tidyinfo}}
+#' @seealso \code{\link{get_prices}}
+#' @seealso \code{\link{tidy_prices}}
+#' @examples
+#' data(companies)
+#' data(financials)
+#' data(prices)
+#' market_data(companies, financials, prices)
+#' 
+#' raw_financials <- get_info(companies)
+#' usable_financials <- tidyinfo(raw_financials)
+#' 
+#' raw_prices <- get_prices(companies)
+#' usable_prices <- tidy_prices(raw_prices)
 #' @docType data
 #' @keywords data
 NULL

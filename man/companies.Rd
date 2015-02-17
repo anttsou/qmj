@@ -28,6 +28,38 @@ data sources that are US-centric, in addition to giving reasonable output by usi
 are at least of sufficient size to produce less erroneous items
 (such as a tiny company doubling in profitability, though the actual change is very small in magnitude)
 as well as producing items which are more likely to interest the user.
+
+Companies crucially provides tickers to many functions in the package, allowing the package to connect
+financial statements and price information to a specific company. It is also the basis of the many "get"
+functions of the package, which retrieves and then formats data from the web. Companies is the "base" data
+that produces financials, prices, and ultimately quality scores.
+}
+\examples{
+data(companies)
+data(financials)
+data(prices)
+market_data(companies, financials, prices)
+
+raw_financials <- get_info(companies)
+usable_financials <- tidyinfo(raw_financials)
+
+raw_prices <- get_prices(companies)
+usable_prices <- tidy_prices(raw_prices)
+}
+\seealso{
+\code{\link{financials}}
+
+\code{\link{prices}}
+
+\code{\link{quality}}
+
+\code{\link{get_info}}
+
+\code{\link{tidyinfo}}
+
+\code{\link{get_prices}}
+
+\code{\link{tidy_prices}}
 }
 \keyword{data}
 
