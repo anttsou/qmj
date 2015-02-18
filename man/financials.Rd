@@ -42,6 +42,10 @@ reporting multiple annual data from the same year, the years of their reports ar
 example, GOOG may have data from 2013.1, 2013.2, 2012.3, 2011.4. This means Google's most recent data set is from
 2013 (2013.1), another data set was published in 2013 (2013.2), and the remaining years are also suffixed for convenience.
 
+The main purpose of financials is to provide key information for each company in order to calculate each of the component scores
+of quality (profitability, growth, safety, and payouts). For every ticker in the \code{\link{companies}} data set, financials
+should ideally store the most recent four years of annual data, though this may vary based on availability.
+
 The Russell 3000 Index is an equity index that tracks the performance of the 3000 largest
 US companies as measured by market cap. The component companies that make up this index are
 reconstituted once a year, usually between May and June. At this reconstitution, all companies
@@ -53,6 +57,28 @@ data sources that are US-centric, in addition to giving reasonable output by usi
 are at least of sufficient size to produce less erroneous items
 (such as a tiny company doubling in profitability, though the actual change is very small in magnitude)
 as well as producing items which are more likely to interest the user.
+}
+\examples{
+data(companies)
+data(financials)
+data(prices)
+market_data(companies, financials, prices)
+
+raw_financials <- get_info(companies)
+usable_financials <- tidyinfo(raw_financials)
+}
+\seealso{
+\code{\link{companies}}
+
+\code{\link{prices}}
+
+\code{\link{quality}}
+
+\code{\link{get_info}}
+
+\code{\link{tidyinfo}}
+
+\code{\link{market_data}}
 }
 \keyword{data}
 
