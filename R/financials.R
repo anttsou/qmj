@@ -9,6 +9,10 @@
 #' example, GOOG may have data from 2013.1, 2013.2, 2012.3, 2011.4. This means Google's most recent data set is from
 #' 2013 (2013.1), another data set was published in 2013 (2013.2), and the remaining years are also suffixed for convenience.
 #' 
+#' The main purpose of financials is to provide key information for each company in order to calculate each of the component scores
+#' of quality (profitability, growth, safety, and payouts). For every ticker in the \code{\link{companies}} data set, financials
+#' should ideally store the most recent four years of annual data, though this may vary based on availability.
+#' 
 #' The Russell 3000 Index is an equity index that tracks the performance of the 3000 largest
 #' US companies as measured by market cap. The component companies that make up this index are
 #' reconstituted once a year, usually between May and June. At this reconstitution, all companies
@@ -48,6 +52,20 @@
 #'  
 #' @source Google Finance, accessed through quantmod
 #' @name financials
+#' @seealso \code{\link{companies}}
+#' @seealso \code{\link{prices}}
+#' @seealso \code{\link{quality}}
+#' @seealso \code{\link{get_info}}
+#' @seealso \code{\link{tidyinfo}}
+#' @seealso \code{\link{market_data}}
+#' @examples
+#' data(companies)
+#' data(financials)
+#' data(prices)
+#' market_data(companies, financials, prices)
+#' 
+#' raw_financials <- get_info(companies)
+#' usable_financials <- tidyinfo(raw_financials)
 #' @docType data
 #' @keywords data
 NULL
