@@ -5,7 +5,6 @@ R/.Rproj
 R/.Rhistory
 .DS_Store
 .Rproj.user
-.Rbuildignore
 .RData
 vignettes/*.gz
 vignettes/*.tex
