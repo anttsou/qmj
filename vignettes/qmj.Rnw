@@ -10,11 +10,9 @@
 The \textbf{qmj} package produces quality scores for companies based on the work of Asness et. al (2013). It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payouts, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
 
 \section*{Introduction}
-\textbf{qmj} implements the methodology of the work of \emph{Asness et. al} (2013). Within the paper, Asness uses several financial measures to calculate the relative profitability, growth, safety, and payouts of a company within a given universe, which they use to provide an overall quality score for a company.
+\textbf{qmj} implements the methodology of the work of \emph{Asness et. al} (2013); a paper which utilizes several financial measures to calculate the relative profitability, growth, safety, and payouts of a company within a given universe. These ``component'' (a term we will be using in this paper frequently) scores are used to quantify the quality of a company. The exact details behind the processes used to determine each of these components are given in the appendix of this paper.
 
-This quality score is used as the basis of a portfolio which longs quality companies, which are likely to outperform the market, while ``junk'' companies shorted as they are expected to underperform relative to the market.
-
-\textbf{qmj} provides tools to practically apply their results, coming equipped with pre-compiled recent data in addition to providing tools to automatically update or analyze that information.
+\textbf{qmj} provides tools to practically apply their results, and also expedites the data-gathering process. Contained within the package are frequently updated, pre-compiled data sets in addition to tools needed to automatically gather relevant financial statements and information from Google Finance for a given data frame of companies. Thus, the package is able to retrieve data and then compute quality scores for an arbitrary data frame of companies.
 
 \section*{Data}
 We demonstrate the use of \textbf{qmj} first based on the already installed data, using a universe comprised of all companies in the Russell 3000 Index as of February 1, 2015.
