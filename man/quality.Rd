@@ -9,11 +9,11 @@ safety, and payouts. Companies are sorted in order of quality score, with NAs st
 at the end of the data set.}
 \format{A data frame with 2999 rows and 7 variables
 \itemize{
-   \item quality
-   \item profitability
-   \item growth
-   \item safety
-   \item payouts
+   \item quality = class \code{"numeric"}.
+   \item profitability = class \code{"numeric"}.
+   \item growth = class \code{"numeric"}.
+   \item safety = class \code{"numeric"}.
+   \item payouts = class \code{"numeric"}.
  }}
 \description{
 If partial information exists (i.e., a profitability score

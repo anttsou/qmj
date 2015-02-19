@@ -28,27 +28,27 @@
 #' 
 #' @format A data frame with 11,112 rows and 23 variables
 #'  \itemize{
-#'    \item AM = Amortization
-#'    \item CWC = Changes in Working Capital
-#'    \item CX = Capital Expenditures
-#'    \item DIVC = Dividends per Share
-#'    \item DO = Discontinued Operations
-#'    \item DP.DPL = Depreciation/Depletion
-#'    \item GPROF = Gross Profits
-#'    \item IAT = Income After Taxes
-#'    \item IBT = Income Before Taxes
-#'    \item NI = Net Income
-#'    \item NINT = Interest and Expense - Net Operating
-#'    \item NRPS = Non-redeemable Preferred Stock
-#'    \item RPS = Redeemable Preferred Stock
-#'    \item TA = Total Assets
-#'    \item TCA = Total Current Assets
-#'    \item TCL = Total Current Liabilities
-#'    \item TCSO = Total Common Shares Outstanding
-#'    \item TD = Total Debt
-#'    \item TL = Total Liabilities
-#'    \item TLSE = Total Liabilities and Shareholders' Equity
-#'    \item TREV = Total Revenue
+#'    \item AM = Amortization, of class \code{"character"}.
+#'    \item CWC = Changes in Working Capital, of class \code{"character"}.
+#'    \item CX = Capital Expenditures, of class \code{"character"}.
+#'    \item DIVC = Dividends per Share, of class \code{"character"}.
+#'    \item DO = Discontinued Operations, of class \code{"character"}.
+#'    \item DP.DPL = Depreciation/Depletion, of class \code{"character"}.
+#'    \item GPROF = Gross Profits, of class \code{"character"}.
+#'    \item IAT = Income After Taxes, of class \code{"character"}.
+#'    \item IBT = Income Before Taxes, of class \code{"character"}.
+#'    \item NI = Net Income, of class \code{"character"}.
+#'    \item NINT = Interest and Expense - Net Operating, of class \code{"character"}.
+#'    \item NRPS = Non-redeemable Preferred Stock, of class \code{"character"}.
+#'    \item RPS = Redeemable Preferred Stock, of class \code{"character"}.
+#'    \item TA = Total Assets, of class \code{"character"}.
+#'    \item TCA = Total Current Assets, of class \code{"character"}.
+#'    \item TCL = Total Current Liabilities, of class \code{"character"}.
+#'    \item TCSO = Total Common Shares Outstanding, of class \code{"character"}.
+#'    \item TD = Total Debt, of class \code{"character"}.
+#'    \item TL = Total Liabilities, of class \code{"character"}.
+#'    \item TLSE = Total Liabilities and Shareholders' Equity, of class \code{"character"}.
+#'    \item TREV = Total Revenue, of class \code{"character"}.
 #'  }
 #'  
 #' @source Google Finance, accessed through quantmod
