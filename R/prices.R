@@ -3,7 +3,8 @@
 #' Stores price returns and closing prices for the past two years (if available) for the Russell 3000 Index companies
 #' as well as the S&P 500 (uniquely taken from Yahoo finance), to serve as a benchmark.
 #' 
-#' The Russell 3000 Index is an equity index that tracks the performance of the 3000 largest
+#' The Russell 3000 Index is an equity index that tracks the performance of the "3000" (this number may actually
+#' vary from year to year, but is always in the neighborhood of 3000) largest
 #' US companies as measured by market cap. The component companies that make up this index are
 #' reconstituted once a year, usually between May and June. At this reconstitution, all companies
 #' are reranked based on their market caps for the year, and any companies which become "ineligible" by,

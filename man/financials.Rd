@@ -44,9 +44,10 @@ example, GOOG may have data from 2013.1, 2013.2, 2012.3, 2011.4. This means Goog
 
 The main purpose of financials is to provide key information for each company in order to calculate each of the component scores
 of quality (profitability, growth, safety, and payouts). For every ticker in the \code{\link{companies}} data set, financials
-should ideally store the most recent four years of annual data, though this may vary based on availability.
+will try to store the most recent four years of annual data, though this may vary based on availability.
 
-The Russell 3000 Index is an equity index that tracks the performance of the 3000 largest
+The Russell 3000 Index is an equity index that tracks the performance of the "3000" (this number may actually
+vary from year to year, but is always in the neighborhood of 3000) largest
 US companies as measured by market cap. The component companies that make up this index are
 reconstituted once a year, usually between May and June. At this reconstitution, all companies
 are reranked based on their market caps for the year, and any companies which become "ineligible" by,
