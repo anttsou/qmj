@@ -14,7 +14,7 @@
 \maketitle
 
 \section*{Abstract}
-The \textbf{qmj} package produces quality scores for companies based on the work of Asness et. al (2013). It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payouts, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
+The \textbf{qmj} package produces quality scores for companies based on the work of \hyperlink{bibliography}{Asness et. al (2013)}. It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payouts, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
 
 \section*{Introduction}
 \textbf{qmj} implements the methodology of the work of \hyperlink{bibliography}{\emph{Asness et. al} (2013)}; a paper which utilizes several financial measures to calculate the relative profitability, growth, safety, and payouts of a company within a given universe. These ``component'' (a term we will be using in this paper frequently) scores are used to quantify the quality of a company. Asness's paper includes the performance of a ``quality minus junk'' portfolio, or a QMJ portfolio. Their ultimate conclusions were that QMJ portfolios that longed high-quality stocks and shorted low-quality stocks "earn[ed] significant risk-adjusted returns with an information ratio above 1", and they documented "strong and consistent abnormal returns to quality" (Asness, Frazzini, and Pedersen 2013). The exact details behind the processes used to determine each of these components are given in the appendix of this paper.
@@ -27,7 +27,7 @@ Also provided are various utilities to aid in analyzing the resultant quality da
 
 \section*{Calculating Quality}
 
-We calculate quality scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. We attempt to perform the same calculations as AQR does, but we have a few adjustments given the availability of data from public sources. 
+We calculate quality scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. We attempt to perform the same calculations as Asness, but we have a few adjustments given the availability of data from public sources. 
 \subsection*{Profitability}
 Profitability is composed of six variables: gross profits over assets ($GPOA$), return on equity ($ROE$), return on assets ($ROA$), cash flow over assets ($CFOA$), gross margin ($GMAR$), and accruals ($ACC$). $GPOA$ is calculated as gross profits ($GPROF$) over total assets ($TA$). $$GPOA \ = \ \frac{GPROF}{TA}$$ $ROE$ is calculated as net income ($NI$) over book equity ($BE$), which is shareholders' equity (the difference of Total Liabilities and Shareholders' Equity ($TLSE$) with Total Liabilities ($TL$)) - preferred stock (the sum of redeemable preferred stock ($RPS$) and non redeemable preferred stock ($NRPS$)). $$ROE \ = \ \frac{NI}{BE}$$ $ROA$ is calculated as $NI$ over $TA$. $$ROA \ = \ \frac{NI}{TA}$$ $CFOA$ is calculated as $NI$ + depreciation ($DP.DPL$) - changes in working capital ($CWC$) - capital expenditures ($CX$) all over $TA$. $$CFOA \ = \ \frac{NI \ + \ DP.DPL \ - \ CWC \ - \ CX}{TA}$$ $GMAR$ is calculated as $GPROF$ over total revenue ($TREV$). $$GMAR \ = \ \frac{GPROF}{TREV}$$ Finally, $ACC$ is calculated as $DP.DPL$ - $CWC$ all over $TA$. $$ACC \ = \ \frac{DP.DPL \ - \ CWC}{TA}$$ We then standardize all components of profitability to z-scores and then standardize all profitability scores into z-scores. $$Profitability \ = \ z(z_{gpoa} \ + \ z_{roe} \ + \ z_{roa} \ + \ z_{cfoa} \ + \ z_{gmar} \ + \ z_{acc})$$
 \subsection*{Growth}
@@ -44,7 +44,10 @@ Payouts is composed of three variables: net equity issuance ($EISS$), net debt i
 
 
 \section*{Data}
-We demonstrate the use of \textbf{qmj} first based on the already installed data, using a universe comprised of all companies in the Russell 3000 Index as of February 1, 2015.
+The package \textbf{qmj} comes pre-compiled with data, using a universe comprised of all companies in the Russell 3000 Index as of February 1, 2015. The Russell 3000 Index is a list of the 3000 largest US companies, according to market cap, updated yearly, usually around May or June. The Russell 3000 Index was chosen due to the US-centric nature of our financial sources (Google Finance and Yahoo Finance), in addition to providing reliable, interesting data. I.e., no anomalies occur such as Gross Profits over Assets (GPOA) doubling for a particularly tiny company due to a very small absolute change in profit.
+
+For this data, \textbf{qmj} is able to automatically retrieve the most recent list of companies, retrieve the previous four 10-K's when possible.
+
 
 <<Package Datasets>>=
 library(qmj)
