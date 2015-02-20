@@ -1,4 +1,5 @@
 \documentclass[titlepage]{article}
+\usepackage{hyperref}
 \author{Ryan Kwon `17, Anthoney Tsou `17}
 \title{An Implementation of Quality Minus Junk}
 \date{February 11, 2015}
