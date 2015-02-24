@@ -6,27 +6,27 @@
 \title{Financial statements of all companies in the Russell 3000 index for the past four years}
 \format{A data frame with 11,112 rows and 23 variables
  \itemize{
-   \item AM = Amortization
-   \item CWC = Changes in Working Capital
-   \item CX = Capital Expenditures
-   \item DIVC = Dividends per Share
-   \item DO = Discontinued Operations
-   \item DP.DPL = Depreciation/Depletion
-   \item GPROF = Gross Profits
-   \item IAT = Income After Taxes
-   \item IBT = Income Before Taxes
-   \item NI = Net Income
-   \item NINT = Interest and Expense - Net Operating
-   \item NRPS = Non-redeemable Preferred Stock
-   \item RPS = Redeemable Preferred Stock
-   \item TA = Total Assets
-   \item TCA = Total Current Assets
-   \item TCL = Total Current Liabilities
-   \item TCSO = Total Common Shares Outstanding
-   \item TD = Total Debt
-   \item TL = Total Liabilities
-   \item TLSE = Total Liabilities and Shareholders' Equity
-   \item TREV = Total Revenue
+   \item AM = Amortization, of class \code{"character"}.
+   \item CWC = Changes in Working Capital, of class \code{"character"}.
+   \item CX = Capital Expenditures, of class \code{"character"}.
+   \item DIVC = Dividends per Share, of class \code{"character"}.
+   \item DO = Discontinued Operations, of class \code{"character"}.
+   \item DP.DPL = Depreciation/Depletion, of class \code{"character"}.
+   \item GPROF = Gross Profits, of class \code{"character"}.
+   \item IAT = Income After Taxes, of class \code{"character"}.
+   \item IBT = Income Before Taxes, of class \code{"character"}.
+   \item NI = Net Income, of class \code{"character"}.
+   \item NINT = Interest and Expense - Net Operating, of class \code{"character"}.
+   \item NRPS = Non-redeemable Preferred Stock, of class \code{"character"}.
+   \item RPS = Redeemable Preferred Stock, of class \code{"character"}.
+   \item TA = Total Assets, of class \code{"character"}.
+   \item TCA = Total Current Assets, of class \code{"character"}.
+   \item TCL = Total Current Liabilities, of class \code{"character"}.
+   \item TCSO = Total Common Shares Outstanding, of class \code{"character"}.
+   \item TD = Total Debt, of class \code{"character"}.
+   \item TL = Total Liabilities, of class \code{"character"}.
+   \item TLSE = Total Liabilities and Shareholders' Equity, of class \code{"character"}.
+   \item TREV = Total Revenue, of class \code{"character"}.
  }}
 \source{
 Google Finance, accessed through quantmod
@@ -44,9 +44,10 @@ example, GOOG may have data from 2013.1, 2013.2, 2012.3, 2011.4. This means Goog
 
 The main purpose of financials is to provide key information for each company in order to calculate each of the component scores
 of quality (profitability, growth, safety, and payouts). For every ticker in the \code{\link{companies}} data set, financials
-should ideally store the most recent four years of annual data, though this may vary based on availability.
+will try to store the most recent four years of annual data, though this may vary based on availability.
 
-The Russell 3000 Index is an equity index that tracks the performance of the 3000 largest
+The Russell 3000 Index is an equity index that tracks the performance of the "3000" (this number may actually
+vary from year to year, but is always in the neighborhood of 3000) largest
 US companies as measured by market cap. The component companies that make up this index are
 reconstituted once a year, usually between May and June. At this reconstitution, all companies
 are reranked based on their market caps for the year, and any companies which become "ineligible" by,

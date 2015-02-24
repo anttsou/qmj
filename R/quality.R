@@ -8,7 +8,15 @@
 #' insufficient information exists to produce a quality score. More details may be found
 #' on the technical vignette.
 #' 
-#' The Russell 3000 Index is an equity index that tracks the performance of the 3000 largest
+#' The quality data set stores quality and component scores for the various companies list in the \code{\link{companies}} 
+#' data set. For every ticker in companies, quality attempts to assign a profitability, growth, safety, and payouts score
+#' to each company using data from \code{\link{financials}} and \code{\link{prices}}, and then attempts to provide
+#' a quality score. It is possible that one or more companies may not have sufficient information to provide one or more
+#' component scores, in which case those companies can still be found at the end of the data set, with NA's making up
+#' any data that cannot be found.
+#' 
+#' The Russell 3000 Index is an equity index that tracks the performance of the "3000" (this number may actually
+#' vary from year to year, but is always in the neighborhood of 3000) largest
 #' US companies as measured by market cap. The component companies that make up this index are
 #' reconstituted once a year, usually between May and June. At this reconstitution, all companies
 #' are reranked based on their market caps for the year, and any companies which become "ineligible" by,
@@ -24,14 +32,30 @@
 #'
 #' @format A data frame with 2999 rows and 7 variables
 #' \itemize{
-#'    \item quality
-#'    \item profitability
-#'    \item growth
-#'    \item safety
-#'    \item payouts
+#'    \item quality = class \code{"numeric"}.
+#'    \item profitability = class \code{"numeric"}.
+#'    \item growth = class \code{"numeric"}.
+#'    \item safety = class \code{"numeric"}.
+#'    \item payouts = class \code{"numeric"}.
 #'  }
 #'
 #' @name quality
+#' @seealso \code{\link{companies}}
+#' @seealso \code{\link{prices}}
+#' @seealso \code{\link{financials}}
+#' @seealso \code{\link{market_data}}
+#' @seealso \code{\link{market_profitability}}
+#' @seealso \code{\link{market_safety}}
+#' @seealso \code{\link{market_growth}}
+#' @seealso \code{\link{market_payouts}}
+#' @examples
+#' data(companies)
+#' data(financials)
+#' data(prices)
+#' new_quality <- market_data(companies, financials, prices)
+#' 
+#' profitability_score <- market_profitability(companies, financials)
+#' safety_score <- market_safety(companies, financials, prices)
 #' @docType data
 #' @keywords data
 NULL
