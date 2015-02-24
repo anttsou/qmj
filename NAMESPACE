@@ -2,6 +2,7 @@
 
 export(create_qmjs)
 export(filter_companies)
+export(get_companies)
 export(get_info)
 export(get_prices)
 export(get_qmj)
