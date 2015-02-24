@@ -7,7 +7,7 @@
 #' get_companies()
 #' @export
 get_companies <- function() {
-  filepath <- system.file("inst/doc",package="qmj")
+  filepath <- system.file("doc",package="qmj")
   filepath <- paste(filepath, "/companies.txt",sep="")
   companies <- read.csv(filepath,stringsAsFactors=FALSE)
   companies
