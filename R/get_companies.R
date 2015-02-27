@@ -15,6 +15,6 @@ get_companies <- function() {
   filepath2 <- paste(filepath2,"/companies.RData",sep="")
   companies <- companies[,c("ticker","name")]
   dplyr::arrange(companies, ticker)
-  save(companies,file="~/econ20/R Paper/qmj/data/companies.RData")
-  save(companies,file=filepath2)
+  #save(companies,file="~/econ20/R Paper/qmj/data/companies.RData")
+  #save(companies,file=filepath2)
 }
