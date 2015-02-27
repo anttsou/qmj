@@ -14,8 +14,6 @@ Imports:
 	stringr,
 	ggplot2,
 	dplyr
-Depends: R (>= 3.1.1),
-	xts,
-	ggplot2
+Depends: R (>= 3.1.1)
 License: GPL-3
 LazyData: false
