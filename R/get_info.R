@@ -11,6 +11,7 @@
 #' data(companies)
 #' get_info(companies)
 #' }
+#' @importFrom quantmod getFinancials viewFinancials
 #' @export
 
 get_info <- function(x) {
