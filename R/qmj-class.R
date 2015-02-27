@@ -392,11 +392,11 @@ setMethod(f="plot_quality",
                           
                           print("Selected object is in the yellow bin.")
                           ggplot2::ggplot(df, aes(x=quality)) +
-                            ggtitle("Quality Histogram") + 
-                            xlab("Quality Scores") +
-                            ylab("Frequency") +
-                            geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
-                            geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+                            ggplot2::ggtitle("Quality Histogram") + 
+                            ggplot2::xlab("Quality Scores") +
+                            ggplot2::ylab("Frequency") +
+                            ggplot2::geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                            ggplot2::geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
                         }
                       }
                       )
@@ -447,11 +447,11 @@ setMethod(f="plot_profitability",
               
               print("Selected object is in the yellow bin.")
               ggplot2::ggplot(df, aes(x=profitability)) +
-                ggtitle("Profitability Histogram") + 
-                xlab("Profitability Scores") +
-                ylab("Frequency") +
-                geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
-                geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+                ggplot2::ggtitle("Profitability Histogram") + 
+                ggplot2::xlab("Profitability Scores") +
+                ggplot2::ylab("Frequency") +
+                ggplot2::geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                ggplot2::geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
             }
           }
 )
@@ -502,11 +502,11 @@ setMethod(f="plot_safety",
               
               print("Selected object is in the yellow bin.")
               ggplot2::ggplot(df, aes(x=safety)) +
-                ggtitle("Safety Histogram") + 
-                xlab("Safety Scores") +
-                ylab("Frequency") +
-                geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
-                geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+                ggplot2::ggtitle("Safety Histogram") + 
+                ggplot2::xlab("Safety Scores") +
+                ggplot2::ylab("Frequency") +
+                ggplot2::geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                ggplot2::geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
             }
           }
 )
@@ -557,11 +557,11 @@ setMethod(f="plot_growth",
               
               print("Selected object is in the yellow bin.")
               ggplot2::ggplot(df, aes(x=growth)) +
-                ggtitle("Growth Histogram") + 
-                xlab("Growth Scores") +
-                ylab("Frequency") +
-                geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
-                geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+                ggplot2::ggtitle("Growth Histogram") + 
+                ggplot2::xlab("Growth Scores") +
+                ggplot2::ylab("Frequency") +
+                ggplot2::geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                ggplot2::geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
             }
           }
 )
@@ -612,11 +612,11 @@ setMethod(f="plot_payouts",
               
               print("Selected object is in the yellow bin.")
               ggplot2::ggplot(df, aes(x=payouts)) +
-                ggtitle("Payouts Histogram") + 
-                xlab("Payout Scores") +
-                ylab("Frequency") +
-                geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
-                geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
+                ggplot2::ggtitle("Payouts Histogram") + 
+                ggplot2::xlab("Payout Scores") +
+                ggplot2::ylab("Frequency") +
+                ggplot2::geom_histogram(data=subset(df, cond==FALSE), binwidth=pbinwidth, origin=min, fill="black") +
+                ggplot2::geom_histogram(data=subset(df, cond==TRUE), binwidth=pbinwidth, origin=min, fill="gold")
             }
           }
 )
