@@ -10,5 +10,8 @@ get_companies <- function() {
   filepath <- system.file("doc",package="qmj")
   filepath <- paste(filepath, "/companies.txt",sep="")
   companies <- read.csv(filepath,stringsAsFactors=FALSE)
-  companies
+  filepath2 <- system.file("data",package="qmj")
+  filepath2 <- paste(filepath2,"/companies.RData",sep="")
+  #save(companies,file="~/econ20/R Paper/qmj/data/companies.RData")
+  save(companies,file=filepath2)
 }
