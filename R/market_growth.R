@@ -15,6 +15,7 @@
 #' data(companies)
 #' data(financials)
 #' market_growth(companies, financials)
+#' @importFrom dplyr distinct arrange
 #' @export
 
 market_growth <- function(x, financials){

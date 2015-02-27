@@ -13,6 +13,7 @@
 #' data(companies)
 #' data(financials)
 #' market_payouts(companies, financials)
+#' @importFrom dplyr distinct arrange
 #' @export
 
 market_payouts <- function(x, financials){

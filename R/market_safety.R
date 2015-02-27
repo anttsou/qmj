@@ -16,6 +16,7 @@
 #' data(financials)
 #' data(prices)
 #' market_safety(companies, financials, prices)
+#' @importFrom dplyr filter distinct arrange
 #' @export
 
 market_safety <- function(x, financials, daily){

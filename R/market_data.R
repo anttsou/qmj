@@ -15,6 +15,7 @@
 #' data(financials)
 #' data(prices)
 #' market_data(companies, financials, prices)
+#' @importFrom dplyr arrange
 #' @export
 
 market_data <- function(x, financials, daily){
