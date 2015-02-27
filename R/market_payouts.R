@@ -38,17 +38,17 @@ market_payouts <- function(x, financials){
   colnames(allcompanies) <- "ticker"
 
   fin <- financials
-  fin <- arrange(financials, desc(year))
-  fstyear <- distinct_(fin, "ticker")
+  fin <- dplyr::arrange(financials, desc(year))
+  fstyear <- dplyr::distinct_(fin, "ticker")
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- distinct_(fin, "ticker")
+  sndyear <- dplyr::distinct_(fin, "ticker")
   
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- distinct_(fin, "ticker")
+  thdyear <- dplyr::distinct_(fin, "ticker")
   
   fthyear <- modifiedsetdiff(fin, thdyear)
-  fthyear <- distinct_(fthyear, "ticker")
+  fthyear <- dplyr::distinct_(fthyear, "ticker")
   
   #Forces all data frames to have the same number of rows.
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)

@@ -32,13 +32,13 @@ market_growth <- function(x, financials){
   financials[is.na(financials)] <- 0
   
   fin <- financials
-  fin <- arrange(fin, desc(year))
+  fin <- dplyr::arrange(fin, desc(year))
   
-  fstyear <- distinct_(fin, "ticker")
+  fstyear <- dplyr::distinct_(fin, "ticker")
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)  
 
-  fin <- arrange(fin, year)
-  lstyear <- distinct_(fin, "ticker")
+  fin <- dplyr::arrange(fin, year)
+  lstyear <- dplyr::distinct_(fin, "ticker")
   lstyear <- merge(allcompanies, lstyear, by="ticker", all.x = TRUE)
   
   #functions calculate individual components of growth

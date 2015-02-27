@@ -30,8 +30,8 @@ market_profitability <- function(x, financials){
   allcompanies <- data.frame(x$ticker)
   colnames(allcompanies) <- "ticker"
   fin <- financials
-  fin <- arrange(fin, desc(year))
-  fin <- distinct_(fin, "ticker")
+  fin <- dplyr::arrange(fin, desc(year))
+  fin <- dplyr::distinct_(fin, "ticker")
   fin <- merge(allcompanies, fin, by="ticker", all.x = TRUE)
   
   #functions calculate individual components of profitability

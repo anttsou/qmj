@@ -39,8 +39,8 @@ market_safety <- function(x, financials, daily){
   daily$pret[is.nan(as.numeric(daily$pret))] <- 0
   daily$pret[is.infinite(as.numeric(daily$pret))] <- 0
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
-  market <- filter(daily, ticker == "GSPC")
-  nogspc <- filter(daily, ticker != "GSPC")
+  market <- dplyr::filter(daily, ticker == "GSPC")
+  nogspc <- dplyr::filter(daily, ticker != "GSPC")
   year <- numeric()
   if(sum(market$date == currentyear) <= 150){
     year <- currentyear - 1
@@ -61,17 +61,17 @@ market_safety <- function(x, financials, daily){
   }
   
   fin <- financials
-  fin <- arrange(financials, desc(year))
-  fstyear <- distinct_(fin, "ticker")
+  fin <- dplyr::arrange(financials, desc(year))
+  fstyear <- dplyr::distinct_(fin, "ticker")
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- distinct_(fin, "ticker")
+  sndyear <- dplyr::distinct_(fin, "ticker")
   
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- distinct_(fin, "ticker")
+  thdyear <- dplyr::distinct_(fin, "ticker")
   
   fthyear <- modifiedsetdiff(fin, thdyear)
-  fthyear <- distinct_(fthyear, "ticker")
+  fthyear <- dplyr::distinct_(fthyear, "ticker")
   
   #Forces all data frames to have the same number of rows.
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)

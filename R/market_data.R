@@ -39,5 +39,5 @@ market_data <- function(x, financials, daily){
                            safety = safety, 
                            payouts = payouts, 
                            quality = quality)
-  marketdata <- arrange(marketdata, desc(quality))
+  marketdata <- dplyr::arrange(marketdata, desc(quality))
 }
