@@ -5,6 +5,7 @@
 #' 
 #' @examples
 #' get_companies()
+#' @importFrom dplyr arrange
 #' @export
 get_companies <- function() {
   filepath <- system.file("doc",package="qmj")
@@ -12,6 +13,8 @@ get_companies <- function() {
   companies <- read.csv(filepath,stringsAsFactors=FALSE)
   filepath2 <- system.file("data",package="qmj")
   filepath2 <- paste(filepath2,"/companies.RData",sep="")
-  #save(companies,file="~/econ20/R Paper/qmj/data/companies.RData")
+  companies <- companies[,c("ticker","name")]
+  dplyr::arrange(companies, ticker)
+  save(companies,file="~/econ20/R Paper/qmj/data/companies.RData")
   save(companies,file=filepath2)
 }
