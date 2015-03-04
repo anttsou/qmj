@@ -47,4 +47,5 @@ tidy_prices <- function(x){
   tidyresult <- tidyresult[which(!is.na(tidyresult$ticker)), ] #Remove rows that are NA's, which should constitute a large percentage of the data.
   tidyresult$pret <- as.numeric(tidyresult$pret)
   tidyresult$close <- as.numeric(tidyresult$close)
+  tidyresult
 }
