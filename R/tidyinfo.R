@@ -34,5 +34,26 @@ tidyinfo <- function(x){
             "DO","DP.DPL","GPROF","IAT","IBT","NI",
               "NINT","NRPS","RPS","TA","TCA","TCL",
                      "TCSO","TD","TL","TLSE","TREV")
+  financials$AM <- as.numeric(financials$AM)
+  financials$CWC <- as.numeric(financials$CWC)
+  financials$CX <- as.numeric(financials$CX)
+  financials$DIVC <- as.numeric(financials$DIVC)
+  financials$DO <- as.numeric(financials$DO)
+  financials$DP.DPL <- as.numeric(financials$DP.DPL)
+  financials$GPROF <- as.numeric(financials$GPROF)
+  financials$IAT <- as.numeric(financials$IAT)
+  financials$IBT <- as.numeric(financials$IBT)
+  financials$NI <- as.numeric(financials$NI)
+  financials$NINT <- as.numeric(financials$NINT)
+  financials$NRPS <- as.numeric(financials$NRPS)
+  financials$RPS <- as.numeric(financials$RPS)
+  financials$TA <- as.numeric(financials$TA)
+  financials$TCA <- as.numeric(financials$TCA)
+  financials$TCL <- as.numeric(financials$TCL)
+  financials$TCSO <- as.numeric(financials$TCSO)
+  financials$TD <- as.numeric(financials$TD)
+  financials$TL <- as.numeric(financials$TL)
+  financials$TLSE <- as.numeric(financials$TLSE)
+  financials$TREV <- as.numeric(financials$TREV)
   financials[keep]
 }
