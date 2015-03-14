@@ -44,6 +44,8 @@
 #' @slot pNPOP Object of class \code{"numeric"}. Total net payouts over profits for payouts calculation.
 #' @slot quality Object of class \code{"numeric"}. The quality score.
 #' @name qmj
+#' 
+#' @importFrom ggplot2 ggplot aes
 #' @rdname qmj-class
 #' @aliases qmj-class
 #' @exportClass qmj

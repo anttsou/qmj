@@ -89,9 +89,9 @@ summarize(first_qmj)
 
 If we desire, we can also plot the safety of this company relative to others in the universe.
 
-<<fig=true>>=
-#data(safety)
-#plot_safety(first_qmj, safety)
+<<>>=
+safety <- market_data(companies,financials,prices)
+plot_safety(first_qmj, safety)
 @
 
 Functions also exist in order to easily retrieve a specific set of companies.
