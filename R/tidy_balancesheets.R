@@ -23,8 +23,6 @@ tidy_balancesheets <- function(x) {
   numCompanies <- length(x)
   balancesheets <- matrix(nrow=numCompanies * 4, ncol=44) #Pre-allocate space for matrix for speed reasons.
   
-  #These are the categories we expect from the raw data.
-
   for(i in 1:numCompanies){
     cdata <- x[[3]][[i]] #Extract this specific company's data from the raw list.
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract the ticker from the first column.
@@ -85,6 +83,8 @@ tidy_balancesheets <- function(x) {
   }
   balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1,] #Remove all rows that are solely NAs.
   balanceframe <- data.frame(balancesheets, stringsAsFactors=FALSE)
+  
+  #These are the categories we expect from the raw data.
   colnames(balanceframe) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", 
                                "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", 
                                "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", 

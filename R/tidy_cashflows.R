@@ -23,11 +23,8 @@ tidy_cashflows <- function(x) {
   numCompanies <- length(x)
   cashflows <- matrix(nrow=numCompanies*4, ncol=21) #Pre-allocate space for speed reasons.
   
-  #These are the categories we expect from the raw data.
-  colnames(cashflows) <- c("ticker", "year", "NI.SL", "DP.DPL", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", 
-                           "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP")
   for(i in 1:numCompanies){
-    cdata <- x[[i]] #Extract this specific company's data from the raw data list.
+    cdata <- x[[1]][[i]] #Extract this specific company's data from the raw data list.
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract the company's ticker from a column.
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extract the years in which the annual statements have been filed.
     if(length(unique(years)) < length(years)){
@@ -63,5 +60,12 @@ tidy_cashflows <- function(x) {
     }
   }
   cashflows <- cashflows[rowSums(!is.na(cashflows)) >= 1,] #Remove rows which are entirely NAs.
-  data.frame(cashflows, stringsAsFactors=FALSE)
+  
+  cashframe <- data.frame(cashflows, stringsAsFactors=FALSE)
+  #These are the categories we expect from the raw data.
+  colnames(cashframe) <- c("ticker", "year", "NI.SL", "DP.DPL", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", 
+                           "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP")
+  cashframe[,2:21] = sapply(cashframe[,2:21],as.numeric)
+  cashframe
+  
 }
