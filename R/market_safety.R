@@ -82,9 +82,8 @@ market_safety <- function(x, financials, daily){
   
   #functions calculate individual components of safety
   merger <- function(company_ticker) {
-    result <- -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
-        as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
-      var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
+    result <- -(cov(splitdail[[company_ticker]]$pret.y,splitdail[[company_ticker]]$pret.x)/
+                var(splitdail[[company_ticker]]$pret.x))
     if(is.na(result)) {
       warning(paste(paste("BAB for",company_ticker,sep=" "),"generated NA",sep=" "))
     }
@@ -92,8 +91,8 @@ market_safety <- function(x, financials, daily){
   }
   calc_ivol <- function(company_ticker) {
     if(length(splitdail[[company_ticker]]) > 0) {
-      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
-                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
+      lmobj <- lm(splitdail[[company_ticker]]$pret.y~
+                    splitdail[[company_ticker]]$pret.x)
       -(sd(residuals(lmobj)))
     } else {
       warning(paste(paste("IVOL for",company_ticker,sep=" "),"generated NA",sep=" "))
@@ -106,7 +105,7 @@ market_safety <- function(x, financials, daily){
 
   calcmean <- function(indexlist){
     indexlist <- as.numeric(indexlist)
-    closingprices <- as.numeric(as.character(daily$close[indexlist]))
+    closingprices <- daily$close[indexlist]
     mean(closingprices)
   }
   marketequity <- function(closemeans, tcso){
@@ -130,45 +129,45 @@ market_safety <- function(x, financials, daily){
  
   IVOL <- sapply(x$ticker,calc_ivol)
 
-  LEV <- mapply(lev, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(fstyear$TA)))
+  LEV <- mapply(lev, fstyear$TD, fstyear$TA)
   
   closingmeans <- sapply(splitindices, calcmean)
   tempframe <- data.frame(companiesstored, closingmeans)
   colnames(tempframe) <- c("ticker", "close")
   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)  
   
-  ME <- mapply(marketequity, as.numeric(as.character(tempframe$close)), as.numeric(as.character(fstyear$TCSO)))
-  WC <- as.numeric(as.character(fstyear$TCA)) - as.numeric(as.character(fstyear$TCL))
-  RE <- as.numeric(as.character(fstyear$NI)) - (as.numeric(as.character(fstyear$DIVC)) * as.numeric(as.character(fstyear$TCSO)))
-  EBIT <- as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(fstyear$DO)) + (as.numeric(as.character(fstyear$IBT)) - as.numeric(as.character(fstyear$IAT))) + as.numeric(as.character(fstyear$NINT))
-  SALE <- as.numeric(as.character(fstyear$TREV))
-  Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(as.numeric(as.character(fstyear$TA)))
+  ME <- mapply(marketequity, tempframe$close, fstyear$TCSO)
+  WC <- fstyear$TCA - fstyear$TCL
+  RE <- fstyear$NI - (fstyear$DIVC * fstyear$TCSO)
+  EBIT <- fstyear$NI - fstyear$DO + (fstyear$IBT - fstyear$IAT) + fstyear$NINT
+  SALE <- fstyear$TREV
+  Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(fstyear$TA)
   
-  EVOL <- mapply(evol, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(sndyear$NI)),
-                 as.numeric(as.character(thdyear$NI)), as.numeric(as.character(fthyear$NI)), 
-                 as.numeric(as.character(fstyear$TLSE)), as.numeric(as.character(sndyear$TLSE)),
-                 as.numeric(as.character(thdyear$TLSE)), as.numeric(as.character(fthyear$TLSE)),
-                 as.numeric(as.character(fstyear$TL)), as.numeric(as.character(sndyear$TL)),
-                 as.numeric(as.character(thdyear$TL)), as.numeric(as.character(fthyear$TL)),
-                 as.numeric(as.character(fstyear$RPS)), as.numeric(as.character(sndyear$RPS)),
-                 as.numeric(as.character(thdyear$RPS)), as.numeric(as.character(fthyear$RPS)),
-                 as.numeric(as.character(fstyear$NRPS)), as.numeric(as.character(sndyear$NRPS)),
-                 as.numeric(as.character(thdyear$NRPS)), as.numeric(as.character(fthyear$NRPS)))
+  EVOL <- mapply(evol, fstyear$NI, sndyear$NI,
+                 thdyear$NI, fthyear$NI, 
+                 fstyear$TLSE, sndyear$TLSE,
+                 thdyear$TLSE, fthyear$TLSE,
+                 fstyear$TL, sndyear$TL,
+                 thdyear$TL, fthyear$TL,
+                 fstyear$RPS, sndyear$RPS,
+                 thdyear$RPS, fthyear$RPS,
+                 fstyear$NRPS, sndyear$NRPS,
+                 thdyear$NRPS, fthyear$NRPS)
   
-  ADJASSET <- as.numeric(as.character(fstyear$TA)) + 0.1*(ME - (as.numeric(as.character(fstyear$TLSE))
-                                                                - as.numeric(as.character(fstyear$TL))
-                                                                - as.numeric(as.character(fstyear$RPS))
-                                                                - as.numeric(as.character(fstyear$NRPS))))
-  TLTA <- (as.numeric(as.character(fstyear$TD)) - as.numeric(as.character(fstyear$NI)) - 
-             as.numeric(as.character(fstyear$RPS)) - as.numeric(as.character(fstyear$NRPS)))/ADJASSET
-  WCTA <- (as.numeric(as.character(fstyear$TCA)) - as.numeric(as.character(fstyear$TCL)))/ADJASSET
-  CLCA <- as.numeric(as.character(fstyear$TCL))/as.numeric(as.character(fstyear$TCA))
-  OENEG <- as.numeric(as.character(fstyear$NI)) > as.numeric(as.character(fstyear$TA))
-  NITA <- as.numeric(as.character(fstyear$NI))/as.numeric(as.character(fstyear$TA))
-  FUTL <- as.numeric(as.character(fstyear$IBT))/as.numeric(as.character(fstyear$TL))
-  INTWO <- mapply(intwo, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(sndyear$NI)))
-  CHIN <- (as.numeric(as.character(fstyear$NI)) - as.numeric(as.character(sndyear$NI)))/
-    (abs(as.numeric(as.character(fstyear$NI))) + abs(as.numeric(as.character(sndyear$NI))))
+  ADJASSET <- fstyear$TA + (0.1*(ME - (fstyear$TLSE
+                                    - fstyear$TL)
+                                    - fstyear$RPS
+                                    - fstyear$NRPS))
+  TLTA <- (fstyear$TD - fstyear$NI - 
+           fstyear$RPS - fstyear$NRPS)/ADJASSET
+  WCTA <- (fstyear$TCA - fstyear$TCL)/ADJASSET
+  CLCA <- fstyear$TCL/fstyear$TCA
+  OENEG <- fstyear$NI > fstyear$TA
+  NITA <- fstyear$NI/fstyear$TA
+  FUTL <- fstyear$IBT/fstyear$TL
+  INTWO <- mapply(intwo, fstyear$NI, sndyear$NI)
+  CHIN <- (fstyear$NI - sndyear$NI)/
+    (abs(fstyear$NI) + abs(sndyear$NI))
   O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
 
