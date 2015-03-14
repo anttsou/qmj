@@ -37,8 +37,8 @@ market_safety <- function(x, financials, daily){
   #set unavailable price data to 0
   daily[is.na(daily)] <- 0
   
-  daily$pret[is.nan(as.numeric(daily$pret))] <- 0
-  daily$pret[is.infinite(as.numeric(daily$pret))] <- 0
+  daily$pret[is.nan(daily$pret)] <- 0
+  daily$pret[is.infinite(daily$pret)] <- 0
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
   market <- dplyr::filter(daily, ticker == "GSPC")
   nogspc <- dplyr::filter(daily, ticker != "GSPC")
