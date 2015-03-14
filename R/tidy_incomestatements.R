@@ -22,17 +22,9 @@
 tidy_incomestatements <- function(x) {
   numCompanies <- length(x)
   incomestatements <- matrix(nrow=numCompanies*4, ncol=51) #Pre-allocates matrix for speed considerations.
-  
-  # These are the categories we expect from the raw data.
-  colnames(incomestatements) <- c("ticker", "year", "REV", "OREV", "TREV", "CREV", "GPROF", 
-                                  "SGAE", "RD", "DP.AM", "NINT", "UI", "OOE", "TOE", "OI", "INT", "GSA", "OTH", "IBT", 
-                                  "IAT", "MI", "EIA", "NIBEI", "AC", "DO", "EI", "NI", "PD", "IACEEI", "IACIEI", 
-                                  "BWAS", "BEPSEEI", "BEPSIEI", "DILADJ", "DILWAS", "DILEPSEEI", "DILEPSIEI", 
-                                  "DIVC", "GDIV", "NIASBCE", "BEPSSBCE", "DEPSSBCE", "DPSUP", "TSI", "NIBT", "ESIIT", 
-                                  "ITISI", "NIAT", "NIAC", "BNEPS", "DNEPS")
-  
+    
   for(i in 1:numCompanies){
-    cdata <- x[[i]] #Extracts this specific company's information from the raw data. Format is matrix.
+    cdata <- x[[2]][[i]] #Extracts this specific company's information from the raw data. Format is matrix.
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract ticker from the first column of the data.
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extracts the years each annual statements is dated.
     if(length(unique(years)) < length(years)){
@@ -97,5 +89,15 @@ tidy_incomestatements <- function(x) {
     }
   }
   incomestatements <- incomestatements[rowSums(!is.na(incomestatements)) >= 1,] #Remove rows which are entirely NA from the pre-allocated matrix.
-  data.frame(incomestatements, stringsAsFactors=FALSE)
+  
+  incomeframe <- data.frame(incomestatements,stringsAsFactors=FALSE)
+  # These are the categories we expect from the raw data.
+  colnames(incomeframe) <- c("ticker", "year", "REV", "OREV", "TREV", "CREV", "GPROF", 
+                                  "SGAE", "RD", "DP.AM", "NINT", "UI", "OOE", "TOE", "OI", "INT", "GSA", "OTH", "IBT", 
+                                  "IAT", "MI", "EIA", "NIBEI", "AC", "DO", "EI", "NI", "PD", "IACEEI", "IACIEI", 
+                                  "BWAS", "BEPSEEI", "BEPSIEI", "DILADJ", "DILWAS", "DILEPSEEI", "DILEPSIEI", 
+                                  "DIVC", "GDIV", "NIASBCE", "BEPSSBCE", "DEPSSBCE", "DPSUP", "TSI", "NIBT", "ESIIT", 
+                                  "ITISI", "NIAT", "NIAC", "BNEPS", "DNEPS")
+  incomeframe[,2:51] = sapply(incomeframe[,2:51],as.numeric)
+  incomeframe
 }
