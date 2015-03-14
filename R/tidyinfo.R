@@ -34,5 +34,10 @@ tidyinfo <- function(x){
             "DO","DP.DPL","GPROF","IAT","IBT","NI",
               "NINT","NRPS","RPS","TA","TCA","TCL",
                      "TCSO","TD","TL","TLSE","TREV")
-  financials[keep]
+  financials <- financials[keep]
+  financials
+  #filepath2 <- system.file("data",package="qmj")
+  #filepath2 <- paste(filepath2,"/financials.RData",sep="")
+  #save(financials,file="~/econ20/qmj/data/financials.RData")
+  #save(financials,file=filepath2)
 }
