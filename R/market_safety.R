@@ -43,7 +43,7 @@ market_safety <- function(x, financials, daily){
   market <- dplyr::filter(daily, ticker == "GSPC")
   nogspc <- dplyr::filter(daily, ticker != "GSPC")
   year <- numeric()
-  if(sum(market$date == currentyear) <= 150){
+  if(sum(as.numeric(sub("-.*","",market$date)) == currentyear) <= 150){
     year <- currentyear - 1
   } else{
     year <- currentyear
