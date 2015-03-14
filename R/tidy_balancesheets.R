@@ -24,12 +24,9 @@ tidy_balancesheets <- function(x) {
   balancesheets <- matrix(nrow=numCompanies * 4, ncol=44) #Pre-allocate space for matrix for speed reasons.
   
   #These are the categories we expect from the raw data.
-  colnames(balancesheets) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", 
-                               "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", 
-                               "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", 
-                               "CS", "APIC", "RE", "TS", "OE", "TE", "TLSE", "SO", "TCSO")
+
   for(i in 1:numCompanies){
-    cdata <- x[[i]] #Extract this specific company's data from the raw list.
+    cdata <- x[[3]][[i]] #Extract this specific company's data from the raw list.
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract the ticker from the first column.
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extract the years these financial statements were filed.
     if(length(unique(years)) < length(years)){
@@ -87,6 +84,11 @@ tidy_balancesheets <- function(x) {
     }
   }
   balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1,] #Remove all rows that are solely NAs.
-  sapply(balancesheets[,2:23],as.numeric)
-  data.frame(balancesheets, stringsAsFactors=FALSE)
+  balanceframe <- data.frame(balancesheets, stringsAsFactors=FALSE)
+  colnames(balanceframe) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", 
+                               "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", 
+                               "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", 
+                               "CS", "APIC", "RE", "TS", "OE", "TE", "TLSE", "SO", "TCSO")
+  balanceframe[,2:44] = sapply(balanceframe[,2:44],as.numeric)
+  balanceframe
 }
