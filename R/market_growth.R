@@ -69,24 +69,24 @@ market_growth <- function(x, financials){
   }
   
   #apply the calculation functions to all companies without using a slow loop.
-  GPOA <- mapply(gpoa, as.numeric(as.character(fstyear$GPROF)), as.numeric(as.character(lstyear$GPROF)), 
-                 as.numeric(as.character(lstyear$TA)))
+  GPOA <- mapply(gpoa, fstyear$GPROF, lstyear$GPROF, 
+                 lstyear$TA)
 
-  ROE <- mapply(roe, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(lstyear$NI)), 
-                as.numeric(as.character(lstyear$TLSE)), as.numeric(as.character(lstyear$TL)), 
-                as.numeric(as.character(lstyear$RPS)), as.numeric(as.character(lstyear$NRPS)))
-  ROA <- mapply(roa, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(lstyear$NI)), 
-                as.numeric(as.character(lstyear$TA)))
-  CFOA <- mapply(cfoa, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(fstyear$DP.DPL)), 
-                 as.numeric(as.character(fstyear$CWC)), as.numeric(as.character(fstyear$CX)),
-                 as.numeric(as.character(lstyear$NI)), as.numeric(as.character(lstyear$DP.DPL)),
-                 as.numeric(as.character(lstyear$CWC)), as.numeric(as.character(lstyear$CX)),
-                 as.numeric(as.character(lstyear$TA)))
-  GMAR <- mapply(gmar, as.numeric(as.character(fstyear$GPROF)), as.numeric(as.character(lstyear$GPROF)),
-                 as.numeric(as.character(lstyear$TREV)))
-  ACC <- mapply(acc, as.numeric(as.character(fstyear$DP.DPL)), as.numeric(as.character(fstyear$CWC)),
-                as.numeric(as.character(lstyear$DP.DPL)), as.numeric(as.character(lstyear$CWC)),
-                as.numeric(as.character(lstyear$TA)))
+  ROE <- mapply(roe, fstyear$NI, lstyear$NI, 
+                lstyear$TLSE, lstyear$TL, 
+                lstyear$RPS, lstyear$NRPS)
+  ROA <- mapply(roa, fstyear$NI, lstyear$NI, 
+                lstyear$TA)
+  CFOA <- mapply(cfoa, fstyear$NI, fstyear$DP.DPL, 
+                 fstyear$CWC, fstyear$CX,
+                 lstyear$NI, lstyear$DP.DPL,
+                 lstyear$CWC, lstyear$CX,
+                 lstyear$TA)
+  GMAR <- mapply(gmar, fstyear$GPROF, lstyear$GPROF,
+                 lstyear$TREV)
+  ACC <- mapply(acc, fstyear$DP.DPL, fstyear$CWC,
+                lstyear$DP.DPL, lstyear$CWC,
+                lstyear$TA)
   
   #remove potential errors from Inf values
   GPOA[is.infinite(GPOA)] <- 0
