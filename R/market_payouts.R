@@ -155,20 +155,20 @@ market_payouts <- function(x, financials){
   }
   
   #apply the calculation functions to all companies without needing a slow loop.
-  EISS <- mapply(eiss, as.numeric(as.character(fstyear$TCSO)), as.numeric(as.character(sndyear$TCSO)))
-  DISS <- mapply(diss, as.numeric(as.character(fstyear$TD)), as.numeric(as.character(sndyear$TD)))
-  NPOP <- mapply(npop, as.numeric(as.character(fstyear$NI)), as.numeric(as.character(sndyear$NI)),
-                 as.numeric(as.character(thdyear$NI)), as.numeric(as.character(fthyear$NI)), 
-                 as.numeric(as.character(fstyear$TLSE)), as.numeric(as.character(sndyear$TLSE)),
-                 as.numeric(as.character(thdyear$TLSE)), as.numeric(as.character(fthyear$TLSE)),
-                 as.numeric(as.character(fstyear$TL)), as.numeric(as.character(sndyear$TL)),
-                 as.numeric(as.character(thdyear$TL)), as.numeric(as.character(fthyear$TL)),
-                 as.numeric(as.character(fstyear$RPS)), as.numeric(as.character(sndyear$RPS)),
-                 as.numeric(as.character(thdyear$RPS)), as.numeric(as.character(fthyear$RPS)),
-                 as.numeric(as.character(fstyear$NRPS)), as.numeric(as.character(sndyear$NRPS)),
-                 as.numeric(as.character(thdyear$NRPS)), as.numeric(as.character(fthyear$NRPS)),
-                 as.numeric(as.character(fstyear$GPROF)), as.numeric(as.character(sndyear$GPROF)),
-                 as.numeric(as.character(thdyear$GPROF)), as.numeric(as.character(fthyear$GPROF)))
+  EISS <- mapply(eiss, fstyear$TCSO, sndyear$TCSO)
+  DISS <- mapply(diss, fstyear$TD, sndyear$TD)
+  NPOP <- mapply(npop, fstyear$NI, sndyear$NI,
+                 thdyear$NI, fthyear$NI, 
+                 fstyear$TLSE, sndyear$TLSE,
+                 thdyear$TLSE, fthyear$TLSE,
+                 fstyear$TL, sndyear$TL,
+                 thdyear$TL, fthyear$TL,
+                 fstyear$RPS, sndyear$RPS,
+                 thdyear$RPS, fthyear$RPS,
+                 fstyear$NRPS, sndyear$NRPS,
+                 thdyear$NRPS, fthyear$NRPS,
+                 fstyear$GPROF, sndyear$GPROF,
+                 thdyear$GPROF, fthyear$GPROF)
 
   #removes potential errors from Inf values
   EISS[is.infinite(EISS)] <- 0
