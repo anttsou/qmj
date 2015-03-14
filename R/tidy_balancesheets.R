@@ -87,5 +87,6 @@ tidy_balancesheets <- function(x) {
     }
   }
   balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1,] #Remove all rows that are solely NAs.
+  sapply(balancesheets[,2:23],as.numeric)
   data.frame(balancesheets, stringsAsFactors=FALSE)
 }
