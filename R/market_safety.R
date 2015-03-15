@@ -82,6 +82,8 @@ market_safety <- function(x, financials, daily){
   
   #functions calculate individual components of safety
   merger <- function(company_ticker) {
+    print(class(company_ticker))
+    print(company_ticker)
     result <- -(cov(splitdail[[company_ticker]]$pret.y,splitdail[[company_ticker]]$pret.x)/
                 var(splitdail[[company_ticker]]$pret.x))
     if(is.na(result)) {
