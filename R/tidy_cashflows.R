@@ -24,7 +24,7 @@ tidy_cashflows <- function(x) {
   cashflows <- matrix(nrow=numCompanies*4, ncol=21) #Pre-allocate space for speed reasons.
   
   for(i in 1:numCompanies){
-    cdata <- x[[1]][[i]] #Extract this specific company's data from the raw data list.
+    cdata <- x[[i]] #Extract this specific company's data from the raw data list.
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract the company's ticker from a column.
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extract the years in which the annual statements have been filed.
     if(length(unique(years)) < length(years)){

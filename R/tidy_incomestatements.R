@@ -24,7 +24,7 @@ tidy_incomestatements <- function(x) {
   incomestatements <- matrix(nrow=numCompanies*4, ncol=51) #Pre-allocates matrix for speed considerations.
     
   for(i in 1:numCompanies){
-    cdata <- x[[2]][[i]] #Extracts this specific company's information from the raw data. Format is matrix.
+    cdata <- x[[i]] #Extracts this specific company's information from the raw data. Format is matrix.
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract ticker from the first column of the data.
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extracts the years each annual statements is dated.
     if(length(unique(years)) < length(years)){

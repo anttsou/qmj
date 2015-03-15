@@ -22,9 +22,9 @@
 
 tidyinfo <- function(x){
   #Index is the current structure of the output of the get_info function.
-  tidycash <- tidy_cashflows(x)
-  tidyincome <- tidy_incomestatements(x)
-  tidybalance <- tidy_balancesheets(x)
+  tidycash <- tidy_cashflows(x[[1]])
+  tidyincome <- tidy_incomestatements(x[[2]])
+  tidybalance <- tidy_balancesheets(x[[3]])
 
   financials <- merge(tidybalance, merge(tidycash, tidyincome, by=c("ticker", "year")), by=c("ticker", "year"))
   financials <- unique(financials)
@@ -35,6 +35,7 @@ tidyinfo <- function(x){
               "NINT","NRPS","RPS","TA","TCA","TCL",
                      "TCSO","TD","TL","TLSE","TREV")
   financials <- financials[keep]
+  # financials
   filepath2 <- system.file("data",package="qmj")
   filepath2 <- paste(filepath2,"/financials.RData",sep="")
   save(financials,file="~/econ20/qmj/data/financials.RData")

@@ -24,7 +24,7 @@ tidy_balancesheets <- function(x) {
   balancesheets <- matrix(nrow=numCompanies * 4, ncol=44) #Pre-allocate space for matrix for speed reasons.
   
   for(i in 1:numCompanies){
-    cdata <- x[[3]][[i]] #Extract this specific company's data from the raw list.
+    cdata <- x[[i]] #Extract this specific company's data from the raw list.
     ticker <- gsub('[0-9 ]', '', colnames(cdata))[1] #Extract the ticker from the first column.
     years <- gsub('[ABCDEFGHIJKLMNOPQRSTUVWXYZ .]', '', colnames(cdata)) #Extract the years these financial statements were filed.
     if(length(unique(years)) < length(years)){
