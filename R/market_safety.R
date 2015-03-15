@@ -84,8 +84,9 @@ market_safety <- function(x, financials, daily){
   merger <- function(company_ticker) {
     print(class(company_ticker))
     print(company_ticker)
-    result <- -(cov(splitdail[[company_ticker]]$pret.y,splitdail[[company_ticker]]$pret.x)/
-                var(splitdail[[company_ticker]]$pret.x))
+    result <- -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
+                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
+                var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
     if(is.na(result)) {
       warning(paste(paste("BAB for",company_ticker,sep=" "),"generated NA",sep=" "))
     }
@@ -93,8 +94,8 @@ market_safety <- function(x, financials, daily){
   }
   calc_ivol <- function(company_ticker) {
     if(length(splitdail[[company_ticker]]) > 0) {
-      lmobj <- lm(splitdail[[company_ticker]]$pret.y~
-                    splitdail[[company_ticker]]$pret.x)
+      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
+                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
       -(sd(residuals(lmobj)))
     } else {
       warning(paste(paste("IVOL for",company_ticker,sep=" "),"generated NA",sep=" "))
