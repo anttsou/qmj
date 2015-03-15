@@ -1,5 +1,5 @@
 # qmj (Quality Minus Junk)
-Authors : Ryan Kwon, Anthoney Tsou
+Authors : Anthoney Tsou, David Kane, Ryan Kwon
 
 To install the package:
 
