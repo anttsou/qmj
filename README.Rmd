@@ -5,7 +5,7 @@ To install the package:
 
 ```{r}
 library(devtools)
-install_github("rynkwn/qmj")
+install_github("anttsou/qmj")
 ```
 
 ##Background
