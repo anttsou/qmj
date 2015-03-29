@@ -10,4 +10,6 @@ vignettes/*.gz
 vignettes/*.tex
 vignettes/*.log
 vignettes/*.pdf
+vignettes/figure*
+vignettes/*.sty
 qmj.Rproj
