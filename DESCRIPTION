@@ -1,5 +1,5 @@
 Package: qmj
-Title: Quality Minus Junk
+Title: Quality Scores for the Russell 3000
 Version: 0.1.0
 Authors@R: c(
 	person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")), 
