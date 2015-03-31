@@ -2,17 +2,18 @@ Package: qmj
 Title: Quality Scores for the Russell 3000
 Version: 0.1.0
 Authors@R: c(
-	person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")), 
-	person("Ryan", "Kwon", email="rhk1@williams.edu", role=c("aut", "cre")))
-Description: An implementation of Quality Minus Junk (QMJ) in R. It allows the user
-    to determine a quantifiable quality factor for individual companies and
-	securities, as well as to determine how well an overall portfolio adheres
-	to the QMJ factor.
+	person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")),
+  person("David", "Kane", email = "dave.kane@gmail.com", role= c("aut")),
+	person("Ryan", "Kwon", email="rhk1@williams.edu", role=c("aut")))
+Description: An implementation of Quality Minus Junk (QMJ) in R for the companies in the Russell 3000. 
+    It allows the user to determine a quality score and its component parts for individual 
+    securities using the latest available data for free. 
 Imports: 
 	quantmod(>= 0.4-3),
 	stringr,
 	ggplot2,
 	dplyr,
+  testthat,
 	xts
 Depends: R (>= 3.1.1)
 License: GPL-3
