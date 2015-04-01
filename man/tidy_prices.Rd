@@ -27,7 +27,7 @@ raw_price_data <- get_prices(sub_comps)
 prices <- tidy_prices(raw_price_data)
 
 my_companies <- data.frame(ticker=c("GOOG", "IBM", "FLWS"))
-raw_price_data <- get_info(my_companies)
+raw_price_data <- get_prices(my_companies)
 prices <- tidy_prices(raw_price_data)
 }
 \seealso{
