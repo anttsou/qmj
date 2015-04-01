@@ -8,7 +8,7 @@
 #' @importFrom dplyr arrange
 #' @export
 get_companies <- function() {
-  filepath <- system.file("doc",package="qmj")
+  filepath <- system.file("extdata",package="qmj")
   filepath <- paste(filepath, "/companies.txt",sep="")
   companies <- read.csv(filepath,stringsAsFactors=FALSE)
   #filepath2 <- system.file("data",package="qmj")
