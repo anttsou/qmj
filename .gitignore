@@ -3,7 +3,6 @@ R/.RData
 R/.Rproj
 .Rhistory
 R/.Rhistory
-.DS_Store
 .Rproj.user
 .RData
 vignettes/*.gz
@@ -13,3 +12,4 @@ vignettes/*.pdf
 vignettes/figure*
 vignettes/*.sty
 qmj.Rproj
+*.html
