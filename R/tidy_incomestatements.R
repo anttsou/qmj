@@ -12,7 +12,7 @@
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_balancesheets}}
 #' @examples
-#' companies <- data(companies)
+#' data(companies)
 #' sub_comps <- companies[1:5,]
 #' raw_data <- get_info(sub_comps)
 #' tidyincome <- tidy_incomestatements(raw_data[[2]])

@@ -21,7 +21,7 @@ must be formatted in a list such that every element is a data frame or matrix co
 within this package.
 }
 \examples{
-companies <- data(companies)
+data(companies)
 sub_comps <- companies[1:5,]
 raw_data <- get_info(sub_comps)
 tidycash <- tidy_cashflows(raw_data[[1]])

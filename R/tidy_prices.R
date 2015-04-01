@@ -9,7 +9,7 @@
 #' @return Returns a data set that's been "tidied" up for use by other functions in this package.
 #' @seealso \code{\link{get_prices}}
 #' @examples
-#' companies <- data(companies)
+#' data(companies)
 #' sub_comps <- companies[1:5,]
 #' raw_price_data <- get_prices(sub_comps)
 #' prices <- tidy_prices(raw_price_data)
