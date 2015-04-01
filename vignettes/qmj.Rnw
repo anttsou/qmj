@@ -6,7 +6,7 @@
     urlcolor=cyan,
 }
 
-\author{Ryan Kwon `17, Anthoney Tsou `17}
+\author{Anthoney Tsou, David Kane, Ryan Kwon}
 \title{An Implementation of Quality Minus Junk}
 \date{February 11, 2015}
 \begin{document}
@@ -145,17 +145,6 @@ head(subset_qualities)
 In the \textbf{qmj} package, we automate AQR's method of assigning quality scores for publicly traded companies in today's market. The package itself provides convenient datasets and utility functions, and it also takes advantage of R's robust nature to allow seamless interaction with functions in the base R package and other packages.
 \\
 \\
-\emph{Ryan Kwon}
-\\
-\emph{Williams College}
-\\
-\emph{Williamstown, MA}
-\\
-\emph{USA}
-\\
-rhk1@williams.edu
-\\
-\\
 \emph{Anthoney Tsou}
 \\
 \emph{Williams College}
@@ -165,7 +154,17 @@ rhk1@williams.edu
 \emph{USA}
 \\
 at6@williams.edu
-
+\\
+\\
+\emph{Ryan Kwon}
+\\
+\emph{Williams College}
+\\
+\emph{Williamstown, MA}
+\\
+\emph{USA}
+\\
+rhk1@williams.edu
 \section*{Bibliography}
 \hypertarget{bibliography}{Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. ``Quality Minus Junk." AQR (2013)}
 \end{document}
