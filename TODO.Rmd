@@ -4,7 +4,6 @@
 * Transfer any undone TODOs from that other system over hear.
 * Format vignette as The R Journal submission
 * Improve Description in DESCRIPTION file. This material will also be useful in the abstract of the paper.
-* Maybe help(package = "qmj") ought to produce something a bit nicer? Not sure about this.
 * Set examples to don't run (or something along that line) since they take an absurd amount of time to run and, therefore, make the default running of R CMD check impossible.
 * Get rid of lots of useless functions like view_growth and plot_quality. This is overkill. We might use versions of these functions in the article. But we don't need them to be user functions.
 * Add Quantitative Value book to bibliography.
