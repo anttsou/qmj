@@ -5,6 +5,12 @@ data(financials)
 data(prices)
 data(quality)
 
+test_that("tickers and names same in companies dataset and get_companies function",{
+  temp <- get_companies()
+  expect_that(length(intersect(companies$ticker,temp$ticker)),equals(length(temp$ticker)))
+  expect_that(length(intersect(companies$name,temp$name)),equals(length(temp$name)))
+}) 
+
 test_that("there are no duplicate tickers",{
     expect_that(length(companies$ticker[duplicated(companies$ticker)]),equals(0))
     expect_that(length(quality$ticker[duplicated(quality$ticker)]),equals(0))
