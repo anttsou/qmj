@@ -16,7 +16,8 @@ resumption of progress.
 }
 \examples{
 data(companies)
-\dontrun{get_prices(companies)}
+sub_comps <- companies[1:10,]
+get_prices(sub_comps)
 }
 \seealso{
 \code{\link{get_info}}

@@ -45,7 +45,9 @@ data(prices)
 new_quality <- market_data(companies, financials, prices)
 
 safety_score <- market_safety(companies, financials, prices)
-raw_price_data <- get_prices(companies)
+
+sub_comps <- companies[1:5,]
+raw_price_data <- get_prices(sub_comps)
 usable_price_data <- tidy_prices(raw_price_data)
 }
 \seealso{

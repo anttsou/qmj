@@ -9,11 +9,14 @@
 #' @return Returns a data set that's been "tidied" up for use by other functions in this package.
 #' @seealso \code{\link{get_prices}}
 #' @examples
-#' \dontrun{
 #' companies <- data(companies)
-#' raw_price_data <- get_prices(companies)
+#' sub_comps <- companies[1:5,]
+#' raw_price_data <- get_prices(sub_comps)
 #' prices <- tidy_prices(raw_price_data)
-#' }
+#' 
+#' my_companies <- data.frame(ticker=c("GOOG", "IBM", "FLWS"))
+#' raw_price_data <- get_info(my_companies)
+#' prices <- tidy_prices(raw_price_data)
 #' @export
 
 tidy_prices <- function(x){

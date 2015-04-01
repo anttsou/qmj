@@ -9,7 +9,9 @@
 #' data(companies)
 #' data(financials)
 #' data(prices)
-#' create_qmjs(companies,financials,prices)
+#' 
+#' sub_comps <- companies[1:5,]
+#' create_qmjs(sub_comps,financials,prices)
 #' @export
 
 create_qmjs <- function(x, financials, prices){

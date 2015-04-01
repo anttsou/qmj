@@ -12,11 +12,10 @@
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_incomestatements}}
 #' @examples
-#' \dontrun{
 #' companies <- data(companies)
-#' raw_data <- get_info(companies)
+#' sub_comps <- companies[1:5,]
+#' raw_data <- get_info(sub_comps)
 #' tidybalance <- tidy_balancesheets(raw_data[[3]])
-#' }
 #' @export
 
 tidy_balancesheets <- function(x) {

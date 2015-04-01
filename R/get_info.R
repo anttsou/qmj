@@ -7,10 +7,9 @@
 #' @param x A data frame of companies. Must have a ticker column.
 #' @seealso \code{\link{get_prices}}
 #' @examples
-#' \dontrun{
 #' data(companies)
-#' get_info(companies)
-#' }
+#' sub_comps <- companies[1:10,]
+#' get_info(sub_comps)
 #' @importFrom quantmod getFinancials viewFinancials
 #' @export
 

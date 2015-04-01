@@ -16,10 +16,9 @@ Also writes .RData files for every company in the /extdata folder in the package
 If canceled partway through, function is able to find and re-read this data, allowing resumption of progress.
 }
 \examples{
-\dontrun{
 data(companies)
-get_info(companies)
-}
+sub_comps <- companies[1:10,]
+get_info(sub_comps)
 }
 \seealso{
 \code{\link{get_prices}}

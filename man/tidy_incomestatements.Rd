@@ -21,11 +21,10 @@ must be formatted in a list such that every element is a data frame or matrix co
 within this package.
 }
 \examples{
-\dontrun{
 companies <- data(companies)
-raw_data <- get_info(companies)
-tidyincome <- tidy_incomestatements(x[[2]])
-}
+sub_comps <- companies[1:5,]
+raw_data <- get_info(sub_comps)
+tidyincome <- tidy_incomestatements(raw_data[[2]])
 }
 \seealso{
 \code{\link{get_info}}

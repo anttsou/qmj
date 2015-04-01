@@ -7,7 +7,8 @@
 #' @seealso \code{\link{get_info}}
 #' @examples
 #' data(companies)
-#' \dontrun{get_prices(companies)}
+#' sub_comps <- companies[1:10,]
+#' get_prices(sub_comps)
 #' @export
 
 get_prices <- function(x){

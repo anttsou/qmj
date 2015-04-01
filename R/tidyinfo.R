@@ -9,15 +9,14 @@
 #' @seealso \code{\link{tidy_balancesheets}}
 #' @seealso \code{\link{tidy_incomestatements}}
 #' @examples
-#' \dontrun{
 #' data(companies)
-#' raw_data <- get_info(companies)
+#' sub_comps <- companies[1:5,]
+#' raw_data <- get_info(sub_comps)
 #' financials <- tidyinfo(raw_data)
 #' 
 #' my_companies <- data.frame(ticker=c("GOOG", "IBM", "FLWS"))
 #' raw_data <- get_info(my_companies)
-#' financials <- tidyinfo(rawdata)
-#' }
+#' financials <- tidyinfo(raw_data)
 #' @export
 
 tidyinfo <- function(x){
