@@ -1,5 +1,3 @@
-library(qmj)
-
 context("Ticker properties")
 
 data(companies)

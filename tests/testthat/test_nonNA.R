@@ -1,8 +1,8 @@
+context("Beta and Idiosyncratic Volatility")
+
 data(companies)
 data(financials)
 data(prices)
-
-context("Beta and Idiosyncratic Volatility")
 
 test_that("calculation returns non-NA value", {
   temp <- companies
