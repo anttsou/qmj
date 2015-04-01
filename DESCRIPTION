@@ -16,5 +16,6 @@ Imports:
   testthat,
 	xts
 Depends: R (>= 3.1.1)
+Suggests: testthat
 License: GPL-3
 LazyData: false
