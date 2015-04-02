@@ -23,7 +23,8 @@ Quality Minus Junk (Asness et al.) in Appendix page A2.
 data(companies)
 data(financials)
 data(prices)
-market_safety(companies, financials, prices)
+sub_comps <- companies[50:51,]
+market_safety(sub_comps, financials, prices)
 }
 \seealso{
 \code{\link{market_data}}

@@ -39,21 +39,13 @@ that produces financials, prices, and ultimately quality scores.
 data(companies)
 data(financials)
 data(prices)
-market_data(companies, financials, prices)
-
-sub_comps <- companies[1:5,]
-raw_financials <- get_info(sub_comps)
-usable_financials <- tidyinfo(raw_financials)
-
-raw_prices <- get_prices(sub_comps)
-usable_prices <- tidy_prices(raw_prices)
+sub_comps <- companies[50:51,]
+market_data(sub_comps, financials, prices)
 }
 \seealso{
 \code{\link{financials}}
 
 \code{\link{prices}}
-
-\code{\link{quality}}
 
 \code{\link{get_info}}
 

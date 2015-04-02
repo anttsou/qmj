@@ -19,7 +19,8 @@ for each company based on the paper Quality Minus Junk (Asness et al.) in Append
 \examples{
 data(companies)
 data(financials)
-market_profitability(companies, financials)
+sub_comps <- companies[50:51,]
+market_profitability(sub_comps, financials)
 }
 \seealso{
 \code{\link{market_data}}

@@ -45,30 +45,19 @@ as well as producing items which are more likely to interest the user.
 Last updated: January 2015
 }
 \examples{
-data(companies)
-data(financials)
-data(prices)
-new_quality <- market_data(companies, financials, prices)
+data(quality)
+filter_companies(quality,"all")
 
-profitability_score <- market_profitability(companies, financials)
-safety_score <- market_safety(companies, financials, prices)
+head(quality,10)
+
+temp <- quality
+
+# remove NAs
+temp <- temp[!is.na(temp$quality),]
+tail(temp,10)
 }
 \seealso{
-\code{\link{companies}}
-
-\code{\link{prices}}
-
-\code{\link{financials}}
-
-\code{\link{market_data}}
-
-\code{\link{market_profitability}}
-
-\code{\link{market_safety}}
-
-\code{\link{market_growth}}
-
-\code{\link{market_payouts}}
+\code{\link{fiter_companies}}
 }
 \keyword{data}
 

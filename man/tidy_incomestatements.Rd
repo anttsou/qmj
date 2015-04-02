@@ -22,7 +22,7 @@ within this package.
 }
 \examples{
 data(companies)
-sub_comps <- companies[1:5,]
+sub_comps <- companies[1:2,]
 raw_data <- get_info(sub_comps)
 tidyincome <- tidy_incomestatements(raw_data[[2]])
 }

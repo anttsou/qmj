@@ -63,18 +63,13 @@ as well as producing items which are more likely to interest the user.
 data(companies)
 data(financials)
 data(prices)
-market_data(companies, financials, prices)
-
-sub_comps <- companies[1:5,]
-raw_financials <- get_info(sub_comps)
-usable_financials <- tidyinfo(raw_financials)
+sub_comps <- companies[50:51,]
+market_data(sub_comps, financials, prices)
 }
 \seealso{
 \code{\link{companies}}
 
 \code{\link{prices}}
-
-\code{\link{quality}}
 
 \code{\link{get_info}}
 

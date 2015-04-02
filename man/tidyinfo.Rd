@@ -17,11 +17,11 @@ Returns a data set that is usable by the other functions of this package, as wel
 }
 \examples{
 data(companies)
-sub_comps <- companies[1:5,]
+sub_comps <- companies[1:2,]
 raw_data <- get_info(sub_comps)
 financials <- tidyinfo(raw_data)
 
-my_companies <- data.frame(ticker=c("GOOG", "IBM", "FLWS"))
+my_companies <- data.frame(ticker=c("GOOG", "IBM"))
 raw_data <- get_info(my_companies)
 financials <- tidyinfo(raw_data)
 }

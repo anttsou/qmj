@@ -17,7 +17,7 @@ If canceled partway through, function is able to find and re-read this data, all
 }
 \examples{
 data(companies)
-sub_comps <- companies[1:10,]
+sub_comps <- companies[1:2,]
 get_info(sub_comps)
 }
 \seealso{
