@@ -10,11 +10,11 @@
 #' @seealso \code{\link{tidy_incomestatements}}
 #' @examples
 #' data(companies)
-#' sub_comps <- companies[1:5,]
+#' sub_comps <- companies[1:2,]
 #' raw_data <- get_info(sub_comps)
 #' financials <- tidyinfo(raw_data)
 #' 
-#' my_companies <- data.frame(ticker=c("GOOG", "IBM", "FLWS"))
+#' my_companies <- data.frame(ticker=c("GOOG", "IBM"))
 #' raw_data <- get_info(my_companies)
 #' financials <- tidyinfo(raw_data)
 #' @export

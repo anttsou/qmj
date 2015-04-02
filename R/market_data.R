@@ -14,7 +14,8 @@
 #' data(companies)
 #' data(financials)
 #' data(prices)
-#' market_data(companies, financials, prices)
+#' sub_comps <- companies[1:5,]
+#' market_data(sub_comps, financials, prices)
 #' @importFrom dplyr arrange
 #' @export
 

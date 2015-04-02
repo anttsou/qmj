@@ -13,7 +13,7 @@
 #' @seealso \code{\link{tidy_incomestatements}}
 #' @examples
 #' data(companies)
-#' sub_comps <- companies[1:5,]
+#' sub_comps <- companies[1:2,]
 #' raw_data <- get_info(sub_comps)
 #' tidycash <- tidy_cashflows(raw_data[[1]])
 #' @export

@@ -40,22 +40,18 @@
 #'  }
 #'
 #' @name quality
-#' @seealso \code{\link{companies}}
-#' @seealso \code{\link{prices}}
-#' @seealso \code{\link{financials}}
-#' @seealso \code{\link{market_data}}
-#' @seealso \code{\link{market_profitability}}
-#' @seealso \code{\link{market_safety}}
-#' @seealso \code{\link{market_growth}}
-#' @seealso \code{\link{market_payouts}}
+#' @seealso \code{\link{fiter_companies}}
 #' @examples
-#' data(companies)
-#' data(financials)
-#' data(prices)
-#' new_quality <- market_data(companies, financials, prices)
+#' data(quality)
+#' filter_companies(quality,"all")
 #' 
-#' profitability_score <- market_profitability(companies, financials)
-#' safety_score <- market_safety(companies, financials, prices)
+#' head(quality,10)
+#' 
+#' temp <- quality
+#' 
+#' # remove NAs
+#' temp[!is.na(temp$quality),]
+#' tail(quality,10)
 #' @docType data
 #' @keywords data
 NULL

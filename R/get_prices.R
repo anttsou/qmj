@@ -7,7 +7,7 @@
 #' @seealso \code{\link{get_info}}
 #' @examples
 #' data(companies)
-#' sub_comps <- companies[1:10,]
+#' sub_comps <- companies[1:2,]
 #' get_prices(sub_comps)
 #' @export
 

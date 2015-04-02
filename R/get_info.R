@@ -8,7 +8,7 @@
 #' @seealso \code{\link{get_prices}}
 #' @examples
 #' data(companies)
-#' sub_comps <- companies[1:10,]
+#' sub_comps <- companies[1:2,]
 #' get_info(sub_comps)
 #' @importFrom quantmod getFinancials viewFinancials
 #' @export
