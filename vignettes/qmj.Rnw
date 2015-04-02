@@ -82,25 +82,25 @@ Though \textbf{qmj} keeps datasets updated, it has a few functions that can extr
 Several functions exist in order to provide more in-depth analysis of a single company. Below, the \textit{qmjs} data set stores qmj objects. Each represents details about a specific company and provides tools for analyzing that company relative to others in the universe. See the \textit{See Also} section of the help page for qmj (?qmj) in order to get a full list of these functions.
 
 <<Getting and analyzing qmj objects>>=
-data(qmjs)
-first_qmj <- qmjs[[1]]
-summarize(first_qmj) 
+# data(qmjs)
+# first_qmj <- qmjs[[1]]
+# summarize(first_qmj) 
 @
 
 If we desire, we can also plot the safety of this company relative to others in the universe.
 
 <<>>=
-safety <- market_data(companies,financials,prices)
-plot_safety(first_qmj, safety)
+# safety <- market_data(companies,financials,prices)
+# plot_safety(first_qmj, safety)
 @
 
 Functions also exist in order to easily retrieve a specific set of companies.
 
 <<>>=
-data(qmjs)
-tickers <- c("GOOG", "IBM", "AAPL")
-selected_qmjs <- get_qmjs(tickers, qmjs)
-summarize(selected_qmjs[[2]])
+# data(qmjs)
+# tickers <- c("GOOG", "IBM", "AAPL")
+# selected_qmjs <- get_qmjs(tickers, qmjs)
+# summarize(selected_qmjs[[2]])
 @
 
 \section*{Analyzing the Universe (Of Companies)}
