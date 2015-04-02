@@ -164,7 +164,7 @@ anttsou@gmail.com
 \\
 \emph{USA}
 \\
-rhk1@williams.edu
+rynkwn@gmail.com
 \section*{Bibliography}
 \hypertarget{bibliography}{C. Asness, A. Frazzini, and L. Pedersen. ``Quality Minus Junk." AQR, 2013.}
 \\
@@ -178,5 +178,5 @@ rhk1@williams.edu
 \hypertarget{bibliography}{D. Kane, A. Liu, and K. Nguyen. Analyzing an Electronic Limit Order Book. \emph{The R Journal}, 3(1):64-68, June 2011.}
 \\
 \\
-\hypertarget{bibliography}{Y. Lu and D. Kane. Performance Attribution for Equity Portfolios. \emph{The R Journal}, 5(2):53-61, December 2013}
+\hypertarget{bibliography}{Y. Lu and D. Kane. Performance Attribution for Equity Portfolios. \emph{The R Journal}, 5(2):53-61, December 2013.}
 \end{document}
