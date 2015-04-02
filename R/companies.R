@@ -30,7 +30,6 @@
 #' @name companies
 #' @seealso \code{\link{financials}}
 #' @seealso \code{\link{prices}}
-#' @seealso \code{\link{quality}}
 #' @seealso \code{\link{get_info}}
 #' @seealso \code{\link{tidyinfo}}
 #' @seealso \code{\link{get_prices}}
@@ -41,13 +40,6 @@
 #' data(prices)
 #' sub_comps <- companies[50:51,]
 #' market_data(sub_comps, financials, prices)
-#' 
-#' 
-#' raw_financials <- get_info(sub_comps)
-#' usable_financials <- tidyinfo(raw_financials)
-#' 
-#' raw_prices <- get_prices(sub_comps)
-#' usable_prices <- tidy_prices(raw_prices)
 #' @docType data
 #' @keywords data
 NULL

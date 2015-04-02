@@ -32,7 +32,6 @@
 #' @source Google Finance, accessed through quantmod
 #' @name prices
 #' @seealso \code{\link{companies}}
-#' @seealso \code{\link{quality}}
 #' @seealso \code{\link{financials}}
 #' @seealso \code{\link{market_data}}
 #' @seealso \code{\link{market_safety}}
@@ -44,11 +43,6 @@
 #' data(prices)
 #' sub_comps <- companies[50:51,]
 #' new_quality <- market_data(sub_comps, financials, prices)
-#' 
-#' safety_score <- market_safety(sub_comps, financials, prices)
-#' 
-#' raw_price_data <- get_prices(sub_comps)
-#' usable_price_data <- tidy_prices(raw_price_data)
 #' @docType data
 #' @keywords data
 NULL
