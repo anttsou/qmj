@@ -153,7 +153,7 @@ In the \textbf{qmj} package, we automate AQR's method of assigning quality score
 \\
 \emph{USA}
 \\
-at6@williams.edu
+anttsou@gmail.com
 \\
 \\
 \emph{Ryan Kwon}
@@ -166,5 +166,17 @@ at6@williams.edu
 \\
 rhk1@williams.edu
 \section*{Bibliography}
-\hypertarget{bibliography}{Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. ``Quality Minus Junk." AQR (2013)}
+\hypertarget{bibliography}{C. Asness, A. Frazzini, and L. Pedersen. ``Quality Minus Junk." AQR, 2013.}
+\\
+\\
+\hypertarget{bibliography}{K. Campbell, J. Enos, D. Gerlanc, and D. Kane. Backtests. \emph{R News}, 7(1):36-41, April 2007.}
+\\
+\\
+\hypertarget{bibliography}{W. Gray and T. Carlisle. \emph{Quantitative Value: A Practitioner's Guide to Automating Intelligent Investment and Eliminating Behavioral Errors}. John Wiley \& Sons, 2013.}
+\\
+\\
+\hypertarget{bibliography}{D. Kane, A. Liu, and K. Nguyen. Analyzing an Electronic Limit Order Book. \emph{The R Journal}, 3(1):64-68, June 2011.}
+\\
+\\
+\hypertarget{bibliography}{Y. Lu and D. Kane. Performance Attribution for Equity Portfolios. \emph{The R Journal}, 5(2):53-61, December 2013}
 \end{document}
