@@ -3,6 +3,7 @@ R/.RData
 R/.Rproj
 .Rhistory
 R/.Rhistory
+.DS_Store
 .Rproj.user
 .RData
 vignettes/*.gz

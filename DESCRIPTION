@@ -5,9 +5,13 @@ Authors@R: c(
 	person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")),
   person("David", "Kane", email = "dave.kane@gmail.com", role= c("aut")),
 	person("Ryan", "Kwon", email="rhk1@williams.edu", role=c("aut")))
-Description: An implementation of Quality Minus Junk (QMJ) in R for the companies in the Russell 3000. 
-    It allows the user to determine a quality score and its component parts for individual 
-    securities using the latest available data for free. 
+Description: The qmj package produces quality scores for each of the 3000 largest US companies from
+the Russell 3000 Index based on the work of Asness et. al (2013). The package includes datasets for users who 
+just want to view the most recently calculated quality scores, and it also includes tools to automatically gather 
+relevant financial documents and stock data, allowing users to update the data and customize their universe for 
+further analysis. The package also provides utilities for analyzing the resultant quality scores and separating 
+the list of companies into “junk” stocks, which are expected to underperform relative to the market, 
+and “quality” stocks, which are expected to outperform.
 Imports: 
 	quantmod(>= 0.4-3),
 	stringr,
