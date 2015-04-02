@@ -42,11 +42,11 @@
 #' data(companies)
 #' data(financials)
 #' data(prices)
-#' new_quality <- market_data(companies, financials, prices)
+#' sub_comps <- companies[50:51,]
+#' new_quality <- market_data(sub_comps, financials, prices)
 #' 
-#' safety_score <- market_safety(companies, financials, prices)
+#' safety_score <- market_safety(sub_comps, financials, prices)
 #' 
-#' sub_comps <- companies[1:2,]
 #' raw_price_data <- get_prices(sub_comps)
 #' usable_price_data <- tidy_prices(raw_price_data)
 #' @docType data

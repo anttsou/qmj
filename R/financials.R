@@ -65,7 +65,7 @@
 #' data(prices)
 #' market_data(companies, financials, prices)
 #' 
-#' sub_comps <- companies[1:2,]
+#' sub_comps <- companies[50:51,]
 #' raw_financials <- get_info(sub_comps)
 #' usable_financials <- tidyinfo(raw_financials)
 #' @docType data

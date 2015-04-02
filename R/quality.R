@@ -50,8 +50,8 @@
 #' temp <- quality
 #' 
 #' # remove NAs
-#' temp[!is.na(temp$quality),]
-#' tail(quality,10)
+#' temp <- temp[!is.na(temp$quality),]
+#' tail(temp,10)
 #' @docType data
 #' @keywords data
 NULL

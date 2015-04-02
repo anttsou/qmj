@@ -14,7 +14,7 @@
 #' data(companies)
 #' data(financials)
 #' data(prices)
-#' sub_comps <- companies[1:5,]
+#' sub_comps <- companies[50:51,]
 #' market_data(sub_comps, financials, prices)
 #' @importFrom dplyr arrange
 #' @export
@@ -42,4 +42,5 @@ market_data <- function(x, financials, daily){
                            payouts = payouts, 
                            quality = quality)
   marketdata <- dplyr::arrange(marketdata, desc(quality))
+  marketdata
 }

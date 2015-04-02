@@ -15,7 +15,7 @@
 #' data(companies)
 #' data(financials)
 #' data(prices)
-#' sub_comps <- companies[1:5,]
+#' sub_comps <- companies[50:51,]
 #' market_safety(sub_comps, financials, prices)
 #' @importFrom dplyr filter distinct arrange
 #' @export
