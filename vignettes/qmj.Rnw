@@ -156,6 +156,17 @@ In the \textbf{qmj} package, we automate AQR's method of assigning quality score
 anttsou@gmail.com
 \\
 \\
+\emph{David Kane}
+\\
+\emph{Williams College}
+\\
+\emph{Williamstown, MA}
+\\
+\emph{USA}
+\\
+dave.kane@gmail.com
+\\
+\\
 \emph{Ryan Kwon}
 \\
 \emph{Williams College}
