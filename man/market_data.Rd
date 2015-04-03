@@ -5,11 +5,6 @@
 \title{Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
 by descending quality.}
 \usage{
-data(companies)
-data(financials)
-data(prices)
-x <- companies[50:51,]
-daily <- prices
 market_data(x, financials, daily)
 }
 \arguments{

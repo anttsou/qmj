@@ -4,12 +4,12 @@
 \alias{market_growth}
 \title{Collects growth z-scores for companies}
 \usage{
-market_growth(x, financials)
+market_growth(companies, financials)
 }
 \arguments{
-\item{financials}{A data frame containing financial statements for every company.}
-
 \item{companies}{A data frame of company names and tickers.}
+
+\item{financials}{A data frame containing financial statements for every company.}
 }
 \description{
 Given a data frame of companies (names and tickers) and a data frame of financial statements,
@@ -20,8 +20,8 @@ Quality Minus Junk (Asness et al.) in Appendix page A2.
 \examples{
 data(companies)
 data(financials)
-x <- companies[50:51,]
-market_growth(x, financials)
+companies <- companies[50:51,]
+market_growth(companies, financials)
 }
 \seealso{
 \code{\link{market_data}}
