@@ -57,7 +57,7 @@ temp <- temp[!is.na(temp$quality),]
 tail(temp,10)
 }
 \seealso{
-\code{\link{fiter_companies}}
+\code{\link{filter_companies}}
 }
 \keyword{data}
 

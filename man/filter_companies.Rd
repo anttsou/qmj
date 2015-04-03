@@ -22,7 +22,8 @@ component. Also allows for the user to trim "driven" companies, returning compan
 }
 \examples{
 data(quality)
+data <- quality
 filter <- "all"
-filter_companies(quality,filter)
+filter_companies(data,filter)
 }
 

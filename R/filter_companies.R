@@ -9,8 +9,9 @@
 #' @param isolate A logical value. If true, returns companies that are driven by the given filter. Mutually exclusive with the remove parameter.
 #' @examples
 #' data(quality)
+#' data <- quality
 #' filter <- "all"
-#' filter_companies(quality,filter)
+#' filter_companies(data,filter)
 #' @export
 
 filter_companies <- function(data, filter, remove=TRUE, isolate=FALSE){

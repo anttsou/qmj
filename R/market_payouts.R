@@ -12,8 +12,8 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' sub_comps <- companies[50:51,]
-#' market_payouts(sub_comps, financials)
+#' x <- companies[50:51,]
+#' market_payouts(x, financials)
 #' @importFrom dplyr distinct arrange
 #' @export
 

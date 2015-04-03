@@ -12,8 +12,8 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' sub_comps <- companies[50:51,]
-#' market_profitability(sub_comps, financials)
+#' x <- companies[50:51,]
+#' market_profitability(x, financials)
 #' @export
 
 market_profitability <- function(x, financials){ 

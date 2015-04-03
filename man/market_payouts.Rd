@@ -19,8 +19,8 @@ Quality Minus Junk (Asness et al.) in Appendix page A3-4.
 \examples{
 data(companies)
 data(financials)
-sub_comps <- companies[50:51,]
-market_payouts(sub_comps, financials)
+x <- companies[50:51,]
+market_payouts(x, financials)
 }
 \seealso{
 \code{\link{market_data}}

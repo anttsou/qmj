@@ -40,7 +40,7 @@
 #'  }
 #'
 #' @name quality
-#' @seealso \code{\link{fiter_companies}}
+#' @seealso \code{\link{filter_companies}}
 #' @examples
 #' data(quality)
 #' filter_companies(quality,"all")
