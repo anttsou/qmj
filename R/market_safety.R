@@ -21,7 +21,6 @@
 #' @export
 
 market_safety <- function(companies, financials, prices){
-  utils::globalVariables(c("ticker","desc"))
   if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
