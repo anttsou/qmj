@@ -14,27 +14,26 @@
 #' data(companies)
 #' data(financials)
 #' data(prices)
-#' x <- companies[50:51,]
-#' daily <- prices
-#' market_data(x, financials, daily)
+#' companies <- companies[50:51,]
+#' market_data(companies, financials, prices)
 #' @importFrom dplyr arrange
 #' @export
 
-market_data <- function(x, financials, daily){
-  if(length(x$ticker) == 0) {
+market_data <- function(companies, financials, prices){
+  if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
   if(length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
-  profitability <- market_profitability(x, financials)$profitability
-  growth <- market_growth(x, financials)$growth
-  safety <- market_safety(x, financials, daily)$safety
-  payouts <- market_payouts(x, financials)$payouts
+  profitability <- market_profitability(companies, financials)$profitability
+  growth <- market_growth(companies, financials)$growth
+  safety <- market_safety(companies, financials, prices)$safety
+  payouts <- market_payouts(companies, financials)$payouts
   quality <- profitability + growth + safety + payouts
   
-  name <- x$name
-  ticker <- x$ticker
+  name <- companies$name
+  ticker <- companies$ticker
   marketdata <- data.frame(name = name, 
                            ticker = ticker, 
                            profitability = profitability, 
