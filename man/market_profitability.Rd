@@ -4,12 +4,12 @@
 \alias{market_profitability}
 \title{Collects profitability z-scores for companies}
 \usage{
-market_profitability(x, financials)
+market_profitability(companies, financials)
 }
 \arguments{
-\item{financials}{A data frame containing financial statements for every company.}
-
 \item{companies}{A data frame of company names and tickers.}
+
+\item{financials}{A data frame containing financial statements for every company.}
 }
 \description{
 Given a data frame of companies (names and tickers) and a data frame of financial statements,
@@ -19,8 +19,8 @@ for each company based on the paper Quality Minus Junk (Asness et al.) in Append
 \examples{
 data(companies)
 data(financials)
-x <- companies[50:51,]
-market_profitability(x, financials)
+companies <- companies[50:51,]
+market_profitability(companies, financials)
 }
 \seealso{
 \code{\link{market_data}}

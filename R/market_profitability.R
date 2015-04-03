@@ -12,23 +12,23 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' x <- companies[50:51,]
-#' market_profitability(x, financials)
+#' companies <- companies[50:51,]
+#' market_profitability(companies, financials)
 #' @export
 
-market_profitability <- function(x, financials){ 
-  if(length(x$ticker) == 0) {
+market_profitability <- function(companies, financials){ 
+  if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
   if(length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
-  numCompanies <- length(x$ticker)
+  numCompanies <- length(companies$ticker)
   
   #set unavailable financial info to 0
   financials[is.na(financials)] <- 0
   
-  allcompanies <- data.frame(x$ticker)
+  allcompanies <- data.frame(companies$ticker)
   colnames(allcompanies) <- "ticker"
   fin <- financials
   fin <- dplyr::arrange(fin, desc(year))
@@ -90,7 +90,7 @@ market_profitability <- function(x, financials){
   
   profitability <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   profitability <- scale(profitability)
-  data.frame(ticker = x$ticker, 
+  data.frame(ticker = companies$ticker, 
              profitability = profitability, 
              GPOA = GPOA, 
              ROE = ROE,
