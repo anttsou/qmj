@@ -18,6 +18,7 @@
 #' @export
 
 market_payouts <- function(companies, financials){
+  utils::globalVariables(c("desc","year"))
   if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }

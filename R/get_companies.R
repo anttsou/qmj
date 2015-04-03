@@ -8,6 +8,7 @@
 #' @importFrom dplyr arrange
 #' @export
 get_companies <- function() {
+  utils::globalVariables("ticker")
   filepath <- system.file("extdata",package="qmj")
   filepath <- paste(filepath, "/companies.txt",sep="")
   companies <- read.csv(filepath,stringsAsFactors=FALSE)
