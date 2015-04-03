@@ -12,19 +12,19 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' x <- companies[50:51,]
-#' market_payouts(x, financials)
+#' companies <- companies[50:51,]
+#' market_payouts(companies, financials)
 #' @importFrom dplyr distinct arrange
 #' @export
 
-market_payouts <- function(x, financials){
-  if(length(x$ticker) == 0) {
+market_payouts <- function(companies, financials){
+  if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
   if(length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
-  numCompanies <- length(x$ticker)
+  numCompanies <- length(companies$ticker)
   
   #set unavailable financial info to 0
   financials[is.na(financials)] <- 0
@@ -36,7 +36,7 @@ market_payouts <- function(x, financials){
     x.1[! x.1p %in% x.2p, ]
   }
   
-  allcompanies <- data.frame(x$ticker)
+  allcompanies <- data.frame(companies$ticker)
   colnames(allcompanies) <- "ticker"
 
   fin <- financials
@@ -189,7 +189,7 @@ market_payouts <- function(x, financials){
   payouts <- EISS + DISS + NPOP
   
   payouts <- scale(payouts)
-  data.frame(ticker = x$ticker, 
+  data.frame(ticker = companies$ticker, 
              payouts = payouts, 
              EISS = EISS, 
              DISS = DISS,
