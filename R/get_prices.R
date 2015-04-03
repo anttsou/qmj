@@ -27,7 +27,7 @@ get_prices <- function(companies){
     pricereturns
   }
   
-  numCompanies <- length(x$ticker)
+  numCompanies <- length(companies$ticker)
   filepath <- system.file("extdata", package="qmj") #folder destination of all temp files.
   thisYear <- as.numeric(format(Sys.Date(), "%Y"))
   desiredDates <- paste(thisYear - 2, "/", sep='') #We only desire stock data for the past two years.
@@ -44,7 +44,7 @@ get_prices <- function(companies){
   
   filesInDest <- list.files(path=filepath) #List of all files in extdata, which should contain all temp files.
   for(i in 1:numCompanies){
-    companyTicker <- as.character(x$ticker[i])
+    companyTicker <- as.character(companies$ticker[i])
     
     file <- paste(companyTicker, ".RData", sep='')
     fileName <- paste(filepath, "/", companyTicker, ".RData", sep='')
