@@ -4,16 +4,16 @@
 \alias{filter_companies}
 \title{Filters quality data to isolate or remove companies which have quality scores that are primarily "driven" by a single component.}
 \usage{
-filter_companies(data, filter, remove = TRUE, isolate = FALSE)
+filter_companies(quality, filter, remove = TRUE, isolate = FALSE)
 }
 \arguments{
+\item{quality}{The quality data frame produced by market_data.}
+
 \item{filter}{What driver to search for. Valid inputs are "profitability", "growth", "payouts", "safety", and "all", which filters companies that are driven by any component.}
 
 \item{remove}{A logical value. If true, removes companies from data frame that are driven by the given filter. Mutually exclusive with the isolate parameter.}
 
 \item{isolate}{A logical value. If true, returns companies that are driven by the given filter. Mutually exclusive with the remove parameter.}
-
-\item{quality}{The quality data frame produced by market_data.}
 }
 \description{
 Taking in the quality data frame and a filter parameter, returns companies that are defined to be driven by that particular
@@ -22,8 +22,7 @@ component. Also allows for the user to trim "driven" companies, returning compan
 }
 \examples{
 data(quality)
-data <- quality
 filter <- "all"
-filter_companies(data,filter)
+filter_companies(quality,filter)
 }
 

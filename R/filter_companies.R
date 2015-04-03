@@ -9,54 +9,53 @@
 #' @param isolate A logical value. If true, returns companies that are driven by the given filter. Mutually exclusive with the remove parameter.
 #' @examples
 #' data(quality)
-#' data <- quality
 #' filter <- "all"
-#' filter_companies(data,filter)
+#' filter_companies(quality,filter)
 #' @export
 
-filter_companies <- function(data, filter, remove=TRUE, isolate=FALSE){
+filter_companies <- function(quality, filter, remove=TRUE, isolate=FALSE){
   if(remove == isolate){
     stop("Both the remove and isolate parameters are set to either true or false in filter_companies. They must have different logical values.")
   }
   #Helper functions perform a simple arithmetic operation to determine if a given component is >= 50% of a given quality score.
-  prof_filter <- function(profitability, quality){
-    if(is.na(profitability) || is.na(quality)){
+  prof_filter <- function(profitability, data){
+    if(is.na(profitability) || is.na(data)){
       FALSE
     }else{
-      if(abs(profitability/quality) >= .5){
+      if(abs(profitability/data) >= .5){
         TRUE
       }else{
         FALSE
       }
     }
   }
-  growth_filter <- function(growth, quality){
-    if(is.na(growth) || is.na(quality)){
+  growth_filter <- function(growth, data){
+    if(is.na(growth) || is.na(data)){
       FALSE
     } else{
-      if(abs(growth/quality) >= .5){
+      if(abs(growth/data) >= .5){
         TRUE
       } else{
         FALSE
       }
     }
   }
-  safety_filter <- function(safety, quality){
-    if(is.na(safety) || is.na(quality)){
+  safety_filter <- function(safety, data){
+    if(is.na(safety) || is.na(data)){
       FALSE
     } else{
-      if(abs(safety/quality) >= .5){
+      if(abs(safety/data) >= .5){
         TRUE
       } else{
         FALSE
       }
     }
   }
-  payouts_filter <- function(payouts, quality){
-    if(is.na(payouts) || is.na(quality)){
+  payouts_filter <- function(payouts, data){
+    if(is.na(payouts) || is.na(data)){
       FALSE
     } else{
-      if(abs(payouts/quality) >= .5){
+      if(abs(payouts/data) >= .5){
         TRUE
       } else{
         FALSE
@@ -67,47 +66,47 @@ filter_companies <- function(data, filter, remove=TRUE, isolate=FALSE){
   #If statements below handle filter choices, as well as if a user chooses a non-valid filter choice.
   #In each case, drivenindices is a vector of logicals that determine which companies to remove or isolate, based on user choice.
   if(filter == "profitability"){
-    drivenindices <- mapply(prof_filter, data$profitability, data$quality)
+    drivenindices <- mapply(prof_filter, quality$profitability, quality$quality)
     if(remove){
-      return(data[!drivenindices,])
+      return(quality[!drivenindices,])
     } else if (isolate){
-      return(data[drivenindices,])
+      return(quality[drivenindices,])
     }
   } else if(filter == "growth"){
-    drivenindices <- mapply(growth_filter, data$growth, data$quality)
+    drivenindices <- mapply(growth_filter, quality$growth, quality$quality)
     if(remove){
-      return(data[!drivenindices,])
+      return(quality[!drivenindices,])
     } else if (isolate){
-      return(data[drivenindices,])
+      return(quality[drivenindices,])
     }
     
   } else if(filter == "safety"){
-    drivenindices <- mapply(safety_filter, data$safety, data$quality)
+    drivenindices <- mapply(safety_filter, quality$safety, quality$quality)
     if(remove){
-      return(data[!drivenindices,])
+      return(quality[!drivenindices,])
     } else if (isolate){
-      return(data[drivenindices,])
+      return(quality[drivenindices,])
     }
     
   } else if(filter == "payouts"){
-    drivenindices <- mapply(payouts_filter, data$payouts, data$quality)
+    drivenindices <- mapply(payouts_filter, quality$payouts, quality$quality)
     if(remove){
-      return(data[!drivenindices,])
+      return(quality[!drivenindices,])
     } else if (isolate){
-      return(data[drivenindices,])
+      return(quality[drivenindices,])
     }
   } else if(filter == "all"){
-    drivenindices1 <- mapply(prof_filter, data$profitability, data$quality)
-    drivenindices2 <- mapply(growth_filter, data$growth, data$quality)
-    drivenindices3 <- mapply(safety_filter, data$safety, data$quality)
-    drivenindices4 <- mapply(payouts_filter, data$payouts, data$quality)
+    drivenindices1 <- mapply(prof_filter, quality$profitability, quality$quality)
+    drivenindices2 <- mapply(growth_filter, quality$growth, quality$quality)
+    drivenindices3 <- mapply(safety_filter, quality$safety, quality$quality)
+    drivenindices4 <- mapply(payouts_filter, quality$payouts, quality$quality)
     
     drivenindices <- as.logical(drivenindices1 + drivenindices2 + drivenindices3 + drivenindices4)
     
     if(remove){
-      return(data[!drivenindices,])
+      return(quality[!drivenindices,])
     } else if (isolate){
-      return(data[drivenindices,])
+      return(quality[drivenindices,])
     }
   } else{
     stop("Error with the filter parameter. Please make sure spelling is correct, and that the filter is lowercase.")
