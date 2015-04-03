@@ -15,35 +15,34 @@
 #' data(companies)
 #' data(financials)
 #' data(prices)
-#' x <- companies[50:51,]
-#' daily <- prices
-#' market_safety(x, financials, daily)
+#' companies <- companies[50:51,]
+#' market_safety(companies, financials, prices)
 #' @importFrom dplyr filter distinct arrange
 #' @export
 
-market_safety <- function(x, financials, daily){
-  if(length(x$ticker) == 0) {
+market_safety <- function(companies, financials, prices){
+  if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
   if(length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
   filepath <- system.file("data", package="qmj")
-  numCompanies <- length(x$ticker)
-  allcompanies <- data.frame(x$ticker)
+  numCompanies <- length(companies$ticker)
+  allcompanies <- data.frame(companies$ticker)
   colnames(allcompanies) <- "ticker"
   
   #set unavailable financial info to 0
   financials[is.na(financials)] <- 0
   
   #set unavailable price data to 0
-  daily[is.na(daily)] <- 0
+  prices[is.na(prices)] <- 0
   
-  daily$pret[is.nan(daily$pret)] <- 0
-  daily$pret[is.infinite(daily$pret)] <- 0
+  prices$pret[is.nan(prices$pret)] <- 0
+  prices$pret[is.infinite(prices$pret)] <- 0
   currentyear <- as.numeric(format(Sys.Date(), "%Y"))
-  market <- dplyr::filter(daily, ticker == "GSPC")
-  nogspc <- dplyr::filter(daily, ticker != "GSPC")
+  market <- dplyr::filter(prices, ticker == "GSPC")
+  nogspc <- dplyr::filter(prices, ticker != "GSPC")
   year <- numeric()
   if(sum(as.numeric(sub("-.*","",market$date)) == currentyear) <= 150){
     year <- currentyear - 1
@@ -53,7 +52,7 @@ market_safety <- function(x, financials, daily){
   marketlistb <- market[grepl(year,market$date),]
   mergedail <- merge(marketlistb,nogspc,by="date")
   splitdail <- split(mergedail,mergedail$ticker.y)
-  splitindices <- split(seq(nrow(daily)), daily$ticker)  # Stores list of indices for a company ticker.
+  splitindices <- split(seq(nrow(prices)), prices$ticker)  # Stores list of indices for a company ticker.
   splitindices <- splitindices[-1]
   companiesstored <- names(splitindices)
   
@@ -108,7 +107,7 @@ market_safety <- function(x, financials, daily){
 
   calcmean <- function(indexlist){
     indexlist <- as.numeric(indexlist)
-    closingprices <- daily$close[indexlist]
+    closingprices <- prices$close[indexlist]
     mean(closingprices)
   }
   marketequity <- function(closemeans, tcso){
@@ -128,9 +127,9 @@ market_safety <- function(x, financials, daily){
   }
 
   #apply the calculation functions to all companies without needing a slow loop.
-  BAB <- sapply(x$ticker, merger)
+  BAB <- sapply(companies$ticker, merger)
  
-  IVOL <- sapply(x$ticker,calc_ivol)
+  IVOL <- sapply(companies$ticker,calc_ivol)
 
   LEV <- mapply(lev, fstyear$TD, fstyear$TA)
   
@@ -200,7 +199,7 @@ market_safety <- function(x, financials, daily){
   
   safety <- BAB + IVOL + LEV + O + Z + EVOL
   safety <- scale(safety)
-  data.frame(ticker = x$ticker, 
+  data.frame(ticker = companies$ticker, 
              safety = safety, 
              BAB = BAB, 
              IVOL = IVOL,
