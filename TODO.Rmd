@@ -1,8 +1,6 @@
 # To-Do List
 
-* Format vignette as The R Journal submission
-* Make examples run quickly
-* Get rid of lots of useless functions like view_growth and plot_quality. This is overkill. We might use versions of these functions in the article. But we don't need them to be user functions.
-* Get rid of qmj class material.
-* Fix NOTE about the misuse of Imports
-* Take care of issues raised in R CMD check.
+* Format vignette as The R Journal submission (R Markdown)
+* Take care of issues raised in R CMD check (format data size)
+* 0.2.0 or 0.2-1? What is correct version number format?
+
