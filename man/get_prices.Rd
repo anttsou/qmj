@@ -4,7 +4,7 @@
 \alias{get_prices}
 \title{Gets the daily prices and returns of companies for the past two years.}
 \usage{
-get_prices(x)
+get_prices(companies)
 }
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
@@ -16,8 +16,8 @@ resumption of progress.
 }
 \examples{
 data(companies)
-sub_comps <- companies[1:2,]
-get_prices(sub_comps)
+companies <- companies[1:2,]
+get_prices(companies)
 }
 \seealso{
 \code{\link{get_info}}

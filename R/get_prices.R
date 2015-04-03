@@ -7,12 +7,12 @@
 #' @seealso \code{\link{get_info}}
 #' @examples
 #' data(companies)
-#' sub_comps <- companies[1:2,]
-#' get_prices(sub_comps)
+#' companies <- companies[1:2,]
+#' get_prices(companies)
 #' @export
 
-get_prices <- function(x){
-  if(length(x$ticker) == 0) {
+get_prices <- function(companies){
+  if(length(companies$ticker) == 0) {
     stop("parameter requires a ticker column.")
   }
   
