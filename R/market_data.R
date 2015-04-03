@@ -17,6 +17,13 @@
 #' x <- companies[50:51,]
 #' daily <- prices
 #' market_data(x, financials, daily)
+#' @usage
+#' data(companies)
+#' data(financials)
+#' data(prices)
+#' x <- companies[50:51,]
+#' daily <- prices
+#' market_data(x, financials, daily)
 #' @importFrom dplyr arrange
 #' @export
 
