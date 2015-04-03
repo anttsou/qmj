@@ -1,3 +1,3 @@
-.onAttach <- function(libname, pkgname) {
+.onLoad <- function(libname, pkgname) {
   utils::globalVariables(c("desc","year","ticker"))
 }
