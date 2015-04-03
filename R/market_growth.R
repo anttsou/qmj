@@ -14,8 +14,8 @@
 #' @examples
 #' data(companies)
 #' data(financials)
-#' x <- companies[50:51,]
-#' market_growth(x, financials)
+#' companies <- companies[50:51,]
+#' market_growth(companies, financials)
 #' @importFrom dplyr distinct arrange
 #' @export
 
