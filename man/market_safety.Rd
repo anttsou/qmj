@@ -4,12 +4,12 @@
 \alias{market_safety}
 \title{Collects safety z-scores for companies}
 \usage{
-market_safety(x, financials, daily)
+market_safety(companies, financials, prices)
 }
 \arguments{
-\item{financials}{A data frame containing financial statements for every company.}
-
 \item{companies}{A data frame of company names and tickers.}
+
+\item{financials}{A data frame containing financial statements for every company.}
 
 \item{prices}{A data frame containing the daily market closing prices and returns.}
 }
@@ -23,9 +23,8 @@ Quality Minus Junk (Asness et al.) in Appendix page A2.
 data(companies)
 data(financials)
 data(prices)
-x <- companies[50:51,]
-daily <- prices
-market_safety(x, financials, daily)
+companies <- companies[50:51,]
+market_safety(companies, financials, prices)
 }
 \seealso{
 \code{\link{market_data}}

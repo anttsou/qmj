@@ -5,12 +5,12 @@
 \title{Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
 by descending quality.}
 \usage{
-market_data(x, financials, daily)
+market_data(companies, financials, prices)
 }
 \arguments{
-\item{financials}{A data frame containing financial information for the given companies.}
-
 \item{companies}{A data frame of company names and tickers.}
+
+\item{financials}{A data frame containing financial information for the given companies.}
 
 \item{prices}{A data frame containing the daily market closing prices and returns.}
 }
@@ -22,9 +22,8 @@ for later processing.
 data(companies)
 data(financials)
 data(prices)
-x <- companies[50:51,]
-daily <- prices
-market_data(x, financials, daily)
+companies <- companies[50:51,]
+market_data(companies, financials, prices)
 }
 \seealso{
 \code{\link{market_profitability}}

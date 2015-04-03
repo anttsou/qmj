@@ -4,12 +4,12 @@
 \alias{market_payouts}
 \title{Collects payout z-scores for companies}
 \usage{
-market_payouts(x, financials)
+market_payouts(companies, financials)
 }
 \arguments{
-\item{financials}{A data frame containing financial statements for every company.}
-
 \item{companies}{A data frame of company names and tickers.}
+
+\item{financials}{A data frame containing financial statements for every company.}
 }
 \description{
 Given a data frame of companies (names and tickers) and a data frame of financial statements,
@@ -19,8 +19,8 @@ Quality Minus Junk (Asness et al.) in Appendix page A3-4.
 \examples{
 data(companies)
 data(financials)
-x <- companies[50:51,]
-market_payouts(x, financials)
+companies <- companies[50:51,]
+market_payouts(companies, financials)
 }
 \seealso{
 \code{\link{market_data}}
