@@ -19,16 +19,16 @@
 #' @importFrom dplyr distinct arrange
 #' @export
 
-market_growth <- function(x, financials){
-  if(length(x$ticker) == 0) {
+market_growth <- function(companies, financials){
+  if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
   if(length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
-  allcompanies <- data.frame(x$ticker)
+  allcompanies <- data.frame(companies$ticker)
   colnames(allcompanies) <- "ticker"
-  numCompanies <- length(x$tickers)
+  numCompanies <- length(companies$tickers)
   
   #set unavailable financial info to 0
   financials[is.na(financials)] <- 0
@@ -115,7 +115,7 @@ market_growth <- function(x, financials){
 
   growth <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   growth <- scale(growth)
-  data.frame(ticker = x$ticker, 
+  data.frame(ticker = companies$ticker, 
              growth = growth, 
              GPOA = GPOA, 
              ROE = ROE,
