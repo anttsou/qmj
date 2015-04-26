@@ -7,7 +7,8 @@ R/.Rhistory
 .Rproj.user
 .RData
 vignettes/*.gz
-vignettes/*.tex
+vignettes/qmj-concordance.tex
+vignettes/qmj.tex
 vignettes/*.log
 vignettes/*.pdf
 vignettes/*.out
