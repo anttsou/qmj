@@ -13,7 +13,8 @@ vignettes/*.log
 vignettes/*.pdf
 vignettes/*.out
 vignettes/*.dvi
-vignettes/*.bib
+vignettes/tsou-kane-kwon-blx.bib
+vignettes/qmj-blx.bib
 vignettes/*.brf
 vignettes/*.bbl
 vignettes/*.blg
