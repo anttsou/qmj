@@ -50,7 +50,7 @@ For this data, \textbf{qmj} is able to automatically retrieve the most recent li
 
 \begin{center}
 \scriptsize{
-<<echo=false>>=
+<<echo=FALSE>>=
 options(width=100)
 @
 <<Package Datasets>>=
