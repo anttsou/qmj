@@ -116,26 +116,26 @@ In the quality data set, it can quickly be seen that the growth score for Angies
 > head(quality)
 \end{Sinput}
 \begin{Soutput}
-  ticker                    name profitability      growth      safety    payouts  quality
-1   ANGI         ANGIES LIST INC    -0.1575365 24.55764246 -0.89076389 -1.8699982 21.63934
-2   SBCF SEACOAST BANKING CORP F    -0.9552288 21.17749195  0.23623565 -1.0820805 19.37642
-3   UHAL                  AMERCO    -0.3350943 19.25596295 -0.16064717 -1.9855567 16.77466
-4   GUID   GUIDANCE SOFTWARE INC     0.2245725 13.61798234  0.09569998 -1.5591484 12.37911
-5    BRO       BROWN & BROWN INC     0.1484205 -0.04063592 11.76587071  0.2254432 12.09910
-6   CFFN CAPITOL FEDERAL FINL IN     5.7540587 -0.04904148  5.73770806  0.2292110 11.67194
+  ticker                    name  profitability   growth   safety   payouts   quality
+1   ANGI         ANGIES LIST INC         -0.158   24.558   -0.891    -1.870    21.639
+2   SBCF SEACOAST BANKING CORP F         -0.955   21.177    0.236   -1.0821    19.376
+3   UHAL                  AMERCO         -0.335   19.256   -0.161    -1.986    16.775
+4   GUID   GUIDANCE SOFTWARE INC          0.225   13.618   0.0957    -1.559    12.379
+5    BRO       BROWN & BROWN INC          0.148  -0.0406   11.766     0.225   12.0991
+6   CFFN CAPITOL FEDERAL FINL IN          5.754  -0.0490    5.738     0.229    11.672
 \end{Soutput}
 \begin{Sinput}
 > sans_growth <- filter_companies(quality, filter="growth")
 > head(sans_growth)
 \end{Sinput}
 \begin{Soutput}
-   ticker                    name  profitability   growth   safety   payouts   quality
-5     BRO       BROWN & BROWN INC         0.1484  -0.0406   11.766     0.225   12.0991
-6    CFFN CAPITOL FEDERAL FINL IN          5.754  -0.0490    5.738     0.229    11.672
-8    CENX     CENTURY ALUMINUM CO         -0.191    3.440    6.177    -0.196     9.230
-9     CXW CORRECTIONS CORP OF AME         -0.328    3.220    4.101     0.191     7.184
-10    RSE    ROUSE PROPERTIES INC          3.621   0.0470    1.888     0.986     6.541
-11   PDCO       PATTERSON COS INC         -0.741  -0.0530    0.166     6.781     6.152
+  ticker                    name  profitability   growth   safety   payouts   quality
+5    BRO       BROWN & BROWN INC         0.1484  -0.0406   11.766     0.225   12.0991
+6   CFFN CAPITOL FEDERAL FINL IN          5.754  -0.0490    5.738     0.229    11.672
+8   CENX     CENTURY ALUMINUM CO         -0.191    3.440    6.177    -0.196     9.230
+9    CXW CORRECTIONS CORP OF AME         -0.328    3.220    4.101     0.191     7.184
+10   RSE    ROUSE PROPERTIES INC          3.621   0.0470    1.888     0.986     6.541
+11  PDCO       PATTERSON COS INC         -0.741  -0.0530    0.166     6.781     6.152
 \end{Soutput}
 \end{Schunk}
 }
