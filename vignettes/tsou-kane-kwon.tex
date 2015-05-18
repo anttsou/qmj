@@ -122,6 +122,8 @@ The \strong{qmj} package comes pre-compiled with data, using a universe comprise
 \end{center}
 
   Every company is allocated four rows, each row representing the financial data for the company for a particular year. Organizing the data in this way allows users to easily see the change in variables affecting each company's financial status over time. For example, consider the company with ticker A. It has nearly a 20\% increase in total assets, but it also has nearly a 50\% decrease in net income from 2011 to 2014.
+  
+  The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. 
 \begin{center}
 \scriptsize{
 \begin{Schunk}
@@ -137,10 +139,24 @@ The \strong{qmj} package comes pre-compiled with data, using a universe comprise
 4   GSPC 2013-01-08 -0.003247646 1457.15
 5   GSPC 2013-01-09  0.002652349 1461.02
 \end{Soutput}
+\begin{Sinput}
+> prices[1050:1054,]
+\end{Sinput}
+\begin{Soutput}
+     ticker       date          pret close
+1050   SRCE 2013-01-03 -0.0083096914 22.77
+1051   SRCE 2013-01-04  0.0000000000 22.77
+1052   SRCE 2013-01-07 -0.0070515938 22.61
+1053   SRCE 2013-01-08 -0.0039884830 22.52
+1054   SRCE 2013-01-09 -0.0004441484 22.51
+\end{Soutput}
 \end{Schunk}
 }
 \end{center}
 
+  In the sample above, we have data for the company with ticker SRCE as well as the S \& P 500 (ticker GSPC), or the market. For every company in the dataset, we have the daily price return (pret) and closing price (close), and we compare these values to those of the market to see if the company outperforms or underperformsthe market. The S \& P 500 is the benchmark we use in our calculations of beta and idiosyncratic volatility for our safety score. If we directly compare price returns, it appears that SRCE underperforms the market for every day in our sample of five consecutive business days. 
+  
+  Finally, we have the main dataset, \code{quality}, which contains the quality scores for each company as well as the four main components measuring profitability, growth, safety, and payouts z-scores. 
 \begin{center}
 \scriptsize{
 \begin{Schunk}
@@ -156,9 +172,25 @@ The \strong{qmj} package comes pre-compiled with data, using a universe comprise
 4   GUID   GUIDANCE SOFTWARE INC     0.2245725 13.61798234  0.09569998 -1.5591484 12.37911
 5    BRO       BROWN & BROWN INC     0.1484205 -0.04063592 11.76587071  0.2254432 12.09910
 \end{Soutput}
+\begin{Sinput}
+> quality[quality$ticker=="SRCE",]
+\end{Sinput}
+\begin{Soutput}
+     ticker            name profitability      growth    safety   payouts   quality
+1408   SRCE 1ST SOURCE CORP    -0.1446971 -0.04772882 0.3205114 0.0298563 0.1579417
+\end{Soutput}
+\begin{Sinput}
+> quality[quality$ticker=="AA",]
+\end{Sinput}
+\begin{Soutput}
+     ticker      name profitability      growth     safety  payouts     quality
+1618     AA ALCOA INC    0.03511853 -0.03946235 -0.1664674 0.124802 -0.04600925
+\end{Soutput}
 \end{Schunk}
 }
 \end{center}
+
+Here we have an example showing the top five companies based on quality measurements. We also have two companies we have seen before in our samples of other datasets. For the company with ticker SRCE, we note that the quality score is not very high. Though we cannot just extrapolate from our sample size of five, it makes sense for SRCE to have a low quality score if it continues to underperform the market every day, which we can verify if we look compare the price returns on more days from the \code{prices} dataset. AA has an even lower quality score, which is understandable from its poor financial records. Most notably, the values for its total assets, net income, income after taxes, income before taxes all decline significantly in a span of four years. 
 
 \subsection{Updating Data}
 

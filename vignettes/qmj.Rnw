@@ -88,6 +88,7 @@ head(financials, n = 8)
 <<>>=
 data(prices)
 head(prices, n = 5)
+prices[1050:1055,]
 @
 }
 \end{center}
@@ -97,6 +98,8 @@ head(prices, n = 5)
 <<>>=
 data(quality)
 head(quality, n = 5)
+quality[quality$ticker=="SRCE",]
+quality[quality$ticker=="AA",]
 @
 }
 \end{center}
