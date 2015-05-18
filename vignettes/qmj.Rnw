@@ -78,7 +78,7 @@ head(companies, n = 5)
 \scriptsize{
 <<>>=
 data(financials)
-head(financials, n = 5)
+head(financials, n = 8)
 @
 }
 \end{center}

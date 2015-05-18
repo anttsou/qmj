@@ -87,31 +87,41 @@ The \strong{qmj} package comes pre-compiled with data, using a universe comprise
 
   The \code{companies} dataset maps each company's ticker to its name. For example, Alcoa Inc. has the ticker AA. This sample of companies uses the 2014 Russell 3000 Index, which only contains 2999 companies. 
 
+  The \code{financials} dataset is composed of data from the balance sheets, income statements, and cash flows of companies. The columns are filtered so only the relevant measurements such as net income are present in the dataset. \code{companies} is the baseline dataset by providing tickers for other datasets in the package.
+  
 \begin{center}
 \scriptsize{
 \begin{Schunk}
 \begin{Sinput}
 > data(financials)
-> head(financials, n = 5)
+> head(financials, n = 8)
 \end{Sinput}
 \begin{Soutput}
-  ticker year AM  CWC    CX DIVC DO DP.DPL GPROF  IAT  IBT   NI NINT NRPS RPS    TA  
-1      A 2011 NA -159  -188 0.00 NA    253  3529 1012 1032 1012   NA   NA  NA  9057 
-2      A 2012 NA -176  -194 0.30 NA    301  3604 1153 1043 1153   NA   NA  NA 10536 
-3      A 2013 NA -114  -195 0.44 NA    372  3535  724  859  724   NA   NA  NA 10686 
-4      A 2014 NA -219  -205 0.52 NA    384  3593  504  646  504   NA    0  NA 10831 
-5     AA 2011 NA -249 -1287 0.12 NA   1481  4471  808 1063  611   NA   55  NA 40120 
+  ticker year AM   CWC    CX DIVC DO DP.DPL GPROF   IAT   IBT    NI NINT NRPS RPS    TA  
+1      A 2011 NA  -159  -188 0.00 NA    253  3529  1012  1032  1012   NA   NA  NA  9057 
+2      A 2012 NA  -176  -194 0.30 NA    301  3604  1153  1043  1153   NA   NA  NA 10536 
+3      A 2013 NA  -114  -195 0.44 NA    372  3535   724   859   724   NA   NA  NA 10686 
+4      A 2014 NA  -219  -205 0.52 NA    384  3593   504   646   504   NA    0  NA 10831 
+5     AA 2011 NA  -249 -1287 0.12 NA   1481  4471   808  1063   611   NA   55  NA 40120
+6     AA 2012 NA    78 -1261 0.12 NA   1462  3299   162   324   191   NA   55  NA 40179 
+7     AA 2013 NA  -433 -1193 0.12 NA   1422  3746 -2244 -1816 -2285   NA   55  NA 35742 
+8     AA 2014 NA -1209 -1219 0.12 NA   1372  4769   177   497   268   NA   58  NA 37399 
+
    TCA  TCL    TCSO   TD    TL  TLSE  TREV
 1 5569 1837  347.00 2185  4749  9057  6615
 2 4629 1893  346.00 2362  5354 10536  6858
 3 4983 1602  333.00 2699  5400 10686  6782
 4 5500 1703  335.00 1663  5533 10831  6981
 5 7713 6013 1064.41 9371 26276 40120 24951
+6 7700 5942 1067.21 8829 26980 40179 23700
+7 6969 6105 1071.01 8319 25149 35742 23032
+8 8269 5541 1216.66 8852 25093 37399 23906
 \end{Soutput}
 \end{Schunk}
 }
 \end{center}
 
+  Every company is allocated four rows, each row representing the financial data for the company for a particular year. Organizing the data in this way allows users to easily see the change in variables affecting each company's financial status over time. For example, consider the company with ticker A. It has nearly a 20\% increase in total assets, but it also has nearly a 50\% decrease in net income from 2011 to 2014.
 \begin{center}
 \scriptsize{
 \begin{Schunk}
