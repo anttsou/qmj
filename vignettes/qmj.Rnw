@@ -73,6 +73,33 @@ head(companies, n = 5)
 }
 \end{center}
 
+
+\begin{center}
+\scriptsize{
+<<>>=
+data(financials)
+head(financials, n = 5)
+@
+}
+\end{center}
+
+\begin{center}
+\scriptsize{
+<<>>=
+data(prices)
+head(prices, n = 5)
+@
+}
+\end{center}
+
+\begin{center}
+\scriptsize{
+<<>>=
+data(quality)
+head(quality, n = 5)
+@
+}
+\end{center}
 \textit{companies} stores names and tickers from the Russell 3000 Index component list, \textit{financials} stores, whenever possible, the four most recent years of financial data (balance sheets, income statements, and cash flow statements) which are relevant to our calculations. \textit{prices} stores closing stock prices and calculated price returns for each company as well as the S\&P 500 for the past two years, and \textit{quality} is the list of quality scores, as well as the component scores, of each of our companies.
 
 \subsection{Updating Data}
