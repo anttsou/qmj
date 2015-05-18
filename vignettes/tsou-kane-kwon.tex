@@ -4,12 +4,6 @@
 \usepackage{RJournal}
 \usepackage{amsmath,amssymb,array}
 \usepackage{booktabs}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue, 
-    urlcolor=cyan
-}
 
 \begin{document}
 
@@ -24,17 +18,21 @@
 \author{by Anthoney Tsou, David Kane, Ryan Kwon}
 \title{An Implementation of Quality Minus Junk}
 \maketitle
+
+\citep{campbell:2007}
+\citep{gray:2013}
+\citep{kane:2011}
+\citep{lu:2013}
 \abstract{
-The \strong{qmj} package produces quality scores for companies based on the work of \hyperlink{bibliography}{Asness et. al (2013)}. It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payout, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock return data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform.} 
+The \strong{qmj} package produces quality scores for companies based on the work of Asness et. al (2013). It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payout, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock return data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform.} 
 
 \section{Introduction}
-\strong{qmj} implements the methodology of the work of \hyperlink{bibliography}{\strong{Asness et. al} (2013)}; a paper which utilizes several financial measures to calculate the relative profitability, growth, safety, and payouts of a company within a given universe. These ``component'' (a term we will be using in this paper frequently) scores are used to quantify the quality of a company. Asness's paper includes the performance of a ``quality minus junk'' portfolio, or a QMJ portfolio. Their ultimate conclusions were that QMJ portfolios that longed high-quality stocks and shorted low-quality stocks "earn[ed] significant risk-adjusted returns with an information ratio above 1", and they documented "strong and consistent abnormal returns to quality" (Asness, Frazzini, and Pedersen 2013). The exact details behind the processes used to determine each of these components are given in the appendix of this paper.
+A stock's quality represents how much investors should be willing to pay for it, all else equal. Thus, the return of a high-quality stock is intended to exceed its purchase price. Naturally, the return of a high-quality stock is at its highest when its purchase price is low. When a high-quality stock yields a high return, however, investors become more willing to pay a higher price for it, decreasing its return and creating a cycle of undervaluing and overvaluing the stock. 
 
-Asness's paper includes the performance of a ``quality minus junk'' portfolio, or a QMJ portfolio. Their ultimate conclusions were that QMJ portfolios that longed high-quality stocks and shorted low-quality stocks "earn[ed] significant risk-adjusted returns with an information ratio above 1", and they documented "strong and consistent abnormal returns to quality" (Asness, Frazzini, and Pedersen 2013).
+A Quality Minus Junk approach \citep{asness:2013}, which involves investing long on high-quality stocks and shorting low-quality stocks, produces high risk-adjusted returns. The \strong{qmj} package evaluates the quality of stocks by measuring the profitability, growth, safety, and payouts of a company relative to other companies in the Russell 3000 Index. We define each of these characteristics in the following section of the paper. 
 
-\strong{qmj} provides tools to practically apply their results, and also expedites the data-gathering process. Contained within the package are frequently updated, pre-compiled data sets in addition to tools needed to automatically gather relevant financial statements and information from Google Finance for a given data frame of companies. The data sets included within this package includes several measures taken from the 10-K's of these companies, as well as the two most recent years of closing stock prices. All data sets pre-compiled with \strong{qmj} may be re-created within the package for an arbitrary data frame of companies. This is further discussed in the \strong{Data} section of this paper.
+Drawing data from financial statements, the \strong{qmj} package uses regression based analysis and calculations with closed form expressions to produce a quality z-score for each company of interest. We demonstrate the use of a variety of tools for both casual and diligent investors to not only view the quality of stocks, but also to understand the underlying factors that compose the scores. 
 
-Also provided are various utilities to aid in analyzing the resultant quality data set. This includes a \strong{qmj class} that reveals all information about a single company, and is also able to plot where the company's relative quality, profitability, growth, e.t.c. stand relative to the entire universe. \strong{qmj} also provides a filter function to minimize the amount of ``noise'' that may result from bad data or falsified financial information.
 
 \section{Calculating Quality}
 
@@ -213,6 +211,8 @@ It may also be desirable to look at quality scores specific to a subset of our e
 
 In the \strong{qmj} package, we automate AQR's method of assigning quality scores for publicly traded companies in today's market. The package itself provides convenient datasets and utility functions, and it also takes advantage of R's robust nature to allow seamless interaction with functions in the base R package and other packages.
 
+\bibliography{tsou-kane-kwon}
+
 \address{Anthoney Tsou\\
       Williams College\\
       2460 Paresky Center\\
@@ -232,7 +232,5 @@ In the \strong{qmj} package, we automate AQR's method of assigning quality score
   Williamstown, MA 01267\\
   United States}\\
 \email{rynkwn@gmail.com}
-\nocite{*}
-\bibliography{tsou-kane-kwon}
 \end{article}
 \end{document}
