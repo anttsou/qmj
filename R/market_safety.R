@@ -53,7 +53,7 @@ market_safety <- function(companies, financials, prices){
   mergedail <- merge(marketlistb,nogspc,by="date")
   splitdail <- split(mergedail,mergedail$ticker.y)
   splitindices <- split(seq(nrow(prices)), prices$ticker)  # Stores list of indices for a company ticker.
-  splitindices <- splitindices[-1]
+  #splitindices <- splitindices[-1]
   companiesstored <- names(splitindices)
   
   modifiedsetdiff <- function(x.1,x.2,...){
@@ -137,12 +137,16 @@ market_safety <- function(companies, financials, prices){
   tempframe <- data.frame(companiesstored, closingmeans)
   colnames(tempframe) <- c("ticker", "close")
   tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)  
-  
   ME <- mapply(marketequity, tempframe$close, fstyear$TCSO)
+  
   WC <- fstyear$TCA - fstyear$TCL
+  
   RE <- fstyear$NI - (fstyear$DIVC * fstyear$TCSO)
+  
   EBIT <- fstyear$NI - fstyear$DO + (fstyear$IBT - fstyear$IAT) + fstyear$NINT
+  
   SALE <- fstyear$TREV
+  
   Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(fstyear$TA)
   
   EVOL <- mapply(evol, fstyear$NI, sndyear$NI,
@@ -160,6 +164,8 @@ market_safety <- function(companies, financials, prices){
                                     - fstyear$TL)
                                     - fstyear$RPS
                                     - fstyear$NRPS))
+  
+  
   TLTA <- (fstyear$TD - fstyear$NI - 
            fstyear$RPS - fstyear$NRPS)/ADJASSET
   WCTA <- (fstyear$TCA - fstyear$TCL)/ADJASSET

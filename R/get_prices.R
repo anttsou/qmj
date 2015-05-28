@@ -59,7 +59,7 @@ get_prices <- function(companies){
       )
       if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1){
         #If we successfully retrieved the data, and there's enough of that data to be worth keeping, we save it as a temp file.
-        print(companyTicker)
+        #print(companyTicker)
         stockData <- stockData[desiredDates,4]
         stockData$pret <- pricereturns(stockData)
         stockData <- stockData[-1,]
