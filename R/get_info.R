@@ -93,7 +93,7 @@ get_info <- function(x) {
   cashflows <- list()
   incomestatements <- list()
   balancesheets <- list()
-  if(length(listfiles) > 1){
+  if(length(listfiles) >= 1){
     for(i in 1:(length(listfiles))){
       load(listfiles[i])
       cashflows <- c(cashflows, clist[1])
@@ -101,7 +101,7 @@ get_info <- function(x) {
       balancesheets <- c(balancesheets, clist[3])
     }
   }
-  
+
   resultlist <- list(cashflows, incomestatements, balancesheets)
   file.remove(listfiles)
   resultlist
