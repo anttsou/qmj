@@ -26,7 +26,6 @@ tidy_prices <- function(x){
   colnames(tidymatrix) <- c("ticker", "date", "pret", "close")
   dates <- rownames(x)
   for(i in 1:numCompanies){
-    print(paste(i/numCompanies, " complete", sep=''))
     ticker <- gsub(".Close","",names(x)[2*i - 1]) #Parses the ticker out of one of the columns contributed by the company.
     ticker <- gsub(".Adjusted", "", ticker) #Correctly retrieves ticker from the special case of GSPC.Adjusted (S&P 500)
     col1 <- x[,(2*i)-1]
