@@ -5,7 +5,8 @@
 \title{Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
 by descending quality.}
 \usage{
-market_data(companies, financials, prices)
+market_data(companies = qmjdata::companies,
+  financials = qmjdata::financials, prices = qmjdata::prices)
 }
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
@@ -19,11 +20,8 @@ Calculates market growth, payouts, safety, and profitability of our list of comp
 for later processing.
 }
 \examples{
-data(companies)
-data(financials)
-data(prices)
-companies <- companies[50:51,]
-market_data(companies, financials, prices)
+companies <- qmjdata::companies[50:51,]
+market_data(companies, qmjdata::financials, qmjdata::prices)
 }
 \seealso{
 \code{\link{market_profitability}}

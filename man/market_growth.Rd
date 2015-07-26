@@ -4,7 +4,8 @@
 \alias{market_growth}
 \title{Collects growth z-scores for companies}
 \usage{
-market_growth(companies, financials)
+market_growth(companies = qmjdata::companies,
+  financials = qmjdata::financials)
 }
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
@@ -18,10 +19,8 @@ and determines the z-score of overall growth for each company based on the paper
 Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
-data(companies)
-data(financials)
-companies <- companies[50:51,]
-market_growth(companies, financials)
+companies <- qmjdata::companies[50:51,]
+market_growth(companies, qmjdata::financials)
 }
 \seealso{
 \code{\link{market_data}}

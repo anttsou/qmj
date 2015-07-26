@@ -4,7 +4,7 @@
 \alias{tidy_incomestatements}
 \title{Makes raw incomestatement data usable and readable.}
 \usage{
-tidy_incomestatements(x)
+tidy_incomestatements(x = qmjdata::companies)
 }
 \arguments{
 \item{x}{A list of raw incomestatement file data produced from quantmod}
@@ -21,8 +21,7 @@ must be formatted in a list such that every element is a data frame or matrix co
 within this package.
 }
 \examples{
-data(companies)
-sub_comps <- companies[1:2,]
+sub_comps <- qmjdata::companies[1:2,]
 raw_data <- get_info(sub_comps)
 tidyincome <- tidy_incomestatements(raw_data[[2]])
 }

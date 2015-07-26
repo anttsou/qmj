@@ -4,7 +4,7 @@
 \alias{get_prices}
 \title{Gets the daily prices and returns of companies for the past two years.}
 \usage{
-get_prices(companies)
+get_prices(companies = qmjdata::companies)
 }
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
@@ -15,8 +15,7 @@ in the package folder. If canceled partway through, function is able to find and
 resumption of progress.
 }
 \examples{
-data(companies)
-companies <- companies[1:2,]
+companies <- qmjdata::companies[1:2,]
 get_prices(companies)
 }
 \seealso{

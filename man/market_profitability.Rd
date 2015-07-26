@@ -4,7 +4,8 @@
 \alias{market_profitability}
 \title{Collects profitability z-scores for companies}
 \usage{
-market_profitability(companies, financials)
+market_profitability(companies = qmjdata::companies,
+  financials = qmjdata::financials)
 }
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
@@ -17,10 +18,8 @@ calculates GPOA, ROE, ROA, CFOA, GMAR, ACC and determines the z-score of overall
 for each company based on the paper Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
-data(companies)
-data(financials)
-companies <- companies[50:51,]
-market_profitability(companies, financials)
+companies <- qmjdata::companies[50:51,]
+market_profitability(companies, qmjdata::financials)
 }
 \seealso{
 \code{\link{market_data}}

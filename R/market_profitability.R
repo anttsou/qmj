@@ -10,13 +10,11 @@
 #' @seealso \code{\link{market_safety}}
 #' @seealso \code{\link{market_payouts}}
 #' @examples
-#' data(companies)
-#' data(financials)
-#' companies <- companies[50:51,]
-#' market_profitability(companies, financials)
+#' companies <- qmjdata::companies[50:51,]
+#' market_profitability(companies, qmjdata::financials)
 #' @export
 
-market_profitability <- function(companies, financials){ 
+market_profitability <- function(companies = qmjdata::companies, financials = qmjdata::financials){ 
   if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }

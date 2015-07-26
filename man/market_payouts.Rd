@@ -4,7 +4,8 @@
 \alias{market_payouts}
 \title{Collects payout z-scores for companies}
 \usage{
-market_payouts(companies, financials)
+market_payouts(companies = qmjdata::companies,
+  financials = qmjdata::financials)
 }
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
@@ -17,10 +18,8 @@ calculates EISS, DISS, NPOP and determines the z-score of overall payout for eac
 Quality Minus Junk (Asness et al.) in Appendix page A3-4.
 }
 \examples{
-data(companies)
-data(financials)
-companies <- companies[50:51,]
-market_payouts(companies, financials)
+companies <- qmjdata::companies[50:51,]
+market_payouts(companies, qmjdata::financials)
 }
 \seealso{
 \code{\link{market_data}}

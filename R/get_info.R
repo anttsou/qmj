@@ -7,13 +7,12 @@
 #' @param x A data frame of companies. Must have a ticker column.
 #' @seealso \code{\link{get_prices}}
 #' @examples
-#' data(companies)
-#' sub_comps <- companies[1:2,]
+#' sub_comps <- qmjdata::companies[1:2,]
 #' get_info(sub_comps)
 #' @importFrom quantmod getFinancials viewFinancials
 #' @export
 
-get_info <- function(x) {
+get_info <- function(x = qmjdata::companies) {
   if(length(x$ticker) == 0) {
     stop("parameter requires a ticker column.")
   }  

@@ -4,7 +4,7 @@
 \alias{tidy_balancesheets}
 \title{Makes raw balancesheet data usable and readable.}
 \usage{
-tidy_balancesheets(x)
+tidy_balancesheets(x = qmjdata::companies)
 }
 \arguments{
 \item{x}{A list of raw cash flow data produced from quantmod}
@@ -21,8 +21,7 @@ must be formatted in a list such that every element is a data frame or matrix co
 within this package.
 }
 \examples{
-data(companies)
-sub_comps <- companies[1:2,]
+sub_comps <- qmjdata::companies[1:2,]
 raw_data <- get_info(sub_comps)
 tidybalance <- tidy_balancesheets(raw_data[[3]])
 }

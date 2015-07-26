@@ -4,7 +4,8 @@
 \alias{market_safety}
 \title{Collects safety z-scores for companies}
 \usage{
-market_safety(companies, financials, prices)
+market_safety(companies = qmjdata::companies,
+  financials = qmjdata::financials, prices = qmjdata::prices)
 }
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
@@ -20,11 +21,8 @@ and determines the z-score of overall safety for each company based on the paper
 Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
-data(companies)
-data(financials)
-data(prices)
-companies <- companies[50:51,]
-market_safety(companies, financials, prices)
+companies <- qmjdata::companies[50:51,]
+market_safety(companies, qmjdata::financials, qmjdata::prices)
 }
 \seealso{
 \code{\link{market_data}}

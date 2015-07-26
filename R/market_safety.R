@@ -12,15 +12,14 @@
 #' @seealso \code{\link{market_growth}}
 #' @seealso \code{\link{market_payouts}}
 #' @examples
-#' data(companies)
-#' data(financials)
-#' data(prices)
-#' companies <- companies[50:51,]
-#' market_safety(companies, financials, prices)
+#' companies <- qmjdata::companies[50:51,]
+#' market_safety(companies, qmjdata::financials, qmjdata::prices)
 #' @importFrom dplyr filter distinct arrange
 #' @export
 
-market_safety <- function(companies, financials, prices){
+market_safety <- function(companies = qmjdata::companies, 
+                          financials = qmjdata::financials, 
+                          prices = qmjdata::prices){
   if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }

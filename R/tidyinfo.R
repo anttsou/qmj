@@ -9,8 +9,7 @@
 #' @seealso \code{\link{tidy_balancesheets}}
 #' @seealso \code{\link{tidy_incomestatements}}
 #' @examples
-#' data(companies)
-#' sub_comps <- companies[1:2,]
+#' sub_comps <- qmjdata::companies[1:2,]
 #' raw_data <- get_info(sub_comps)
 #' financials <- tidyinfo(raw_data)
 #' 
@@ -19,7 +18,7 @@
 #' financials <- tidyinfo(raw_data)
 #' @export
 
-tidyinfo <- function(x){
+tidyinfo <- function(x = qmjdata::companies){
   #Index is the current structure of the output of the get_info function.
   tidycash <- tidy_cashflows(x[[1]])
   tidyincome <- tidy_incomestatements(x[[2]])

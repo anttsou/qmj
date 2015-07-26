@@ -12,13 +12,12 @@
 #' @seealso \code{\link{tidy_balancesheets}}
 #' @seealso \code{\link{tidy_incomestatements}}
 #' @examples
-#' data(companies)
-#' sub_comps <- companies[1:2,]
+#' sub_comps <- qmjdata::companies[1:2,]
 #' raw_data <- get_info(sub_comps)
 #' tidycash <- tidy_cashflows(raw_data[[1]])
 #' @export
 
-tidy_cashflows <- function(x) {
+tidy_cashflows <- function(x = qmjdata::companies) {
   numCompanies <- length(x)
   cashflows <- matrix(nrow=numCompanies*4, ncol=21) #Pre-allocate space for speed reasons.
   

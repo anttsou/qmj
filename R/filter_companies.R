@@ -8,13 +8,15 @@
 #' @param remove A logical value. If true, removes companies from data frame that are driven by the given filter. Mutually exclusive with the isolate parameter.
 #' @param isolate A logical value. If true, returns companies that are driven by the given filter. Mutually exclusive with the remove parameter.
 #' @examples
-#' data(quality)
 #' filter <- "all"
-#' filter_companies(quality,filter)
+#' filter_companies(qmjdata::quality,filter)
 #' @export
 
-filter_companies <- function(quality, filter, remove=TRUE, isolate=FALSE){
-  if(remove == isolate){
+filter_companies <- function(quality = qmjdata::quality, 
+                             filter = "all", 
+                             remove = TRUE, 
+                             isolate = FALSE) {
+  if(remove == isolate) {
     stop("Both the remove and isolate parameters are set to either true or false in filter_companies. They must have different logical values.")
   }
   #Helper functions perform a simple arithmetic operation to determine if a given component is >= 50% of a given quality score.

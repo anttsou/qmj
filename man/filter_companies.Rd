@@ -4,7 +4,8 @@
 \alias{filter_companies}
 \title{Filters quality data to isolate or remove companies which have quality scores that are primarily "driven" by a single component.}
 \usage{
-filter_companies(quality, filter, remove = TRUE, isolate = FALSE)
+filter_companies(quality = qmjdata::quality, filter = "all",
+  remove = TRUE, isolate = FALSE)
 }
 \arguments{
 \item{quality}{The quality data frame produced by market_data.}
@@ -21,8 +22,7 @@ factor. For a company to be driven by a particular component, at least 50% of it
 component. Also allows for the user to trim "driven" companies, returning companies that have scores that are relatively well-distributed.
 }
 \examples{
-data(quality)
 filter <- "all"
-filter_companies(quality,filter)
+filter_companies(qmjdata::quality,filter)
 }
 

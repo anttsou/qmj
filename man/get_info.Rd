@@ -4,7 +4,7 @@
 \alias{get_info}
 \title{Gets raw company balance sheets, income statements, and cash flows from Google Finance.}
 \usage{
-get_info(x)
+get_info(x = qmjdata::companies)
 }
 \arguments{
 \item{x}{A data frame of companies. Must have a ticker column.}
@@ -16,8 +16,7 @@ Also writes .RData files for every company in the /extdata folder in the package
 If canceled partway through, function is able to find and re-read this data, allowing resumption of progress.
 }
 \examples{
-data(companies)
-sub_comps <- companies[1:2,]
+sub_comps <- qmjdata::companies[1:2,]
 get_info(sub_comps)
 }
 \seealso{

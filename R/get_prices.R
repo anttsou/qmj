@@ -6,12 +6,11 @@
 #' @param companies A data frame of company names and tickers.
 #' @seealso \code{\link{get_info}}
 #' @examples
-#' data(companies)
-#' companies <- companies[1:2,]
+#' companies <- qmjdata::companies[1:2,]
 #' get_prices(companies)
 #' @export
 
-get_prices <- function(companies){
+get_prices <- function(companies = qmjdata::companies){
   if(length(companies$ticker) == 0) {
     stop("parameter requires a ticker column.")
   }
