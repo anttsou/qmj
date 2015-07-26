@@ -1,8 +1,8 @@
 context("Attributes for Financials")
 
-data(companies)
-data(financials)
-data(prices)
+companies <- qmjdata::companies
+financials <- qmjdata::financials
+prices <- qmjdata::prices
 
 test_that("tcso is positive", {
   temp <- financials

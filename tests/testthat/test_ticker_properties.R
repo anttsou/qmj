@@ -1,9 +1,9 @@
 context("Ticker properties")
 
-data(companies)
-data(financials)
-data(prices)
-data(quality)
+companies <- qmjdata::companies
+financials <- qmjdata::financials
+prices <- qmjdata::prices
+quality <- qmjdata::quality
 
 test_that("tickers and names same in companies dataset and get_companies function",{
   temp <- get_companies()

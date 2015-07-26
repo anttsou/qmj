@@ -1,8 +1,8 @@
 context("Beta and Idiosyncratic Volatility")
 
-data(companies)
-data(financials)
-data(prices)
+companies <- qmjdata::companies
+financials <- qmjdata::financials
+prices <- qmjdata::prices
 
 test_that("calculation returns non-NA value", {
   temp <- companies
