@@ -1,12 +1,24 @@
-#' Filters quality data to isolate or remove companies which have quality scores that are primarily "driven" by a single component.
+#' Filters quality data to isolate or remove companies 
+#' which have quality scores that are primarily "driven" 
+#' by a single component.
 #'
-#' Taking in the quality data frame and a filter parameter, returns companies that are defined to be driven by that particular
-#' factor. For a company to be driven by a particular component, at least 50% of its quality score must be due to that particular
-#' component. Also allows for the user to trim "driven" companies, returning companies that have scores that are relatively well-distributed.
+#' Taking in the quality data frame and a filter parameter,
+#' returns companies that are defined to be driven by that 
+#' particular factor. For a company to be driven by a 
+#' particular component, at least 50% of its quality score
+#' must be due to that particular component. Also allows for
+#' the user to trim "driven" companies, returning companies 
+#' that have scores that are relatively well-distributed.
 #' @param quality The quality data frame produced by market_data.
-#' @param filter What driver to search for. Valid inputs are "profitability", "growth", "payouts", "safety", and "all", which filters companies that are driven by any component.
-#' @param remove A logical value. If true, removes companies from data frame that are driven by the given filter. Mutually exclusive with the isolate parameter.
-#' @param isolate A logical value. If true, returns companies that are driven by the given filter. Mutually exclusive with the remove parameter.
+#' @param filter What driver to search for. Valid inputs are 
+#' "profitability", "growth","payouts", "safety", and "all", 
+#' which filters companies that are driven by any component.
+#' @param remove A logical value. If true, removes companies from 
+#' data frame that are driven by the given filter. Mutually 
+#' exclusive with the isolate parameter.
+#' @param isolate A logical value. If true, returns companies 
+#' that are driven by the  given filter. Mutually exclusive with 
+#' the remove parameter.
 #' @examples
 #' filter <- "all"
 #' filter_companies(qmjdata::quality,filter)

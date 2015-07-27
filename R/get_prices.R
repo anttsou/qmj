@@ -1,8 +1,9 @@
 #' Gets the daily prices and returns of companies for the past two years.
 #'
-#' Given a data frame of companies (names and tickers), writes .RData files for every company in the /extdata folder
-#' in the package folder. If canceled partway through, function is able to find and re-read this data, allowing
-#' resumption of progress.
+#' Given a data frame of companies (names and tickers), writes .RData 
+#' files for every company in the /extdata folder in the package folder. 
+#' If canceled partway through, function is able to find and re-read this 
+#' data, allowing resumption of progress.
 #' @param companies A data frame of company names and tickers.
 #' @seealso \code{\link{get_info}}
 #' @examples

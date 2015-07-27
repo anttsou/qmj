@@ -1,10 +1,12 @@
 #' Collects payout z-scores for companies
 #'
-#' Given a data frame of companies (names and tickers) and a data frame of financial statements, 
-#' calculates EISS, DISS, NPOP and determines the z-score of overall payout for each company based on the paper
-#' Quality Minus Junk (Asness et al.) in Appendix page A3-4.
+#' Given a data frame of companies (names and tickers) and a data frame of 
+#' financial statements, calculates EISS, DISS, NPOP and determines the 
+#' z-score of overall payout for each company based on the paper Quality 
+#' Minus Junk (Asness et al.) in Appendix page A3-4.
 #' @param companies A data frame of company names and tickers.
-#' @param financials A data frame containing financial statements for every company.
+#' @param financials A data frame containing financial statements for every
+#' company.
 #' @seealso \code{\link{market_data}}
 #' @seealso \code{\link{market_profitability}}
 #' @seealso \code{\link{market_growth}}
