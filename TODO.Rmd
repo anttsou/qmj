@@ -2,5 +2,5 @@
 
 * Format vignette as The R Journal submission (R Markdown)
 * Take care of issues raised in R CMD check (format data size)
-* 0.2.0 or 0.2-1? What is correct version number format?
+
 
