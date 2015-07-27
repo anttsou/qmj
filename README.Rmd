@@ -1,5 +1,5 @@
 # qmj (Quality Minus Junk)
-Authors : Anthoney Tsou, David Kane, Ryan Kwon
+Authors : Anthoney Tsou, Eugene Choe, David Kane, Ryan Kwon
 
 To install the package:
 
@@ -9,11 +9,11 @@ install_github("anttsou/qmj")
 ```
 
 ##Background
-qmj implements the results and methodology of the paper Quality Minus Junk by Clifford Asness, Andrea Frazzini, Lasse Pedersen. In their paper, they use several measures to calculate the relative profitability, growth, safety, and payouts of a company, which they use to provide an overall quality score for a company.
+qmj implements the results and methodology of the paper Quality Minus Junk by Clifford Asness, Andrea Frazzini, Lasse Pedersen. They use several measures to calculate scores for the relative profitability, growth, safety, and payouts of a company. Combining those scores generates an overall quality score.
 
-This quality score is used to recommend which companies to buy and which to sell, by reasoning that quality companies are likely outperform the market, while "junk" companies are likely to underperform.
+High quality companies are likely outperform the market, while ``junk'' companies are likely to underperform.
 
-Here we use the equations and methods described in the paper, coupled with data scraped from reputable online sources, in order to produce quality measurements for companies listed in the Russell 3000 Index.
+Here we use the equations and methods described in the paper, coupled with data scraped from online sources, in order to produce quality measurements for companies listed in the Russell 3000 Index.
 
 ##Getting Started
 In order to start you off, qmj comes equipped with several data sets, including company information, financial statements, and daily stock data. To access them, call:
