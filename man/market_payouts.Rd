@@ -10,12 +10,14 @@ market_payouts(companies = qmjdata::companies,
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
 
-\item{financials}{A data frame containing financial statements for every company.}
+\item{financials}{A data frame containing financial statements for every
+company.}
 }
 \description{
-Given a data frame of companies (names and tickers) and a data frame of financial statements,
-calculates EISS, DISS, NPOP and determines the z-score of overall payout for each company based on the paper
-Quality Minus Junk (Asness et al.) in Appendix page A3-4.
+Given a data frame of companies (names and tickers) and a data frame of
+financial statements, calculates EISS, DISS, NPOP and determines the
+z-score of overall payout for each company based on the paper Quality
+Minus Junk (Asness et al.) in Appendix page A3-4.
 }
 \examples{
 companies <- qmjdata::companies[50:51,]

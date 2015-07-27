@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_info.R
 \name{get_info}
 \alias{get_info}
-\title{Gets raw company balance sheets, income statements, and cash flows from Google Finance.}
+\title{Gets raw company balance sheets, income statements, and
+cash flows from Google Finance.}
 \usage{
 get_info(x = qmjdata::companies)
 }
@@ -10,10 +11,13 @@ get_info(x = qmjdata::companies)
 \item{x}{A data frame of companies. Must have a ticker column.}
 }
 \description{
-Retrieves data for the data frame of companies and generates a list with three elements. Each element
-is a large list containing all the balance sheets, income statements, or cash flow statements for all companies.
-Also writes .RData files for every company in the /extdata folder in the package folder.
-If canceled partway through, function is able to find and re-read this data, allowing resumption of progress.
+Retrieves data for the data frame of companies and generates
+a list with three elements. Each element is a large list
+containing all the balance sheets, income statements, or cash
+flow statements for all companies. Also writes .RData files
+for every company in the /extdata folder in the package folder.
+If canceled partway through, function is able to find and
+re-read this data, allowing resumption of progress.
 }
 \examples{
 sub_comps <- qmjdata::companies[1:2,]
