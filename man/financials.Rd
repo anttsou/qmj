@@ -79,10 +79,9 @@ very small in magnitude) as well as producing items which are more
 likely to interest the user.
 }
 \examples{
-data(companies)
-data(financials)
-data(prices)
-sub_comps <- companies[50:51,]
+financials <- qmjdata::financials
+prices <- qmjdata::prices
+sub_comps <- qmjdata::companies[50:51,]
 market_data(sub_comps, financials, prices)
 }
 \seealso{

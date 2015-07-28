@@ -10,7 +10,11 @@ get_companies()
 \description{
 Reads in the contents of a text file created from the
 pdf of company names and tickers given by the Russell
-3000 Index.
+3000 Index. As of now, there does not seem to be a very
+good way of converting from pdf to txt file in R, so
+the txt file is directly copied and pasted from the pdf
+and uses the following regex: [ ](?=[^ ]+$)
+to create comma separated values.
 }
 \examples{
 get_companies()

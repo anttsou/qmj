@@ -4,7 +4,7 @@
 \alias{tidy_cashflows}
 \title{Makes raw cash flow data usable and readable.}
 \usage{
-tidy_cashflows(x = qmjdata::companies)
+tidy_cashflows(x)
 }
 \arguments{
 \item{x}{A list of raw cash flow data produced from quantmod}

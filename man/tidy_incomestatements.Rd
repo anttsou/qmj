@@ -4,7 +4,7 @@
 \alias{tidy_incomestatements}
 \title{Makes raw incomestatement data usable and readable.}
 \usage{
-tidy_incomestatements(x = qmjdata::companies)
+tidy_incomestatements(x)
 }
 \arguments{
 \item{x}{A list of raw incomestatement file data produced from quantmod}
