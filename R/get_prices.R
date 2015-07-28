@@ -4,8 +4,11 @@
 #' files for every company in the /extdata folder in the package folder. 
 #' If canceled partway through, function is able to find and re-read this 
 #' data, allowing resumption of progress.
+#' 
 #' @param companies A data frame of company names and tickers.
+#' 
 #' @seealso \code{\link{get_info}}
+#' 
 #' @examples
 #' companies <- qmjdata::companies[1:2,]
 #' get_prices(companies)
@@ -28,12 +31,21 @@ get_prices <- function(companies = qmjdata::companies){
   }
   
   numCompanies <- length(companies$ticker)
-  filepath <- system.file("extdata", package="qmj") #folder destination of all temp files.
-  thisYear <- as.numeric(format(Sys.Date(), "%Y"))
-  desiredDates <- paste(thisYear - 2, "/", sep='') #We only desire stock data for the past two years.
-  listfiles <- rep("", (numCompanies + 1)) #listfiles stores the location of all temp files we use/create during this process.
   
-  #Code below specially gathers the daily data for the S&P 500 for use as a benchmark.
+  ## folder destination of all temp files.
+  
+  filepath <- system.file("extdata", package="qmj") 
+  thisYear <- as.numeric(format(Sys.Date(), "%Y"))
+  
+  ## We only desire stock data for the past two years.
+  
+  desiredDates <- paste(thisYear - 2, "/", sep='') 
+  
+  ## listfiles stores the location of all temp files we use/create during this process.
+  listfiles <- rep("", (numCompanies + 1)) 
+  
+  ## Code below specially gathers the daily data for the S&P 500 for use as a benchmark.
+  
   stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE)
   stockData <- stockData[desiredDates,6]
   stockData$pret <- pricereturns(stockData)
@@ -42,14 +54,18 @@ get_prices <- function(companies = qmjdata::companies){
   listfiles[1] <- fileName
   save(stockData, file=fileName)
   
-  filesInDest <- list.files(path=filepath) #List of all files in extdata, which should contain all temp files.
+  ## List of all files in extdata, which should contain all temp files.
+  
+  filesInDest <- list.files(path = filepath) 
   for(i in 1:numCompanies){
     companyTicker <- as.character(companies$ticker[i])
     
     file <- paste(companyTicker, ".RData", sep='')
     fileName <- paste(filepath, "/", companyTicker, ".RData", sep='')
     if(is.element(file, filesInDest)){
-      #If the temp file already exists, we skip downloading this company's information.
+      
+      ## If the temp file already exists, we skip downloading this company's information.
+      
       print(paste(companyTicker, "information found in extdata. Resuming Download.", sep=' '))
       listfiles[i+1] <- fileName
     } else{
@@ -58,8 +74,10 @@ get_prices <- function(companies = qmjdata::companies){
         error=function(e) e
       )
       if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1){
-        #If we successfully retrieved the data, and there's enough of that data to be worth keeping, we save it as a temp file.
-        #print(companyTicker)
+        
+        ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, 
+        ## we save it as a temp file.
+        
         stockData <- stockData[desiredDates,4]
         stockData$pret <- pricereturns(stockData)
         stockData <- stockData[-1,]
@@ -77,16 +95,18 @@ get_prices <- function(companies = qmjdata::companies){
   load(listfiles[1])
   compiled = cbind(compiled, stockData)
   if(length(listfiles) > 1){
-    #Go through all our temp files and aggregate them.
-    for(i in 2:(length(listfiles))){
+    
+    ## Go through all our temp files and aggregate them.
+    
+    for(i in 2:(length(listfiles))) {
       load(listfiles[i])
       compiled = cbind(compiled, stockData)
     } 
   }
   
-  file.remove(listfiles) #Remove all our temp files.
-  prices <- data.frame(compiled, stringsAsFactors=FALSE)[,-1]
-  #   filepath2 <- paste(filepath, "/prices.RData", sep='')
-  #   save(prices, file="prices.RData")
+  ## Remove all our temp files.
+  
+  file.remove(listfiles) 
+  prices <- data.frame(compiled, stringsAsFactors = FALSE)[,-1]
   prices
 }

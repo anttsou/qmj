@@ -21,7 +21,8 @@
 
 market_safety <- function(companies = qmjdata::companies, 
                           financials = qmjdata::financials, 
-                          prices = qmjdata::prices){
+                          prices = qmjdata::prices) {
+  
   if(length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
@@ -32,10 +33,10 @@ market_safety <- function(companies = qmjdata::companies,
   allcompanies <- data.frame(companies$ticker)
   colnames(allcompanies) <- "ticker"
   
-  #set unavailable financial info to 0
+  ## set unavailable financial info to 0
   financials[is.na(financials)] <- 0
   
-  #set unavailable price data to 0
+  ## set unavailable price data to 0
   prices[is.na(prices)] <- 0
   
   prices$pret[is.nan(prices$pret)] <- 0
@@ -82,13 +83,15 @@ market_safety <- function(companies = qmjdata::companies,
   fthyear <- modifiedsetdiff(fin, thdyear)
   fthyear <- dplyr::distinct_(fthyear, "ticker")
   
-  #Forces all data frames to have the same number of rows.
+  ## Forces all data frames to have the same number of rows.
+  
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)
   sndyear <- merge(allcompanies, sndyear, by="ticker", all.x = TRUE)
   thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
   fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
   
-  #functions calculate individual components of safety
+  ## functions calculate individual components of safety
+  
   merger <- function(company_ticker) {
     result <- -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
                     as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
@@ -134,7 +137,8 @@ market_safety <- function(companies = qmjdata::companies,
     as.numeric(ni1 > 0 && ni2 > 0)
   }
 
-  #apply the calculation functions to all companies without needing a slow loop.
+  ## apply the calculation functions to all companies without needing a slow loop.
+  
   BAB <- sapply(companies$ticker, merger)
  
   IVOL <- sapply(companies$ticker,calc_ivol)
@@ -187,7 +191,8 @@ market_safety <- function(companies = qmjdata::companies,
   O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
 
-  #removes potential errors from Inf values
+  ## removes potential errors from Inf values
+  
   BAB[is.infinite(BAB)] <- 0
   IVOL[is.infinite(IVOL)] <- 0
   LEV[is.infinite(LEV)] <- 0
@@ -195,7 +200,8 @@ market_safety <- function(companies = qmjdata::companies,
   Z[is.infinite(Z)] <- 0
   EVOL[is.infinite(EVOL)] <- 0
   
-  #scale converts the individual scores for these values into z-scores.
+  ## scale converts the individual scores for these values into z-scores.
+  
   BAB <- scale(BAB)
   IVOL <- scale(IVOL)
   LEV <- scale(LEV)
