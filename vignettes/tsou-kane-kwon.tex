@@ -62,8 +62,9 @@ Payouts measures the proportion of profits paid to shareholders. It is composed 
 
 
 \section{Data}
-The \strong{qmj} package comes pre-compiled with data, using a universe comprised of all companies in the Russell 3000 Index. which is a list of the 3000 largest US companies, according to market cap, updated annually around May or June. We choose our universe to focus on companies in the US with reliable and interesting data. We do not analyze companies outside the scope of the Russell 3000 Index in order to prevent potential problems with limited financial information for small companies as well as anomalies that could skew our measurements for quality. For example, Gross Profits over Assets (GPOA) could double for a tiny company due to a small absolute change in profit, dramatically increasing the growth measurement for that company. We thus wish to focus on companies with reasonably large market cap to have the best possible quality comparisons. For each dataset, see \code{?dataset} for more information each of its variables. For example, for the dataset \code{companies}, use \code{?companies}.
+The \strong{qmj} package comes pre-compiled with data, including a universe comprised of all companies in the Russell 3000 Index along with each companies financials, daily closing prices and returns, and quality scores. The Russell 3000 Index is a list of the 3000 largest US companies, according to market cap, updated annually around May or June. We do not analyze companies outside the scope of the Russell 3000 Index in order to prevent potential problems with limited financial information for small companies as well as anomalies that could skew our measurements for quality. For example, Gross Profits over Assets (GPOA) could double for a tiny company due to a small absolute change in profit, dramatically increasing the growth measurement for that company. We thus wish to focus on companies with reasonably large market cap to have the best possible quality comparisons. For each dataset, see \code{?dataset} for more information each of its variables. For example, for the dataset \code{companies}, use \code{?companies}.
 
+\subsection{companies}
   The first dataset of the package contains the companies we wish to study, ordered alphabetically by ticker. Here is a sample of the first five companies.
 
 \begin{center}
@@ -87,7 +88,8 @@ The \strong{qmj} package comes pre-compiled with data, using a universe comprise
 
   The \code{companies} dataset maps each company's ticker to its name. For example, Alcoa Inc. has the ticker AA. This sample of companies uses the 2014 Russell 3000 Index, which only contains 2999 companies. 
 
-  The \code{financials} dataset is composed of data from the balance sheets, income statements, and cash flows of companies. The columns are filtered so only the relevant measurements such as net income are present in the dataset. \code{companies} is the baseline dataset by providing tickers for other datasets in the package.
+\subsection{financials}
+  The second dataset is \code{financials}, which is composed of data from the balance sheets, income statements, and cash flows of companies. The columns are filtered so only the relevant measurements such as net income are present in the dataset. \code{companies} is the baseline dataset by providing tickers for other datasets in the package.
   
 \begin{center}
 \scriptsize{
@@ -122,7 +124,8 @@ The \strong{qmj} package comes pre-compiled with data, using a universe comprise
 \end{center}
 
   Every company is allocated four rows, each row representing the financial data for the company for a particular year. Organizing the data in this way allows users to easily see the change in variables affecting each company's financial status over time. For example, consider the company with ticker A. It has nearly a 20\% increase in total assets, but it also has nearly a 50\% decrease in net income from 2011 to 2014.
-  
+
+\subsection{prices}
   The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. 
 \begin{center}
 \scriptsize{
@@ -155,7 +158,8 @@ The \strong{qmj} package comes pre-compiled with data, using a universe comprise
 \end{center}
 
   In the sample above, we have data for the company with ticker SRCE as well as the S \& P 500 (ticker GSPC), or the market. For every company in the dataset, we have the daily price return (pret) and closing price (close), and we compare these values to those of the market to see if the company outperforms or underperformsthe market. The S \& P 500 is the benchmark we use in our calculations of beta and idiosyncratic volatility for our safety score. If we directly compare price returns, it appears that SRCE underperforms the market for every day in our sample of five consecutive business days. 
-  
+
+\subsection{quality}
   Finally, we have the main dataset, \code{quality}, which contains the quality scores for each company as well as the four main components measuring profitability, growth, safety, and payouts z-scores. 
 \begin{center}
 \scriptsize{
@@ -173,14 +177,14 @@ The \strong{qmj} package comes pre-compiled with data, using a universe comprise
 5    BRO       BROWN & BROWN INC     0.1484205 -0.04063592 11.76587071  0.2254432 12.09910
 \end{Soutput}
 \begin{Sinput}
-> quality[quality$ticker=="SRCE",]
+> quality[quality$ticker == "SRCE",]
 \end{Sinput}
 \begin{Soutput}
      ticker            name profitability      growth    safety   payouts   quality
 1408   SRCE 1ST SOURCE CORP    -0.1446971 -0.04772882 0.3205114 0.0298563 0.1579417
 \end{Soutput}
 \begin{Sinput}
-> quality[quality$ticker=="AA",]
+> quality[quality$ticker == "AA",]
 \end{Sinput}
 \begin{Soutput}
      ticker      name profitability      growth     safety  payouts     quality
@@ -194,12 +198,12 @@ Here we have an example showing the top five companies based on quality measurem
 
 \subsection{Updating Data}
 
-Though \strong{qmj} keeps datasets updated, it has a few functions that can extract information directly from Google Finance to grab the most recent data. 
+Though \strong{qmj} updates its datasets periodically, it has a few functions that can extract information directly from Google Finance to grab the most recent data for users to utilize in their own datasets. 
 
 \begin{Schunk}
 \begin{Sinput}
-> #raw_prices <- get_prices(companies)
-> #raw_data <- get_info(companies)
+> raw_prices <- get_prices(companies)
+> raw_data <- get_info(companies)
 \end{Sinput}
 \end{Schunk}
 
@@ -207,15 +211,15 @@ Though \strong{qmj} keeps datasets updated, it has a few functions that can extr
 
 \begin{Schunk}
 \begin{Sinput}
-> #clean_prices <- tidy_prices(raw_prices)
-> #clean_data <- tidyinfo(raw_data)
+> clean_prices <- tidy_prices(raw_prices)
+> clean_data <- tidyinfo(raw_data)
 \end{Sinput}
 \end{Schunk}
 
 \strong{tidy\_prices()} takes as input the result of \strong{get\_prices()}, which is assigned here as \strong{raw\_prices}, and organizes the data into columns for ticker, date, price, and price return. \strong{tidyinfo()} takes as input the result of \strong{get\_info()}, which is assigned here as \strong{raw\_data}, and organizes the data into columns for ticker, year, and various items found in company financial statements such as total assets and net income. The column names themselves are abbreviations that are used in the Appendix. 
 
 \section{Analyzing the Universe (Of Companies)}
-In the quality data set, it can quickly be seen that the growth score for Angies List Inc. is abnormally high, and accounts for virtually all of its quality score. In many cases, it is undesirable to consider companies with high quality scores that are ``driven'' (here defined as composing at least half the quality score) by a single component score. \strong{qmj} provides a filter.
+In the quality data set, it can quickly be seen that the growth score for Angies List Inc. is abnormally high, and accounts for virtually all of its quality score. In many cases, it is undesirable to consider companies with high quality scores that are ``driven'' (here defined as composing at least half of the quality score) by a single component score. \strong{qmj} provides a filter.
 \begin{center}
 \scriptsize{
 \begin{Schunk}
@@ -233,7 +237,7 @@ In the quality data set, it can quickly be seen that the growth score for Angies
 6   CFFN CAPITOL FEDERAL FINL IN          5.754  -0.0490    5.738     0.229    11.672
 \end{Soutput}
 \begin{Sinput}
-> sans_growth <- filter_companies(quality, filter="growth")
+> sans_growth <- filter_companies(quality, filter = "growth")
 > head(sans_growth)
 \end{Sinput}
 \begin{Soutput}
@@ -248,13 +252,13 @@ In the quality data set, it can quickly be seen that the growth score for Angies
 \end{Schunk}
 }
 \end{center}
-If desirable, we may also select specifically for those companies which are driven by a particular component. Note that \code{remove} is, by default, set to TRUE, and \code{isolate}, is set to FALSE.
+As shown above, companies with excessively high growth scores compared to their other component scores, including ANGI, have been filtered out. If desirable, we may also choose to isolate companies that are driven by a particular component, or whitelist, rather than to remove, or blacklist them. \code{remove} and \code{isolate} are boolean parameters that specify whether the user wishes to blacklist or whitelist, with \code{remove} being TRUE and \code{isolate} being FALSE by default.
 
 \begin{center}
 \scriptsize{
 \begin{Schunk}
-\begin{Sinput}
-> cpayouts <- filter_companies(quality, filter="payouts", remove=FALSE, isolate=TRUE)
+\begin{Sinput} 
+> cpayouts <- filter_companies(quality, filter = "payouts", remove = FALSE, isolate = TRUE)
 > head(cpayouts)
 \end{Sinput}
 \begin{Soutput}
@@ -269,13 +273,13 @@ If desirable, we may also select specifically for those companies which are driv
 \end{Schunk}
 }
 \end{center}
-Or, we can select for all companies which are not driven by any component score.
+As we can see above, now that \code{isolate} is TRUE, we are left with only the companies that have excessively high payouts scores compared to their other component scores. We can also select for all companies that are not driven by any component score. 
 
 \begin{center}
 \scriptsize{
 \begin{Schunk}
 \begin{Sinput}
-> well_rounded <- filter_companies(quality, filter="all")
+> well_rounded <- filter_companies(quality, filter = "all")
 > head(well_rounded)
 \end{Sinput}
 \begin{Soutput}
@@ -290,7 +294,7 @@ Or, we can select for all companies which are not driven by any component score.
 \end{Schunk}
 }
 \end{center}
-It may also be desirable to look at quality scores specific to a subset of our extant universe. For example, it may be desirable to focus on a specific industry, instead of the entire market.
+We are left with only the companies that do not have single outstanding component scores. It may also be desirable to look at quality scores specific to a subset of our extant universe. 
 
 \begin{center}
 \scriptsize{
@@ -316,6 +320,8 @@ It may also be desirable to look at quality scores specific to a subset of our e
 \end{Schunk}
 }
 \end{center}
+
+This very simple example only grabs the first 35 companies of the Russell 3000 Index and demonstrates that our functions can calculate quality scores for customized data sets as well. For example, a user may wish to focus on a specific industry, instead of the entire market, and see the relative quality scores for just that subsection.
 
 \section{Conclusion}
 

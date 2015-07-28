@@ -131,8 +131,8 @@ In the quality data set, it can quickly be seen that the growth score for Angies
 data(quality)
 head(quality)
 
-sans_growth <- filter_companies(quality, filter="growth")
-head(sans_growth)
+# sans_growth <- filter_companies(quality, filter="growth")
+# head(sans_growth)
 @
 }
 \end{center}
@@ -141,8 +141,8 @@ If desirable, we may also select specifically for those companies which are driv
 \begin{center}
 \scriptsize{
 <<>>=
-cpayouts <- filter_companies(quality, filter="payouts", remove=FALSE, isolate=TRUE)
-head(cpayouts)
+# cpayouts <- filter_companies(quality, filter="payouts", remove=FALSE, isolate=TRUE)
+# head(cpayouts)
 @
 }
 \end{center}
@@ -151,8 +151,8 @@ Or, we can select for all companies which are not driven by any component score.
 \begin{center}
 \scriptsize{
 <<>>=
-well_rounded <- filter_companies(quality, filter="all")
-head(well_rounded)
+# well_rounded <- filter_companies(quality, filter="all")
+# head(well_rounded)
 @
 }
 \end{center}

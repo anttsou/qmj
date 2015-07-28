@@ -26,8 +26,7 @@ market_safety <- function(companies = qmjdata::companies,
   if(length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
-  filepath <- system.file("data", package="qmj")
-  numCompanies <- length(companies$ticker)
+  
   allcompanies <- data.frame(companies$ticker)
   colnames(allcompanies) <- "ticker"
   
@@ -49,12 +48,19 @@ market_safety <- function(companies = qmjdata::companies,
     year <- currentyear
   }
   marketlistb <- market[grepl(year,market$date),]
-  mergedail <- merge(marketlistb,nogspc,by="date")
-  splitdail <- split(mergedail,mergedail$ticker.y)
-  splitindices <- split(seq(nrow(prices)), prices$ticker)  # Stores list of indices for a company ticker.
-  #splitindices <- splitindices[-1]
-  companiesstored <- names(splitindices)
   
+  ## merge to allow cross column comparisons in price returns 
+  ## and closing prices
+  
+  mergedail <- merge(marketlistb,nogspc,by="date")
+  
+  ## separates into a list indexed by ticker
+  splitdail <- split(mergedail,mergedail$ticker.y)
+  
+  ## Stores list of indices for a company ticker.
+  splitindices <- split(seq(nrow(prices)), prices$ticker)  
+  
+  companiesstored <- names(splitindices)
   modifiedsetdiff <- function(x.1,x.2,...){
     x.1p <- do.call("paste", x.1[,1:5])
     x.2p <- do.call("paste", x.2[,1:5])
@@ -90,6 +96,7 @@ market_safety <- function(companies = qmjdata::companies,
     }
     result
   }
+  
   calc_ivol <- function(company_ticker) {
     if(length(splitdail[[company_ticker]]) > 0) {
       lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
