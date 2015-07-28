@@ -10,9 +10,10 @@ get_prices(companies = qmjdata::companies)
 \item{companies}{A data frame of company names and tickers.}
 }
 \description{
-Given a data frame of companies (names and tickers), writes .RData files for every company in the /extdata folder
-in the package folder. If canceled partway through, function is able to find and re-read this data, allowing
-resumption of progress.
+Given a data frame of companies (names and tickers), writes .RData
+files for every company in the /extdata folder in the package folder.
+If canceled partway through, function is able to find and re-read this
+data, allowing resumption of progress.
 }
 \examples{
 companies <- qmjdata::companies[1:2,]

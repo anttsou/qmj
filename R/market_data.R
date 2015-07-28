@@ -1,18 +1,25 @@
-#' Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
+#' Collects all relevant market data (growth, payout, 
+#' profitability, and safety) and orders companies
 #' by descending quality.
 #'
-#' Calculates market growth, payouts, safety, and profitability of our list of companies
-#' for later processing.
-#' @param companies A data frame of company names and tickers.
-#' @param financials A data frame containing financial information for the given companies.
-#' @param prices A data frame containing the daily market closing prices and returns. 
+#' Calculates market growth, payouts, safety, and 
+#' profitability of our list of companies for later 
+#' processing.
+#' @param companies A data frame of company names and 
+#' tickers.
+#' @param financials A data frame containing financial 
+#' information for the given companies.
+#' @param prices A data frame containing the daily 
+#' market closing prices and returns. 
 #' @seealso \code{\link{market_profitability}}
 #' @seealso \code{\link{market_growth}}
 #' @seealso \code{\link{market_safety}}
 #' @seealso \code{\link{market_payouts}}
 #' @examples
 #' companies <- qmjdata::companies[50:51,]
-#' market_data(companies, qmjdata::financials, qmjdata::prices)
+#' market_data(companies, 
+#'             qmjdata::financials, 
+#'             qmjdata::prices)
 #' @importFrom dplyr arrange
 #' @export
 

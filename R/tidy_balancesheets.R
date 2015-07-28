@@ -1,12 +1,16 @@
 #' Makes raw balancesheet data usable and readable.
 #'
-#' Processes raw balance sheet data produced from quantmod into a tidy data frame. Raw balance sheet data
-#' must be formatted in a list such that every element is a data frame or matrix containing quantmod data.
+#' Processes raw balance sheet data produced from quantmod 
+#' into a tidy data frame. Raw balance sheet data must be 
+#' formatted in a list such that every element is a data 
+#' frame or matrix containing quantmod data.
 #' 
-#' \code{tidy_balancesheets} produces a data frame that is "tidy" or more readily readable by a user and usable by other functions
-#' within this package.
+#' \code{tidy_balancesheets} produces a data frame that is
+#' "tidy" or more readily readable by a user and usable by
+#' other functions within this package.
 #' @param x A list of raw cash flow data produced from quantmod
-#' @return Returns a data set that's been "tidied" up for use by other functions in this package.
+#' @return Returns a data set that's been "tidied" up for use 
+#' by other functions in this package.
 #' @seealso \code{\link{get_info}}
 #' @seealso \code{\link{tidy_prices}}
 #' @seealso \code{\link{tidy_cashflows}}

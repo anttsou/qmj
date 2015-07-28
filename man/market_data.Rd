@@ -2,26 +2,33 @@
 % Please edit documentation in R/market_data.R
 \name{market_data}
 \alias{market_data}
-\title{Collects all relevant market data (growth, payout, profitability, and safety) and orders companies
+\title{Collects all relevant market data (growth, payout,
+profitability, and safety) and orders companies
 by descending quality.}
 \usage{
 market_data(companies = qmjdata::companies,
   financials = qmjdata::financials, prices = qmjdata::prices)
 }
 \arguments{
-\item{companies}{A data frame of company names and tickers.}
+\item{companies}{A data frame of company names and
+tickers.}
 
-\item{financials}{A data frame containing financial information for the given companies.}
+\item{financials}{A data frame containing financial
+information for the given companies.}
 
-\item{prices}{A data frame containing the daily market closing prices and returns.}
+\item{prices}{A data frame containing the daily
+market closing prices and returns.}
 }
 \description{
-Calculates market growth, payouts, safety, and profitability of our list of companies
-for later processing.
+Calculates market growth, payouts, safety, and
+profitability of our list of companies for later
+processing.
 }
 \examples{
 companies <- qmjdata::companies[50:51,]
-market_data(companies, qmjdata::financials, qmjdata::prices)
+market_data(companies,
+            qmjdata::financials,
+            qmjdata::prices)
 }
 \seealso{
 \code{\link{market_profitability}}

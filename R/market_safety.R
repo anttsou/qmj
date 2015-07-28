@@ -1,12 +1,14 @@
 #' Collects safety z-scores for companies
 #'
 #' Given a data frame of companies (names and tickers), a data frame of financial
-#' statements, and a data frame of daily price data, calculates BAB, IVOL, LEV, O, Z, and EVOL
-#' and determines the z-score of overall safety for each company based on the paper
-#' Quality Minus Junk (Asness et al.) in Appendix page A2.
+#' statements, and a data frame of daily price data, calculates BAB, IVOL, LEV, 
+#' O, Z, and EVOL, and determines the z-score of overall safety for each company 
+#' based on the paper Quality Minus Junk (Asness et al.) in Appendix page A2.
 #' @param companies A data frame of company names and tickers.
-#' @param financials A data frame containing financial statements for every company.
-#' @param prices A data frame containing the daily market closing prices and returns. 
+#' @param financials A data frame containing financial statements for every 
+#' company.
+#' @param prices A data frame containing the daily market closing prices and 
+#' returns. 
 #' @seealso \code{\link{market_data}}
 #' @seealso \code{\link{market_profitability}}
 #' @seealso \code{\link{market_growth}}

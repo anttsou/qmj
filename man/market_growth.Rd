@@ -10,13 +10,16 @@ market_growth(companies = qmjdata::companies,
 \arguments{
 \item{companies}{A data frame of company names and tickers.}
 
-\item{financials}{A data frame containing financial statements for every company.}
+\item{financials}{A data frame containing financial
+statements for every company.}
 }
 \description{
-Given a data frame of companies (names and tickers) and a data frame of financial statements,
-calculates GPOA, ROE, ROA, CFOA, GMAR, ACC over a four-year time span
-and determines the z-score of overall growth for each company based on the paper
-Quality Minus Junk (Asness et al.) in Appendix page A2.
+Given a data frame of companies (names and tickers) and
+a data frame of financial statements, calculates GPOA,
+ROE, ROA, CFOA, GMAR, ACC over a four-year time span
+and determines the z-score of overall growth for each
+company based on the paper Quality Minus Junk
+(Asness et al.) in Appendix page A2.
 }
 \examples{
 companies <- qmjdata::companies[50:51,]
