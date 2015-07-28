@@ -50,7 +50,6 @@
 #' @name quality
 #' @seealso \code{\link{filter_companies}}
 #' @examples
-#' filter_companies(qmjdata::quality,"all")
 #' 
 #' head(qmjdata::quality,10)
 #' 

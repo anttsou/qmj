@@ -53,8 +53,6 @@ items which are more likely to interest the user.
 Last updated: January 2015
 }
 \examples{
-filter_companies(qmjdata::quality,"all")
-
 head(qmjdata::quality,10)
 
 temp <- qmjdata::quality
