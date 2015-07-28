@@ -78,10 +78,9 @@
 #' @seealso \code{\link{tidyinfo}}
 #' @seealso \code{\link{market_data}}
 #' @examples
-#' data(companies)
-#' data(financials)
-#' data(prices)
-#' sub_comps <- companies[50:51,]
+#' financials <- qmjdata::financials
+#' prices <- qmjdata::prices
+#' sub_comps <- qmjdata::companies[50:51,]
 #' market_data(sub_comps, financials, prices)
 #' @docType data
 #' @keywords data
