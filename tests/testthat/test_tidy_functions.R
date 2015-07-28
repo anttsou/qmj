@@ -3,7 +3,7 @@ context("Test Tidy Functions")
 companies <- qmjdata::companies[1:2,]
 load(system.file("extdata/true_balancesheets.RData", package = "qmj"))
 load(system.file("extdata/true_incomestatements.RData", package = "qmj"))
-load(system.file("extdata/true_cashflows.RData"), package = "qmj")
+load(system.file("extdata/true_cashflows.RData", package = "qmj"))
 raw_data <- get_info(companies)
 
 test_that("balance sheets have expected output", { 
