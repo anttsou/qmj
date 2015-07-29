@@ -1,3 +1,5 @@
+#' @export
+
 tidy_helper <- function(cdata) {
   
   ## Extract the ticker from the first column. 
