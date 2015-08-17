@@ -1,225 +1,220 @@
-\documentclass[titlepage]{article}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue, 
-    urlcolor=cyan,
-}
+\documentclass[a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{RJournal}
+\usepackage{amsmath,amssymb,array}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{Sweave}
+\usepackage[parfill]{parskip}
+\usepackage[round]{natbib}
 
-\author{Anthoney Tsou, David Kane, Ryan Kwon}
-\title{An Implementation of Quality Minus Junk}
-\date{February 11, 2015}
+%\VignetteEngine{Sweave}
+%\VignetteIndexEntry{qmj}
+
 \begin{document}
-\SweaveOpts{concordance=TRUE}
+\SweaveOpts{concordance = FALSE}
+%% do not edit, for illustration only
+\sectionhead{Contributed research article}
+\volume{XX}
+\volnumber{YY}
+\year{20ZZ}
+\month{AAAA}
+
+\begin{article}
+
+\title{An Implementation of Quality Minus Junk}
+
+\author{by Anthoney Tsou, Eugene Choe, David Kane, and Ryan Kwon}
+
 \maketitle
 
-\section{Abstract}
-The \textbf{qmj} package produces quality scores for companies based on the work of \hyperlink{bibliography}{Asness et. al (2013)}. It measures the quality of each of the 3000 largest US companies from the Russell 3000 Index based on profitability, growth, safety, and payout, using the latest available data from Google Finance. The package includes tools to automatically gather relevant financial documents and stock return data, allowing users to update their data whenever desired. The package also provides utilities for analyzing the scores of individual companies, various plotting and filtering tools, and generally helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform. 
+\citep{campbell:2007}
+\citep{gray:2013}
+\citep{kane:2011}
+\citep{lu:2013}
+\abstract{
+The \strong{qmj} package produces quality scores for companies from the Russell 3000 Index based on their profitability, growth, safety, and payouts, using the approach described in "Quality Minus Junk" by Clifford Asness et. al (2013). The package gathers the latest company financial statements and stock returns from Google Finance and provides periodically updated quality scores. Users also have access to the functions used to generate these scores, allowing them to update their data whenever desired. The package helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform.
+}
 
 \section{Introduction}
-\textbf{qmj} implements the methodology of the work of \hyperlink{bibliography}{\emph{Asness et. al} (2013)}; a paper which utilizes several financial measures to calculate the relative profitability, growth, safety, and payouts of a company within a given universe. These ``component'' (a term we will be using in this paper frequently) scores are used to quantify the quality of a company. Asness's paper includes the performance of a ``quality minus junk'' portfolio, or a QMJ portfolio. Their ultimate conclusions were that QMJ portfolios that longed high-quality stocks and shorted low-quality stocks "earn[ed] significant risk-adjusted returns with an information ratio above 1", and they documented "strong and consistent abnormal returns to quality" (Asness, Frazzini, and Pedersen 2013). The exact details behind the processes used to determine each of these components are given in the appendix of this paper.
 
-Asness's paper includes the performance of a ``quality minus junk'' portfolio, or a QMJ portfolio. Their ultimate conclusions were that QMJ portfolios that longed high-quality stocks and shorted low-quality stocks "earn[ed] significant risk-adjusted returns with an information ratio above 1", and they documented "strong and consistent abnormal returns to quality" (Asness, Frazzini, and Pedersen 2013).
+A Quality Minus Junk approach \citep{asness:2013}, involves investing long on high-quality stocks and shorting low-quality stocks to produce high risk-adjusted returns. A high-quality stock has characteristics investors should be willing to pay for, ceteris paribus. These characteristics are profitability, growth, safety, and payouts. Thus, the return of a quality stock is intended to exceed its purchase price. 
 
-\textbf{qmj} provides tools to practically apply their results, and also expedites the data-gathering process. Contained within the package are frequently updated, pre-compiled data sets in addition to tools needed to automatically gather relevant financial statements and information from Google Finance for a given data frame of companies. The data sets included within this package includes several measures taken from the 10-K's of these companies, as well as the two most recent years of closing stock prices. All data sets pre-compiled with \textbf{qmj} may be re-created within the package for an arbitrary data frame of companies. This is further discussed in the \textbf{Data} section of this paper.
+Each of the four components that make up the quality score are calculated from different variables that can be found from a company's financial statements.  The package draws this data from Google Finance.
 
-Also provided are various utilities to aid in analyzing the resultant quality data set. This includes a \textbf{qmj class} that reveals all information about a single company, and is also able to plot where the company's relative quality, profitability, growth, e.t.c. stand relative to the entire universe. \textbf{qmj} also provides a filter function to minimize the amount of ``noise'' that may result from bad data or falsified financial information.
+The \strong{qmj} package evaluates the quality of stocks by measuring the profitability, growth, safety, and payouts of a company relative to other companies in the Russell 3000 Index. We define each of these characteristics in the following section of the paper. 
+
+Drawing data from financial statements, the \strong{qmj} package uses regression based analysis and calculations with closed form expressions to produce a quality z-score for each company of interest. We demonstrate the use of a variety of tools for both casual and diligent investors to not only view the quality of stocks, but also to understand the underlying factors that compose the scores. 
 
 \section{Calculating Quality}
 
-We calculate quality scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. We attempt to perform the same calculations as Asness, but we have a few adjustments given the availability of data from public sources. 
+We calculate quality z-scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. 
+
 \subsection{Profitability}
-Profitability is composed of six variables: gross profits over assets ($GPOA$), return on equity ($ROE$), return on assets ($ROA$), cash flow over assets ($CFOA$), gross margin ($GMAR$), and accruals ($ACC$). $GPOA$ is calculated as gross profits ($GPROF$) over total assets ($TA$). $$GPOA \ = \ \frac{GPROF}{TA}$$ $ROE$ is calculated as net income ($NI$) over book equity ($BE$), which is shareholders' equity (the difference of Total Liabilities and Shareholders' Equity ($TLSE$) with Total Liabilities ($TL$)) - preferred stock (the sum of redeemable preferred stock ($RPS$) and non redeemable preferred stock ($NRPS$)). $$ROE \ = \ \frac{NI}{BE}$$ $ROA$ is calculated as $NI$ over $TA$. $$ROA \ = \ \frac{NI}{TA}$$ $CFOA$ is calculated as $NI$ + depreciation ($DP.DPL$) - changes in working capital ($CWC$) - capital expenditures ($CX$) all over $TA$. $$CFOA \ = \ \frac{NI \ + \ DP.DPL \ - \ CWC \ - \ CX}{TA}$$ $GMAR$ is calculated as $GPROF$ over total revenue ($TREV$). $$GMAR \ = \ \frac{GPROF}{TREV}$$ Finally, $ACC$ is calculated as $DP.DPL$ - $CWC$ all over $TA$. $$ACC \ = \ \frac{DP.DPL \ - \ CWC}{TA}$$ We then standardize all components of profitability to z-scores and then standardize all profitability scores into z-scores. $$Profitability \ = \ z(z_{gpoa} \ + \ z_{roe} \ + \ z_{roa} \ + \ z_{cfoa} \ + \ z_{gmar} \ + \ z_{acc})$$
+Profitability is a company's profits per unit of book value. It is composed of six variables: gross profits over assets ($GPOA$), return on equity ($ROE$), return on assets ($ROA$), cash flow over assets ($CFOA$), gross margin ($GMAR$), and accruals ($ACC$). $GPOA$ is calculated as gross profits ($GPROF$) over total assets ($TA$). $$GPOA \ = \ \frac{GPROF}{TA}$$ $ROE$ is calculated as net income ($NI$) over book equity ($BE$), which is shareholders' equity (the difference of Total Liabilities and Shareholders' Equity ($TLSE$) with Total Liabilities ($TL$)) - preferred stock (the sum of redeemable preferred stock ($RPS$) and non redeemable preferred stock ($NRPS$)). $$ROE \ = \ \frac{NI}{BE}$$ $ROA$ is calculated as $NI$ over $TA$. $$ROA \ = \ \frac{NI}{TA}$$ $CFOA$ is calculated as $NI$ + depreciation ($DP.DPL$) - changes in working capital ($CWC$) - capital expenditures ($CX$) all over $TA$. $$CFOA \ = \ \frac{NI \ + \ DP.DPL \ - \ CWC \ - \ CX}{TA}$$ $GMAR$ is calculated as $GPROF$ over total revenue ($TREV$). $$GMAR \ = \ \frac{GPROF}{TREV}$$ Finally, $ACC$ is calculated as $DP.DPL$ - $CWC$ all over $TA$. $$ACC \ = \ \frac{DP.DPL \ - \ CWC}{TA}$$ We then standardize all components of profitability to z-scores and then standardize all profitability scores into z-scores. $$Profitability \ = \ z(z_{gpoa} \ + \ z_{roe} \ + \ z_{roa} \ + \ z_{cfoa} \ + \ z_{gmar} \ + \ z_{acc})$$
 \subsection{Growth}
-Growth is measured by differences in profitability across a time span of four years. Though AQR recommends measuring growth across a time span of five years, public information that is both consistent and well-organized in 10-K forms is only available for a time span of four years, and it is still too early in the most recent year (2015) for most companies to have submitted a 10-K form. Thus, we measure growth using a time span of four years, which we will update once this year's 10-K form is submitted for each company in the Russell 3000 Index. As of now, $$Growth \ = \ z(z_{\Delta gpoa_{t,t-4}} \ + \ z_{\Delta roe_{t,t-4}} \ + \ z_{\Delta roa_{t,t-4}} \ + \ z_{\Delta cfoa_{t,t-4}} \ + \ z_{\Delta gmar_{t,t-4}} \ + \ z_{\Delta acc_{t,t-4}})$$
+Growth is a measure of a company's increase in profits. It is measured by differences in profitability across a time span of four years. Though AQR recommends measuring growth across a time span of five years, public information that is both consistent and well-organized in 10-K forms is only available for a time span of four years, and it is still too early in the most recent year (2015) for most companies to have submitted a 10-K form. Thus, we measure growth using a time span of four years, which we will update once this year's 10-K form is submitted for each company in the Russell 3000 Index. As of now, $$Growth \ = \ z(z_{\Delta gpoa_{t,t-4}} \ + \ z_{\Delta roe_{t,t-4}} \ + \ z_{\Delta roa_{t,t-4}} \ + \ z_{\Delta cfoa_{t,t-4}} \ + \ z_{\Delta gmar_{t,t-4}} \ + \ z_{\Delta acc_{t,t-4}})$$
 \subsection{Safety}
-Safety is composed of six variables: beta ($BAB$), idiosyncratic volatility ($IVOL$), leverage ($LEV$), Ohlson's O ($O$), Altman's Z ($Z$), and earnings volatility ($EVOL$). $BAB$ is calculated as the negative covariance of each company's daily price returns ($pret_{c_i}$) relative to the benchmark daily market price returns ($pret_{mkt}$), in this case the S\&P 500, over the variance of $pret_{mkt}$. $$BAB \ = \ \frac{-cov(pret_{c_i},pret_{mkt})}{var(pret_{mkt})}$$ $IVOL$ is the standard deviation of daily beta-adjusted excess returns. In other words, $IVOL$ is found by running a regression on each company's price returns and the benchmark, then taking the standard deviation of the residuals. Leverage is -(total debt ($TD$) over $TA$). $$Leverage \ = \ -\frac{TD}{TA}$$ 
+Safety is a measure of required return, with safer stocks having a lower required return. Safety is composed of six variables: beta ($BAB$), idiosyncratic volatility ($IVOL$), leverage ($LEV$), Ohlson's O ($O$), Altman's Z ($Z$), and earnings volatility ($EVOL$). $BAB$ is calculated as the negative covariance of each company's daily price returns ($pret_{c_i}$) relative to the benchmark daily market price returns ($pret_{mkt}$), in this case the S\&P 500, over the variance of $pret_{mkt}$. $$BAB \ = \ \frac{-cov(pret_{c_i},pret_{mkt})}{var(pret_{mkt})}$$ $IVOL$ is the standard deviation of daily beta-adjusted excess returns. In other words, $IVOL$ is found by running a regression on each company's price returns and the benchmark, then taking the standard deviation of the residuals. Leverage is -(total debt ($TD$) over $TA$). $$Leverage \ = \ -\frac{TD}{TA}$$ 
 \\
-$$ O \ = \ -(-1.32 \ - \ 0.407 \ * \ log\left(\frac{ADJASSET}{CPI}\right) \ + \ 6.03 \ * \ TLTA \ - \ 1.43 \ * \ WCTA$$
-$$ + \ 0.076 \ * \ CLCA \ - \ 1.72 \ * \ OENEG \ - \ 2.37 \ * \ NITA \ - \ 1.83 \ * \ FUTL$$
-$$ + \ 0.285 \ * \ INTWO \ - \ 0.521 \ * \ CHIN)$$ 
-$ADJASSET$ is adjusted total assets, which is $TA$ + 0.1 * (market equity ($ME$, calculated as average price per share for the most recent year * total number of shares outstanding ($TCSO$) - $BE$)). $$ADJASSET \ = \ TA \ + \ 0.1 \ * \ (ME \ - \ BE)$$ $CPI$, the consumer price index, is assumed to be 100, since we only care about the most recent year. $TLTA$ is book value of debt ($BD$, calculated as $TD$ - minority interest ($MI$) - ($RPS$ + $NRPS$)) over $ADJASSET$. $$TLTA \ = \ \frac{BD}{ADJASSET}$$ $WCTA$ is current assets ($TCA$) - current liabilities ($TCL$) over $TA$. $$WCTA \ = \ \frac{TCA - TCL}{TA}$$ $CLCA$ is $TCL$ over $TCA$. $$ CLCA \ = \ \frac{TCL}{TCA}$$ $OENEG$ is a dummy variable that is 1 if total liabilities ($TL$) is greater than $TA$. $$ OENEG \ = \ TL > TA $$ $NITA$ is $NI$ over $TA$. $$NITA \ = \ \frac{NI}{TA}$$ $FUTL$ is income before taxes ($IBT$) over $TL$. $$FUTL \ = \ \frac{IBT}{TL}$$ $INTWO$ is another dummy variable that is 1 if $NI$ for the current year and $NI$ for the previous year are both negative. $$INTWO \ = \ MAX(NI_t,NI_{t-1}) < 0$$ $CHIN$ is $NI$ for the current year - $NI$ for the previous year all over the sum of the absolute value of $NI$ for the current year and the absolute value of $NI$ for the previous year $$CHIN \ = \ \frac{NI_t \ - \ NI_{t-1}}{|NI_t| + |NI_{t-1}|}$$ Altman's Z is calculated using weighted averages of working capital ($WC$, calculated as $TCA$ - $TCL$), $$WC \ = \ TCA \ - \ TCL$$ retained earnings ($RE$, calculated as $NI$ - dividends per share ($DIVC$) * $TCSO$), $$RE \ = \ NI \ - \ DIVC \ * \ TCSO$$ earnings before interest and taxes ($EBIT$, calculated as $NI$ - Discontinued Operations($DO$) + (income before tax ($IBT$) - income after tax ($IAT$)) + interest expense ($NINT$)), $$ EBIT \ = \ NI \ - \ DO \ + \ (IBT \ - \ IAT) \ + \ NINT $$ $ME$, and $TREV$, all over $TA$. $$Z \ = \frac{\ 1.2 \ * \ WC \ + \ 1.4 \ * \ RE \ + \ 3.3 \ * \ EBIT \ + \ 0.6 \ * \ ME \ + TREV}{TA}$$ $EBIT$ is likely an overestimate for a given company due to potentially missing information. $EVOL$ is calculated as the standard deviation of $ROE$ for a four year span. AQR recommends the past five years, but for the same reason stated in the Growth section, we use a four year span. $$EVOL = \sigma\left(\sum_{i=t-4}^{t}ROE_i\right)$$ Likewise, we standardize each variable and then standardize each safety measure, so $$Safety \ = \ z(z_{bab} \ + \ z_{ivol} \ + \ z_{lev} \ + \ z_{o} \ + \ z_{z} \ + \ z_{evol})$$ 
+
+\begin{equation}
+\begin{aligned}
+O \ = \ - \Biggl[-1.32 \ - \ 0.407 \ * \ log\left(\frac{ADJASSET}{CPI}\right) \ + \ 6.03 \ * \ TLTA \ - \ 1.43 \ * \ WCTA 
+\notag\\
+ + \ 0.076 \ * \ CLCA \ - \ 1.72 \ * \ OENEG \ - \ 2.37 \ * \ NITA \ - \ 1.83 \ * \ FUTL 
+ \notag\\
+ + \ 0.285 \ * \ INTWO \ - \ 0.521 \ * \ CHIN \Biggr] 
+\end{aligned}
+\end{equation}
+
+$ADJASSET$ is adjusted total assets, which is $TA$ + 0.1 * (market equity ($ME$, calculated as average price per share for the most recent year * total number of shares outstanding ($TCSO$) - $BE$)). $$ADJASSET \ = \ TA \ + \ 0.1 \ * \ (ME \ - \ BE)$$ $CPI$, the consumer price index, is assumed to be 100, since we only care about the most recent year. $TLTA$ is book value of debt ($BD$, calculated as $TD$ - minority interest ($MI$) - ($RPS$ + $NRPS$)) over $ADJASSET$. $$TLTA \ = \ \frac{BD}{ADJASSET}$$ $WCTA$ is current assets ($TCA$) - current liabilities ($TCL$) over $TA$. $$WCTA \ = \ \frac{TCA - TCL}{TA}$$ $CLCA$ is $TCL$ over $TCA$. $$ CLCA \ = \ \frac{TCL}{TCA}$$ $OENEG$ is a dummy variable that is 1 if total liabilities ($TL$) is greater than $TA$. $$ OENEG \ = \ TL > TA $$ $NITA$ is $NI$ over $TA$. $$NITA \ = \ \frac{NI}{TA}$$ $FUTL$ is income before taxes ($IBT$) over $TL$. $$FUTL \ = \ \frac{IBT}{TL}$$ $INTWO$ is another dummy variable that is 1 if $NI$ for the current year and $NI$ for the previous year are both negative. $$INTWO \ = \ MAX(NI_t,NI_{t-1}) < 0$$ $CHIN$ is $NI$ for the current year - $NI$ for the previous year all over the sum of the absolute value of $NI$ for the current year and the absolute value of $NI$ for the previous year $$CHIN \ = \ \frac{NI_t \ - \ NI_{t-1}}{|NI_t| + |NI_{t-1}|}$$ Altman's Z is calculated using weighted averages of working capital ($WC$, calculated as $TCA$ - $TCL$), $$WC \ = \ TCA \ - \ TCL$$ retained earnings ($RE$, calculated as $NI$ - dividends per share ($DIVC$) * $TCSO$), $$RE \ = \ NI \ - \ DIVC \ * \ TCSO$$ earnings before interest and taxes ($EBIT$, calculated as $NI$ - Discontinued Operations ($DO$) + (income before tax ($IBT$) - income after tax ($IAT$)) + interest expense ($NINT$)), $$ EBIT \ = \ NI \ - \ DO \ + \ (IBT \ - \ IAT) \ + \ NINT $$ $ME$, and $TREV$, all over $TA$. $$Z \ = \frac{\ 1.2 \ * \ WC \ + \ 1.4 \ * \ RE \ + \ 3.3 \ * \ EBIT \ + \ 0.6 \ * \ ME \ + TREV}{TA}$$ $EBIT$ is likely an overestimate for a given company due to potentially missing information. $EVOL$ is calculated as the standard deviation of $ROE$ for a four year span. AQR recommends the past five years, but for the same reason stated in the Growth section, we use a four year span. $$EVOL = \sigma\left(\sum_{i=t-4}^{t}ROE_i\right)$$ Likewise, we standardize each variable and then standardize each safety measure, so $$Safety \ = \ z(z_{bab} \ + \ z_{ivol} \ + \ z_{lev} \ + \ z_{o} \ + \ z_{z} \ + \ z_{evol})$$ 
 \subsection{Payouts}
-Payouts is composed of three variables: net equity issuance ($EISS$), net debt issuance ($DISS$), and total net payout over profits ($NPOP$). $EISS$ is calculated as the negative log of the ratio of $TCSO$ of the most recent year and $TCSO$ of the previous year. $$EISS \ = \ -log\left(\frac{TCSO_t}{TCSO_{t-1}}\right)$$ Though AQR uses split-adjusted number of shares, we are currently using $TCSO$ given available information and will adjust for splits in future iterations of qmj. $DISS$ is calculated as the negative log of the ratio of $TD$ of the most recent year and $TD$ of the previous year. $$DISS \ = \ -log\left(\frac{TD_t}{TD_{t-1}}\right)$$ $NPOP$ is calculated as $NI$ - $\Delta BE$ over a four year span all over sum of $GPROF$ for the past four years (for the same reason as explained in the Growth section). $$NPOP \ = \ \frac{NI - \Delta BE}{\sum_{i=t-4}^{t}GPROF_i}$$
+Payouts measures the proportion of profits paid to shareholders. It is composed of three variables: net equity issuance ($EISS$), net debt issuance ($DISS$), and total net payout over profits ($NPOP$). $EISS$ is calculated as the negative log of the ratio of $TCSO$ of the most recent year and $TCSO$ of the previous year. $$EISS \ = \ -log\left(\frac{TCSO_t}{TCSO_{t-1}}\right)$$ Though AQR uses split-adjusted number of shares, we are currently using $TCSO$ given available information and will adjust for splits in future iterations of qmj. $DISS$ is calculated as the negative log of the ratio of $TD$ of the most recent year and $TD$ of the previous year. $$DISS \ = \ -log\left(\frac{TD_t}{TD_{t-1}}\right)$$ $NPOP$ is calculated as $NI$ - $\Delta BE$ over a four year span all over sum of $GPROF$ for the past four years (for the same reason as explained in the Growth section). $$NPOP \ = \ \frac{NI - \Delta BE}{\sum_{i=t-4}^{t}GPROF_i}$$
 
 
 \section{Data}
-The package \textbf{qmj} comes pre-compiled with data, using a universe comprised of all companies in the Russell 3000 Index as of February 1, 2015. The Russell 3000 Index is a list of the 3000 largest US companies, according to market cap, updated yearly, usually around May or June. The Russell 3000 Index was chosen due to the US-centric nature of our financial sources (Google Finance and Yahoo Finance), in addition to providing reliable, interesting data (i.e. no anomalies such as Gross Profits over Assets (GPOA) doubling for a tiny company due to a small absolute change in profit occurs).
+The \strong{qmj} package comes pre-compiled with data, including a universe comprised of all companies in the Russell 3000 Index along with each companies financials, daily closing prices and returns, and quality scores. The Russell 3000 Index is a list of the 3000 largest US companies, according to market cap, updated annually around May or June. We do not analyze companies outside the scope of the Russell 3000 Index in order to prevent potential problems with limited financial information for small companies as well as anomalies that could skew our measurements for quality. For example, Gross Profits over Assets (GPOA) could double for a tiny company due to a small absolute change in profit, dramatically increasing the growth measurement for that company. We thus wish to focus on companies with reasonably large market cap to have the best possible quality comparisons. For each dataset, see \code{?dataset} for more information each of its variables. For example, for the dataset \code{companies}, use \code{?companies}.
 
-For this data, \textbf{qmj} is able to automatically retrieve the most recent list of companies, retrieve the previous four 10-K's when possible.
-
-\begin{center}
-\scriptsize{
-<<echo=FALSE>>=
-options(width=100)
-@
-<<Package Datasets>>=
-library(qmj)
-data(companies) 
-data(financials) 
-data(prices) 
-data(quality)
-head(quality,n=5)
-@
-}
-\end{center}
+\subsection{companies}
+  The first dataset of the package contains the companies we wish to study, ordered alphabetically by ticker. Here is a sample of the first five companies.
 
 \begin{center}
-\scriptsize{
-<<>>=
-data(companies)
-head(companies, n = 5)
+<<echo = FALSE>>=
+head(qmjdata::companies, n = 5)
 @
-}
 \end{center}
 
+The \code{companies} dataset maps each company's ticker to its name. For example, Alcoa Inc. has the ticker AA. This sample of companies uses the 2014 Russell 3000 Index, which only contains 2999 companies. 
 
+\subsection{financials}
+  The second dataset is \code{financials}, which is composed of data from the balance sheets, income statements, and cash flows of companies. The columns are filtered so only the relevant measurements such as net income are present in the dataset. \code{companies} is the baseline dataset by providing tickers for other datasets in the package.
+
+<<echo = FALSE>>=
+quality_scores <- qmjdata::quality
+quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))] <-
+  round(quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))], 
+        digits = 3)
+
+@
 \begin{center}
-\scriptsize{
-<<>>=
-data(financials)
-head(financials, n = 8)
+<<echo = FALSE>>=
+head(qmjdata::financials, n = 8)
 @
-}
 \end{center}
 
+Every company is allocated four rows, each row representing the financial data for the company for a particular year. Organizing the data in this way allows users to easily see the change in variables affecting each company's financial status over time. For example, consider the company with ticker A. It has nearly a 20\% increase in total assets, but it also has nearly a 50\% decrease in net income from 2011 to 2014.
+
+\subsection{prices}
+  The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. 
+  
 \begin{center}
-\scriptsize{
-<<>>=
-data(prices)
-head(prices, n = 5)
-prices[1050:1055,]
+<<echo = FALSE>>=
+rbind(head(qmjdata::prices, n = 5),
+      qmjdata::prices[1050:1054,])
 @
-}
 \end{center}
 
+In the sample above, we have data for the company with ticker SRCE as well as the S \& P 500 (ticker GSPC), or the market. For every company in the dataset, we have the daily price return (pret) and closing price (close), and we compare these values to those of the market to see if the company outperforms or underperformsthe market. The S \& P 500 is the benchmark we use in our calculations of beta and idiosyncratic volatility for our safety score. If we directly compare price returns, it appears that SRCE underperforms the market for every day in our sample of five consecutive business days. 
+
+\subsection{quality}
+  Finally, we have the main dataset, \code{quality}, which contains the quality scores for each company as well as the four main components measuring profitability, growth, safety, and payouts z-scores. 
+  
 \begin{center}
-\scriptsize{
-<<>>=
-data(quality)
-head(quality, n = 5)
-quality[quality$ticker=="SRCE",]
-quality[quality$ticker=="AA",]
+<<echo = FALSE>>=
+rbind(head(quality_scores, n = 5),
+      rbind(quality_scores[quality_scores$ticker == "SRCE",],
+            quality_scores[quality_scores$ticker == "AA",]))
 @
-}
 \end{center}
-\textit{companies} stores names and tickers from the Russell 3000 Index component list, \textit{financials} stores, whenever possible, the four most recent years of financial data (balance sheets, income statements, and cash flow statements) which are relevant to our calculations. \textit{prices} stores closing stock prices and calculated price returns for each company as well as the S\&P 500 for the past two years, and \textit{quality} is the list of quality scores, as well as the component scores, of each of our companies.
+
+Here we have an example showing the top five companies based on quality measurements. We also have two companies we have seen before in our samples of other datasets. For the company with ticker SRCE, we note that the quality score is not very high. Though we cannot just extrapolate from our sample size of five, it makes sense for SRCE to have a low quality score if it continues to underperform the market every day, which we can verify if we look compare the price returns on more days from the \code{prices} dataset. AA has an even lower quality score, which is understandable from its poor financial records. Most notably, the values for its total assets, net income, income after taxes, income before taxes all decline significantly in a span of four years. 
 
 \subsection{Updating Data}
 
-Though \textbf{qmj} keeps datasets updated, it has a few functions that can extract information directly from Google Finance to grab the most recent data. 
+Though \strong{qmj} updates its datasets periodically, it has a few functions that can extract information directly from Google Finance to grab the most recent data for users to utilize in their own datasets. 
 
-<<get functions>>=
+<<echo = FALSE>>=
 #raw_prices <- get_prices(companies)
 #raw_data <- get_info(companies)
 @
 
-\textbf{get\_prices()} takes a data frame of companies, organized by name and ticker, and returns the daily prices and returns for the past two years including the most recent trading day. \textbf{get\_info()} also takes a data frame of companies, organized by name and ticker, and grabs the most recent company 10-K financial statements. Thus, \textbf{get\_info()} does not need to be called often since it will only grab new data once per year. Both functions will return a data frame that can be organized easily. An easy way to make the data more readable is through tidy functions in the \textbf{qmj} package. 
+\strong{get\_prices()} takes a data frame of companies, organized by name and ticker, and returns the daily prices and returns for the past two years including the most recent trading day. \strong{get\_info()} also takes a data frame of companies, organized by name and ticker, and grabs the most recent company 10-K financial statements. Thus, \strong{get\_info()} does not need to be called often since it will only grab new data once per year. Both functions will return a data frame that can be organized easily. An easy way to make the data more readable is through tidy functions in the \strong{qmj} package. 
 
-<<tidy functions>>=
+<<echo = FALSE>>=
 #clean_prices <- tidy_prices(raw_prices)
 #clean_data <- tidyinfo(raw_data)
 @
 
-\textbf{tidy\_prices()} takes as input the result of \textbf{get\_prices()}, which is assigned here as \textbf{raw\_prices}, and organizes the data into columns for ticker, date, price, and price return. \textbf{tidyinfo()} takes as input the result of \textbf{get\_info()}, which is assigned here as \textbf{raw\_data}, and organizes the data into columns for ticker, year, and various items found in company financial statements such as total assets and net income. The column names themselves are abbreviations that are used in the Appendix. 
+\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()}, which is assigned here as \strong{raw\_prices}, and organizes the data into columns for ticker, date, price, and price return. \strong{tidyinfo()} takes as input the result of \strong{get\_info()}, which is assigned here as \strong{raw\_data}, and organizes the data into columns for ticker, year, and various items found in company financial statements such as total assets and net income. The column names themselves are abbreviations that are used in the Calculating Quality section. 
 
 \section{Analyzing the Universe (Of Companies)}
-In the quality data set, it can quickly be seen that the growth score for Angies List Inc. is abnormally high, and accounts for virtually all of its quality score. In many cases, it is undesirable to consider companies with high quality scores that are ``driven'' (here defined as composing at least half the quality score) by a single component score. \textbf{qmj} provides a filter.
+In the quality data set, it can quickly be seen that the growth score for Angies List Inc. is abnormally high, and accounts for virtually all of its quality score. In many cases, it is undesirable to consider companies with high quality scores that are ``driven'' (here defined as composing at least half of the quality score) by a single component score. \strong{qmj} provides a filter.
 \begin{center}
-\scriptsize{
-<<>>=
-data(quality)
-head(quality)
+<<echo = FALSE>>=
+head(quality_scores)
 
 # sans_growth <- filter_companies(quality, filter="growth")
 # head(sans_growth)
 @
-}
 \end{center}
-If desirable, we may also select specifically for those companies which are driven by a particular component. Note that \textit{remove} is, by default, set to TRUE, and \textit{isolate}, is set to FALSE.
+As shown above, companies with excessively high growth scores compared to their other component scores, including ANGI, have been filtered out. If desirable, we may also choose to isolate companies that are driven by a particular component, or whitelist, rather than to remove, or blacklist them. \code{remove} and \code{isolate} are boolean parameters that specify whether the user wishes to blacklist or whitelist, with \code{remove} being TRUE and \code{isolate} being FALSE by default.
 
 \begin{center}
-\scriptsize{
-<<>>=
+<<echo = FALSE>>=
 # cpayouts <- filter_companies(quality, filter="payouts", remove=FALSE, isolate=TRUE)
 # head(cpayouts)
 @
-}
 \end{center}
-Or, we can select for all companies which are not driven by any component score.
+As we can see above, now that \code{isolate} is TRUE, we are left with only the companies that have excessively high payouts scores compared to their other component scores. We can also select for all companies that are not driven by any component score. 
 
 \begin{center}
-\scriptsize{
-<<>>=
+<<echo = FALSE>>=
 # well_rounded <- filter_companies(quality, filter="all")
 # head(well_rounded)
 @
-}
 \end{center}
-It may also be desirable to look at quality scores specific to a subset of our extant universe. For example, it may be desirable to focus on a specific industry, instead of the entire market.
+We are left with only the companies that do not have single outstanding component scores. It may also be desirable to look at quality scores specific to a subset of our extant universe. 
+
 
 \begin{center}
-\scriptsize{
-<<>>=
-data(companies)
-data(financials)
-data(prices)
-
-subset_companies <- companies[1:35,]
-subset_qualities <- market_data(subset_companies, financials, prices)
+<<echo = FALSE>>=
+subset_companies <- qmjdata::companies[1:35,]
+subset_qualities <- qmj::market_data(subset_companies, qmjdata::financials, qmjdata::prices)
+subset_qualities[-which(colnames(subset_qualities) %in% c("ticker", "name"))] <-
+  round(subset_qualities[-which(colnames(subset_qualities) %in% c("ticker", "name"))], 
+        digits = 3)
 head(subset_qualities)
 @
-}
 \end{center}
+
+This very simple example only grabs the first 35 companies of the Russell 3000 Index and demonstrates that our functions can calculate quality scores for customized data sets as well. For example, a user may wish to focus on a specific industry, instead of the entire market, and see the relative quality scores for just that subsection.
 
 \section{Conclusion}
 
-In the \textbf{qmj} package, we automate AQR's method of assigning quality scores for publicly traded companies in today's market. The package itself provides convenient datasets and utility functions, and it also takes advantage of R's robust nature to allow seamless interaction with functions in the base R package and other packages.
-\\
-\\
-\emph{Anthoney Tsou}
-\\
-\emph{Williams College}
-\\
-\emph{Williamstown, MA}
-\\
-\emph{USA}
-\\
-anttsou@gmail.com
-\\
-\\
-\emph{David Kane}
-\\
-\emph{Williams College}
-\\
-\emph{Williamstown, MA}
-\\
-\emph{USA}
-\\
-dave.kane@gmail.com
-\\
-\\
-\emph{Ryan Kwon}
-\\
-\emph{Williams College}
-\\
-\emph{Williamstown, MA}
-\\
-\emph{USA}
-\\
-rynkwn@gmail.com
-\section{Bibliography}
-\hypertarget{bibliography}{C. Asness, A. Frazzini, and L. Pedersen. ``Quality Minus Junk." AQR, 2013.}
-\\
-\\
-\hypertarget{bibliography}{K. Campbell, J. Enos, D. Gerlanc, and D. Kane. Backtests. \emph{R News}, 7(1):36-41, April 2007.}
-\\
-\\
-\hypertarget{bibliography}{W. Gray and T. Carlisle. \emph{Quantitative Value: A Practitioner's Guide to Automating Intelligent Investment and Eliminating Behavioral Errors}. John Wiley \& Sons, 2013.}
-\\
-\\
-\hypertarget{bibliography}{D. Kane, A. Liu, and K. Nguyen. Analyzing an Electronic Limit Order Book. \emph{The R Journal}, 3(1):64-68, June 2011.}
-\\
-\\
-\hypertarget{bibliography}{Y. Lu and D. Kane. Performance Attribution for Equity Portfolios. \emph{The R Journal}, 5(2):53-61, December 2013.}
+In the \strong{qmj} package, we automate AQR's method of assigning quality scores for publicly traded companies in today's market. The package itself provides convenient datasets and utility functions, and it also takes advantage of R's robust nature to allow seamless interaction with functions in the base R package and other packages.
+
+\bibliography{tsou-kane-kwon}
+
+\address{Anthoney Tsou\\
+      Williams College\\
+      2460 Paresky Center\\
+      Williamstown, MA 01267\\
+      United States}\\
+\email{anttsou@gmail.com}
+
+\address{David Kane\\
+   Williams College\\
+   Williamstown, MA 01267\\
+   United States}\\
+\email{dave.kane@gmail.com}
+
+\address{Ryan Kwon\\
+  Williams College\\
+  1309 Paresky Center\\
+  Williamstown, MA 01267\\
+  United States}\\
+\email{rynkwn@gmail.com}
+\end{article}
 \end{document}
