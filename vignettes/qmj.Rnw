@@ -4,6 +4,7 @@
 \usepackage{RJournal}
 \usepackage{amsmath,amssymb,array}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \usepackage{float}
 \usepackage{Sweave}
 \usepackage[parfill]{parskip}
@@ -29,23 +30,79 @@
 
 \maketitle
 
-\citep{campbell:2007}
-\citep{gray:2013}
-\citep{kane:2011}
-\citep{lu:2013}
 \abstract{
-The \strong{qmj} package produces quality scores for companies from the Russell 3000 Index based on their profitability, growth, safety, and payouts, using the approach described in "Quality Minus Junk" by Clifford Asness et. al (2013). The package gathers the latest company financial statements and stock returns from Google Finance and provides periodically updated quality scores. Users also have access to the functions used to generate these scores, allowing them to update their data whenever desired. The package helps separate the list of companies into ``junk'' stocks, which are expected to underperform relative to the market, and ``quality'' stocks, which are expected to outperform.
+The \strong{qmj} package provides tools to produce quality scores for companies from the Russell 3000 Index following the approach described in ``Quality Minus Junk'' by Clifford Asness et. al (2013). The package downloads necessary financial statement data and stock returns from Google Finance and Yahoo Finance to calculate these scores. The package has quality scores as of August 2015 in a precalculated data frame, allowing users to use the package as an overview of stocks in the Russell 3000 Universe. Users can also update these scores themselves by using the functions provided in the package.
 }
 
 \section{Introduction}
 
-A Quality Minus Junk approach \citep{asness:2013}, involves investing long on high-quality stocks and shorting low-quality stocks to produce high risk-adjusted returns. A high-quality stock has characteristics investors should be willing to pay for, ceteris paribus. These characteristics are profitability, growth, safety, and payouts. Thus, the return of a quality stock is intended to exceed its purchase price. 
+There is no single, widely accepted definition for the quality of a stock. MSCI defines quality as ``msci definition''. (Quality can also be loosely described as .... \citep{gray:2013}). In ``Quantitative Value'', quality is loosely described as...  In ``Quality Minus Junk'' \citep{asness:2013}\footnote{Hereafter referred to as AFP}, quality is defined as the average of the four scores representing profitability, growth, safety and payouts.
 
-Each of the four components that make up the quality score are calculated from different variables that can be found from a company's financial statements.  The package draws this data from Google Finance.
+Each of the four characteristics is an average of the z-scores of the measures that comprises the characteristic. Profitability covers measures that aim understand earnings relative to the costs incurred. Growth measures the increase in a company's profits. Safety contains measures of risk in future returns. Payout considers how much of the profits goes to the shareholders.
 
-The \strong{qmj} package evaluates the quality of stocks by measuring the profitability, growth, safety, and payouts of a company relative to other companies in the Russell 3000 Index. We define each of these characteristics in the following section of the paper. 
+\strong{qmj} considers the quality of stocks that belong to the Russell 3000. The Russell 3000 is an index that includes the 3000 largest US companies by market capitalization.  This universe was chosen due to the relative ease in obtaining the data necessary for quality score calculation from Google Finance and Yahoo Finance.
 
-Drawing data from financial statements, the \strong{qmj} package uses regression based analysis and calculations with closed form expressions to produce a quality z-score for each company of interest. We demonstrate the use of a variety of tools for both casual and diligent investors to not only view the quality of stocks, but also to understand the underlying factors that compose the scores. 
+Using the necessary financial and stock data as of August 2015, \strong{qmj} provides a precalculated data frame of quality scores for the companies in the 2015 Russell 3000. This is convenient for those who primarily want to use the package for a quick overview of recent Russell 3000 quality scores. Users who want to regularly update the data themselves and recalculate the quality scores can do so by calling the same functions that were used to create the precalculated data frame.
+
+\section{Data}
+\subsection{Companies}
+The Russell 3000 is an index that tracks 3000 of the largest US-traded companies by Market Capitalization\citep{russell:2015}. It is rebalanced anually in June. The package comes with a data frame called \code{companies} containing the members of 2015 index by name and ticker\footnote{from https://www.russell.com/documents/indexes/construction-methodology-us-indexes.pdf}.
+
+Here is a sample of the first five companies in \code{companies}.
+
+\begin{center}
+<<echo = FALSE>>=
+head(qmjdata::companies, n = 5)
+@
+\end{center}
+
+For more information, see \code{?companies}.
+
+\subsection{Financials}
+The second dataset, \code{financials} contains the data from the balance sheets, income statements, and cash flows of companies that is necessary for quality score generation. This is gathered through functions that call \strong{quantmod} functions that get data from Google Finance and Yahoo Finance.
+
+\code{financials} is long format data, so for each ticker, there are four rows corresponding to the past four fiscal years based on 10-K submission date. Since companies have different 10-K submission dates, the most recently gathered data may not include the financial information for the most current year. Thus, some companies will occasionally not have data for the past four years, but rather data with a one-year lag. 
+
+Here is a sample of the first five companies in \code{financials}.
+
+\begin{center}
+<<echo = FALSE>>=
+head(qmjdata::financials, n = 5)
+@
+\end{center}
+
+For more information, see \code{?financials}. 
+
+\begin{table}
+  \caption{Columns in \code{financials}}
+  \label{table:financials}
+  \begin{tabularx}{\textwidth}{X X}
+    \toprule
+      Abbreviation & Name \\ 
+    \midrule
+      AM & Amortization \\ 
+      CWC & Changes in Working Capital \\ 
+      CX & Capital Expenditures \\ 
+      DIVC & Dividends per Share \\ 
+      DO & Discontinued Operations \\ 
+      DP.DPL & Depreciation/Depletion \\ 
+      GPROF & Gross Profits \\ 
+      IAT & Income After Taxes \\ 
+      IBT & Income Before Taxes \\ 
+      NI & Net Income \\ 
+      NINT & Interest and Expense \\ 
+      NRPS & Non-redeemable Preferred Stock \\ 
+      RPS & Redeemable Preferred Stock \\ 
+      TA & Total Assets \\ 
+      TCA & Total Current Assets \\ 
+      TCL & Total Current Liabilities \\ 
+      TCSO & Total Common Shares Outstanding \\
+      TL & Total Liabilities  \\ 
+      TLSE & Total Liabilities and Shareholder's Equity \\ 
+      TREV & Total Revenue \\
+    \bottomrule
+  \end{tabularx}{\parfillskip=0pt\par}
+\end{table}
 
 \section{Calculating Quality}
 
@@ -89,7 +146,7 @@ head(qmjdata::companies, n = 5)
 The \code{companies} dataset maps each company's ticker to its name. For example, Alcoa Inc. has the ticker AA. This sample of companies uses the 2014 Russell 3000 Index, which only contains 2999 companies. 
 
 \subsection{financials}
-  The second dataset is \code{financials}, which is composed of data from the balance sheets, income statements, and cash flows of companies. The columns are filtered so only the relevant measurements such as net income are present in the dataset. \code{companies} is the baseline dataset by providing tickers for other datasets in the package.
+  The second dataset, \code{financials}, which is composed of data from the balance sheets, income statements, and cash flows of companies. The columns are filtered so only the relevant measurements such as net income are present in the dataset. \code{companies} is the baseline dataset by providing tickers for other datasets in the package.
 
 <<echo = FALSE>>=
 quality_scores <- qmjdata::quality
