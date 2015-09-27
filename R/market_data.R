@@ -37,6 +37,7 @@ market_data <- function(companies = qmjdata::companies,
   safety <- market_safety(companies, financials, prices)$safety
   payouts <- market_payouts(companies, financials)$payouts
   quality <- profitability + growth + safety + payouts
+  quality <- scale(quality)
   
   name <- companies$name
   ticker <- companies$ticker
