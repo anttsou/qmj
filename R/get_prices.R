@@ -58,18 +58,20 @@ get_prices <- function(companies = qmjdata::companies){
   filesInDest <- list.files(path = filepath) 
   for(i in 1:numCompanies){
     companyTicker <- as.character(companies$ticker[i])
-    
     file <- paste(companyTicker, ".RData", sep='')
     absoluteFilePath <- paste(filepath, "/", companyTicker, ".RData", sep='')
-    if(is.element(file, filesInDest)){  ## If the temp file already exists, we skip downloading this company's information.
-
+    
+    if(is.element(file, filesInDest)){
+      
+      ## If the temp file already exists, we skip downloading this company's information.
+      
       print(paste(companyTicker, "information found in extdata. Resuming Download.", sep=' '))
       listfiles[i+1] <- absoluteFilePath
     } else{
       stockData <- tryCatch(
         quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=startDate),
         error=function(e) e
-      )
+        )
       if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1){
         
         ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, 
@@ -90,10 +92,9 @@ get_prices <- function(companies = qmjdata::companies){
   compiled <- matrix()
   load(listfiles[1])
   compiled = cbind(compiled, stockData)
+  
+  ## Go through all our temp files and aggregate them.
   if(length(listfiles) > 1){
-    
-    ## Go through all our temp files and aggregate them.
-   
     for(i in 2:(length(listfiles))) {
       load(listfiles[i])
       compiled = cbind(compiled, stockData)
@@ -101,8 +102,8 @@ get_prices <- function(companies = qmjdata::companies){
   }
   
   ## Remove all our temp files.
-  
   file.remove(listfiles) 
+  
   prices <- data.frame(compiled, stringsAsFactors = FALSE)[,-1]
   prices
 }
