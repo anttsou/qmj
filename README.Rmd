@@ -11,7 +11,7 @@ install_github("anttsou/qmj")
 ##Background
 qmj implements the results and methodology of the paper Quality Minus Junk by Clifford Asness, Andrea Frazzini, Lasse Pedersen. They use several measures to calculate scores for the relative profitability, growth, safety, and payouts of a company. Combining those scores generates an overall quality score.
 
-High quality companies are likely outperform the market, while ``junk'' companies are likely to underperform.
+High quality companies are likely outperform the market, while "junk" companies are likely to underperform.
 
 Here we use the equations and methods described in the paper, coupled with data scraped from online sources, in order to produce quality measurements for companies listed in the Russell 3000 Index.
 
