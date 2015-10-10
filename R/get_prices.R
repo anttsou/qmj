@@ -32,18 +32,22 @@ get_prices <- function(companies = qmjdata::companies){
     pricereturns
   }
   
-  ## folder destination of all temp files.
+  ## Folder destination of all temp files.
+  
   filepath <- system.file("extdata", package="qmj") 
 
   ## We only desire stock data for the past two years.
+  
   startDate <- as.POSIXlt(Sys.Date())
   startDate$year <- startDate$year - 2
   startDate <- as.Date(startDate)
   
   ## listfiles stores the location of all temp files we use/create during this process.
+  
   listfiles <- rep("", (numCompanies + 1)) 
   
   ## Code below specially gathers the daily data for the S&P 500 for use as a benchmark.
+  
   stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE, from=startDate)
   stockData$pret <- pricereturns(stockData)
   stockData <- stockData[-1,]
@@ -52,6 +56,7 @@ get_prices <- function(companies = qmjdata::companies){
   save(stockData, file=absoluteFilePath)
   
   ## List of all files in extdata, which should contain all temp files.
+  
   filesInDest <- list.files(path = filepath) 
   
   for(i in 1:numCompanies){
@@ -70,7 +75,7 @@ get_prices <- function(companies = qmjdata::companies){
         quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=startDate),
         error=function(e) e
         )
-      if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1){
+      if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1) {
         
         ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, 
         ## we save it as a temp file.
@@ -92,6 +97,7 @@ get_prices <- function(companies = qmjdata::companies){
   compiled = cbind(compiled, stockData)
   
   ## Go through all our temp files and aggregate them.
+  
   if(length(listfiles) > 1){
     for(i in 2:(length(listfiles))) {
       load(listfiles[i])
@@ -100,6 +106,7 @@ get_prices <- function(companies = qmjdata::companies){
   }
   
   ## Remove all our temp files.
+  
   file.remove(listfiles) 
   
   prices <- data.frame(compiled, stringsAsFactors = FALSE)[,-1]
