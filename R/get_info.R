@@ -22,60 +22,71 @@ get_info <- function(x = qmjdata::companies) {
     stop("parameter requires a ticker column.")
   }  
   
-  ## Variables related to temporarily storing fetched data.
+  ## These variables temporarily store fetched data.
+  
   filepath <- system.file("extdata", package="qmj")
   listfiles <- rep("", length(x$ticker))
-  filesInDest <- list.files(path=filepath)
+  filesInDest <- list.files(path = filepath)
   
   for(i in tickers) {
     file <- paste0(i, "-fin", ".RData")
     fileName <- paste0(filepath, "/", i, "-fin.RData")
-    if(is.element(file, filesInDest)){
+    if(is.element(file, filesInDest)) {
       
       ## If the temp file already exists, we skip downloading this company's information.
       
-      print(paste(i, "information found in extdata. Resuming Download.", sep=' '))
+      message(paste0(i, " information found in extdata. Resuming Download."))
       listfiles[i] <- fileName
     } else {
-      prospective <- tryCatch(quantmod::getFinancials(i,auto.assign = FALSE),
-                              error=function(e) e)
+      prospective <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE),
+                              error = function(e) e)
       matr <- matrix()
       if(!inherits(prospective,"error")) {
         
-        ## grab cash flows from Google Finance 
-        ## Structure of statements is extremely similar for income statements and balance sheets.
-        if(nrow(matr <- viewFinancials(prospective,type = 'CF',period = 'A'))) {
+        ## Grab cash flows from Google Finance.
+        ## Structure of statements is extremely similar for income statements 
+        ## and balance sheets.        
+        
+        ## First checks if a positive number of rows exist. 
+        
+        if(nrow(matr <- viewFinancials(prospective, type = 'CF', period = 'A'))) {
           
-          ## rename columns to include the ticker and the year
-          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste(i,colnames(matr)))
+          ## Rename columns to include the ticker and the year.
           
-          ## add company cash flows to building list
+          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
+          
+          ## Add company cash flows to building list.
+          
           cashflow <- matr
         }
         
-        ## grab income statements from Google Finance        
+        ## Grab income statements from Google Finance.    
+        
         if(nrow(matr <- viewFinancials(prospective, type = 'IS', period = 'A'))) {
-          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste(i,colnames(matr)))
+          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           incomestatement <- matr
         }
         
-        ## grab balance sheets from Google Finance        
+        ## Grab balance sheets from Google Finance 
+        
         if(nrow(matr <- viewFinancials(prospective, type = 'BS', period = 'A'))) {
-          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "",paste(i,colnames(matr)))
+          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           balancesheet <- matr
         }
         
         clist <- list(cashflow, incomestatement, balancesheet)
         listfiles[i] <- fileName
-        save(clist, file=fileName)
+        save(clist, file = fileName)
       } else {
-        print(paste0("Error retrieving data for ", i))
+        message(paste0("Error retrieving data for ", i))
         warning(paste0("No financials for ", i))
       }
     }
   }
   
-  ## extract information from files to compile cash flows, income statements, and balance sheets
+  ## Extract information from files to compile cash flows, income statements, 
+  ## and balance sheets.
+  
   listfiles <- listfiles[listfiles != ""]
   cashflows <- list()
   incomestatements <- list()
