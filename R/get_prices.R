@@ -76,11 +76,12 @@ get_prices <- function(companies = qmjdata::companies){
         error = function(e) e
         )
       
-      if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1) {
+      if(!inherits(stockData, "error") && length(stockData[,1]) > 1) {
         
         ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, 
         ## we save it as a temp file.
         
+        message(paste0("Price data for ", companyTicker, sep=''))
         stockData$pret <- pricereturns(stockData)
         stockData <- stockData[-1,]
         listfiles[(i) + 1] <- absoluteFilePath
