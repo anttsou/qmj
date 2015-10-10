@@ -99,8 +99,7 @@ get_info <- function(x = qmjdata::companies) {
       balancesheets <- c(balancesheets, clist[3])
     }
   }
-  
-  resultlist <- as.list(cashflows, incomestatements, balancesheets)
+  resultlist <- list(cashflows, incomestatements, balancesheets)
   file.remove(listfiles)
   resultlist
 }

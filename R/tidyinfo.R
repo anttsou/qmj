@@ -18,12 +18,12 @@
 #' raw_data <- get_info(sub_comps)
 #' financials <- tidyinfo(raw_data)
 #' 
-#' my_companies <- data.frame(ticker=c("GOOG", "IBM"))
+#' my_companies <- data.frame(ticker = c("GOOG", "IBM"))
 #' raw_data <- get_info(my_companies)
 #' financials <- tidyinfo(raw_data)
 #' @export
 
-tidyinfo <- function(x = qmjdata::companies){
+tidyinfo <- function(x) {
   #Index is the current structure of the output of the get_info function.
   tidycash <- tidy_cashflows(x[[1]])
   tidyincome <- tidy_incomestatements(x[[2]])
