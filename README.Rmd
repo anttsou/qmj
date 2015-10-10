@@ -11,7 +11,7 @@ install_github("anttsou/qmj")
 ##Background
 qmj implements the results and methodology of the paper Quality Minus Junk by Clifford Asness, Andrea Frazzini, Lasse Pedersen. They use several measures to calculate scores for the relative profitability, growth, safety, and payouts of a company. Combining those scores generates an overall quality score.
 
-High quality companies are likely outperform the market, while ``junk'' companies are likely to underperform.
+High quality companies are likely outperform the market, while "junk" companies are likely to underperform.
 
 Here we use the equations and methods described in the paper, coupled with data scraped from online sources, in order to produce quality measurements for companies listed in the Russell 3000 Index.
 
@@ -20,16 +20,10 @@ In order to start you off, qmj comes equipped with several data sets, including 
 
 ```{r}
 library(qmj)
-data(companies) #Stores company names and tickers from the Russell 3000 index
-data(financials) #Stores financial documents for the given list of companies.
-data(prices) # Stores price returns and closing stock prices for the past two years.
-data(quality) #Stores the quality scores and the scores of its components.
-  
-#And more detailed data sets into what makes up quality
-data(profitability)
-data(growth)
-data(payouts)
-data(safety)
+data(companies) ## Stores company names and tickers from the Russell 3000 index.
+data(financials) ## Stores financial documents for the given list of companies.
+data(prices) ## Stores price returns and closing stock prices for the past two years.
+data(quality) ## Stores the quality scores and the scores of its components.
 ```
 
 Getting a quality data frame and a holistic summary of all its components can be done by calling
@@ -44,85 +38,41 @@ If you're only interested in accessing certain quality factors, such as profitab
 market_profitability(companies, financials)
 ```
 
-This will return a numeric vector containing profitability z-scores for the given companies, where the nth number corresponds to the nth company. 
+This will return a data frame containing profitability z-scores for the given companies as well as the z-scores for the components creating the profitability scores.
 
-##Analyzing Your Data
-The qmj package has stored a large number of qmj objects, which store significant amounts of information about a single company and which allows more in-depth analysis of that company. Some examples of analysis follow:
-
-```{r}
-data(qmjs)
-first_qmj <- qmjs[[1]]
-summarize(first_qmj) # Displays key information about this qmj object.
-
-#We're clearly missing some interesting data, but we can still 
-#perform some analysis.
-data(safety)
-```
-```{r fig.width=7, fig.width=6}
-plot_safety(first_qmj, safety)
-```
-
-```{r}
-#Now let's look at a graph for quality.
-data(quality)
-second_qmj <- qmjs[[2]]
-```
-```{r fig.width=7, fig.height=6}
-plot_quality(second_qmj, quality)
-```
-
-```{r}
-#What if I'm only interested in looking closely at a few companies? 
-#Well, voila.
-desired_companies <- c("GOOG", "IBM", "FLWS") #Returns a list containing the given qmj objects in order.
-desired_qmjs <- get_qmjs(desired_companies, qmjs) 
-
-summarize(desired_qmjs[[1]])
-```
-
-But the package also provides some tools for better examining your data en masse, as opposed to individual companies.
-
-```{r}
-#Let's look at the head of our quality data frame.
-data(quality)
-head(quality)
-
-#Angies has an abnormally high growth score, which is very suspicious.
-#Companies that are primarily driven by a single component score 
-#are suspect, so let's filter out companies that are driven by growth.
-sans_growth <- filter_companies(quality, filter="growth")
-head(sans_growth)
-
-#On the other hand, if we're interested in only companies that are 
-#driven by growth, we can do the following:
-driven_by_growth <- filter_companies(quality, filter="growth", remove=FALSE, isolate=TRUE)
-head(driven_by_growth)
-
-#We can also remove all companies with quality scores which are 
-#primarily driven by any component.
-#Notice that the remove parameter is by default TRUE, and 
-#isolate is by default FALSE
-liberal_arts_companies <- filter_companies(quality, filter="all")
-head(liberal_arts_companies)
-```
-  
 ##Updating your Data
-If you're interested in inputting your own data, you can generate financial statements for a data frame of companies as follows:
+Suppose you want to use the qmj package for your a custom set of companies, a dataset we will call "custom_companies". You can generate the most recent financial statements for those companies as follows:
 
 ```{r}
-#companies #Your custom data frame of company names and tickers. The column name for tickers must be "ticker"
-#rawdata <- get_info(companies) #Retrieves raw financial statements from google finance through the quantmod package.
-#financials <- tidyinfo(rawdata) #Renders raw data in a format usable by other functions in this package.
+## Note that your custom data frame of company names and tickers must have the column name 
+## "ticker" for the column of tickers.
+
+## Retrieves raw financial statements from google finance through the quantmod package.
+
+rawdata <- get_info(companies) 
+
+## Renders raw data in a format usable by other functions in this package 
+## and also dramatically improves readability.
+
+financials <- tidyinfo(rawdata) 
+
 ```
 
-get_info temporarily saves your progress to the extdata folder at all stages of its process, allowing you to resume your downloading if the process is interrupted for any reason.
+get_info also allows you to resume your downloading if the process is interrupted for any reason.
 
-###Updating Prices
+##Updating Prices
 Updating prices is a separate, lengthy process, and for that reason is separated from the other functions that automatically collect financial statements. To update prices, which is necessary for calculating safety measurements, call:
 
 ```{r}
-# rawprices <- get_prices(companies) #Retrieves stock price data from Google Finance for listed companies for the past two years. Also saves data from the S&P 500, retrieved from Yahoo Finance.
-# prices <- tidy_prices(rawprices) #Renders the raw data into a form usable by other functions in this package.
+
+## Retrieves stock price data from Google Finance for listed companies for the past two years. 
+## Also saves data from the S&P 500, retrieved from Yahoo Finance.
+
+rawprices <- get_prices(companies) 
+
+## Renders the raw data into a form usable by other functions in this package.
+
+prices <- tidy_prices(rawprices) 
 ```
 
-The get_prices function is able to save its progress as it temporarily saves its download data to the extdata folder in the package's folder.
+Similar to the get_info function, The get_prices function is also able to save its progress and resume previous downloads.

@@ -31,7 +31,7 @@
 \maketitle
 
 \abstract{
-The \strong{qmj} package provides tools to produce quality scores for companies from the Russell 3000 Index following the approach described in ``Quality Minus Junk'' by Clifford Asness et. al (2013). The package downloads necessary financial statement data and stock returns from Google Finance and Yahoo Finance to calculate these scores. The package has quality scores as of August 2015 in a precalculated data frame, allowing users to use the package as an overview of stocks in the Russell 3000 Universe. Users can also update these scores themselves by using the functions provided in the package.
+The \strong{qmj} package provides tools to produce quality scores for companies from the Russell 3000 Index following the approach described in ``Quality Minus Junk'' by Clifford Asness et. al (2013). The package downloads necessary financial statement data and stock returns from Google Finance and Yahoo Finance to calculate these scores. The package has quality scores as of October 2015 in a precalculated data frame, allowing users to use the package as an overview of stocks in the Russell 3000 Universe. Users can also update these scores themselves by using the functions provided in the package.
 }
 
 \section{Introduction}
@@ -42,7 +42,7 @@ Each of the four characteristics is an average of the z-scores of the measures t
 
 \strong{qmj} considers the quality of stocks that belong to the Russell 3000. The Russell 3000 is an index that includes the 3000 largest US companies by market capitalization.  This universe was chosen due to the relative ease in obtaining the data necessary for quality score calculation from Google Finance and Yahoo Finance.
 
-Using the necessary financial and stock data as of August 2015, \strong{qmj} provides a precalculated data frame of quality scores for the companies in the 2015 Russell 3000. This is convenient for those who primarily want to use the package for a quick overview of recent Russell 3000 quality scores. Users who want to regularly update the data themselves and recalculate the quality scores can do so by calling the same functions that were used to create the precalculated data frame.
+Using the necessary financial and stock data as of October 2015, \strong{qmj} provides a precalculated data frame of quality scores for the companies in the 2015 Russell 3000. This is convenient for those who primarily want to use the package for a quick overview of recent Russell 3000 quality scores. Users who want to regularly update the data themselves and recalculate the quality scores can do so by calling the same functions that were used to create the precalculated data frame.
 
 \section{Data}
 \subsection{Companies}
@@ -104,6 +104,18 @@ For more information, see \code{?financials}.
   \end{tabularx}{\parfillskip=0pt\par}
 \end{table}
 
+\subsection{prices}
+The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. Similar to \code{get\_info}, \code{get\_prices} gets daily price information for stocks using the \strong{quantmod} package, but this time using Yahoo Finance. Here is a sample of the data:
+
+\begin{center}
+<<echo = FALSE>>=
+rbind(head(qmjdata::prices, n = 5),
+      qmjdata::prices[1050:1054,])
+@
+\end{center}
+
+Above, we see data for 1st Source Corporation(with ticker SRCE) and the Standard and Poor's 500 Index(with ticker GSPC). For every company in the dataset, we have the daily price return (pret) and closing price (close), and we compare these values to those of the market to see if the company outperforms or underperformsthe market. The S \& P 500 is the benchmark we use in our calculations of beta and idiosyncratic volatility for our safety score. Here, SRCE underperforms the market for every day in our sample of five consecutive business days.
+
 \section{Calculating Quality}
 
 We calculate quality z-scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. 
@@ -131,55 +143,15 @@ $ADJASSET$ is adjusted total assets, which is $TA$ + 0.1 * (market equity ($ME$,
 Payouts measures the proportion of profits paid to shareholders. It is composed of three variables: net equity issuance ($EISS$), net debt issuance ($DISS$), and total net payout over profits ($NPOP$). $EISS$ is calculated as the negative log of the ratio of $TCSO$ of the most recent year and $TCSO$ of the previous year. $$EISS \ = \ -log\left(\frac{TCSO_t}{TCSO_{t-1}}\right)$$ Though AQR uses split-adjusted number of shares, we are currently using $TCSO$ given available information and will adjust for splits in future iterations of qmj. $DISS$ is calculated as the negative log of the ratio of $TD$ of the most recent year and $TD$ of the previous year. $$DISS \ = \ -log\left(\frac{TD_t}{TD_{t-1}}\right)$$ $NPOP$ is calculated as $NI$ - $\Delta BE$ over a four year span all over sum of $GPROF$ for the past four years (for the same reason as explained in the Growth section). $$NPOP \ = \ \frac{NI - \Delta BE}{\sum_{i=t-4}^{t}GPROF_i}$$
 
 
-\section{Data}
-The \strong{qmj} package comes pre-compiled with data, including a universe comprised of all companies in the Russell 3000 Index along with each companies financials, daily closing prices and returns, and quality scores. The Russell 3000 Index is a list of the 3000 largest US companies, according to market cap, updated annually around May or June. We do not analyze companies outside the scope of the Russell 3000 Index in order to prevent potential problems with limited financial information for small companies as well as anomalies that could skew our measurements for quality. For example, Gross Profits over Assets (GPOA) could double for a tiny company due to a small absolute change in profit, dramatically increasing the growth measurement for that company. We thus wish to focus on companies with reasonably large market cap to have the best possible quality comparisons. For each dataset, see \code{?dataset} for more information each of its variables. For example, for the dataset \code{companies}, use \code{?companies}.
-
-\subsection{companies}
-  The first dataset of the package contains the companies we wish to study, ordered alphabetically by ticker. Here is a sample of the first five companies.
-
+\section{quality}
+  Finally, we have the main dataset, \code{quality}, which contains the quality scores for each company as well as the four main components measuring profitability, growth, safety, and payouts z-scores. 
+  
 \begin{center}
-<<echo = FALSE>>=
-head(qmjdata::companies, n = 5)
-@
-\end{center}
-
-The \code{companies} dataset maps each company's ticker to its name. For example, Alcoa Inc. has the ticker AA. This sample of companies uses the 2014 Russell 3000 Index, which only contains 2999 companies. 
-
-\subsection{financials}
-  The second dataset, \code{financials}, which is composed of data from the balance sheets, income statements, and cash flows of companies. The columns are filtered so only the relevant measurements such as net income are present in the dataset. \code{companies} is the baseline dataset by providing tickers for other datasets in the package.
-
 <<echo = FALSE>>=
 quality_scores <- qmjdata::quality
 quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))] <-
   round(quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))], 
         digits = 3)
-
-@
-\begin{center}
-<<echo = FALSE>>=
-head(qmjdata::financials, n = 8)
-@
-\end{center}
-
-Every company is allocated four rows, each row representing the financial data for the company for a particular year. Organizing the data in this way allows users to easily see the change in variables affecting each company's financial status over time. For example, consider the company with ticker A. It has nearly a 20\% increase in total assets, but it also has nearly a 50\% decrease in net income from 2011 to 2014.
-
-\subsection{prices}
-  The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. 
-  
-\begin{center}
-<<echo = FALSE>>=
-rbind(head(qmjdata::prices, n = 5),
-      qmjdata::prices[1050:1054,])
-@
-\end{center}
-
-In the sample above, we have data for the company with ticker SRCE as well as the S \& P 500 (ticker GSPC), or the market. For every company in the dataset, we have the daily price return (pret) and closing price (close), and we compare these values to those of the market to see if the company outperforms or underperformsthe market. The S \& P 500 is the benchmark we use in our calculations of beta and idiosyncratic volatility for our safety score. If we directly compare price returns, it appears that SRCE underperforms the market for every day in our sample of five consecutive business days. 
-
-\subsection{quality}
-  Finally, we have the main dataset, \code{quality}, which contains the quality scores for each company as well as the four main components measuring profitability, growth, safety, and payouts z-scores. 
-  
-\begin{center}
-<<echo = FALSE>>=
 rbind(head(quality_scores, n = 5),
       rbind(quality_scores[quality_scores$ticker == "SRCE",],
             quality_scores[quality_scores$ticker == "AA",]))
@@ -250,21 +222,33 @@ This very simple example only grabs the first 35 companies of the Russell 3000 I
 
 \section{Conclusion}
 
-In the \strong{qmj} package, we automate AQR's method of assigning quality scores for publicly traded companies in today's market. The package itself provides convenient datasets and utility functions, and it also takes advantage of R's robust nature to allow seamless interaction with functions in the base R package and other packages.
+The \strong{qmj} package offers an R implementation of the assigning quality scores found in the paper,``Quality Minus Junk''\citep{asness:2013} for the Russell 3000. The quality data frame it comes with, as well as the functions it provides to calculate the data can be used by a variety of users with different needs. 
+
+A limitation is that it does not provide time-series data of these quality scores. An extension as such to the package could make it more useful. It would enable the backtesting of quality scores as a predictive factor for future returns\footnote{See \cite{enos:2013} for more information}.
 
 \bibliography{tsou-kane-kwon}
 
 \address{Anthoney Tsou\\
-      Williams College\\
-      2460 Paresky Center\\
-      Williamstown, MA 01267\\
-      United States}\\
+  Williams College\\
+  2460 Paresky Center\\
+  Williamstown, MA 01267\\
+  United States}\\
 \email{anttsou@gmail.com}
 
+\address{Eugene Choe\\
+  Williams College\\
+  1104 Paresky Center\\
+  Williamstown, MA 01267\\
+  United States}\\
+\email{ec7@williams.edu}
+
 \address{David Kane\\
-   Williams College\\
-   Williamstown, MA 01267\\
-   United States}\\
+  Harvard University\\
+  IQSS\\
+  1737 Cambridge St\\
+  CGIS Knafel Building, Room 350\\
+  Cambridge, MA 02138\\
+  United States}\\
 \email{dave.kane@gmail.com}
 
 \address{Ryan Kwon\\
