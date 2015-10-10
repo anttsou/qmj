@@ -41,22 +41,35 @@ market_profitability(companies, financials)
 This will return a data frame containing profitability z-scores for the given companies as well as the z-scores for the components creating the profitability scores.
 
 ##Updating your Data
-If you're interested in inputting your own data, you can generate financial statements for a data frame of companies as follows:
+Suppose you want to use the qmj package for your a custom set of companies, a dataset we will call "custom_companies". You can generate the most recent financial statements for those companies as follows:
 
 ```{r}
-#companies #Your custom data frame of company names and tickers. The column name for tickers must be "ticker"
-#rawdata <- get_info(companies) #Retrieves raw financial statements from google finance through the quantmod package.
-#financials <- tidyinfo(rawdata) #Renders raw data in a format usable by other functions in this package.
+# Note that your custom data frame of company names and tickers must have the column name "ticker" for the column of tickers.
+
+## Retrieves raw financial statements from google finance through the quantmod package.
+
+rawdata <- get_info(companies) 
+
+## Renders raw data in a format usable by other functions in this package and also dramatically improves readability.
+
+financials <- tidyinfo(rawdata) 
+
 ```
 
-get_info temporarily saves your progress to the extdata folder at all stages of its process, allowing you to resume your downloading if the process is interrupted for any reason.
+get_info also allows you to resume your downloading if the process is interrupted for any reason.
 
-###Updating Prices
+##Updating Prices
 Updating prices is a separate, lengthy process, and for that reason is separated from the other functions that automatically collect financial statements. To update prices, which is necessary for calculating safety measurements, call:
 
 ```{r}
-# rawprices <- get_prices(companies) #Retrieves stock price data from Google Finance for listed companies for the past two years. Also saves data from the S&P 500, retrieved from Yahoo Finance.
-# prices <- tidy_prices(rawprices) #Renders the raw data into a form usable by other functions in this package.
+
+## Retrieves stock price data from Google Finance for listed companies for the past two years. Also saves data from the S&P 500, retrieved from Yahoo Finance.
+
+rawprices <- get_prices(companies) 
+
+## Renders the raw data into a form usable by other functions in this package.
+
+prices <- tidy_prices(rawprices) 
 ```
 
 Similar to the get_info function, The get_prices function is also able to save its progress and resume previous downloads.
