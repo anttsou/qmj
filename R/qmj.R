@@ -40,5 +40,5 @@
 #' 
 #' 
 #' @docType package
-#' @name qmj-package
+#' @name qmj
 NULL
