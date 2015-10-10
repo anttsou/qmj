@@ -51,7 +51,7 @@ get_prices <- function(companies = qmjdata::companies){
   stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE, from=startDate)
   stockData$pret <- pricereturns(stockData)
   stockData <- stockData[-1,]
-  absoluteFilePath <- paste(filepath, "/", "GSPC.RData", sep='')
+  absoluteFilePath <- paste0(filepath, "/", "GSPC.RData")
   listfiles[1] <- absoluteFilePath
   save(stockData, file=absoluteFilePath)
   
@@ -61,20 +61,21 @@ get_prices <- function(companies = qmjdata::companies){
   
   for(i in 1:numCompanies){
     companyTicker <- as.character(companies$ticker[i])
-    file <- paste(companyTicker, ".RData", sep='')
-    absoluteFilePath <- paste(filepath, "/", companyTicker, ".RData", sep='')
+    file <- paste0(companyTicker, ".RData")
+    absoluteFilePath <- paste0(filepath, "/", companyTicker, ".RData")
     
     if(is.element(file, filesInDest)){
       
       ## If the temp file already exists, we skip downloading this company's information.
       
-      print(paste(companyTicker, "information found in extdata. Resuming Download.", sep=' '))
+      message(paste0(companyTicker, " information found in extdata. Resuming Download."))
       listfiles[i+1] <- absoluteFilePath
     } else{
       stockData <- tryCatch(
-        quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=startDate),
-        error=function(e) e
+        quantmod::getSymbols(companyTicker, src="google", auto.assign = FALSE, from = startDate),
+        error = function(e) e
         )
+      
       if(!inherits(stockData, "error") && length(stockData[,1]) > 1 && length(stockData[desiredDates,4]) > 1) {
         
         ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, 
@@ -85,8 +86,8 @@ get_prices <- function(companies = qmjdata::companies){
         listfiles[(i) + 1] <- absoluteFilePath
         save(stockData, file=absoluteFilePath)
       } else{
-        print(paste("Error retrieving data for ", companyTicker, sep=""))
-        warning(paste("No daily data for",companyTicker,sep=" "))
+        message(paste0("Error retrieving data for ", companyTicker))
+        warning(paste0("No daily data for ", companyTicker))
       }
     }
   }
