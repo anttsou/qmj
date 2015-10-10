@@ -16,8 +16,6 @@ Quality is a measure of a company's profitability, growth,
 safety, and payouts. By using publicly available data for
 company balance sheets, income statements, and cash flows, the
 qmj package calculates relative quality z-scores for companies.
-Utility functions in the class qmj also allow users to further
-analyze the quality of stocks.
 
 All functions and datasets are documented, and are freely
 available for use.
@@ -27,19 +25,9 @@ Index of datasets:
  3000 Index
  \item financials - financial statements for companies in the
  companies dataset
- \item profitability - most recently measured profitability z-scores
- and their components
- \item growth - most recently measured growth z-scores and their
- components
- \item safety - most recently measured safety z-scores and their
- components
- \item payouts - most recently measured payouts z-scores and their
- components
+ \item prices - daily prices and price returns for the past two years
  \item quality - most recently measure quality z-scores and their
  components
- \item qmjs - objects of class qmj, providing utility functions for
- further analysis of company quality
- \item prices - daily prices and price returns for the past two years
 }
 }
 \references{
