@@ -26,19 +26,18 @@ tidy_prices <- function(x){
   closing <- x[,grep(".Close", colNames)]
   pret <- x[,grep("pret", colNames)]
   
-  #' @describeIn priceCombine combines relevant columns from the original price
+  #' @describeIn pricecombine combines relevant columns from the original price
   #' data set.
-  priceCombine <- function(colReference){
+  pricecombine <- function(colReference){
     dates <- rownames(closing)
     ticker <- gsub(".Close","",names(closing)[colReference])
     ticker <- rep(ticker, length(dates))
     cbind(data.frame(ticker, date=dates, pret=pret[,colReference], close=closing[,colReference]))
   }
   
-  data <- lapply(1:ncol(closing), priceCombine)
+  data <- lapply(1:ncol(closing), pricecombine)
   
-  ## Resulting data frames are combined by rows, and the appropriate
-  ## columns are converted into reasonable types.
+  ## Aggregate data sets and convert pret and close columns to type numeric.
   result <- dplyr::bind_rows(data)
   result$pret <- as.numeric(result$pret)
   result$close <- as.numeric(result$close)
