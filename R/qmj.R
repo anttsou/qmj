@@ -41,4 +41,5 @@
 #' 
 #' @docType package
 #' @name qmj
+#' @useDynLib qmj
 NULL
