@@ -22,13 +22,18 @@ get_info <- function(x = qmjdata::companies) {
     stop("parameter requires a ticker column.")
   }  
   
+  ## Variables related to temporarily storing fetched data.
   filepath <- system.file("extdata", package="qmj")
   listfiles <- rep("", length(x$ticker))
   filesInDest <- list.files(path=filepath)
+  
   for(i in tickers) {
     file <- paste0(i, "-fin", ".RData")
     fileName <- paste0(filepath, "/", i, "-fin.RData")
     if(is.element(file, filesInDest)){
+      
+      ## If the temp file already exists, we skip downloading this company's information.
+      
       print(paste(i, "information found in extdata. Resuming Download.", sep=' '))
       listfiles[i] <- fileName
     } else {
@@ -37,38 +42,26 @@ get_info <- function(x = qmjdata::companies) {
       matr <- matrix()
       if(!inherits(prospective,"error")) {
         
-        ## grab cash flows from Google Finance
-        
+        ## grab cash flows from Google Finance 
+        ## Structure of statements is extremely similar for income statements and balance sheets.
         if(nrow(matr <- viewFinancials(prospective,type = 'CF',period = 'A'))) {
           
           ## rename columns to include the ticker and the year
-          
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste(i,colnames(matr)))
           
           ## add company cash flows to building list
-          
           cashflow <- matr
         }
         
-        ## grab income statements from Google Finance
-        
+        ## grab income statements from Google Finance        
         if(nrow(matr <- viewFinancials(prospective, type = 'IS', period = 'A'))) {
-        
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste(i,colnames(matr)))
-
-          ## add company income statements to building list
-          
           incomestatement <- matr
         }
         
-        ## grab balance sheets from Google Finance
-        
+        ## grab balance sheets from Google Finance        
         if(nrow(matr <- viewFinancials(prospective, type = 'BS', period = 'A'))) {
-      
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "",paste(i,colnames(matr)))
-                
-          ## add company balance sheets to building list
-          
           balancesheet <- matr
         }
         
@@ -83,7 +76,6 @@ get_info <- function(x = qmjdata::companies) {
   }
   
   ## extract information from files to compile cash flows, income statements, and balance sheets
-  
   listfiles <- listfiles[listfiles != ""]
   cashflows <- list()
   incomestatements <- list()
