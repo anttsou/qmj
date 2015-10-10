@@ -44,9 +44,7 @@ get_prices <- function(companies = qmjdata::companies){
   listfiles <- rep("", (numCompanies + 1)) 
   
   ## Code below specially gathers the daily data for the S&P 500 for use as a benchmark.
-  
   stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE, from=startDate)
-  
   stockData$pret <- pricereturns(stockData)
   stockData <- stockData[-1,]
   absoluteFilePath <- paste(filepath, "/", "GSPC.RData", sep='')
@@ -54,8 +52,8 @@ get_prices <- function(companies = qmjdata::companies){
   save(stockData, file=absoluteFilePath)
   
   ## List of all files in extdata, which should contain all temp files.
-  
   filesInDest <- list.files(path = filepath) 
+  
   for(i in 1:numCompanies){
     companyTicker <- as.character(companies$ticker[i])
     file <- paste(companyTicker, ".RData", sep='')
