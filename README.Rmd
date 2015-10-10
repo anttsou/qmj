@@ -44,13 +44,15 @@ This will return a data frame containing profitability z-scores for the given co
 Suppose you want to use the qmj package for your a custom set of companies, a dataset we will call "custom_companies". You can generate the most recent financial statements for those companies as follows:
 
 ```{r}
-# Note that your custom data frame of company names and tickers must have the column name "ticker" for the column of tickers.
+## Note that your custom data frame of company names and tickers must have the column name 
+## "ticker" for the column of tickers.
 
 ## Retrieves raw financial statements from google finance through the quantmod package.
 
 rawdata <- get_info(companies) 
 
-## Renders raw data in a format usable by other functions in this package and also dramatically improves readability.
+## Renders raw data in a format usable by other functions in this package 
+## and also dramatically improves readability.
 
 financials <- tidyinfo(rawdata) 
 
@@ -63,7 +65,8 @@ Updating prices is a separate, lengthy process, and for that reason is separated
 
 ```{r}
 
-## Retrieves stock price data from Google Finance for listed companies for the past two years. Also saves data from the S&P 500, retrieved from Yahoo Finance.
+## Retrieves stock price data from Google Finance for listed companies for the past two years. 
+## Also saves data from the S&P 500, retrieved from Yahoo Finance.
 
 rawprices <- get_prices(companies) 
 
