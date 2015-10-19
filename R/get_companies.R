@@ -20,7 +20,7 @@
 #' file with the first having the name Apple and ticker AAPL and the second having the name
 #' Google and ticker GOOG, please format the text file as follows: 
 #' 
-#' APPLE AAPL
+#' APPLE AAPL \cr
 #' GOOGLE GOOG
 #' 
 #' Once you have your text file, you must pass the filepath as an argument to get_companies. 
