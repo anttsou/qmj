@@ -32,7 +32,7 @@ tidycash <- tidy_cashflows(raw_data[[1]])
 \seealso{
 \code{\link{get_info}}
 
-\code{\link{tidy_prices}}
+\code{\link{tidyinfo}}
 
 \code{\link{tidy_balancesheets}}
 

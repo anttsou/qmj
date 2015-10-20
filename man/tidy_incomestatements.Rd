@@ -32,7 +32,7 @@ tidyincome <- tidy_incomestatements(raw_data[[2]])
 \seealso{
 \code{\link{get_info}}
 
-\code{\link{tidy_prices}}
+\code{\link{tidyinfo}}
 
 \code{\link{tidy_cashflows}}
 

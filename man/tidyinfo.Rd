@@ -32,8 +32,6 @@ financials <- tidyinfo(raw_data)
 \seealso{
 \code{\link{get_info}}
 
-\code{\link{tidy_prices}}
-
 \code{\link{tidy_cashflows}}
 
 \code{\link{tidy_balancesheets}}
