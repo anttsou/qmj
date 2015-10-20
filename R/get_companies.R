@@ -77,7 +77,7 @@ get_companies <- function(x = system.file("extdata/companies.txt", package = "qm
   ## Create a data frame with appropriate column names
   ## and remove companies without a name. 
   
-  companies <- data.frame(name = names, ticker = tickers)
+  companies <- data.frame(name = names, ticker = tickers, stringsAsFactors = FALSE)
   companies <- companies[companies$name != "",]
   
   ## Want the row names to just be numeric indices. 
