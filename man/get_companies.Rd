@@ -7,6 +7,10 @@ Russell 3000 Index.}
 \usage{
 get_companies(x = system.file("extdata/companies.txt", package = "qmj"))
 }
+\arguments{
+\item{x}{Specifies the filepath of the text file containing the company names and
+tickers of interest.}
+}
 \description{
 Reads in the contents of a text file created from the
 pdf of company names and tickers given by the Russell

@@ -21,6 +21,7 @@
 #'             qmjdata::financials, 
 #'             qmjdata::prices)
 #' @importFrom dplyr arrange
+#' @import qmjdata
 #' @export
 
 market_data <- function(companies = qmjdata::companies, 
