@@ -29,6 +29,9 @@
 #' in the package, so \code{get_companies()} will produce the data frame of names and tickers
 #' for the most recent Russell 3000 Index already.
 #' 
+#' @param x Specifies the filepath of the text file containing the company names and 
+#' tickers of interest.
+#' 
 #' @examples
 #' get_companies()
 #' 
