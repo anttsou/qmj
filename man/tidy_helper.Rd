@@ -4,7 +4,13 @@
 \alias{tidy_helper}
 \title{Main helper function for all tidy functions.}
 \usage{
-tidy_helper(cdata)
+tidy_helper(x)
+}
+\arguments{
+\item{x}{A matrix containing financial information,
+either cash flows, balancesheets, or income statements,
+downloaded from Google Finance. The formatting of the
+matrix has not been altered yet, as if just retrieved.}
 }
 \description{
 This function does the main work of converting
