@@ -18,7 +18,8 @@ Description: The qmj package produces quality scores for each of the 3000
     market, and ``quality'' stocks, which are expected to outperform.
 Imports: quantmod(>= 0.4-3),
 	 dplyr, 
-	 qmjdata
+	 qmjdata,
+	 devtools
 Depends: R (>= 3.1.1)
 Suggests: testthat
 License: GPL-3
