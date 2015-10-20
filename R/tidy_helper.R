@@ -1,3 +1,14 @@
+#' Main helper function for all tidy functions.
+#'
+#' This function does the main work of converting
+#' raw financial data into organized data frames. 
+#' It is used by qmj's tidy functions to reuse common
+#' code and to avoid potential mistakes from repeating
+#' similar processes.
+#' @seealso \code{\link{tidy_cashflows}}
+#' @seealso \code{\link{tidy_balancesheets}}
+#' @seealso \code{\link{tidy_incomestatements}}
+#' 
 #' @export
 
 tidy_helper <- function(cdata) {

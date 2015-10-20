@@ -15,7 +15,7 @@
 #' by other functions in this package.
 #' 
 #' @seealso \code{\link{get_info}}
-#' @seealso \code{\link{tidy_prices}}
+#' @seealso \code{\link{tidyinfo}}
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_incomestatements}}
 #' 

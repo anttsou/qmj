@@ -9,7 +9,6 @@
 #' other functions of this package, as well as being 
 #' generally more readable.
 #' @seealso \code{\link{get_info}}
-#' @seealso \code{\link{tidy_prices}}
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_balancesheets}}
 #' @seealso \code{\link{tidy_incomestatements}}
