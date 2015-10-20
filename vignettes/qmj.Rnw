@@ -31,12 +31,12 @@
 \maketitle
 
 \abstract{
-The \strong{qmj} package provides tools to produce quality scores for companies from the Russell 3000 Index following the approach described in ``Quality Minus Junk'' by Clifford Asness et. al (2013). The package downloads necessary financial statement data and stock returns from Google Finance and Yahoo Finance to calculate these scores. The package has quality scores as of October 2015 in a precalculated data frame, allowing users to use the package as an overview of stocks in the Russell 3000 Universe. Users can also update these scores themselves by using the functions provided in the package.
+The \strong{qmj} package provides tools to produce quality scores for companies from the Russell 3000 Index following the approach described in ``Quality Minus Junk'' \citep{asness:2013}. The package downloads necessary financial statement data and stock returns from Google Finance and Yahoo Finance to calculate these scores. The package has quality scores as of October 2015 in a precalculated data frame, allowing users to use the package as an overview of stocks in the Russell 3000 Universe. Users can also update these scores themselves by using the functions provided in the package.
 }
 
 \section{Introduction}
 
-There is no single, widely accepted definition for the quality of a stock. MSCI's measure of quality combines the z-scores of three winsorized numbers: Return on Equity, Debt to Equity and Earnings Variability to calculate quality indices for their quality indexes\citep{msci:2013}. In ``Quality Minus Junk'' \citep{asness:2013}\footnote{Hereafter referred to as AFP}, quality is defined as the average of the four scores representing profitability, growth, safety and payouts.
+There is no single, widely accepted definition for the quality of a stock. MSCI's measure of quality combines the z-scores of three winsorized numbers: Return on Equity, Debt to Equity and Earnings Variability to calculate quality indices for their quality indexes\citep{msci:2013}. In ``Quality Minus Junk'' \citep{asness:2013}a, quality is defined as the average of the four scores representing profitability, growth, safety and payouts.
 
 Each of the four characteristics is an average of the z-scores of the measures that comprises the characteristic. Profitability covers measures that aim understand earnings relative to the costs incurred. Growth measures the increase in a company's profits. Safety contains measures of risk in future returns. Payout considers how much of the profits goes to the shareholders.
 
@@ -46,7 +46,7 @@ Using the necessary financial and stock data as of October 2015, \strong{qmj} pr
 
 \section{Data}
 \subsection{Companies}
-The Russell 3000 is an index that tracks 3000 of the largest US-traded companies by Market Capitalization\citep{russell:2015}. It is rebalanced anually in June. The package comes with a data frame called \code{companies} containing the members of 2015 index by name and ticker\footnote{from https://www.russell.com/documents/indexes/construction-methodology-us-indexes.pdf}.
+The Russell 3000 is an index that tracks 3000 of the largest US-traded companies by Market Capitalization\citep{russell:2015}. It is rebalanced anually in June. The package comes with a data frame called \code{companies} containing the members of 2015 index by name and ticker\footnote{From https://www.russell.com/documents/indexes/construction-methodology-us-indexes.pdf}.
 
 Here is a sample of the first five companies in \code{companies}.
 
@@ -100,7 +100,7 @@ head(qmjdata::financials, n = 5)
   \end{tabularx}{\parfillskip=0pt\par}
 \end{table}
 
-\subsection{prices}
+\subsection{Prices}
 The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. Here is a sample of the data:
 
 \begin{center}
@@ -112,6 +112,20 @@ rbind(head(qmjdata::prices, n = 5),
 
 Above, we see data for 1st Source Corporation(with ticker SRCE) and the Standard and Poor's 500 Index(with ticker GSPC). 
 
+\subsection{Quality}
+The data frame \code{quality} contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts that make up the quality score following the methodology described below on the data in the \code{prices} and the \code{financials} data sets.
+  
+\begin{center}
+<<echo = FALSE>>=
+quality_scores <- qmjdata::quality
+quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))] <-
+  round(quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))], 
+        digits = 3)
+head(quality_scores, n = 5)
+@
+\end{center}
+
+Here we have an example showing the top five companies based on quality measurements.
 \section{Calculating Quality}
 
 We calculate quality z-scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. 
@@ -137,22 +151,6 @@ O \ = \ - \Biggl[-1.32 \ - \ 0.407 \ * \ log\left(\frac{ADJASSET}{CPI}\right) \ 
 $ADJASSET$ is adjusted total assets, which is $TA$ + 0.1 * (market equity ($ME$, calculated as average price per share for the most recent year * total number of shares outstanding ($TCSO$) - $BE$)). $$ADJASSET \ = \ TA \ + \ 0.1 \ * \ (ME \ - \ BE)$$ $CPI$, the consumer price index, is assumed to be 100, since we only care about the most recent year. $TLTA$ is book value of debt ($BD$, calculated as $TD$ - minority interest ($MI$) - ($RPS$ + $NRPS$)) over $ADJASSET$. $$TLTA \ = \ \frac{BD}{ADJASSET}$$ $WCTA$ is current assets ($TCA$) - current liabilities ($TCL$) over $TA$. $$WCTA \ = \ \frac{TCA - TCL}{TA}$$ $CLCA$ is $TCL$ over $TCA$. $$ CLCA \ = \ \frac{TCL}{TCA}$$ $OENEG$ is a dummy variable that is 1 if total liabilities ($TL$) is greater than $TA$. $$ OENEG \ = \ TL > TA $$ $NITA$ is $NI$ over $TA$. $$NITA \ = \ \frac{NI}{TA}$$ $FUTL$ is income before taxes ($IBT$) over $TL$. $$FUTL \ = \ \frac{IBT}{TL}$$ $INTWO$ is another dummy variable that is 1 if $NI$ for the current year and $NI$ for the previous year are both negative. $$INTWO \ = \ MAX(NI_t,NI_{t-1}) < 0$$ $CHIN$ is $NI$ for the current year - $NI$ for the previous year all over the sum of the absolute value of $NI$ for the current year and the absolute value of $NI$ for the previous year $$CHIN \ = \ \frac{NI_t \ - \ NI_{t-1}}{|NI_t| + |NI_{t-1}|}$$ Altman's Z is calculated using weighted averages of working capital ($WC$, calculated as $TCA$ - $TCL$), $$WC \ = \ TCA \ - \ TCL$$ retained earnings ($RE$, calculated as $NI$ - dividends per share ($DIVC$) * $TCSO$), $$RE \ = \ NI \ - \ DIVC \ * \ TCSO$$ earnings before interest and taxes ($EBIT$, calculated as $NI$ - Discontinued Operations ($DO$) + (income before tax ($IBT$) - income after tax ($IAT$)) + interest expense ($NINT$)), $$ EBIT \ = \ NI \ - \ DO \ + \ (IBT \ - \ IAT) \ + \ NINT $$ $ME$, and $TREV$, all over $TA$. $$Z \ = \frac{\ 1.2 \ * \ WC \ + \ 1.4 \ * \ RE \ + \ 3.3 \ * \ EBIT \ + \ 0.6 \ * \ ME \ + TREV}{TA}$$ $EBIT$ is likely an overestimate for a given company due to potentially missing information. $EVOL$ is calculated as the standard deviation of $ROE$ for a four year span. AQR recommends the past five years, but for the same reason stated in the Growth section, we use a four year span. $$EVOL = \sigma\left(\sum_{i=t-4}^{t}ROE_i\right)$$ Likewise, we standardize each variable and then standardize each safety measure, so $$Safety \ = \ z(z_{bab} \ + \ z_{ivol} \ + \ z_{lev} \ + \ z_{o} \ + \ z_{z} \ + \ z_{evol})$$ 
 \subsection{Payouts}
 Payouts measures the proportion of profits paid to shareholders. It is composed of three variables: net equity issuance ($EISS$), net debt issuance ($DISS$), and total net payout over profits ($NPOP$). $EISS$ is calculated as the negative log of the ratio of $TCSO$ of the most recent year and $TCSO$ of the previous year. $$EISS \ = \ -log\left(\frac{TCSO_t}{TCSO_{t-1}}\right)$$ Though AQR uses split-adjusted number of shares, we are currently using $TCSO$ given available information and will adjust for splits in future iterations of qmj. $DISS$ is calculated as the negative log of the ratio of $TD$ of the most recent year and $TD$ of the previous year. $$DISS \ = \ -log\left(\frac{TD_t}{TD_{t-1}}\right)$$ $NPOP$ is calculated as $NI$ - $\Delta BE$ over a four year span all over sum of $GPROF$ for the past four years (for the same reason as explained in the Growth section). $$NPOP \ = \ \frac{NI - \Delta BE}{\sum_{i=t-4}^{t}GPROF_i}$$
-
-
-\section{quality}
-The data frame \code{quality} contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts that make up the quality score following the methodology described above on the data in the \code{prices} and the \code{financials} data sets.
-  
-\begin{center}
-<<echo = FALSE>>=
-quality_scores <- qmjdata::quality
-quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))] <-
-  round(quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))], 
-        digits = 3)
-head(quality_scores, n = 5)
-@
-\end{center}
-
-Here we have an example showing the top five companies based on quality measurements.
 
 \section{Recalculating the Data}
 
