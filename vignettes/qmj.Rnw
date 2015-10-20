@@ -36,7 +36,7 @@ The \strong{qmj} package provides tools to produce quality scores for companies 
 
 \section{Introduction}
 
-There is no single, widely accepted definition for the quality of a stock. MSCI defines quality as ``msci definition''. (Quality can also be loosely described as .... \citep{gray:2013}). In ``Quantitative Value'', quality is loosely described as...  In ``Quality Minus Junk'' \citep{asness:2013}\footnote{Hereafter referred to as AFP}, quality is defined as the average of the four scores representing profitability, growth, safety and payouts.
+There is no single, widely accepted definition for the quality of a stock. MSCI's measure of quality combines the z-scores of three winsorized numbers: Return on Equity, Debt to Equity and Earnings Variability to calculate quality indices for their quality indexes\citep{msci:2013}. In ``Quality Minus Junk'' \citep{asness:2013}\footnote{Hereafter referred to as AFP}, quality is defined as the average of the four scores representing profitability, growth, safety and payouts.
 
 Each of the four characteristics is an average of the z-scores of the measures that comprises the characteristic. Profitability covers measures that aim understand earnings relative to the costs incurred. Growth measures the increase in a company's profits. Safety contains measures of risk in future returns. Payout considers how much of the profits goes to the shareholders.
 
@@ -140,7 +140,7 @@ Payouts measures the proportion of profits paid to shareholders. It is composed 
 
 
 \section{quality}
-  Finally, we have the main dataset, \code{quality}, which contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts that make up the quality score that were calculated using the methodology descried above.
+The data frame \code{quality} contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts that make up the quality score following the methodology described above on the data in the \code{prices} and the \code{financials} data sets.
   
 \begin{center}
 <<echo = FALSE>>=
