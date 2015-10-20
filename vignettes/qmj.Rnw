@@ -56,12 +56,10 @@ head(qmjdata::companies, n = 5)
 @
 \end{center}
 
-For more information, see \code{?companies}.
-
 \subsection{Financials}
-The second dataset, \code{financials} contains the data from the balance sheets, income statements, and cash flows of companies that is necessary for quality score generation. This is gathered through functions that call \strong{quantmod} functions that get data from Google Finance and Yahoo Finance.
+The second dataset, \code{financials} contains the data from the balance sheets, income statements, and cash flows of companies that is necessary for quality score generation.
 
-\code{financials} is long format data, so for each ticker, there are four rows corresponding to the past four fiscal years based on 10-K submission date. Since companies have different 10-K submission dates, the most recently gathered data may not include the financial information for the most current year. Thus, some companies will occasionally not have data for the past four years, but rather data with a one-year lag. 
+\code{financials} is long format data, so for each ticker, there are four rows corresponding to the past four available fiscal years based on 10-K submission date. Since companies have different 10-K submission dates, the most recently gathered data may not include the financial information for the most current year. Thus, some companies will occasionally not have data for the past four years, but rather data with a one-year lag. 
 
 Here is a sample of the first five companies in \code{financials}.
 
@@ -70,8 +68,6 @@ Here is a sample of the first five companies in \code{financials}.
 head(qmjdata::financials, n = 5)
 @
 \end{center}
-
-For more information, see \code{?financials}. 
 
 \begin{table}
   \caption{Columns in \code{financials}}
@@ -105,7 +101,7 @@ For more information, see \code{?financials}.
 \end{table}
 
 \subsection{prices}
-The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. Similar to \code{get\_info}, \code{get\_prices} gets daily price information for stocks using the \strong{quantmod} package, but this time using Yahoo Finance. Here is a sample of the data:
+The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. Here is a sample of the data:
 
 \begin{center}
 <<echo = FALSE>>=
@@ -114,7 +110,7 @@ rbind(head(qmjdata::prices, n = 5),
 @
 \end{center}
 
-Above, we see data for 1st Source Corporation(with ticker SRCE) and the Standard and Poor's 500 Index(with ticker GSPC). For every company in the dataset, we have the daily price return (pret) and closing price (close), and we compare these values to those of the market to see if the company outperforms or underperformsthe market. The S \& P 500 is the benchmark we use in our calculations of beta and idiosyncratic volatility for our safety score. Here, SRCE underperforms the market for every day in our sample of five consecutive business days.
+Above, we see data for 1st Source Corporation(with ticker SRCE) and the Standard and Poor's 500 Index(with ticker GSPC). 
 
 \section{Calculating Quality}
 
@@ -144,7 +140,7 @@ Payouts measures the proportion of profits paid to shareholders. It is composed 
 
 
 \section{quality}
-  Finally, we have the main dataset, \code{quality}, which contains the quality scores for each company as well as the four main components measuring profitability, growth, safety, and payouts z-scores. 
+  Finally, we have the main dataset, \code{quality}, which contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts that make up the quality score that were calculated using the methodology descried above.
   
 \begin{center}
 <<echo = FALSE>>=
@@ -152,79 +148,44 @@ quality_scores <- qmjdata::quality
 quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))] <-
   round(quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))], 
         digits = 3)
-rbind(head(quality_scores, n = 5),
-      rbind(quality_scores[quality_scores$ticker == "SRCE",],
-            quality_scores[quality_scores$ticker == "AA",]))
+head(quality_scores, n = 5)
 @
 \end{center}
 
-Here we have an example showing the top five companies based on quality measurements. We also have two companies we have seen before in our samples of other datasets. For the company with ticker SRCE, we note that the quality score is not very high. Though we cannot just extrapolate from our sample size of five, it makes sense for SRCE to have a low quality score if it continues to underperform the market every day, which we can verify if we look compare the price returns on more days from the \code{prices} dataset. AA has an even lower quality score, which is understandable from its poor financial records. Most notably, the values for its total assets, net income, income after taxes, income before taxes all decline significantly in a span of four years. 
+Here we have an example showing the top five companies based on quality measurements.
 
-\subsection{Updating Data}
+\section{Recalculating the Data}
 
-Though \strong{qmj} updates its datasets periodically, it has a few functions that can extract information directly from Google Finance to grab the most recent data for users to utilize in their own datasets. 
+\strong{qmj} is planned to be updated periodically with up-to-date data, especially as the Russell 3000 index rebalances. However, the users can also call the functions that generate the dataframes to. This may be useful for users who perhaps want to run their own list of US tickers, or want frequent updates based on recent returns.
 
-<<echo = FALSE>>=
-#raw_prices <- get_prices(companies)
-#raw_data <- get_info(companies)
+\strong{get\_companies()} will create a companies data set from a text file. Usually this information will only need to be updated once a year, as the index rebalances. The user will have to provide the new text file however. \strong{get\_prices()} takes a data frame of companies from \strong{get\_companies()}, organized by name and ticker, and returns the daily prices and returns for the past two years including the most recent trading day. \strong{get\_info()} also takes a data frame of companies, organized by name and ticker, and grabs the most recent company 10-K financial statements. \strong{get\_info()} does not need to be called often since it will only grab new data once per year. 
+
+<<echo = TRUE, results = hide, eval= FALSE>>=
+raw_prices <- get_prices(companies)
+raw_data <- get_info(companies)
 @
 
-\strong{get\_prices()} takes a data frame of companies, organized by name and ticker, and returns the daily prices and returns for the past two years including the most recent trading day. \strong{get\_info()} also takes a data frame of companies, organized by name and ticker, and grabs the most recent company 10-K financial statements. Thus, \strong{get\_info()} does not need to be called often since it will only grab new data once per year. Both functions will return a data frame that can be organized easily. An easy way to make the data more readable is through tidy functions in the \strong{qmj} package. 
+An easy way to make the data more readable is through tidy functions in the \strong{qmj} package. 
 
-<<echo = FALSE>>=
-#clean_prices <- tidy_prices(raw_prices)
-#clean_data <- tidyinfo(raw_data)
+<<echo = TRUE, results = hide, eval= FALSE>>=
+clean_prices <- tidy_prices(raw_prices)
+clean_data <- tidyinfo(raw_data)
 @
 
-\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()}, which is assigned here as \strong{raw\_prices}, and organizes the data into columns for ticker, date, price, and price return. \strong{tidyinfo()} takes as input the result of \strong{get\_info()}, which is assigned here as \strong{raw\_data}, and organizes the data into columns for ticker, year, and various items found in company financial statements such as total assets and net income. The column names themselves are abbreviations that are used in the Calculating Quality section. 
+\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()} and \strong{tidyinfo()} takes as input the result of \strong{get\_info()}. The column names of these data frames will be the same abbreviations that are used in the default data frames described in Input Data section. Then the quality data frame can be generated using \strong{market\_data()}.
 
-\section{Analyzing the Universe (Of Companies)}
-In the quality data set, it can quickly be seen that the growth score for Angies List Inc. is abnormally high, and accounts for virtually all of its quality score. In many cases, it is undesirable to consider companies with high quality scores that are ``driven'' (here defined as composing at least half of the quality score) by a single component score. \strong{qmj} provides a filter.
-\begin{center}
-<<echo = FALSE>>=
-head(quality_scores)
-
-# sans_growth <- filter_companies(quality, filter="growth")
-# head(sans_growth)
+<<echo = TRUE, results = hide, eval= FALSE>>=
+quality_data <- market_data(companies, clean_data, clean_prices)
 @
-\end{center}
-As shown above, companies with excessively high growth scores compared to their other component scores, including ANGI, have been filtered out. If desirable, we may also choose to isolate companies that are driven by a particular component, or whitelist, rather than to remove, or blacklist them. \code{remove} and \code{isolate} are boolean parameters that specify whether the user wishes to blacklist or whitelist, with \code{remove} being TRUE and \code{isolate} being FALSE by default.
 
-\begin{center}
-<<echo = FALSE>>=
-# cpayouts <- filter_companies(quality, filter="payouts", remove=FALSE, isolate=TRUE)
-# head(cpayouts)
-@
-\end{center}
-As we can see above, now that \code{isolate} is TRUE, we are left with only the companies that have excessively high payouts scores compared to their other component scores. We can also select for all companies that are not driven by any component score. 
-
-\begin{center}
-<<echo = FALSE>>=
-# well_rounded <- filter_companies(quality, filter="all")
-# head(well_rounded)
-@
-\end{center}
-We are left with only the companies that do not have single outstanding component scores. It may also be desirable to look at quality scores specific to a subset of our extant universe. 
-
-
-\begin{center}
-<<echo = FALSE>>=
-subset_companies <- qmjdata::companies[1:35,]
-subset_qualities <- qmj::market_data(subset_companies, qmjdata::financials, qmjdata::prices)
-subset_qualities[-which(colnames(subset_qualities) %in% c("ticker", "name"))] <-
-  round(subset_qualities[-which(colnames(subset_qualities) %in% c("ticker", "name"))], 
-        digits = 3)
-head(subset_qualities)
-@
-\end{center}
-
-This very simple example only grabs the first 35 companies of the Russell 3000 Index and demonstrates that our functions can calculate quality scores for customized data sets as well. For example, a user may wish to focus on a specific industry, instead of the entire market, and see the relative quality scores for just that subsection.
 
 \section{Conclusion}
 
-The \strong{qmj} package offers an R implementation of the assigning quality scores found in the paper,``Quality Minus Junk''\citep{asness:2013} for the Russell 3000. The quality data frame it comes with, as well as the functions it provides to calculate the data can be used by a variety of users with different needs. 
+The \strong{qmj} package offers an R implementation of the methodologies found in the paper,``Quality Minus Junk''\citep{asness:2013}. The quality scores data it comes with, as well as the functions it provides to calculate the data can be used by a variety of users with different needs. 
 
-A limitation is that it does not provide time-series data of these quality scores. An extension as such to the package could make it more useful. It would enable the backtesting of quality scores as a predictive factor for future returns\footnote{See \cite{enos:2013} for more information}.
+A limitation is that it itself can not provide time-series data of these quality scores. An extension as such to the package could provide useful in testing long-quality, short-junk strategies in backtests\footnote{See \cite{enos:2013} for more information}. Such an extension however, would be difficult while still depending on openly available data on Google Finance and Yahoo Finance.
+
+Regardless, \strong{qmj} provides useful tools to create a data frame that provides quality scores, as well as the profitability, growth and safety payout subscores on a ticker level for the Russell 3000 Universe. As it comes with all the dataframes pre-generated, it is also a useful reference tool. 
 
 \bibliography{tsou-kane-kwon}
 
