@@ -34,7 +34,7 @@ get_prices <- function(companies = qmjdata::companies){
   
   ## Folder destination of all temp files.
   
-  filepath <- system.file("extdata", package="qmj") 
+  filepath <- Sys.getenv("temp")
 
   ## We only desire stock data for the past two years.
   
