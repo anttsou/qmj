@@ -24,7 +24,7 @@ get_info <- function(x = qmjdata::companies) {
   
   ## These variables temporarily store fetched data.
   
-  filepath <- system.file("extdata", package="qmj")
+  filepath <- Sys.getenv("temp")
   listfiles <- rep("", length(x$ticker))
   filesInDest <- list.files(path = filepath)
   
@@ -35,7 +35,7 @@ get_info <- function(x = qmjdata::companies) {
       
       ## If the temp file already exists, we skip downloading this company's information.
       
-      message(paste0(i, " information found in extdata. Resuming Download."))
+      message(paste0(i, " information found in temp directory. Resuming Download."))
       listfiles[i] <- fileName
     } else {
       prospective <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE),
