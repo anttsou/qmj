@@ -24,7 +24,7 @@ get_info <- function(x = qmjdata::companies) {
   
   ## These variables temporarily store fetched data.
   
-  filepath <- system.file("extdata", package="qmj")
+  filepath <- Sys.getenv("temp")
   listfiles <- rep("", length(x$ticker))
   filesInDest <- list.files(path = filepath)
   
