@@ -55,7 +55,7 @@ get_prices <- function(companies = qmjdata::companies){
   listfiles[1] <- absoluteFilePath
   save(stockData, file=absoluteFilePath)
   
-  ## List of all files in extdata, which should contain all temp files.
+  ## List of all files in temp directory, which should contain all temp files.
   
   filesInDest <- list.files(path = filepath) 
   
