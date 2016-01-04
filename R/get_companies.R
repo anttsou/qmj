@@ -43,23 +43,18 @@ get_companies <- function(filepath = system.file("extdata/companies.txt", packag
   ## "As of" ONWARDS ON EACH LINE. THEN DO FOLLOWING CODE.
   
   ## Create two copies of the data to separately parse out names and tickers. 
-  
   names <- readLines(filepath)
   tickers <- readLines(filepath)
   
-  ## Only care about the lines that actually have company name 
-  ## and ticker info, which are entirely capitalized in the "raw"
-  ## component list.
-  
+  ## From the raw component list, company names and tickers
+  ## should be differentiated by being entirely capitalized.
+  ## These are the only lines we care about.
   names <- names[which(toupper(names) == names)]
   tickers <- tickers[which(toupper(tickers) == tickers)]
   
-  ## Creates a string without the ticker for the names vector 
-  ## and isolates the ticker for the tickers vector. The function
-  ## splits by space and grabs everything before the last word as 
-  ## the name and has the last word as the ticker, which is the
-  ## formatting used in the Russell 3000 Index. 
-  
+  ## The function splits by space and grabs everything before 
+  ## the last word as the name and has the last word as the ticker.
+  ## Which chunk it returns is determined by the is_name variable.
   splitter <- function(s, is_name) {
     split_s <- unlist(strsplit(s, " "))
     if(is_name) {
@@ -74,16 +69,13 @@ get_companies <- function(filepath = system.file("extdata/companies.txt", packag
   
   ## Create a data frame with appropriate column names
   ## and remove companies without a name. 
-  
   companies <- data.frame(name = names, ticker = tickers, stringsAsFactors = FALSE)
   companies <- companies[companies$name != "",]
   
   ## Want the row names to just be numeric indices. 
-  
   row.names(companies) <- NULL
   
   ## Arrange alphabetically by ticker. 
-  
   companies <- dplyr::arrange(companies, ticker)
   companies
 }
