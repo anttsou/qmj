@@ -1,7 +1,7 @@
-#' Gets raw company balance sheets, income statements, and 
+#' Gets raw annual company balance sheets, income statements, and 
 #' cash flows from Google Finance.
 #'
-#' \code{get_info} grabs financial data for a given data frame of companies.
+#' \code{get_info} grabs annual financial data for a given data frame of companies.
 #' 
 #' For each ticker in the data frame of companies, \code{get_info} grabs
 #' financial data using the quantmod package and generates a list with 
@@ -66,6 +66,9 @@ get_info <- function(companies = qmjdata::companies) {
       ## Test to see if quantmod can successfully grab the financial data.
       prospective <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE),
                               error = function(e) e)
+      
+      ## Generate an empty matrix. This matrix will temporarily store financial statement data
+      ## before adding that data to the correct list.
       matr <- matrix()
       if(!inherits(prospective,"error")) {
         
@@ -95,6 +98,7 @@ get_info <- function(companies = qmjdata::companies) {
           balancesheet <- matr
         }
         
+        ## Create a temporary list containing the data, and save the result to an RData file.
         clist <- list(cashflow, incomestatement, balancesheet)
         listfiles[i] <- fileName
         save(clist, file = fileName)
@@ -107,11 +111,11 @@ get_info <- function(companies = qmjdata::companies) {
   
   ## Extract information from files to compile cash flows, income statements, 
   ## and balance sheets.
-  
   listfiles <- listfiles[listfiles != ""]
   cashflows <- list()
   incomestatements <- list()
   balancesheets <- list()
+  
   if(length(listfiles) >= 1){
     for(i in 1:(length(listfiles))) {
       load(listfiles[i])
