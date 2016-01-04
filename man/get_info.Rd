@@ -58,5 +58,7 @@ financials <- tidyinfo(fin_data)
 \code{\link{get_prices}}
 
 \code{\link{clean_downloads}}
+
+\code{\link{tidyinfo}}
 }
 
