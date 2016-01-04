@@ -54,9 +54,7 @@
 #' @export
 
 get_prices <- function(companies = qmjdata::companies){
-  numCompanies <- length(companies$ticker)
-  
-  if(numCompanies == 0) {
+  if(length(companies$ticker) == 0) {
     stop("parameter requires a ticker column.")
   }
   
@@ -72,21 +70,17 @@ get_prices <- function(companies = qmjdata::companies){
   }
   
   ## Folder destination of all temp files.
-  
   filepath <- Sys.getenv("temp")
 
   ## We only desire stock data for the past two years.
-  
   startDate <- as.POSIXlt(Sys.Date())
   startDate$year <- startDate$year - 2
   startDate <- as.Date(startDate)
   
   ## listfiles stores the location of all temp files we use/create during this process.
-  
   listfiles <- rep("", (numCompanies + 1)) 
   
   ## Code below specially gathers the daily data for the S&P 500 for use as a benchmark.
-  
   stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE, from=startDate)
   stockData$pret <- pricereturns(stockData)
   stockData <- stockData[-1,]
@@ -95,7 +89,6 @@ get_prices <- function(companies = qmjdata::companies){
   save(stockData, file=absoluteFilePath)
   
   ## List of all files in temp directory, which should contain all temp files.
-  
   filesInDest <- list.files(path = filepath) 
   
   for(i in 1:numCompanies){
@@ -106,21 +99,24 @@ get_prices <- function(companies = qmjdata::companies){
     if(is.element(file, filesInDest)){
       
       ## If the temp file already exists, we skip downloading this company's information.
-      
       message(paste0(companyTicker, " information found in temp directroy. Resuming Download."))
       listfiles[i+1] <- absoluteFilePath
+      
     } else{
       stockData <- tryCatch(
         quantmod::getSymbols(companyTicker, src="google", auto.assign = FALSE, from = startDate),
         error = function(e) e
         )
       
+      ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, 
+      ## we save it as a temp file.
       if(!inherits(stockData, "error") && length(stockData[,1]) > 1) {
         
-        ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, 
-        ## we save it as a temp file.
-        
+        ## Inform the user of progress.
         message(paste0("Price data for ", companyTicker, sep=''))
+        
+        ## Add price return data to stockData, remove oldest row (as pret data for that point is undefined), 
+        ## and save the information in a temporary file.
         stockData$pret <- pricereturns(stockData)
         stockData <- stockData[-1,]
         listfiles[(i) + 1] <- absoluteFilePath
@@ -138,7 +134,6 @@ get_prices <- function(companies = qmjdata::companies){
   compiled = cbind(compiled, stockData)
   
   ## Go through all our temp files and aggregate them.
-  
   if(length(listfiles) > 1){
     for(i in 2:(length(listfiles))) {
       load(listfiles[i])
@@ -146,8 +141,7 @@ get_prices <- function(companies = qmjdata::companies){
     } 
   }
   
-  ## Remove all our temp files.
-  
+  ## Remove all our temp files.  
   file.remove(listfiles) 
   
   prices <- data.frame(compiled, stringsAsFactors = FALSE)[,-1]
