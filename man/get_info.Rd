@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_info.R
 \name{get_info}
 \alias{get_info}
-\title{Gets raw company balance sheets, income statements, and
+\title{Gets raw annual company balance sheets, income statements, and
 cash flows from Google Finance.}
 \usage{
 get_info(companies = qmjdata::companies)
@@ -16,14 +16,15 @@ all financial documents of a specific type for each company. These lists are, in
 all cash flow statements, all income statements, and all balance sheets.
 }
 \description{
-\code{get_info} grabs financial data for a given data frame of companies.
+\code{get_info} grabs annual financial data for a given data frame of companies.
 }
 \details{
 For each ticker in the data frame of companies, \code{get_info} grabs
 financial data using the quantmod package and generates a list with
 three sub-lists. Also writes .RData files to the user's temporary directory.
 If cancelled partway through, \code{get_info} is able to find and re-read this
-data, quickly resuming its progress.
+data, quickly resuming its progress. Once complete, \code{get_info} deletes
+all used temporary data.
 
 Parameter data frame defaults to provided \code{companies} data set if not specified.
 }
@@ -47,6 +48,11 @@ get_info(comps)
 
 clean_downloads(comps)
 get_info(comps)
+
+## The raw financial data is difficult to use, so we'll clean the data for use in other functions.
+
+fin_data <- get_info(comps)
+financials <- tidyinfo(fin_data)
 }
 \seealso{
 \code{\link{get_prices}}

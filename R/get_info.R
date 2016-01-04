@@ -7,7 +7,8 @@
 #' financial data using the quantmod package and generates a list with 
 #' three sub-lists. Also writes .RData files to the user's temporary directory. 
 #' If cancelled partway through, \code{get_info} is able to find and re-read this
-#' data, quickly resuming its progress.
+#' data, quickly resuming its progress. Once complete, \code{get_info} deletes
+#' all used temporary data.
 #' 
 #' Parameter data frame defaults to provided \code{companies} data set if not specified.
 #' 
@@ -39,6 +40,11 @@
 #' 
 #' clean_downloads(comps)
 #' get_info(comps)
+#' 
+#' ## The raw financial data is difficult to use, so we'll clean the data for use in other functions.
+#' 
+#' fin_data <- get_info(comps)
+#' financials <- tidyinfo(fin_data)
 #' @importFrom quantmod getFinancials viewFinancials
 #' @export
 

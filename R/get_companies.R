@@ -52,9 +52,9 @@ get_companies <- function(filepath = system.file("extdata/companies.txt", packag
   names <- names[which(toupper(names) == names)]
   tickers <- tickers[which(toupper(tickers) == tickers)]
   
-  ## The function splits by space and grabs everything before 
-  ## the last word as the name and has the last word as the ticker.
-  ## Which chunk it returns is determined by the is_name variable.
+  #' @describeIn The function splits by space and grabs everything before 
+  #' the last word as the name and has the last word as the ticker.
+  #' Which chunk it returns is determined by the is_name variable.
   splitter <- function(s, is_name) {
     split_s <- unlist(strsplit(s, " "))
     if(is_name) {
