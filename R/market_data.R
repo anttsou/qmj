@@ -1,25 +1,48 @@
-#' Collects all relevant market data (growth, payout, 
-#' profitability, and safety) and orders companies
-#' by descending quality.
+#' Produces component and quality scores when given relevant market data.
 #'
 #' Calculates market growth, payouts, safety, and 
 #' profitability of our list of companies for later 
 #' processing.
+#' 
+#' All parameters default to package data sets.
+#' 
+#' @return A data frame containing company names, tickers, 
+#' profitability z-scores, growth z-scores, safety z-scores,
+#' payout z-scores, and quality z-scores. Organized by
+#' quality in descending order.
+#' 
 #' @param companies A data frame of company names and 
-#' tickers.
+#' tickers. 
 #' @param financials A data frame containing financial 
 #' information for the given companies.
 #' @param prices A data frame containing the daily 
 #' market closing prices and returns. 
+#' 
 #' @seealso \code{\link{market_profitability}}
 #' @seealso \code{\link{market_growth}}
 #' @seealso \code{\link{market_safety}}
 #' @seealso \code{\link{market_payouts}}
+#' 
 #' @examples
-#' companies <- qmjdata::companies[50:51,]
-#' market_data(companies, 
-#'             qmjdata::financials, 
-#'             qmjdata::prices)
+#' ## Rough structure I want this to be in:
+#' ## From beginnign to end.
+#' 
+#' ## To immediately get quality scores using package data sets.
+#' 
+#' market_data()
+#' 
+#' ## If we desire to produce a set of quality scores for a specific
+#' ## data frame of companies, which we'll call \code{companies}
+#' 
+#' clean_downloads(companies)
+#' 
+#' raw_financials <- get_info(companies)
+#' raw_prices <- get_prices(companies)
+#' 
+#' financials <- tidyinfo(raw_financials)
+#' prices <- tidy_prices(raw_prices)
+#' 
+#' quality_scores <- market_data(companies, financials, prices)
 #' @importFrom dplyr arrange
 #' @import qmjdata
 #' @export
@@ -33,10 +56,14 @@ market_data <- function(companies = qmjdata::companies,
   if(length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
+  
+  ## Calculate component scores.
   profitability <- market_profitability(companies, financials)$profitability
   growth <- market_growth(companies, financials)$growth
   safety <- market_safety(companies, financials, prices)$safety
   payouts <- market_payouts(companies, financials)$payouts
+  
+  ## Calculate quality scores and get z-scores.
   quality <- profitability + growth + safety + payouts
   quality <- scale(quality)
   
@@ -49,6 +76,8 @@ market_data <- function(companies = qmjdata::companies,
                            safety = safety, 
                            payouts = payouts, 
                            quality = quality)
+  
+  ## Arrange data by 
   marketdata <- dplyr::arrange(marketdata, desc(quality))
   marketdata
 }
