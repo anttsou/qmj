@@ -1,8 +1,12 @@
 #' Gets raw company balance sheets, income statements, and 
 #' cash flows from Google Finance.
 #'
-#' Retrieves data for the data frame of companies and generates 
-#' a list with three elements. Each element is a large list 
+#' \code{get_info} grabs financial data for a given data frame of companies.
+#' 
+#' For each ticker in the data frame of companies, \code{get_info} grabs
+#' financial data and generates a list with three elements. 
+#' 
+#' Each element is a large list 
 #' containing all the balance sheets, income statements, or cash
 #' flow statements for all companies. Also writes .RData files 
 #' for every company in the /extdata folder in the package folder. 

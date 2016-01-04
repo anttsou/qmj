@@ -11,8 +11,13 @@ get_info(x = qmjdata::companies)
 \item{x}{A data frame of companies. Must have a ticker column.}
 }
 \description{
-Retrieves data for the data frame of companies and generates
-a list with three elements. Each element is a large list
+\code{get_info} grabs financial data for a given data frame of companies.
+}
+\details{
+For each ticker in the data frame of companies, \code{get_info} grabs
+financial data and generates a list with three elements.
+
+Each element is a large list
 containing all the balance sheets, income statements, or cash
 flow statements for all companies. Also writes .RData files
 for every company in the /extdata folder in the package folder.

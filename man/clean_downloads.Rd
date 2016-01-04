@@ -46,6 +46,11 @@ clean_downloads()
 data(companies)
 sub_comps <- companies[1:80,]
 clean_downloads(sub_comps)
+
+## Fetch fresh data after removing old temporary files.
+
+get_prices(sub_comps)
+get_info(sub_comps)
 }
 \seealso{
 \code{\link{get_prices}}
