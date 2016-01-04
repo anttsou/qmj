@@ -9,25 +9,42 @@ clean_downloads(x = qmjdata::companies)
 \arguments{
 \item{x}{A data frame of companies. Must have a ticker column.}
 }
+\value{
+A logical vector Where the (2i-1)th and (2i)th element corresponds to
+whether or not a temporary financial and/or price file, respectively,
+was found and removed for the ith company provided.
+
+For example, if AAPL was our 3rd company, for which we had not
+partially downloaded financial data, but did have temporary
+price data, the 5th and 6th elements of the logical vector
+would be FALSE and TRUE, respectively.
+
+The last two indices refer to the S&P 500 temporary data.
+}
 \description{
-This function works to remove the files that get_info and get_prices
-temporarily store in order to conserve progress.
-Because this data may become irrelvant over time,
+\code{clean_downloads} removes files that get_info and get_prices
+temporarily store when progress is interrupted while updating.
+Because the temporarily stored data may become irrelvant over time,
 clean_downloads removes these files so that get_info and
-get_prices may download fresh sets of data for a given
+get_prices will download completely fresh sets of data for a given
 data frame of companies.
 }
 \details{
 The clean_downloads() function will also automatically remove any
 temporarily stored data for the S&P 500, with the stock ticker ^GSPC.
-
-Returns a logical vector Where the ith and (i+1)th correspond to
-whether or not a temporary financial and/or price file, respectively,
-was found and removed for the ith company provided.
-The last two indices refer to the S&P 500 temporary data.
 }
 \examples{
-sub_comps <- qmjdata::companies[1:2,]
+## Without a specified data frame, clean_downloads defaults to the package
+## provided data frame of comapnies.
+
+clean_downloads()
+
+## If we wanted to remove temporarily downloaded files for only some
+## subset of our companies, or if we wanted to specify a modified data frame
+## of companies.
+
+data(companies)
+sub_comps <- companies[1:80,]
 clean_downloads(sub_comps)
 }
 \seealso{
