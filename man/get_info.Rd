@@ -22,7 +22,7 @@ all cash flow statements, all income statements, and all balance sheets.
 For each ticker in the data frame of companies, \code{get_info} grabs
 financial data using the quantmod package and generates a list with
 three sub-lists. Also writes .RData files to the user's temporary directory.
-Ifvcancelled partway through, \code{get_info} is able to find and re-read this
+If cancelled partway through, \code{get_info} is able to find and re-read this
 data, quickly resuming its progress.
 
 Parameter data frame defaults to provided \code{companies} data set if not specified.

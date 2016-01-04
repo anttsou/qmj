@@ -6,7 +6,7 @@
 #' For each ticker in the data frame of companies, \code{get_info} grabs
 #' financial data using the quantmod package and generates a list with 
 #' three sub-lists. Also writes .RData files to the user's temporary directory. 
-#' Ifvcancelled partway through, \code{get_info} is able to find and re-read this
+#' If cancelled partway through, \code{get_info} is able to find and re-read this
 #' data, quickly resuming its progress.
 #' 
 #' Parameter data frame defaults to provided \code{companies} data set if not specified.
@@ -49,7 +49,6 @@ get_info <- function(companies = qmjdata::companies) {
   }
   
   ## These variables are responsible for temporarily storing fetched data.
-  
   filepath <- Sys.getenv("temp")
   listfiles <- rep("", length(tickers))
   filesInDest <- list.files(path = filepath)
@@ -59,11 +58,12 @@ get_info <- function(companies = qmjdata::companies) {
     fileName <- paste0(filepath, "/", i, "-fin.RData")
     if(is.element(file, filesInDest)) {
       
-      ## If the temp file already exists, we skip downloading this company's information.
-      
+      ## If the temp file already exists, skip downloading this company's information and inform the user.
       message(paste0(i, " information found in temp directory. Resuming Download."))
       listfiles[i] <- fileName
     } else {
+      
+      ## Test to see if quantmod can successfully grab the financial data.
       prospective <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE),
                               error = function(e) e)
       matr <- matrix()
@@ -71,30 +71,25 @@ get_info <- function(companies = qmjdata::companies) {
         
         ## Grab cash flows from Google Finance.
         ## Structure of statements is extremely similar for income statements 
-        ## and balance sheets.        
+        ## and balance sheets.
         
-        ## First checks if a positive number of rows exist. 
-        
+        ## First check if a positive number of rows exist. 
         if(nrow(matr <- viewFinancials(prospective, type = 'CF', period = 'A'))) {
           
           ## Rename columns to include the ticker and the year.
-          
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           
           ## Add company cash flows to building list.
-          
           cashflow <- matr
         }
         
         ## Grab income statements from Google Finance.    
-        
         if(nrow(matr <- viewFinancials(prospective, type = 'IS', period = 'A'))) {
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           incomestatement <- matr
         }
         
         ## Grab balance sheets from Google Finance 
-        
         if(nrow(matr <- viewFinancials(prospective, type = 'BS', period = 'A'))) {
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           balancesheet <- matr
