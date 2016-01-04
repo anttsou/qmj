@@ -32,9 +32,6 @@ processing.
 All parameters default to package data sets.
 }
 \examples{
-## Rough structure I want this to be in:
-## From beginnign to end.
-
 ## To immediately get quality scores using package data sets.
 
 market_data()
@@ -42,11 +39,14 @@ market_data()
 ## If we desire to produce a set of quality scores for a specific
 ## data frame of companies, which we'll call \\code{companies}
 
+# Remove old temporary data, if present.
 clean_downloads(companies)
 
+# Get raw financial and price data.
 raw_financials <- get_info(companies)
 raw_prices <- get_prices(companies)
 
+# Clean raw data for use in market_data.
 financials <- tidyinfo(raw_financials)
 prices <- tidy_prices(raw_prices)
 
