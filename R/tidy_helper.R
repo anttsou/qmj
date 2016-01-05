@@ -24,7 +24,7 @@ tidy_helper <- function(x) {
   
   ## Extract the years these financial statements were filed. 
   ## Remove the uncessary letters to grab only the year digits.
-  years <- gsub('[A-Z]', '', colnames(x)) 
+  years <- gsub('[A-Z.]', '', colnames(x)) 
   
   ## Takes the transpose to make the rows become columns and appends
   ## the ticker and year columns. 
