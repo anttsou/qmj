@@ -2,46 +2,47 @@
 % Please edit documentation in R/get_companies.R
 \name{get_companies}
 \alias{get_companies}
-\title{Gets the company names and tickers from the most recent
-Russell 3000 Index.}
+\title{Parses a text file, copied and pasted directly from the
+Russell 3000 Index membership list, and returns a data
+frame of company names and tickers.}
 \usage{
-get_companies(x = system.file("extdata/companies.txt", package = "qmj"))
+get_companies(filepath = system.file("extdata/companies.txt", package =
+  "qmj"))
 }
 \arguments{
-\item{x}{Specifies the filepath of the text file containing the company names and
-tickers of interest.}
+\item{filepath}{Specifies the filepath of the text file containing the company names and
+tickers of interest. May be either absolute or relative to working directory.}
 }
 \description{
-Reads in the contents of a text file created from the
-pdf of company names and tickers given by the Russell
-3000 Index. Because there is not a consistent way to read
-pdfs into text files using R across different operating
-systems, the user must copy and paste the contents of the
-Russell 3000 Index into a text file for this function to
-process the data correctly. This can be done simply by
-selecting all on the Russell 3000 Index and pasting into
-an empty document with the .txt extension. The contents
-of the Russell 3000 Index can be found
-\href{https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}{here}.
+\code{get_companies} reads in the contents of a text file
+created from the pdf of company names and tickers given by
+the Russell 3000 Index.
 }
 \details{
-If you wish to create your own text files of companies for get_companies to process,
-please be sure that each letter of all company names and tickers is capitalized and
-each word is separated by a single space, with each line starting with the company name
-followed by the company ticker. For example, if you want to put two companies in your text
-file with the first having the name Apple and ticker AAPL and the second having the name
-Google and ticker GOOG, please format the text file as follows:
+The user must copy and paste the contents of the Russell
+3000 Index into a text file for this function to process the
+data correctly. Simply select all of the component list and paste
+the contents into an empty document with
+the .txt extension. The list may be found
+\href{https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}{here}.
 
-APPLE AAPL \cr
-GOOGLE GOOG
-
-Once you have your text file, you must pass the filepath as an argument to get_companies.
-For example, if your text file is called "companies.txt", you would use
-\code{get_companies("companies.txt")}. get_companies by default uses a text file
-in the package, so \code{get_companies()} will produce the data frame of names and tickers
-for the most recent Russell 3000 Index already.
+\code{get_companies} by default uses a text file created from
+the Russell 3000 Index in the package.
 }
 \examples{
+## The function by default uses a text file created from the Russell 3000 Index.
+
 get_companies()
+
+## If you wish to create your own text file of companies for get_companies to process,
+## create a text file containing each company on a separate line. Every word and ticker
+## must be capitalized, and the ticker must be the last word, separated by a space, on
+## each line.
+## As an example valid txt file, create "companies.txt" in our current working directory
+## containing the following two lines:
+## APPLE AAPL
+## GOOGLE GOOG
+
+get_companies("companies.txt")
 }
 

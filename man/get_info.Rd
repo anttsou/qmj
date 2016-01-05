@@ -2,28 +2,63 @@
 % Please edit documentation in R/get_info.R
 \name{get_info}
 \alias{get_info}
-\title{Gets raw company balance sheets, income statements, and
+\title{Gets raw annual company balance sheets, income statements, and
 cash flows from Google Finance.}
 \usage{
-get_info(x = qmjdata::companies)
+get_info(companies = qmjdata::companies)
 }
 \arguments{
-\item{x}{A data frame of companies. Must have a ticker column.}
+\item{companies}{A data frame of companies. Must have a ticker column.}
+}
+\value{
+A list with three elements. Each element is a list containing
+all financial documents of a specific type for each company. These lists are, in order,
+all cash flow statements, all income statements, and all balance sheets.
 }
 \description{
-Retrieves data for the data frame of companies and generates
-a list with three elements. Each element is a large list
-containing all the balance sheets, income statements, or cash
-flow statements for all companies. Also writes .RData files
-for every company in the /extdata folder in the package folder.
-If canceled partway through, function is able to find and
-re-read this data, allowing resumption of progress.
+\code{get_info} grabs annual financial data for a given data frame of companies.
+}
+\details{
+For each ticker in the data frame of companies, \code{get_info} grabs
+financial data using the quantmod package and generates a list with
+three sub-lists. Also writes .RData files to the user's temporary directory.
+If cancelled partway through, \code{get_info} is able to find and re-read this
+data, quickly resuming its progress. Once complete, \code{get_info} deletes
+all used temporary data.
+
+Parameter data frame defaults to provided \code{companies} data set if not specified.
 }
 \examples{
-sub_comps <- qmjdata::companies[1:2,]
-get_info(sub_comps)
+## If no data frame is provided, the default is the package's companies data set.
+
+get_info()
+
+## If we want to get information for a specific data frame of companies, called
+## comps
+
+get_info(comps)
+
+## If we then decide to quit the process partway through, and then resume downloading,
+## the function usage is identical.
+
+get_info(comps)
+
+## If we quit the process partway through, and then decide to clean the data to start
+## from scratch.
+
+clean_downloads(comps)
+get_info(comps)
+
+## The raw financial data is difficult to use, so we'll clean the data for use in other functions.
+
+fin_data <- get_info(comps)
+financials <- tidyinfo(fin_data)
 }
 \seealso{
 \code{\link{get_prices}}
+
+\code{\link{clean_downloads}}
+
+\code{\link{tidyinfo}}
 }
 

@@ -2,9 +2,7 @@
 % Please edit documentation in R/market_data.R
 \name{market_data}
 \alias{market_data}
-\title{Collects all relevant market data (growth, payout,
-profitability, and safety) and orders companies
-by descending quality.}
+\title{Produces component and quality scores when given relevant market data.}
 \usage{
 market_data(companies = qmjdata::companies,
   financials = qmjdata::financials, prices = qmjdata::prices)
@@ -19,16 +17,40 @@ information for the given companies.}
 \item{prices}{A data frame containing the daily
 market closing prices and returns.}
 }
+\value{
+A data frame containing company names, tickers,
+profitability z-scores, growth z-scores, safety z-scores,
+payout z-scores, and quality z-scores. Organized by
+quality in descending order.
+}
 \description{
 Calculates market growth, payouts, safety, and
 profitability of our list of companies for later
 processing.
 }
+\details{
+All parameters default to package data sets.
+}
 \examples{
-companies <- qmjdata::companies[50:51,]
-market_data(companies,
-            qmjdata::financials,
-            qmjdata::prices)
+## To immediately get quality scores using package data sets.
+
+market_data()
+
+## If we desire to produce a set of quality scores for a specific
+## data frame of companies, which we'll call \\code{companies}
+
+# Remove old temporary data, if present.
+clean_downloads(companies)
+
+# Get raw financial and price data.
+raw_financials <- get_info(companies)
+raw_prices <- get_prices(companies)
+
+# Clean raw data for use in market_data.
+financials <- tidyinfo(raw_financials)
+prices <- tidy_prices(raw_prices)
+
+quality_scores <- market_data(companies, financials, prices)
 }
 \seealso{
 \code{\link{market_profitability}}

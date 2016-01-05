@@ -1,4 +1,3 @@
-
 #' Collects growth z-scores for companies
 #'
 #' Given a data frame of companies (names and tickers) and 
@@ -7,13 +6,16 @@
 #' and determines the z-score of overall growth for each 
 #' company based on the paper Quality Minus Junk 
 #' (Asness et al.) in Appendix page A2.
+#' 
 #' @param companies A data frame of company names and tickers.
 #' @param financials A data frame containing financial
 #' statements for every company.
+#' 
 #' @seealso \code{\link{market_data}}
 #' @seealso \code{\link{market_profitability}}
 #' @seealso \code{\link{market_safety}}
 #' @seealso \code{\link{market_payouts}}
+#' 
 #' @examples
 #' companies <- qmjdata::companies[50:51,]
 #' market_growth(companies, qmjdata::financials)
@@ -31,9 +33,13 @@ market_growth <- function(companies = qmjdata::companies, financials = qmjdata::
   colnames(allcompanies) <- "ticker"
   numCompanies <- length(companies$tickers)
   
-  #set unavailable financial info to 0
+  ## Set unavailable financial info to 0
   financials[is.na(financials)] <- 0
   
+  
+  ## We only need the first and last years of company financials to calculate growth.
+  ## In this case, order the data by year, and then grab the first instance of each ticker
+  ## to appear. In order to get the last year, reverse the ordering and repeat.
   fin <- financials
   fin <- dplyr::arrange(fin, desc(year))
   
@@ -44,7 +50,8 @@ market_growth <- function(companies = qmjdata::companies, financials = qmjdata::
   lstyear <- dplyr::distinct_(fin, "ticker")
   lstyear <- merge(allcompanies, lstyear, by="ticker", all.x = TRUE)
   
-  #functions calculate individual components of growth
+  ## Functions below calculate the individual components of growth
+  ## for each company.
   gpoa <- function(gprof1, gprof2, ta){
     (gprof1 - gprof2)/ta
   }
@@ -70,7 +77,7 @@ market_growth <- function(companies = qmjdata::companies, financials = qmjdata::
     (accrual1 - accrual2)/ta 
   }
   
-  #apply the calculation functions to all companies without using a slow loop.
+  ## Calculate the various raw scores for all companies.
   GPOA <- mapply(gpoa, fstyear$GPROF, lstyear$GPROF, 
                  lstyear$TA)
 
@@ -90,7 +97,7 @@ market_growth <- function(companies = qmjdata::companies, financials = qmjdata::
                 lstyear$DP.DPL, lstyear$CWC,
                 lstyear$TA)
   
-  #remove potential errors from Inf values
+  ## Remove potential errors from Inf values.
   GPOA[is.infinite(GPOA)] <- 0
   ROE[is.infinite(ROE)] <- 0
   ROA[is.infinite(ROA)] <- 0
@@ -98,7 +105,7 @@ market_growth <- function(companies = qmjdata::companies, financials = qmjdata::
   GMAR[is.infinite(GMAR)] <- 0
   ACC[is.infinite(ACC)] <- 0
   
-  #scale converts the individual scores for these values into z-scores.
+  ## Convert the raw scores into z-scores.
   GPOA <- scale(GPOA)
   ROE <- scale(ROE)
   ROA <- scale(ROA)
@@ -106,7 +113,7 @@ market_growth <- function(companies = qmjdata::companies, financials = qmjdata::
   GMAR <- scale(GMAR)
   ACC <- scale(ACC)
   
-  #remove potential errors from nan values
+  ## Remove potential errors from nan values.
   GPOA[is.nan(GPOA)] <- 0
   ROE[is.nan(ROE)] <- 0
   ROA[is.nan(ROA)] <- 0

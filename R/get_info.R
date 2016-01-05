@@ -1,31 +1,63 @@
-#' Gets raw company balance sheets, income statements, and 
+#' Gets raw annual company balance sheets, income statements, and 
 #' cash flows from Google Finance.
 #'
-#' Retrieves data for the data frame of companies and generates 
-#' a list with three elements. Each element is a large list 
-#' containing all the balance sheets, income statements, or cash
-#' flow statements for all companies. Also writes .RData files 
-#' for every company in the /extdata folder in the package folder. 
-#' If canceled partway through, function is able to find and 
-#' re-read this data, allowing resumption of progress.
-#' @param x A data frame of companies. Must have a ticker column.
+#' \code{get_info} grabs annual financial data for a given data frame of companies.
+#' 
+#' For each ticker in the data frame of companies, \code{get_info} grabs
+#' financial data using the quantmod package and generates a list with 
+#' three sub-lists. Also writes .RData files to the user's temporary directory. 
+#' If cancelled partway through, \code{get_info} is able to find and re-read this
+#' data, quickly resuming its progress. Once complete, \code{get_info} deletes
+#' all used temporary data.
+#' 
+#' Parameter data frame defaults to provided \code{companies} data set if not specified.
+#' 
+#' @return A list with three elements. Each element is a list containing
+#' all financial documents of a specific type for each company. These lists are, in order,
+#' all cash flow statements, all income statements, and all balance sheets.
+#' 
+#' @param companies A data frame of companies. Must have a ticker column.
 #' @seealso \code{\link{get_prices}}
+#' @seealso \code{\link{clean_downloads}}
+#' @seealso \code{\link{tidyinfo}}
+#' 
 #' @examples
-#' sub_comps <- qmjdata::companies[1:2,]
-#' get_info(sub_comps)
+#' ## If no data frame is provided, the default is the package's companies data set.
+#' 
+#' get_info()
+#' 
+#' ## If we want to get information for a specific data frame of companies, called
+#' ## comps
+#' 
+#' get_info(comps)
+#' 
+#' ## If we then decide to quit the process partway through, and then resume downloading,
+#' ## the function usage is identical.
+#' 
+#' get_info(comps)
+#' 
+#' ## If we quit the process partway through, and then decide to clean the data to start
+#' ## from scratch.
+#' 
+#' clean_downloads(comps)
+#' get_info(comps)
+#' 
+#' ## The raw financial data is difficult to use, so we'll clean the data for use in other functions.
+#' 
+#' fin_data <- get_info(comps)
+#' financials <- tidyinfo(fin_data)
 #' @importFrom quantmod getFinancials viewFinancials
 #' @export
 
-get_info <- function(x = qmjdata::companies) {
-  tickers = x$ticker
+get_info <- function(companies = qmjdata::companies) {
+  tickers = companies$ticker
   if(length(tickers) == 0) {
     stop("parameter requires a ticker column.")
-  }  
+  }
   
-  ## These variables temporarily store fetched data.
-  
+  ## These variables are responsible for temporarily storing fetched data.
   filepath <- Sys.getenv("temp")
-  listfiles <- rep("", length(x$ticker))
+  listfiles <- rep("", length(tickers))
   filesInDest <- list.files(path = filepath)
   
   for(i in tickers) {
@@ -33,47 +65,47 @@ get_info <- function(x = qmjdata::companies) {
     fileName <- paste0(filepath, "/", i, "-fin.RData")
     if(is.element(file, filesInDest)) {
       
-      ## If the temp file already exists, we skip downloading this company's information.
-      
+      ## If the temp file already exists, skip downloading this company's information and inform the user.
       message(paste0(i, " information found in temp directory. Resuming Download."))
       listfiles[i] <- fileName
     } else {
+      
+      ## Test to see if quantmod can successfully grab the financial data.
       prospective <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE),
                               error = function(e) e)
+      
+      ## Generate an empty matrix. This matrix will temporarily store financial statement data
+      ## before adding that data to the correct list.
       matr <- matrix()
       if(!inherits(prospective,"error")) {
         
         ## Grab cash flows from Google Finance.
         ## Structure of statements is extremely similar for income statements 
-        ## and balance sheets.        
+        ## and balance sheets.
         
-        ## First checks if a positive number of rows exist. 
-        
+        ## First check if a positive number of rows exist. 
         if(nrow(matr <- viewFinancials(prospective, type = 'CF', period = 'A'))) {
           
           ## Rename columns to include the ticker and the year.
-          
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           
           ## Add company cash flows to building list.
-          
           cashflow <- matr
         }
         
         ## Grab income statements from Google Finance.    
-        
         if(nrow(matr <- viewFinancials(prospective, type = 'IS', period = 'A'))) {
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           incomestatement <- matr
         }
         
         ## Grab balance sheets from Google Finance 
-        
         if(nrow(matr <- viewFinancials(prospective, type = 'BS', period = 'A'))) {
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           balancesheet <- matr
         }
         
+        ## Create a temporary list containing the data, and save the result to an RData file.
         clist <- list(cashflow, incomestatement, balancesheet)
         listfiles[i] <- fileName
         save(clist, file = fileName)
@@ -86,11 +118,11 @@ get_info <- function(x = qmjdata::companies) {
   
   ## Extract information from files to compile cash flows, income statements, 
   ## and balance sheets.
-  
   listfiles <- listfiles[listfiles != ""]
   cashflows <- list()
   incomestatements <- list()
   balancesheets <- list()
+  
   if(length(listfiles) >= 1){
     for(i in 1:(length(listfiles))) {
       load(listfiles[i])

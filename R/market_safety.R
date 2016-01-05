@@ -95,7 +95,7 @@ market_safety <- function(companies = qmjdata::companies,
   merger <- function(company_ticker) {
     result <- -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
                     as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
-                var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
+                  var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
     if(is.na(result)) {
       warning(paste(paste("BAB for",company_ticker,sep=" "),"generated NA",sep=" "))
     }
@@ -115,7 +115,7 @@ market_safety <- function(companies = qmjdata::companies,
   lev <- function(td, ta){
     -td/ta
   }
-
+  
   calcmean <- function(indexlist){
     indexlist <- as.numeric(indexlist)
     closingprices <- prices$close[indexlist]
@@ -132,17 +132,17 @@ market_safety <- function(companies = qmjdata::companies,
     val4 <- ni4/(tlse4 - tl4 - (rps4 + nrps4))
     sd(c(val1, val2, val3, val4), na.rm=TRUE)
   }
-
+  
   intwo <- function(ni1, ni2){
     as.numeric(ni1 > 0 && ni2 > 0)
   }
-
+  
   ## apply the calculation functions to all companies without needing a slow loop.
   
   BAB <- sapply(companies$ticker, merger)
- 
+  
   IVOL <- sapply(companies$ticker,calc_ivol)
-
+  
   LEV <- mapply(lev, fstyear$TD, fstyear$TA)
   
   closingmeans <- sapply(splitindices, calcmean)
@@ -173,13 +173,13 @@ market_safety <- function(companies = qmjdata::companies,
                  thdyear$NRPS, fthyear$NRPS)
   
   ADJASSET <- fstyear$TA + (0.1*(ME - (fstyear$TLSE
-                                    - fstyear$TL)
-                                    - fstyear$RPS
-                                    - fstyear$NRPS))
+                                       - fstyear$TL)
+                                 - fstyear$RPS
+                                 - fstyear$NRPS))
   
   
   TLTA <- (fstyear$TD - fstyear$NI - 
-           fstyear$RPS - fstyear$NRPS)/ADJASSET
+             fstyear$RPS - fstyear$NRPS)/ADJASSET
   WCTA <- (fstyear$TCA - fstyear$TCL)/ADJASSET
   CLCA <- fstyear$TCL/fstyear$TCA
   OENEG <- fstyear$NI > fstyear$TA
@@ -190,7 +190,7 @@ market_safety <- function(companies = qmjdata::companies,
     (abs(fstyear$NI) + abs(sndyear$NI))
   O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
            1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
-
+  
   ## removes potential errors from Inf values
   
   BAB[is.infinite(BAB)] <- 0
