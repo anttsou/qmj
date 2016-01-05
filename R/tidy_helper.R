@@ -14,8 +14,6 @@
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_balancesheets}}
 #' @seealso \code{\link{tidy_incomestatements}}
-#' 
-#' @export
 
 tidy_helper <- function(x) {
 
