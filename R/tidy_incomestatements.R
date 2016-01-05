@@ -19,7 +19,6 @@
 #' sub_comps <- qmjdata::companies[1:2,]
 #' raw_data <- get_info(sub_comps)
 #' tidyincome <- tidy_incomestatements(raw_data[[2]])
-#' @export
 
 tidy_incomestatements <- function(x) {
   
