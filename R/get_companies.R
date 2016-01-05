@@ -38,10 +38,7 @@
 #' @importFrom dplyr arrange
 #' @export
 
-get_companies <- function(filepath = system.file("extdata/companies.txt", package = "qmj")) {
-  ## TODO. INITIALLY READ IN THE DATA AND APPLY SOME REGEX TO REMOVE CHARACTERS FROM
-  ## "As of" ONWARDS ON EACH LINE. THEN DO FOLLOWING CODE.
-  
+get_companies <- function(filepath = system.file("extdata/companies.txt", package = "qmj")) {  
   ## Create two copies of the data to separately parse out names and tickers. 
   names <- readLines(filepath)
   tickers <- readLines(filepath)
