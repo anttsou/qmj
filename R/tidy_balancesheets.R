@@ -29,17 +29,14 @@ tidy_balancesheets <- function(x) {
   
   ## Calls tidy_helper to construct a list of data.frames and
   ## merges the list elements into one large data.frame
-  
   balancesheets <- do.call(rbind, lapply(x, tidy_helper))
-
-  ## Remove all rows that are solely NAs.
   
+  ## Remove all rows that are solely NAs.
   balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1,] 
   rownames(balancesheets) <- NULL
 
   ## These are the categories we expect from the raw data, with abbreviations
   ## for each of the variables found in the balanceshee
-
   names(balancesheets) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", 
                             "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", 
                             "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", 
