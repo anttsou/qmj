@@ -8,10 +8,13 @@ market_profitability(companies = qmjdata::companies,
   financials = qmjdata::financials)
 }
 \arguments{
-\item{companies}{A data frame of company names and tickers.}
+\item{companies}{A data frame of company names and tickers.
+Requires a 'ticker' column. Defaults to provided companies
+data set.}
 
 \item{financials}{A data frame containing financial
-statements for every company.}
+statements for every company. Defaults to provided
+financial data set.}
 }
 \description{
 Given a data frame of companies (names and tickers) and

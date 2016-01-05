@@ -4,13 +4,18 @@
 #' financial statements, calculates EISS, DISS, NPOP and determines the 
 #' z-score of overall payout for each company based on the paper Quality 
 #' Minus Junk (Asness et al.) in Appendix page A3-4.
-#' @param companies A data frame of company names and tickers.
+#' 
+#' @param companies A data frame of company names and tickers. Requires
+#' a 'ticker' column. Defaults to the provided companies data set.
+#' 
 #' @param financials A data frame containing financial statements for every
-#' company.
+#' company. Defaults to the provided financials data set.
+#' 
 #' @seealso \code{\link{market_data}}
 #' @seealso \code{\link{market_profitability}}
 #' @seealso \code{\link{market_growth}}
 #' @seealso \code{\link{market_safety}}
+#' 
 #' @examples
 #' companies <- qmjdata::companies[50:51,]
 #' market_payouts(companies, qmjdata::financials)
@@ -18,27 +23,27 @@
 #' @export
 
 market_payouts <- function(companies = qmjdata::companies, financials = qmjdata::financials){
-  if(length(companies$ticker) == 0) {
-    stop("first parameter requires a ticker column.")
-  }
-  if(length(which(financials$TCSO < 0))) {
-    stop("Negative TCSO exists.")
-  }
+  
+  ## Stop the function in case of bad data.
+  if(length(companies$ticker) == 0) { stop("first parameter requires a ticker column.") }
+  if(length(which(financials$TCSO < 0))) { stop("Negative TCSO exists.") }
+  
   numCompanies <- length(companies$ticker)
   
-  #set unavailable financial info to 0
+  ## Set missing financial data to 0.
   financials[is.na(financials)] <- 0
   
-  #Function returns a structure that contains all elements in x.1 that are not in x.2
-  modifiedsetdiff <- function(x.1,x.2,...){
-    x.1p <- do.call("paste", x.1)
-    x.2p <- do.call("paste", x.2)
-    x.1[! x.1p %in% x.2p, ]
+  #' @describeIn modifiedsetdiff Returns all rows in x that aren't in y,
+  #' where x and y are data frames.
+  modifiedsetdiff <- function(x, y){
+    xp <- do.call("paste", x)
+    yp <- do.call("paste", y)
+    x[! xp %in% yp, ]
   }
   
   allcompanies <- data.frame(companies$ticker)
   colnames(allcompanies) <- "ticker"
-
+  
   fin <- financials
   fin <- dplyr::arrange(financials, desc(year))
   fstyear <- dplyr::distinct_(fin, "ticker")
@@ -52,19 +57,15 @@ market_payouts <- function(companies = qmjdata::companies, financials = qmjdata:
   fthyear <- modifiedsetdiff(fin, thdyear)
   fthyear <- dplyr::distinct_(fthyear, "ticker")
   
-  #Forces all data frames to have the same number of rows.
+  ## Forces all data frames to have the same number of rows.
   fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)
   sndyear <- merge(allcompanies, sndyear, by="ticker", all.x = TRUE)
   thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
   fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
   
-  #functions calculate individual components of payouts
-  eiss <- function(tcso1, tcso2){
-    -log(tcso1/tcso2)
-  }
-  diss <- function(td1, td2){
-    -log(td1/td2)
-  }
+  ## Functions to calculate payout raw scores.
+  eiss <- function(tcso1, tcso2){ -log(tcso1/tcso2) }
+  diss <- function(td1, td2){ -log(td1/td2) }
   npop <- function(ni1, ni2, ni3, ni4, tlse1, tlse2, tlse3, tlse4,tl1, tl2, tl3, tl4, rps1, 
                    rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4, gprof1, gprof2, gprof3, gprof4){
     if(is.na(ni1)){
@@ -155,7 +156,7 @@ market_payouts <- function(companies = qmjdata::companies, financials = qmjdata:
     totalNetPayouts/totalProfits
   }
   
-  #apply the calculation functions to all companies without needing a slow loop.
+  ## Calculate raw payout scores.
   EISS <- mapply(eiss, fstyear$TCSO, sndyear$TCSO)
   DISS <- mapply(diss, fstyear$TD, sndyear$TD)
   NPOP <- mapply(npop, fstyear$NI, sndyear$NI,
@@ -170,18 +171,18 @@ market_payouts <- function(companies = qmjdata::companies, financials = qmjdata:
                  thdyear$NRPS, fthyear$NRPS,
                  fstyear$GPROF, sndyear$GPROF,
                  thdyear$GPROF, fthyear$GPROF)
-
-  #removes potential errors from Inf values
+  
+  ## Removes potential errors from Inf values
   EISS[is.infinite(EISS)] <- 0
   DISS[is.infinite(DISS)] <- 0
   NPOP[is.infinite(NPOP)] <- 0
   
-  #scale converts the individual scores for these values into z-scores.
+  ## Convert raw payout scores into z-scores.
   EISS <- scale(EISS)
   DISS <- scale(DISS)
   NPOP <- scale(NPOP)
   
-  #removes potential errors from nan values
+  ## Removes potential errors from nan values
   EISS[is.nan(EISS)] <- 0
   DISS[is.nan(DISS)] <- 0
   NPOP[is.nan(NPOP)] <- 0
