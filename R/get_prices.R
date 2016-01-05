@@ -54,7 +54,8 @@
 #' @export
 
 get_prices <- function(companies = qmjdata::companies){
-  if(length(companies$ticker) == 0) {
+  numCompanies <- length(companies$ticker)
+  if(numCompanies == 0) {
     stop("parameter requires a ticker column.")
   }
   
