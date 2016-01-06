@@ -1,3 +1,16 @@
+#'
+#' In this file we're concerned with testing the accuracy of our functions for retrieving
+#' price data, as well as to make sure that the raw data is correctly mapped onto
+#' the processed, tidy data.
+#' 
+#' RAW DATA TESTS:
+#' - Every ticker in the raw price data is unique with a predicted number of columns.
+#' - Every ticker for which we grab data, has some data.
+#' - Any company for which we have no raw data, it is specifically because quantmod provides no data.
+#' 
+#' PROCESSED DATA TESTs:
+#'
+
 context("Price Data Gathering and Processing Tests")
 
 companies <- qmjdata::companies
@@ -10,17 +23,19 @@ test_that("Every ticker in the raw price data is unique with a predicted number 
   tickers <- tickers[tickers != 'GSPC' & tickers != 'pret']  # We're not interested in either the GSPC or pret columns.
   occurrences <- table(tickers)
   
-  ## After removing pret, every ticker should only occur 5 times.
+  ## After removing pret, every ticker should only appear 5 times.
   apply(occurrences, MARGIN=1, FUN=function(ticker_occurrences){expect_equal(ticker_occurrences, 5)})
   
-  ## Make sure we covered all columns in the raw price data.
   ## We use length(table) as we presume that price data for some tickers were not found.
   num_columns_used_by_GSPC <- 7  # GSPC.Open, GSPC.High, GSPC.Low, GSPC.Close, GSPC.Volume, GSPC.Adjusted, pret
   num_of_columns_per_ticker <- 6  # TICK.Open, TICK.High, TICK.Low, TICK.Close, TICK.Volume, pret.num
   
+  ## Make sure we covered all columns in the raw price data.
   expected_num_columns = (num_columns_used_by_GSPC) + (num_of_columns_per_ticker * length(table))
   expect_equal(expected_num_columns, ncol(raw_prices))
 })
+
+
 
 test_that("Missing Information is Solely Due To Quantmod Finding No Data", {
   ## First get all companies for which we do have data.
