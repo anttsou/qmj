@@ -37,5 +37,6 @@ tidyinfo <- function(x) {
               "NINT","NRPS","RPS","TA","TCA","TCL",
                      "TCSO","TD","TL","TLSE","TREV")
   financials <- financials[keep]
+  rownames(financials) <- NULL  # We're not interested in keeping the row numbers.
   financials
 }
