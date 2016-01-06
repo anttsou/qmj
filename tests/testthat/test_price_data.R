@@ -5,10 +5,10 @@ raw_prices <- qmj::get_prices(companies)
 
 test_that("Every ticker in the raw price data is unique with a predicted number of columns", {
   ## Grab column names and remove everything but the ticker.
-  cols <- colnames(raw_prices)
-  cols <- gsub('\\.([^.]*$)(.*)', '', cols)  # Remove everything after the last '.' to get rid of '.____' suffixes.
-  cols <- cols[cols != 'GSPC' & cols != 'pret']  # We're not interested in either the GSPC or pret columns.
-  occurrences <- table(cols)
+  tickers <- colnames(raw_prices)
+  tickers <- gsub('\\.([^.]*$)(.*)', '', tickers)  # Remove everything after the last '.' to get rid of '.____' suffixes.
+  tickers <- tickers[tickers != 'GSPC' & tickers != 'pret']  # We're not interested in either the GSPC or pret columns.
+  occurrences <- table(tickers)
   
   ## After removing pret, every ticker should only occur 5 times.
   apply(occurrences, MARGIN=1, FUN=function(ticker_occurrences){expect_equal(ticker_occurrences, 5)})
@@ -20,4 +20,36 @@ test_that("Every ticker in the raw price data is unique with a predicted number 
   
   expected_num_columns = (num_columns_used_by_GSPC) + (num_of_columns_per_ticker * length(table))
   expect_equal(expected_num_columns, ncol(raw_prices))
+})
+
+test_that("Missing Information is Solely Due To Quantmod Finding No Data", {
+  ## First get all companies for which we do have data.
+  tickers <- colnames(raw_prices)
+  tickers <- gsub('\\.([^.]*$)(.*)', '', tickers)  # Remove everything after the last '.' to get rid of '.____' suffixes.
+  tickers <- tickers[tickers != 'GSPC' & tickers != 'pret']  # We're not interested in either the GSPC or pret columns.
+  tickers <- unique(tickers)
+  
+  ## Then determine which companies have no price data
+  missing_tickers <- companies$ticker[!companies$ticker %in% tickers]
+  
+  ## We only want stock data from the past 2 years
+  start <- as.POSIXlt(Sys.Date())
+  start$year <- start$year - 2
+  start <- as.Date(start)
+  
+  #' @describeIn For each missing ticker, ensure that quantmod produces either an error or an empty
+  #' xts object.
+  download_check <- function(ticker){
+     price_data <- tryCatch(
+      quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=start),
+      error = function(e) e
+      )
+     
+     ## Check to make sure that either price_data is an error, or that it has a single
+     ## row of NA's.
+     expect_equal(inherits(price_data, "error") || (length(price_data[,1])==1 && sum(!is.na(price_data))==0), TRUE,
+                  label=paste0(ticker, " price information missing due to download error or lack of data"))
+  }
+  
+  lapply(missing_tickers, FUN=download_check)
 })
