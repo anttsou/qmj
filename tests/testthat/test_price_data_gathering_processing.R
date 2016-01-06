@@ -1,7 +1,7 @@
 #'
 #' In this file we're concerned with testing the accuracy of our functions for retrieving
 #' price data, as well as to make sure that the raw data is correctly mapped onto
-#' the processed, tidy data.
+#' the processed, tidy data set.
 #' 
 #' RAW DATA TESTS:
 #' - Every ticker in the raw price data is unique with a predicted number of columns.
@@ -12,12 +12,13 @@
 #' - Raw data matches processed data for any given company
 #'
 
-context("Price Data Gathering and Processing Tests")
+context("Gathering Raw Price Data Tests")
 
 companies <- qmjdata::companies
 raw_prices <- qmj::get_prices(companies)
 
 test_that("Every ticker in the raw price data is unique with a predicted number of columns", {
+  
   ## Grab column names and remove everything but the ticker.
   tickers <- colnames(raw_prices)
   tickers <- gsub('\\.([^.]*$)(.*)', '', tickers)  # Remove everything after the last '.' to get rid of '.____' suffixes.
@@ -34,9 +35,11 @@ test_that("Every ticker in the raw price data is unique with a predicted number 
   ## Make sure we covered all columns in the raw price data.
   expected_num_columns = (num_columns_used_by_GSPC) + (num_of_columns_per_ticker * length(table))
   expect_equal(expected_num_columns, ncol(raw_prices))
+  
 })
 
 test_that("Every ticker for which we successfully grabbed data, has some data"{
+  
   #' @describeIn Check to make sure every column has at least one non-na entry
   col_check <- function(column) {
     expect_true(sum(!is.na(column)) >= 1, label="grabbed data contains some data")
@@ -44,9 +47,11 @@ test_that("Every ticker for which we successfully grabbed data, has some data"{
   
   ## For completeness, we check all columns to ensure they have at least one non-NA entry.
   apply(raw_prices, MARGIN=2, FUN=col_check)
+  
 })
 
 test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
+  
   ## First get all companies for which we do have data.
   tickers <- colnames(raw_prices)
   tickers <- gsub('\\.([^.]*$)(.*)', '', tickers)  # Remove everything after the last '.' to get rid of '.____' suffixes.
@@ -76,9 +81,14 @@ test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
   }
   
   lapply(missing_tickers, FUN=download_check)
+  
 })
 
+
+context("Processing Price Data Tests")
+
 test_that("Raw data matches processed data for any given company", {
+  
   ## Grab all .Close and pret columns from the raw data.
   close_indices <- grep('(.Close)', colnames(raw_prices))
   pret_indices <- grep('(pret)', colnames(raw_prices))
@@ -119,4 +129,5 @@ test_that("Raw data matches processed data for any given company", {
   for(i in 1:ncol(subset_close)) {
     compare_transcription(column_names[i], subset_close[,i], subset_pret[,i])
   }
+  
 })
