@@ -9,6 +9,7 @@
 #' - Missing Companies is Solely Due To Quantmod Finding No Data
 #' 
 #' PROCESSED DATA TESTs:
+#' - Raw data matches processed data for any given company
 #'
 
 context("Price Data Gathering and Processing Tests")
@@ -75,4 +76,47 @@ test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
   }
   
   lapply(missing_tickers, FUN=download_check)
+})
+
+test_that("Raw data matches processed data for any given company", {
+  ## Grab all .Close and pret columns from the raw data.
+  close_indices <- grep('(.Close)', colnames(raw_prices))
+  pret_indices <- grep('(pret)', colnames(raw_prices))
+  
+  subset_close <- raw_prices[, close_indices]
+  subset_pret <- raw_prices[,pret_indices]
+  column_names <- colnames(subset_close)
+  
+  ## A quick sanity check. Make sure subset_close and subset_pret have
+  ## equal numbers of columns.
+  expect_equal(ncol(subset_close), ncol(subset_pret), label='col numbers of close')
+  
+  ## Get the tidied prices for use in the compare_data function.
+  prices <- tidy_prices(raw_prices)
+  
+  #' @describeIn Compares raw close and raw pret with their
+  #' processed counterparts.
+  compare_row <- function(close, pret, tidyclose, tidypret) {
+    expect_equal(close, tidyclose, label='closing values match')
+    expect_equal(pret, tidypret, label='pret values match')
+  }
+  
+  #' @describeIn Accept raw columns containing closing prices and pret,
+  #' find the relevant chunk of processed data, and compare the values.
+  compare_transcription <- function(colname, close, pret) {
+    # Grab the ticker by removing everything past, and including, the last '.'
+    ticker <- gsub('\\.([^.]*$)(.*)', '', colname)
+    
+    price_subset <- prices[prices$ticker==ticker,]
+    
+    ## Compare values with their counterparts row-by-row.
+    mapply(compare_row, close, pret, price_subset$close, price_subset$pret)
+  }
+  
+  ## Now, iterate through both subsetted columns and compare data with the
+  ## processed prices data. subset_close and subset_pret have equal col
+  ## numbers from an earlier check.
+  for(i in 1:ncol(subset_close)) {
+    compare_transcription(column_names[i], subset_close[,i], subset_pret[,i])
+  }
 })
