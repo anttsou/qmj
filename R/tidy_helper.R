@@ -26,13 +26,16 @@ tidy_helper <- function(x) {
   ## Remove the uncessary letters to grab only the year digits.
   years <- gsub('[A-Z .-]', '', colnames(x))
   
-  ## If a ticker has multiple filings in the same calendar year, we need
-  ## to differentiate the two filings. Preferably by XXXX.1, and XXXX.2
-  
+  ## In case a ticker has multiple filings in the same calendar year,
+  ## we need to differentiate between those rows. We do this by
+  ## assigning a number in the order we process that ticker's
+  ## data
+  order <- 1:(ncol(x))
   
   ## Takes the transpose to make the rows become columns and appends
   ## the ticker and year columns. 
-  temp <- cbind(data.frame(ticker = symbol, year = as.numeric(years), 
+  temp <- cbind(data.frame(ticker = symbol, year = as.numeric(years),
+                           order = order,
                            stringsAsFactors = FALSE), 
                 data.frame(t(x)))
 }

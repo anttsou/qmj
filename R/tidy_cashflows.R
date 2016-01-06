@@ -32,7 +32,7 @@ tidy_cashflows <- function(x) {
   
   ## These are the categories we expect from the raw data, with abbreviations
   ## for each of the variables found in the cash flows  
-  names(cashflows) <- c("ticker", "year", "NI.SL", "DP.DPL", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", 
+  names(cashflows) <- c("ticker", "year", "order", "NI.SL", "DP.DPL", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", 
                            "FCFI", "TCDP", "ISN", "IDN", "CFA", "FEE", "NCC", "CIP", "CTP") 
   cashflows 
 }
