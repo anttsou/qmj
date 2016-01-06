@@ -36,7 +36,7 @@ tidy_balancesheets <- function(x) {
 
   ## These are the categories we expect from the raw data, with abbreviations
   ## for each of the variables found in the balanceshee
-  names(balancesheets) <- c("ticker", "year", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", 
+  names(balancesheets) <- c("ticker", "year", "order", "CE", "STI", "CSTI", "AR", "RE", "TR", "TI", "PE", "OCA", "TCA", 
                             "PPE", "AD", "GDW", "INT", "LTI", "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", 
                             "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", 
                             "CS", "APIC", "RE", "TS", "OE", "TE", "TLSE", "SO", "TCSO")

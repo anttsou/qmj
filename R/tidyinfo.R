@@ -28,7 +28,7 @@ tidyinfo <- function(x) {
   tidyincome <- tidy_incomestatements(x[[2]])
   tidybalance <- tidy_balancesheets(x[[3]])
 
-  financials <- merge(tidybalance, merge(tidycash, tidyincome, by=c("ticker", "year")), by=c("ticker", "year"))
+  financials <- merge(tidybalance, merge(tidycash, tidyincome, by=c("ticker", "order")), by=c("ticker", "order"))
   financials <- unique(financials)
   
   #The columns below are the only ones used in our formulas, and so the other columns are culled out.

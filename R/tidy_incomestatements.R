@@ -32,7 +32,7 @@ tidy_incomestatements <- function(x) {
   
   ## These are the categories we expect from the raw data, with abbreviations
   ## for each of the variables found in the income statements
-  names(incomestatements) <- c("ticker", "year", "REV", "OREV", "TREV", "CREV", "GPROF", 
+  names(incomestatements) <- c("ticker", "year", "order", "REV", "OREV", "TREV", "CREV", "GPROF", 
                           "SGAE", "RD", "DP.AM", "NINT", "UI", "OOE", "TOE", "OI", "INT", "GSA", "OTH", "IBT", 
                           "IAT", "MI", "EIA", "NIBEI", "AC", "DO", "EI", "NI", "PD", "IACEEI", "IACIEI", 
                           "BWAS", "BEPSEEI", "BEPSIEI", "DILADJ", "DILWAS", "DILEPSEEI", "DILEPSIEI", 
