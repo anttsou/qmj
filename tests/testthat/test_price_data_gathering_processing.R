@@ -5,8 +5,8 @@
 #' 
 #' RAW DATA TESTS:
 #' - Every ticker in the raw price data is unique with a predicted number of columns.
-#' - Every ticker for which we grab data, has some data.
-#' - Any company for which we have no raw data, it is specifically because quantmod provides no data.
+#' - Every ticker for which we successfully grabbed data, has some data
+#' - Missing Companies is Solely Due To Quantmod Finding No Data
 #' 
 #' PROCESSED DATA TESTs:
 #'
@@ -35,9 +35,17 @@ test_that("Every ticker in the raw price data is unique with a predicted number 
   expect_equal(expected_num_columns, ncol(raw_prices))
 })
 
+test_that("Every ticker for which we successfully grabbed data, has some data"{
+  #' @describeIn Check to make sure every column has at least one non-na entry
+  col_check <- function(column) {
+    expect_true(sum(!is.na(column)) >= 1, label="grabbed data contains some data")
+  }
+  
+  ## For completeness, we check all columns to ensure they have at least one non-NA entry.
+  apply(raw_prices, MARGIN=2, FUN=col_check)
+})
 
-
-test_that("Missing Information is Solely Due To Quantmod Finding No Data", {
+test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
   ## First get all companies for which we do have data.
   tickers <- colnames(raw_prices)
   tickers <- gsub('\\.([^.]*$)(.*)', '', tickers)  # Remove everything after the last '.' to get rid of '.____' suffixes.
