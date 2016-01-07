@@ -28,6 +28,7 @@ all used temporary data.
 Parameter data frame defaults to provided \code{companies} data set if not specified.
 }
 \examples{
+\dontrun{
 ## If no data frame is provided,
 ## the default is the package's
 ## companies data set.
@@ -62,6 +63,7 @@ get_info(comps)
 
 fin_data <- get_info(comps)
 financials <- tidyinfo(fin_data)
+}
 }
 \seealso{
 \code{\link{get_prices}}

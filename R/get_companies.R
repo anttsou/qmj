@@ -34,7 +34,9 @@
 #' ## APPLE AAPL
 #' ## GOOGLE GOOG
 #' 
+#' \dontrun{
 #' get_companies('companies.txt')
+#' }
 #' 
 #' @importFrom dplyr arrange
 #' @export

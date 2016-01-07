@@ -26,6 +26,7 @@
 #' @seealso \code{\link{get_prices}}
 #' @seealso \code{\link{get_info}}
 #' @examples
+#' \dontrun{
 #' ## Without a specified data frame, 
 #' ## clean_downloads defaults to the package
 #' ## provided data frame of comapnies.
@@ -38,8 +39,6 @@
 #' ## wanted to specify a modified data frame
 #' ## of companies.
 #' 
-#' data(companies)
-#' sub_comps <- companies[1:80,]
 #' clean_downloads(sub_comps)
 #' 
 #' ## Fetch fresh data after removing old 
@@ -47,6 +46,7 @@
 #' 
 #' get_prices(sub_comps)
 #' get_info(sub_comps)
+#' }
 #' @export
 
 clean_downloads <- function(x = qmjdata::companies) {

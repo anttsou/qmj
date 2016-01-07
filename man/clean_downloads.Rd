@@ -34,6 +34,7 @@ The clean_downloads() function will also automatically remove any
 temporarily stored data for the S&P 500, with the stock ticker ^GSPC.
 }
 \examples{
+\dontrun{
 ## Without a specified data frame,
 ## clean_downloads defaults to the package
 ## provided data frame of comapnies.
@@ -46,8 +47,6 @@ clean_downloads()
 ## wanted to specify a modified data frame
 ## of companies.
 
-data(companies)
-sub_comps <- companies[1:80,]
 clean_downloads(sub_comps)
 
 ## Fetch fresh data after removing old
@@ -55,6 +54,7 @@ clean_downloads(sub_comps)
 
 get_prices(sub_comps)
 get_info(sub_comps)
+}
 }
 \seealso{
 \code{\link{get_prices}}

@@ -21,6 +21,7 @@
 #' @seealso \code{\link{tidyinfo}}
 #' 
 #' @examples
+#' \dontrun{
 #' ## If no data frame is provided, 
 #' ## the default is the package's 
 #' ## companies data set.
@@ -55,6 +56,7 @@
 #' 
 #' fin_data <- get_info(comps)
 #' financials <- tidyinfo(fin_data)
+#' }
 #' @importFrom quantmod getFinancials viewFinancials
 #' @export
 

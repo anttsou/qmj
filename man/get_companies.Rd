@@ -44,6 +44,8 @@ get_companies()
 ## APPLE AAPL
 ## GOOGLE GOOG
 
+\dontrun{
 get_companies('companies.txt')
+}
 }
 
