@@ -4,7 +4,9 @@
 #' profitability of our list of companies for later 
 #' processing.
 #' 
-#' All parameters default to package data sets.
+#' All parameters default to package data sets and must
+#' be formatted similarly to a data frame produced by
+#' \code{\link{tidy_prices}} and \code{\link{tidyinfo}}.
 #' 
 #' @return A data frame containing company names, tickers, 
 #' profitability z-scores, growth z-scores, safety z-scores,

@@ -29,7 +29,9 @@ profitability of our list of companies for later
 processing.
 }
 \details{
-All parameters default to package data sets.
+All parameters default to package data sets and must
+be formatted similarly to a data frame produced by
+\code{\link{tidy_prices}} and \code{\link{tidyinfo}}.
 }
 \examples{
 ## To immediately get quality scores using package data sets.
