@@ -31,6 +31,7 @@
 #' 
 #' market_data()
 #' 
+#' \dontrun{
 #' ## If we desire to produce a set of quality 
 #' ## scores for a specific data frame of 
 #' ## companies, which we'll call companies.
@@ -47,6 +48,7 @@
 #' prices <- tidy_prices(raw_prices)
 #' 
 #' quality_scores <- market_data(companies, financials, prices)
+#' }
 #' @importFrom dplyr arrange
 #' @import qmjdata
 #' @export

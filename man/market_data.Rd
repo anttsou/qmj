@@ -39,6 +39,7 @@ be formatted similarly to a data frame produced by
 
 market_data()
 
+\dontrun{
 ## If we desire to produce a set of quality
 ## scores for a specific data frame of
 ## companies, which we'll call companies.
@@ -55,6 +56,7 @@ financials <- tidyinfo(raw_financials)
 prices <- tidy_prices(raw_prices)
 
 quality_scores <- market_data(companies, financials, prices)
+}
 }
 \seealso{
 \code{\link{market_profitability}}
