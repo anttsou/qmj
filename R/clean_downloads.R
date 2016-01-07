@@ -1,4 +1,4 @@
-#' Removes all downloaded temporary files for a given data frame of companies.
+#' Removes downloaded temporary files.
 #' 
 #' \code{clean_downloads} removes files that get_info and get_prices
 #' temporarily store when progress is interrupted while updating. 
@@ -26,47 +26,50 @@
 #' @seealso \code{\link{get_prices}}
 #' @seealso \code{\link{get_info}}
 #' @examples
-#' ## Without a specified data frame, clean_downloads defaults to the package
+#' \dontrun{
+#' ## Without a specified data frame, 
+#' ## clean_downloads defaults to the package
 #' ## provided data frame of comapnies.
 #' 
 #' clean_downloads()
 #' 
-#' ## If we wanted to remove temporarily downloaded files for only some
-#' ## subset of our companies, or if we wanted to specify a modified data frame
+#' ## If we wanted to remove temporarily 
+#' ## downloaded files for only some
+#' ## subset of our companies, or if we 
+#' ## wanted to specify a modified data frame
 #' ## of companies.
 #' 
-#' data(companies)
-#' sub_comps <- companies[1:80,]
 #' clean_downloads(sub_comps)
 #' 
-#' ## Fetch fresh data after removing old temporary files.
+#' ## Fetch fresh data after removing old 
+#' ## temporary files.
 #' 
 #' get_prices(sub_comps)
 #' get_info(sub_comps)
+#' }
 #' @export
 
 clean_downloads <- function(x = qmjdata::companies) {
   tickers = x$ticker
-  if(length(tickers) == 0) {
+  if (length(tickers) == 0) {
     stop("parameter requires a ticker column.")
   }
   
   ## In order to comply with CRAN Standards, files must have been downloaded to the user's specified temporary directory.
   filepath <- Sys.getenv("temp")
   
-  ## Every company will have at most two associated temporary files.
-  ## The extra +1 is to account for any temporary ^GSPC files.
-  listfiles <- rep("", 2 * (length(x$ticker)+1))
+  ## Every company will have at most two associated temporary files.  The extra +1 is to account for any temporary ^GSPC files.
+  listfiles <- rep("", 2 * (length(x$ticker) + 1))
   
-  for(i in 1:length(tickers)) {
+  for (i in 1:length(tickers)) {
     ## File paths for both financial data, and price data, respectively.
-    listfiles[(2*i)-1] <- paste0(filepath, "/", tickers[i], "-fin.RData")
-    listfiles[(2*i)] <- paste0(filepath, "/", tickers[i], ".RData")
+    listfiles[(2 * i) - 1] <- paste0(filepath, "/", tickers[i], "-fin.RData")
+    listfiles[(2 * i)] <- paste0(filepath, "/", tickers[i], ".RData")
   }
   
   ## Add temporary S&P 500 data files at the end of the list.
-  listfiles[(length(tickers)*2)+1] <- paste0(filepath, "/GSPC-fin.RData")
-  listfiles[(length(tickers)*2)+2] <- paste0(filepath, "/GSPC.RData")
+  listfiles[(length(tickers) * 2) + 1] <- paste0(filepath, "/GSPC-fin.RData")
+  listfiles[(length(tickers) * 2) + 2] <- paste0(filepath, "/GSPC.RData")
   
   file.remove(listfiles)
-}
+} 

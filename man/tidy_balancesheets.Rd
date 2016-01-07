@@ -10,7 +10,7 @@ tidy_balancesheets(x)
 \item{x}{A list of raw cash flow data produced from quantmod}
 }
 \value{
-Returns a data set that's been "tidied" up for use
+Returns a data set that's been 'tidied' up for use
 by other functions in this package.
 }
 \description{
@@ -21,13 +21,8 @@ frame or matrix containing quantmod data.
 }
 \details{
 \code{tidy_balancesheets} produces a data frame that is
-"tidy" or more readily readable by a user and usable by
+'tidy' or more readily readable by a user and usable by
 other functions within this package.
-}
-\examples{
-sub_comps <- qmjdata::companies[1:2,]
-raw_data <- get_info(sub_comps)
-tidybalance <- tidy_balancesheets(raw_data[[3]])
 }
 \seealso{
 \code{\link{get_info}}

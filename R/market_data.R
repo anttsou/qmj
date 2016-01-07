@@ -1,10 +1,12 @@
-#' Produces component and quality scores when given relevant market data.
+#' Produces component and quality scores.
 #'
 #' Calculates market growth, payouts, safety, and 
 #' profitability of our list of companies for later 
 #' processing.
 #' 
-#' All parameters default to package data sets.
+#' All parameters default to package data sets and must
+#' be formatted similarly to a data frame produced by
+#' \code{\link{tidy_prices}} and \code{\link{tidyinfo}}.
 #' 
 #' @return A data frame containing company names, tickers, 
 #' profitability z-scores, growth z-scores, safety z-scores,
@@ -24,12 +26,15 @@
 #' @seealso \code{\link{market_payouts}}
 #' 
 #' @examples
-#' ## To immediately get quality scores using package data sets.
+#' ## To immediately get quality scores using 
+#' ## package data sets.
 #' 
 #' market_data()
 #' 
-#' ## If we desire to produce a set of quality scores for a specific
-#' ## data frame of companies, which we'll call \code{companies}
+#' \dontrun{
+#' ## If we desire to produce a set of quality 
+#' ## scores for a specific data frame of 
+#' ## companies, which we'll call companies.
 #' 
 #' # Remove old temporary data, if present.
 #' clean_downloads(companies)
@@ -43,28 +48,28 @@
 #' prices <- tidy_prices(raw_prices)
 #' 
 #' quality_scores <- market_data(companies, financials, prices)
+#' }
 #' @importFrom dplyr arrange
 #' @import qmjdata
 #' @export
 
-market_data <- function(companies = qmjdata::companies, 
-                        financials = qmjdata::financials, 
-                        prices = qmjdata::prices){
-  if(length(companies$ticker) == 0) { stop("first parameter requires a ticker column.") }
-  if(length(which(financials$TCSO < 0))) { stop("Negative TCSO exists.") }
+market_data <- function(companies = qmjdata::companies, financials = qmjdata::financials, prices = qmjdata::prices) {
+  if (length(companies$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
+  if (length(which(financials$TCSO < 0))) {
+    stop("Negative TCSO exists.")
+  }
   
-  ## First Filter: All companies must have an annual financial statement posted two years ago,
-  ## we'll call this the target-year.
-  #target_year <- as.numeric(format(Sys.Date(), "%Y")) - 2
+  ## First Filter: All companies must have an annual financial statement posted two years ago, we'll call this the target-year. target_year <-
+  ## as.numeric(format(Sys.Date(), '%Y')) - 2
   
-  ## Valid tickers are all tickers that have financial information for the target year.
-  #t <- dplyr::filter(financials, year==2014)
-  
-  
+  ## Valid tickers are all tickers that have financial information for the target year. t <- dplyr::filter(financials, year==2014)
   
   
-  ## Second Filter: All companies must have 3-5 years of contiguous financial data including
-  ## the target year.
+  
+  
+  ## Second Filter: All companies must have 3-5 years of contiguous financial data including the target year.
   
   ## Calculate component scores.
   profitability <- market_profitability(companies, financials)$profitability
@@ -78,15 +83,9 @@ market_data <- function(companies = qmjdata::companies,
   
   name <- companies$name
   ticker <- companies$ticker
-  marketdata <- data.frame(name = name, 
-                           ticker = ticker, 
-                           profitability = profitability, 
-                           growth = growth, 
-                           safety = safety, 
-                           payouts = payouts, 
-                           quality = quality)
+  marketdata <- data.frame(name = name, ticker = ticker, profitability = profitability, growth = growth, safety = safety, payouts = payouts, quality = quality)
   
-  ## Arrange data by 
+  ## Arrange data by
   marketdata <- dplyr::arrange(marketdata, desc(quality))
   marketdata
-}
+} 

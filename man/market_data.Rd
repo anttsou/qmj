@@ -2,7 +2,7 @@
 % Please edit documentation in R/market_data.R
 \name{market_data}
 \alias{market_data}
-\title{Produces component and quality scores when given relevant market data.}
+\title{Produces component and quality scores.}
 \usage{
 market_data(companies = qmjdata::companies,
   financials = qmjdata::financials, prices = qmjdata::prices)
@@ -29,15 +29,20 @@ profitability of our list of companies for later
 processing.
 }
 \details{
-All parameters default to package data sets.
+All parameters default to package data sets and must
+be formatted similarly to a data frame produced by
+\code{\link{tidy_prices}} and \code{\link{tidyinfo}}.
 }
 \examples{
-## To immediately get quality scores using package data sets.
+## To immediately get quality scores using
+## package data sets.
 
 market_data()
 
-## If we desire to produce a set of quality scores for a specific
-## data frame of companies, which we'll call \\code{companies}
+\dontrun{
+## If we desire to produce a set of quality
+## scores for a specific data frame of
+## companies, which we'll call companies.
 
 # Remove old temporary data, if present.
 clean_downloads(companies)
@@ -51,6 +56,7 @@ financials <- tidyinfo(raw_financials)
 prices <- tidy_prices(raw_prices)
 
 quality_scores <- market_data(companies, financials, prices)
+}
 }
 \seealso{
 \code{\link{market_profitability}}
