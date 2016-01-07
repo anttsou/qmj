@@ -8,13 +8,17 @@
 #' \code{tidy_incomestatements} produces a data frame that is 'tidy' 
 #' or more readily readable by a user and usable by other functions within 
 #' this package.
+#' 
 #' @param x A list of raw incomestatement file data produced from quantmod
+#' 
 #' @return Returns a data set that's been 'tidied' up for use by other 
 #' functions in this package.
+#' 
 #' @seealso \code{\link{get_info}}
 #' @seealso \code{\link{tidyinfo}}
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_balancesheets}}
+#' 
 #' @examples
 #' sub_comps <- qmjdata::companies[1:2,]
 #' raw_data <- get_info(sub_comps)
