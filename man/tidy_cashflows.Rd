@@ -24,11 +24,6 @@ matrix containing quantmod data.
 or more readily readable by a user and usable by other
 functions within this package.
 }
-\examples{
-sub_comps <- qmjdata::companies[1:2,]
-raw_data <- get_info(sub_comps)
-tidycash <- tidy_cashflows(raw_data[[1]])
-}
 \seealso{
 \code{\link{get_info}}
 

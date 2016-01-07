@@ -24,11 +24,6 @@ frame or matrix containing quantmod data.
 'tidy' or more readily readable by a user and usable by
 other functions within this package.
 }
-\examples{
-sub_comps <- qmjdata::companies[1:2,]
-raw_data <- get_info(sub_comps)
-tidybalance <- tidy_balancesheets(raw_data[[3]])
-}
 \seealso{
 \code{\link{get_info}}
 

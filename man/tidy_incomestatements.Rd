@@ -24,11 +24,6 @@ quantmod data.
 or more readily readable by a user and usable by other functions within
 this package.
 }
-\examples{
-sub_comps <- qmjdata::companies[1:2,]
-raw_data <- get_info(sub_comps)
-tidyincome <- tidy_incomestatements(raw_data[[2]])
-}
 \seealso{
 \code{\link{get_info}}
 

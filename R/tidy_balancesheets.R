@@ -18,11 +18,6 @@
 #' @seealso \code{\link{tidyinfo}}
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_incomestatements}}
-#' 
-#' @examples
-#' sub_comps <- qmjdata::companies[1:2,]
-#' raw_data <- get_info(sub_comps)
-#' tidybalance <- tidy_balancesheets(raw_data[[3]])
 
 tidy_balancesheets <- function(x) {
   
