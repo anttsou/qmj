@@ -2,10 +2,10 @@ Package: qmj
 Title: Quality Scores for the Russell 3000
 Version: 0.2.1
 Authors@R: c(
-	   person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")),
-	   person("Eugene", "Choe", email = "ec7@williams.edu", role = c("aut")),
-	   person("David", "Kane", email = "dave.kane@gmail.com", role= c("aut")),
-	   person("Ryan", "Kwon", email="rynkwn@gmail.com", role=c("aut", "cre")))
+	  person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")),
+	  person("Eugene", "Choe", email = "ec7@williams.edu", role = c("aut")),
+    person("David", "Kane", email = "dave.kane@gmail.com", role= c("aut")),
+    person("Ryan", "Kwon", email="rynkwn@gmail.com", role=c("aut", "cre")))
 Description: The qmj package produces quality scores for each of the 3000
     largest US companies from the Russell 3000 Index based on the work of
     Asness et. al (2013). The package includes datasets for users who just
