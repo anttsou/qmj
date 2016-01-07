@@ -85,7 +85,7 @@ test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
 })
 
 
-context("Processing Price Data Tests")
+context("Processing/Tidying Price Data Tests")
 
 test_that("Raw data matches processed data for any given company", {
   
