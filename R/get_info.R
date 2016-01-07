@@ -21,27 +21,37 @@
 #' @seealso \code{\link{tidyinfo}}
 #' 
 #' @examples
-#' ## If no data frame is provided, the default is the package's companies data set.
+#' ## If no data frame is provided, 
+#' ## the default is the package's 
+#' ## companies data set.
 #' 
 #' get_info()
 #' 
-#' ## If we want to get information for a specific data frame of companies, called
-#' ## comps
+#' ## If we want to get information 
+#' ## for a specific data frame of 
+#' ## companies, called comps
 #' 
 #' get_info(comps)
 #' 
-#' ## If we then decide to quit the process partway through, and then resume downloading,
+#' ## If we then decide to quit the 
+#' ## process partway through, and 
+#' ## then resume downloading,
 #' ## the function usage is identical.
 #' 
 #' get_info(comps)
 #' 
-#' ## If we quit the process partway through, and then decide to clean the data to start
+#' ## If we quit the process partway 
+#' ## through, and then decide to 
+#' ## clean the data to start
 #' ## from scratch.
 #' 
 #' clean_downloads(comps)
 #' get_info(comps)
 #' 
-#' ## The raw financial data is difficult to use, so we'll clean the data for use in other functions.
+#' ## The raw financial data is 
+#' ## difficult to use, so we'll 
+#' ## clean the data for use in 
+#' ## other functions.
 #' 
 #' fin_data <- get_info(comps)
 #' financials <- tidyinfo(fin_data)

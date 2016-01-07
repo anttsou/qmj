@@ -11,6 +11,11 @@
 #' the .txt extension. The list may be found 
 #' \href{https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}{here}.
 #' 
+#' If you wish to use your own text file of companies for get_companies to process,
+#' create a text file containing each company on a separate line. Every word and ticker
+#' must be capitalized, and the ticker must be the last word, separated by a space, on
+#' each line.
+#' 
 #' \code{get_companies} by default uses a text file created from
 #' the Russell 3000 Index in the package.
 #' 
@@ -18,16 +23,14 @@
 #' tickers of interest. May be either absolute or relative to working directory.
 #' 
 #' @examples
-#' ## The function by default uses a text file created from the Russell 3000 Index.
+#' ## The function by default uses a text 
+#' ## file created from the Russell 3000 Index.
 #' 
 #' get_companies()
 #' 
-#' ## If you wish to create your own text file of companies for get_companies to process,
-#' ## create a text file containing each company on a separate line. Every word and ticker
-#' ## must be capitalized, and the ticker must be the last word, separated by a space, on
-#' ## each line.
-#' ## As an example valid txt file, create 'companies.txt' in our current working directory
-#' ## containing the following two lines:
+#' ## As an example valid txt file, create 
+#' ## 'companies.txt' in our current working 
+#' ## directory containing the following two lines:
 #' ## APPLE AAPL
 #' ## GOOGLE GOOG
 #' 

@@ -26,20 +26,24 @@
 #' @seealso \code{\link{get_prices}}
 #' @seealso \code{\link{get_info}}
 #' @examples
-#' ## Without a specified data frame, clean_downloads defaults to the package
+#' ## Without a specified data frame, 
+#' ## clean_downloads defaults to the package
 #' ## provided data frame of comapnies.
 #' 
 #' clean_downloads()
 #' 
-#' ## If we wanted to remove temporarily downloaded files for only some
-#' ## subset of our companies, or if we wanted to specify a modified data frame
+#' ## If we wanted to remove temporarily 
+#' ## downloaded files for only some
+#' ## subset of our companies, or if we 
+#' ## wanted to specify a modified data frame
 #' ## of companies.
 #' 
 #' data(companies)
 #' sub_comps <- companies[1:80,]
 #' clean_downloads(sub_comps)
 #' 
-#' ## Fetch fresh data after removing old temporary files.
+#' ## Fetch fresh data after removing old 
+#' ## temporary files.
 #' 
 #' get_prices(sub_comps)
 #' get_info(sub_comps)

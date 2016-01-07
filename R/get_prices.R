@@ -27,27 +27,35 @@
 #' @seealso \code{\link{tidy_prices}}
 #' 
 #' @examples
-#' ## If no data frame is provided, the default is the package's companies data set.
+#' ## If no data frame is provided, 
+#' ## the default is the package's 
+#' ## companies data set.
 #' 
 #' get_prices()
 #' 
-#' ## If we want to get information for a specific data frame of companies, called
-#' ## comps
+#' ## If we want to get information 
+#' ## for a specific data frame of 
+#' ## companies, called comps
 #' 
 #' get_prices(comps)
 #' 
-#' ## If we then decide to quit the process partway through, and then resume downloading,
+#' ## If we then decide to quit the 
+#' ## process partway through, and 
+#' ## then resume downloading,
 #' ## the function usage is identical.
 #' 
 #' get_prices(comps)
 #' 
-#' ## If we quit the process partway through, and then decide to clean the data to start
-#' ## from scratch.
+#' ## If we quit the process partway 
+#' ## through, and then decide to clean 
+#' ## the data to start from scratch.
 #' 
 #' clean_downloads(comps)
 #' get_prices(comps)
 #' 
-#' ## The raw price data is difficult to use, so we'll clean the data for future use.
+#' ## The raw price data is difficult 
+#' ## to use, so we'll clean the data 
+#' ## for future use.
 #' 
 #' price_data <- get_prices(comps)
 #' prices <- tidy_prices(price_data)
