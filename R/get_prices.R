@@ -59,6 +59,7 @@
 #' 
 #' price_data <- get_prices(comps)
 #' prices <- tidy_prices(price_data)
+#' @importFrom quantmod getSymbols
 #' @export
 
 get_prices <- function(companies = qmjdata::companies) {
