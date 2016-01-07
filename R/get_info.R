@@ -1,5 +1,4 @@
-#' Gets raw annual company balance sheets, income statements, and 
-#' cash flows from Google Finance.
+#' Gets raw financial statements from Google Finance.
 #'
 #' \code{get_info} grabs annual financial data for a given data frame of companies.
 #' 

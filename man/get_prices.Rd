@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_prices.R
 \name{get_prices}
 \alias{get_prices}
-\title{Grab daily prices and price returns of companies for the previous two years.}
+\title{Grab daily prices and price returns for the previous two years.}
 \usage{
 get_prices(companies = qmjdata::companies)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/market_data.R
 \name{market_data}
 \alias{market_data}
-\title{Produces component and quality scores when given relevant market data.}
+\title{Produces component and quality scores.}
 \usage{
 market_data(companies = qmjdata::companies,
   financials = qmjdata::financials, prices = qmjdata::prices)

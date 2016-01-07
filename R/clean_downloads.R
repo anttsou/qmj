@@ -1,4 +1,4 @@
-#' Removes all downloaded temporary files for a given data frame of companies.
+#' Removes downloaded temporary files.
 #' 
 #' \code{clean_downloads} removes files that get_info and get_prices
 #' temporarily store when progress is interrupted while updating. 

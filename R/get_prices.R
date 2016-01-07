@@ -1,4 +1,4 @@
-#' Grab daily prices and price returns of companies for the previous two years.
+#' Grab daily prices and price returns for the previous two years.
 #'
 #' \code{get_prices} grabs price-related data for a given data frame
 #' of companies and returns a matrix-like object containing relevant

@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_downloads.R
 \name{clean_downloads}
 \alias{clean_downloads}
-\title{Removes all downloaded temporary files for a given data frame of companies.}
+\title{Removes downloaded temporary files.}
 \usage{
 clean_downloads(x = qmjdata::companies)
 }

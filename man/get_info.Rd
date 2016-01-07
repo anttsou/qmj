@@ -2,8 +2,7 @@
 % Please edit documentation in R/get_info.R
 \name{get_info}
 \alias{get_info}
-\title{Gets raw annual company balance sheets, income statements, and
-cash flows from Google Finance.}
+\title{Gets raw financial statements from Google Finance.}
 \usage{
 get_info(companies = qmjdata::companies)
 }

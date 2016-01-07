@@ -1,4 +1,4 @@
-#' Makes prices data usable and readable.
+#' Formats raw price data.
 #'
 #' Tidies raw prices and returns a tidied, usable data frame. 
 #' Raw data should be structured identically to that produced

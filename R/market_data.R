@@ -1,4 +1,4 @@
-#' Produces component and quality scores when given relevant market data.
+#' Produces component and quality scores.
 #'
 #' Calculates market growth, payouts, safety, and 
 #' profitability of our list of companies for later 

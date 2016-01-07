@@ -1,6 +1,4 @@
-#' Parses a text file, copied and pasted directly from the 
-#' Russell 3000 Index membership list, and returns a data 
-#' frame of company names and tickers.
+#' Builds a companies data frame from a text file.
 #' 
 #' \code{get_companies} reads in the contents of a text file
 #' created from the pdf of company names and tickers given by

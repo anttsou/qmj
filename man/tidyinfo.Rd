@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidyinfo.R
 \name{tidyinfo}
 \alias{tidyinfo}
-\title{Makes raw financial data usable and readable.}
+\title{Formats raw financial data.}
 \usage{
 tidyinfo(x)
 }

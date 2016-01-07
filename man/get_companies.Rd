@@ -2,9 +2,7 @@
 % Please edit documentation in R/get_companies.R
 \name{get_companies}
 \alias{get_companies}
-\title{Parses a text file, copied and pasted directly from the
-Russell 3000 Index membership list, and returns a data
-frame of company names and tickers.}
+\title{Builds a companies data frame from a text file.}
 \usage{
 get_companies(filepath = system.file("extdata/companies.txt", package =
   "qmj"))

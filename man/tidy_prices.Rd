@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy_prices.R
 \name{tidy_prices}
 \alias{tidy_prices}
-\title{Makes prices data usable and readable.}
+\title{Formats raw price data.}
 \usage{
 tidy_prices(x)
 }
