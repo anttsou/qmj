@@ -34,12 +34,14 @@ be formatted similarly to a data frame produced by
 \code{\link{tidy_prices}} and \code{\link{tidyinfo}}.
 }
 \examples{
-## To immediately get quality scores using package data sets.
+## To immediately get quality scores using
+## package data sets.
 
 market_data()
 
-## If we desire to produce a set of quality scores for a specific
-## data frame of companies, which we'll call \\code{companies}
+## If we desire to produce a set of quality
+## scores for a specific data frame of
+## companies, which we'll call companies.
 
 # Remove old temporary data, if present.
 clean_downloads(companies)
