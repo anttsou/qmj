@@ -23,4 +23,5 @@ Imports: quantmod(>= 0.4-3),
 Depends: R (>= 3.1.1)
 Suggests: testthat
 License: GPL-3
+BugReports: https://github.com/anttsou/qmj/issues
 LazyData: false
