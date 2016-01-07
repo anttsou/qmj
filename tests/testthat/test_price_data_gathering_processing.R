@@ -38,7 +38,7 @@ test_that("Every ticker in the raw price data is unique with a predicted number 
   
 })
 
-test_that("Every ticker for which we successfully grabbed data, has some data"{
+test_that("Every ticker for which we successfully grabbed data, has some data", {
   
   #' @describeIn Check to make sure every column has at least one non-na entry
   col_check <- function(column) {
