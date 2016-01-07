@@ -38,11 +38,11 @@ get_companies()
 ## create a text file containing each company on a separate line. Every word and ticker
 ## must be capitalized, and the ticker must be the last word, separated by a space, on
 ## each line.
-## As an example valid txt file, create "companies.txt" in our current working directory
+## As an example valid txt file, create 'companies.txt' in our current working directory
 ## containing the following two lines:
 ## APPLE AAPL
 ## GOOGLE GOOG
 
-get_companies("companies.txt")
+get_companies('companies.txt')
 }
 

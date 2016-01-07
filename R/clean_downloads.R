@@ -47,26 +47,25 @@
 
 clean_downloads <- function(x = qmjdata::companies) {
   tickers = x$ticker
-  if(length(tickers) == 0) {
+  if (length(tickers) == 0) {
     stop("parameter requires a ticker column.")
   }
   
   ## In order to comply with CRAN Standards, files must have been downloaded to the user's specified temporary directory.
   filepath <- Sys.getenv("temp")
   
-  ## Every company will have at most two associated temporary files.
-  ## The extra +1 is to account for any temporary ^GSPC files.
-  listfiles <- rep("", 2 * (length(x$ticker)+1))
+  ## Every company will have at most two associated temporary files.  The extra +1 is to account for any temporary ^GSPC files.
+  listfiles <- rep("", 2 * (length(x$ticker) + 1))
   
-  for(i in 1:length(tickers)) {
+  for (i in 1:length(tickers)) {
     ## File paths for both financial data, and price data, respectively.
-    listfiles[(2*i)-1] <- paste0(filepath, "/", tickers[i], "-fin.RData")
-    listfiles[(2*i)] <- paste0(filepath, "/", tickers[i], ".RData")
+    listfiles[(2 * i) - 1] <- paste0(filepath, "/", tickers[i], "-fin.RData")
+    listfiles[(2 * i)] <- paste0(filepath, "/", tickers[i], ".RData")
   }
   
   ## Add temporary S&P 500 data files at the end of the list.
-  listfiles[(length(tickers)*2)+1] <- paste0(filepath, "/GSPC-fin.RData")
-  listfiles[(length(tickers)*2)+2] <- paste0(filepath, "/GSPC.RData")
+  listfiles[(length(tickers) * 2) + 1] <- paste0(filepath, "/GSPC-fin.RData")
+  listfiles[(length(tickers) * 2) + 2] <- paste0(filepath, "/GSPC.RData")
   
   file.remove(listfiles)
-}
+} 

@@ -19,14 +19,12 @@
 #' @importFrom dplyr filter distinct arrange
 #' @export
 
-market_safety <- function(companies = qmjdata::companies, 
-                          financials = qmjdata::financials, 
-                          prices = qmjdata::prices) {
+market_safety <- function(companies = qmjdata::companies, financials = qmjdata::financials, prices = qmjdata::prices) {
   
-  if(length(companies$ticker) == 0) {
+  if (length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
-  if(length(which(financials$TCSO < 0))) {
+  if (length(which(financials$TCSO < 0))) {
     stop("Negative TCSO exists.")
   }
   
@@ -45,29 +43,28 @@ market_safety <- function(companies = qmjdata::companies,
   market <- dplyr::filter(prices, ticker == "GSPC")
   nogspc <- dplyr::filter(prices, ticker != "GSPC")
   year <- numeric()
-  if(sum(as.numeric(sub("-.*","",market$date)) == currentyear) <= 150){
+  if (sum(as.numeric(sub("-.*", "", market$date)) == currentyear) <= 150) {
     year <- currentyear - 1
-  } else{
+  } else {
     year <- currentyear
   }
-  marketlistb <- market[grepl(year,market$date),]
+  marketlistb <- market[grepl(year, market$date), ]
   
-  ## merge to allow cross column comparisons in price returns 
-  ## and closing prices
+  ## merge to allow cross column comparisons in price returns and closing prices
   
-  mergedail <- merge(marketlistb,nogspc,by="date")
+  mergedail <- merge(marketlistb, nogspc, by = "date")
   
   ## separates into a list indexed by ticker
-  splitdail <- split(mergedail,mergedail$ticker.y)
+  splitdail <- split(mergedail, mergedail$ticker.y)
   
   ## Stores list of indices for a company ticker.
-  splitindices <- split(seq(nrow(prices)), prices$ticker)  
+  splitindices <- split(seq(nrow(prices)), prices$ticker)
   
   companiesstored <- names(splitindices)
-  modifiedsetdiff <- function(x.1,x.2,...){
-    x.1p <- do.call("paste", x.1[,1:5])
-    x.2p <- do.call("paste", x.2[,1:5])
-    x.1[! x.1p %in% x.2p, ]
+  modifiedsetdiff <- function(x.1, x.2, ...) {
+    x.1p <- do.call("paste", x.1[, 1:5])
+    x.2p <- do.call("paste", x.2[, 1:5])
+    x.1[!x.1p %in% x.2p, ]
   }
   
   fin <- financials
@@ -85,55 +82,51 @@ market_safety <- function(companies = qmjdata::companies,
   
   ## Forces all data frames to have the same number of rows.
   
-  fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)
-  sndyear <- merge(allcompanies, sndyear, by="ticker", all.x = TRUE)
-  thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
-  fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
+  fstyear <- merge(allcompanies, fstyear, by = "ticker", all.x = TRUE)
+  sndyear <- merge(allcompanies, sndyear, by = "ticker", all.x = TRUE)
+  thdyear <- merge(allcompanies, thdyear, by = "ticker", all.x = TRUE)
+  fthyear <- merge(allcompanies, fthyear, by = "ticker", all.x = TRUE)
   
   ## functions calculate individual components of safety
   
   merger <- function(company_ticker) {
-    result <- -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)),
-                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/
-                  var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
-    if(is.na(result)) {
-      warning(paste(paste("BAB for",company_ticker,sep=" "),"generated NA",sep=" "))
+    result <- -(cov(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)), as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))/var(as.numeric(as.character(splitdail[[company_ticker]]$pret.x))))
+    if (is.na(result)) {
+      warning(paste(paste("BAB for", company_ticker, sep = " "), "generated NA", sep = " "))
     }
     result
   }
   
   calc_ivol <- function(company_ticker) {
-    if(length(splitdail[[company_ticker]]) > 0) {
-      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y))~
-                    as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
+    if (length(splitdail[[company_ticker]]) > 0) {
+      lmobj <- lm(as.numeric(as.character(splitdail[[company_ticker]]$pret.y)) ~ as.numeric(as.character(splitdail[[company_ticker]]$pret.x)))
       -(sd(residuals(lmobj)))
     } else {
-      warning(paste(paste("IVOL for",company_ticker,sep=" "),"generated NA",sep=" "))
+      warning(paste(paste("IVOL for", company_ticker, sep = " "), "generated NA", sep = " "))
       NA
     }
   }
-  lev <- function(td, ta){
+  lev <- function(td, ta) {
     -td/ta
   }
   
-  calcmean <- function(indexlist){
+  calcmean <- function(indexlist) {
     indexlist <- as.numeric(indexlist)
     closingprices <- prices$close[indexlist]
     mean(closingprices)
   }
-  marketequity <- function(closemeans, tcso){
+  marketequity <- function(closemeans, tcso) {
     closemeans/tcso
   }
-  evol <- function(ni1, ni2, ni3, ni4, tlse1, tlse2, tlse3, tlse4,tl1, tl2, tl3, tl4, rps1, 
-                   rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4){
+  evol <- function(ni1, ni2, ni3, ni4, tlse1, tlse2, tlse3, tlse4, tl1, tl2, tl3, tl4, rps1, rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4) {
     val1 <- ni1/(tlse1 - tl1 - (rps1 + nrps1))
     val2 <- ni2/(tlse2 - tl2 - (rps2 + nrps2))
     val3 <- ni3/(tlse3 - tl3 - (rps3 + nrps3))
     val4 <- ni4/(tlse4 - tl4 - (rps4 + nrps4))
-    sd(c(val1, val2, val3, val4), na.rm=TRUE)
+    sd(c(val1, val2, val3, val4), na.rm = TRUE)
   }
   
-  intwo <- function(ni1, ni2){
+  intwo <- function(ni1, ni2) {
     as.numeric(ni1 > 0 && ni2 > 0)
   }
   
@@ -141,14 +134,14 @@ market_safety <- function(companies = qmjdata::companies,
   
   BAB <- sapply(companies$ticker, merger)
   
-  IVOL <- sapply(companies$ticker,calc_ivol)
+  IVOL <- sapply(companies$ticker, calc_ivol)
   
   LEV <- mapply(lev, fstyear$TD, fstyear$TA)
   
   closingmeans <- sapply(splitindices, calcmean)
   tempframe <- data.frame(companiesstored, closingmeans)
   colnames(tempframe) <- c("ticker", "close")
-  tempframe <- merge(allcompanies, tempframe, by='ticker', all.x = TRUE)  
+  tempframe <- merge(allcompanies, tempframe, by = "ticker", all.x = TRUE)
   ME <- mapply(marketequity, tempframe$close, fstyear$TCSO)
   
   WC <- fstyear$TCA - fstyear$TCL
@@ -159,37 +152,24 @@ market_safety <- function(companies = qmjdata::companies,
   
   SALE <- fstyear$TREV
   
-  Z <- (1.2*WC + 1.4*RE + 3.3*EBIT + 0.6*ME + SALE)/(fstyear$TA)
+  Z <- (1.2 * WC + 1.4 * RE + 3.3 * EBIT + 0.6 * ME + SALE)/(fstyear$TA)
   
-  EVOL <- mapply(evol, fstyear$NI, sndyear$NI,
-                 thdyear$NI, fthyear$NI, 
-                 fstyear$TLSE, sndyear$TLSE,
-                 thdyear$TLSE, fthyear$TLSE,
-                 fstyear$TL, sndyear$TL,
-                 thdyear$TL, fthyear$TL,
-                 fstyear$RPS, sndyear$RPS,
-                 thdyear$RPS, fthyear$RPS,
-                 fstyear$NRPS, sndyear$NRPS,
-                 thdyear$NRPS, fthyear$NRPS)
+  EVOL <- mapply(evol, fstyear$NI, sndyear$NI, thdyear$NI, fthyear$NI, fstyear$TLSE, sndyear$TLSE, thdyear$TLSE, fthyear$TLSE, fstyear$TL, sndyear$TL, 
+    thdyear$TL, fthyear$TL, fstyear$RPS, sndyear$RPS, thdyear$RPS, fthyear$RPS, fstyear$NRPS, sndyear$NRPS, thdyear$NRPS, fthyear$NRPS)
   
-  ADJASSET <- fstyear$TA + (0.1*(ME - (fstyear$TLSE
-                                       - fstyear$TL)
-                                 - fstyear$RPS
-                                 - fstyear$NRPS))
+  ADJASSET <- fstyear$TA + (0.1 * (ME - (fstyear$TLSE - fstyear$TL) - fstyear$RPS - fstyear$NRPS))
   
   
-  TLTA <- (fstyear$TD - fstyear$NI - 
-             fstyear$RPS - fstyear$NRPS)/ADJASSET
+  TLTA <- (fstyear$TD - fstyear$NI - fstyear$RPS - fstyear$NRPS)/ADJASSET
   WCTA <- (fstyear$TCA - fstyear$TCL)/ADJASSET
   CLCA <- fstyear$TCL/fstyear$TCA
   OENEG <- fstyear$NI > fstyear$TA
   NITA <- fstyear$NI/fstyear$TA
   FUTL <- fstyear$IBT/fstyear$TL
   INTWO <- mapply(intwo, fstyear$NI, sndyear$NI)
-  CHIN <- (fstyear$NI - sndyear$NI)/
-    (abs(fstyear$NI) + abs(sndyear$NI))
-  O <- -(-1.32 - 0.407*log(ADJASSET/100) + 6.03*TLTA - 1.43*WCTA + 0.076*CLCA -
-           1.72*OENEG - 2.37*NITA - 1.83*FUTL + 0.285*INTWO - 0.521*CHIN)
+  CHIN <- (fstyear$NI - sndyear$NI)/(abs(fstyear$NI) + abs(sndyear$NI))
+  O <- -(-1.32 - 0.407 * log(ADJASSET/100) + 6.03 * TLTA - 1.43 * WCTA + 0.076 * CLCA - 1.72 * OENEG - 2.37 * NITA - 1.83 * FUTL + 0.285 * INTWO - 0.521 * 
+    CHIN)
   
   ## removes potential errors from Inf values
   
@@ -209,7 +189,7 @@ market_safety <- function(companies = qmjdata::companies,
   Z <- scale(Z)
   EVOL <- scale(EVOL)
   
-  #removes potential errors from nan values
+  # removes potential errors from nan values
   BAB[is.nan(BAB)] <- 0
   IVOL[is.nan(IVOL)] <- 0
   LEV[is.nan(LEV)] <- 0
@@ -219,12 +199,5 @@ market_safety <- function(companies = qmjdata::companies,
   
   safety <- BAB + IVOL + LEV + O + Z + EVOL
   safety <- scale(safety)
-  data.frame(ticker = companies$ticker, 
-             safety = safety, 
-             BAB = BAB, 
-             IVOL = IVOL,
-             LEV = LEV, 
-             O = O, 
-             Z = Z, 
-             EVOL = EVOL)
-}
+  data.frame(ticker = companies$ticker, safety = safety, BAB = BAB, IVOL = IVOL, LEV = LEV, O = O, Z = Z, EVOL = EVOL)
+} 

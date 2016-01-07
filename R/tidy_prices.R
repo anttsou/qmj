@@ -4,11 +4,11 @@
 #' Raw data should be structured identically to that produced
 #' by get_prices(), as this function depends on that structure.
 #' 
-#' \code{tidy_prices} produces a data frame that is "tidy" or 
+#' \code{tidy_prices} produces a data frame that is 'tidy' or 
 #' more readily readable by a user and usable by other functions
 #' within this package.
 #' @param x Raw daily data, as produced by get_prices()
-#' @return Returns a data set that's been "tidied" up for use 
+#' @return Returns a data set that's been 'tidied' up for use 
 #' by other functions in this package.
 #' @seealso \code{\link{get_prices}}
 #' @examples
@@ -16,23 +16,23 @@
 #' raw_price_data <- get_prices(sub_comps)
 #' prices <- tidy_prices(raw_price_data)
 #' 
-#' my_companies <- data.frame(ticker=c("GOOG", "IBM"))
+#' my_companies <- data.frame(ticker=c('GOOG', 'IBM'))
 #' raw_price_data <- get_prices(my_companies)
 #' prices <- tidy_prices(raw_price_data)
 #' @export
 
-tidy_prices <- function(x){
+tidy_prices <- function(x) {
   colNames <- names(x)
-  closing <- x[,grep(".Close", colNames)]
-  pret <- x[,grep("pret", colNames)]
+  closing <- x[, grep(".Close", colNames)]
+  pret <- x[, grep("pret", colNames)]
   
   #' @describeIn pricecombine combines relevant columns from the original price
   #' data set.
-  pricecombine <- function(colReference){
+  pricecombine <- function(colReference) {
     dates <- rownames(closing)
-    ticker <- gsub(".Close","",names(closing)[colReference])
+    ticker <- gsub(".Close", "", names(closing)[colReference])
     ticker <- rep(ticker, length(dates))
-    cbind(data.frame(ticker, date=dates, pret=pret[,colReference], close=closing[,colReference]))
+    cbind(data.frame(ticker, date = dates, pret = pret[, colReference], close = closing[, colReference]))
   }
   
   data <- lapply(1:ncol(closing), pricecombine)
@@ -42,4 +42,4 @@ tidy_prices <- function(x){
   result$pret <- as.numeric(result$pret)
   result$close <- as.numeric(result$close)
   result
-}
+} 

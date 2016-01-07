@@ -28,24 +28,23 @@
 #' ## create a text file containing each company on a separate line. Every word and ticker
 #' ## must be capitalized, and the ticker must be the last word, separated by a space, on
 #' ## each line.
-#' ## As an example valid txt file, create "companies.txt" in our current working directory
+#' ## As an example valid txt file, create 'companies.txt' in our current working directory
 #' ## containing the following two lines:
 #' ## APPLE AAPL
 #' ## GOOGLE GOOG
 #' 
-#' get_companies("companies.txt")
+#' get_companies('companies.txt')
 #' 
 #' @importFrom dplyr arrange
 #' @export
 
-get_companies <- function(filepath = system.file("extdata/companies.txt", package = "qmj")) {  
-  ## Create two copies of the data to separately parse out names and tickers. 
+get_companies <- function(filepath = system.file("extdata/companies.txt", package = "qmj")) {
+  ## Create two copies of the data to separately parse out names and tickers.
   names <- readLines(filepath)
   tickers <- readLines(filepath)
   
-  ## From the raw component list, company names and tickers
-  ## should be differentiated by being entirely capitalized.
-  ## These are the only lines we care about.
+  ## From the raw component list, company names and tickers should be differentiated by being entirely capitalized.  These are the only lines we care
+  ## about.
   names <- names[which(toupper(names) == names)]
   tickers <- tickers[which(toupper(tickers) == tickers)]
   
@@ -54,8 +53,8 @@ get_companies <- function(filepath = system.file("extdata/companies.txt", packag
   #' Which chunk it returns is determined by the is_name variable.
   splitter <- function(s, is_name) {
     split_s <- unlist(strsplit(s, " "))
-    if(is_name) {
-      paste(split_s[1:length(split_s)-1], collapse = " ")
+    if (is_name) {
+      paste(split_s[1:length(split_s) - 1], collapse = " ")
     } else {
       split_s[length(split_s)]
     }
@@ -64,15 +63,14 @@ get_companies <- function(filepath = system.file("extdata/companies.txt", packag
   names <- sapply(names, splitter, TRUE)
   tickers <- sapply(tickers, splitter, FALSE)
   
-  ## Create a data frame with appropriate column names
-  ## and remove companies without a name. 
+  ## Create a data frame with appropriate column names and remove companies without a name.
   companies <- data.frame(name = names, ticker = tickers, stringsAsFactors = FALSE)
-  companies <- companies[companies$name != "",]
+  companies <- companies[companies$name != "", ]
   
-  ## Want the row names to just be numeric indices. 
+  ## Want the row names to just be numeric indices.
   row.names(companies) <- NULL
   
-  ## Arrange alphabetically by ticker. 
+  ## Arrange alphabetically by ticker.
   companies <- dplyr::arrange(companies, ticker)
   companies
-}
+} 

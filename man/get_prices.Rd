@@ -17,7 +17,7 @@ exception of price returns, which are stored as pret.#, where # refers to
 the the i-th company given.
 
 The first company calculated is always the S&P 500, and its price return
-column is simply "pret".
+column is simply 'pret'.
 }
 \description{
 \code{get_prices} grabs price-related data for a given data frame

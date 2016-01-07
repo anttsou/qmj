@@ -47,24 +47,23 @@
 #' @import qmjdata
 #' @export
 
-market_data <- function(companies = qmjdata::companies, 
-                        financials = qmjdata::financials, 
-                        prices = qmjdata::prices){
-  if(length(companies$ticker) == 0) { stop("first parameter requires a ticker column.") }
-  if(length(which(financials$TCSO < 0))) { stop("Negative TCSO exists.") }
+market_data <- function(companies = qmjdata::companies, financials = qmjdata::financials, prices = qmjdata::prices) {
+  if (length(companies$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
+  if (length(which(financials$TCSO < 0))) {
+    stop("Negative TCSO exists.")
+  }
   
-  ## First Filter: All companies must have an annual financial statement posted two years ago,
-  ## we'll call this the target-year.
-  #target_year <- as.numeric(format(Sys.Date(), "%Y")) - 2
+  ## First Filter: All companies must have an annual financial statement posted two years ago, we'll call this the target-year. target_year <-
+  ## as.numeric(format(Sys.Date(), '%Y')) - 2
   
-  ## Valid tickers are all tickers that have financial information for the target year.
-  #t <- dplyr::filter(financials, year==2014)
-  
-  
+  ## Valid tickers are all tickers that have financial information for the target year. t <- dplyr::filter(financials, year==2014)
   
   
-  ## Second Filter: All companies must have 3-5 years of contiguous financial data including
-  ## the target year.
+  
+  
+  ## Second Filter: All companies must have 3-5 years of contiguous financial data including the target year.
   
   ## Calculate component scores.
   profitability <- market_profitability(companies, financials)$profitability
@@ -78,15 +77,9 @@ market_data <- function(companies = qmjdata::companies,
   
   name <- companies$name
   ticker <- companies$ticker
-  marketdata <- data.frame(name = name, 
-                           ticker = ticker, 
-                           profitability = profitability, 
-                           growth = growth, 
-                           safety = safety, 
-                           payouts = payouts, 
-                           quality = quality)
+  marketdata <- data.frame(name = name, ticker = ticker, profitability = profitability, growth = growth, safety = safety, payouts = payouts, quality = quality)
   
-  ## Arrange data by 
+  ## Arrange data by
   marketdata <- dplyr::arrange(marketdata, desc(quality))
   marketdata
-}
+} 

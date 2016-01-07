@@ -22,11 +22,15 @@
 #' @importFrom dplyr distinct arrange
 #' @export
 
-market_payouts <- function(companies = qmjdata::companies, financials = qmjdata::financials){
+market_payouts <- function(companies = qmjdata::companies, financials = qmjdata::financials) {
   
   ## Stop the function in case of bad data.
-  if(length(companies$ticker) == 0) { stop("first parameter requires a ticker column.") }
-  if(length(which(financials$TCSO < 0))) { stop("Negative TCSO exists.") }
+  if (length(companies$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
+  if (length(which(financials$TCSO < 0))) {
+    stop("Negative TCSO exists.")
+  }
   
   numCompanies <- length(companies$ticker)
   
@@ -35,10 +39,10 @@ market_payouts <- function(companies = qmjdata::companies, financials = qmjdata:
   
   #' @describeIn modifiedsetdiff Returns all rows in x that aren't in y,
   #' where x and y are data frames.
-  modifiedsetdiff <- function(x, y){
+  modifiedsetdiff <- function(x, y) {
     xp <- do.call("paste", x)
     yp <- do.call("paste", y)
-    x[! xp %in% yp, ]
+    x[!xp %in% yp, ]
   }
   
   allcompanies <- data.frame(companies$ticker)
@@ -58,86 +62,90 @@ market_payouts <- function(companies = qmjdata::companies, financials = qmjdata:
   fthyear <- dplyr::distinct_(fthyear, "ticker")
   
   ## Forces all data frames to have the same number of rows.
-  fstyear <- merge(allcompanies, fstyear, by="ticker", all.x = TRUE)
-  sndyear <- merge(allcompanies, sndyear, by="ticker", all.x = TRUE)
-  thdyear <- merge(allcompanies, thdyear, by='ticker', all.x = TRUE)
-  fthyear <- merge(allcompanies, fthyear, by='ticker', all.x = TRUE)
+  fstyear <- merge(allcompanies, fstyear, by = "ticker", all.x = TRUE)
+  sndyear <- merge(allcompanies, sndyear, by = "ticker", all.x = TRUE)
+  thdyear <- merge(allcompanies, thdyear, by = "ticker", all.x = TRUE)
+  fthyear <- merge(allcompanies, fthyear, by = "ticker", all.x = TRUE)
   
   ## Functions to calculate payout raw scores.
-  eiss <- function(tcso1, tcso2){ -log(tcso1/tcso2) }
-  diss <- function(td1, td2){ -log(td1/td2) }
-  npop <- function(ni1, ni2, ni3, ni4, tlse1, tlse2, tlse3, tlse4,tl1, tl2, tl3, tl4, rps1, 
-                   rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4, gprof1, gprof2, gprof3, gprof4){
-    if(is.na(ni1)){
+  eiss <- function(tcso1, tcso2) {
+    -log(tcso1/tcso2)
+  }
+  diss <- function(td1, td2) {
+    -log(td1/td2)
+  }
+  npop <- function(ni1, ni2, ni3, ni4, tlse1, tlse2, tlse3, tlse4, tl1, tl2, tl3, tl4, rps1, rps2, rps3, rps4, nrps1, nrps2, nrps3, nrps4, gprof1, gprof2, 
+    gprof3, gprof4) {
+    if (is.na(ni1)) {
       ni1 <- 0
     }
-    if(is.na(ni2)){
+    if (is.na(ni2)) {
       ni2 <- 0
     }
-    if(is.na(ni3)){
+    if (is.na(ni3)) {
       ni3 <- 0
     }
-    if(is.na(ni4)){
+    if (is.na(ni4)) {
       ni4 <- 0
     }
-    if(is.na(tlse1)){
+    if (is.na(tlse1)) {
       tlse1 <- 0
     }
-    if(is.na(tlse2)){
+    if (is.na(tlse2)) {
       tlse2 <- 0
     }
-    if(is.na(tlse3)){
+    if (is.na(tlse3)) {
       tlse3 <- 0
     }
-    if(is.na(tlse4)){
+    if (is.na(tlse4)) {
       tlse4 <- 0
     }
-    if(is.na(tl1)){
+    if (is.na(tl1)) {
       tl1 <- 0
     }
-    if(is.na(tl2)){
+    if (is.na(tl2)) {
       tl2 <- 0
     }
-    if(is.na(tl3)){
+    if (is.na(tl3)) {
       tl3 <- 0
     }
-    if(is.na(tl4)){
+    if (is.na(tl4)) {
       tl4 <- 0
     }
-    if(is.na(rps1)){
+    if (is.na(rps1)) {
       rps1 <- 0
     }
-    if(is.na(rps2)){
+    if (is.na(rps2)) {
       rps2 <- 0
     }
-    if(is.na(rps3)){
+    if (is.na(rps3)) {
       rps3 <- 0
     }
-    if(is.na(rps4)){
+    if (is.na(rps4)) {
       rps4 <- 0
     }
-    if(is.na(nrps1)){
+    if (is.na(nrps1)) {
       nrps1 <- 0
     }
-    if(is.na(nrps2)){
+    if (is.na(nrps2)) {
       nrps2 <- 0
     }
-    if(is.na(nrps3)){
+    if (is.na(nrps3)) {
       nrps3 <- 0
     }
-    if(is.na(nrps4)){
+    if (is.na(nrps4)) {
       nrps4 <- 0
     }
-    if(is.na(gprof1)){
+    if (is.na(gprof1)) {
       gprof1 <- 0
     }
-    if(is.na(gprof2)){
+    if (is.na(gprof2)) {
       gprof2 <- 0
     }
-    if(is.na(gprof3)){
+    if (is.na(gprof3)) {
       gprof3 <- 0
     }
-    if(is.na(gprof4)){
+    if (is.na(gprof4)) {
       gprof4 <- 0
     }
     
@@ -159,18 +167,9 @@ market_payouts <- function(companies = qmjdata::companies, financials = qmjdata:
   ## Calculate raw payout scores.
   EISS <- mapply(eiss, fstyear$TCSO, sndyear$TCSO)
   DISS <- mapply(diss, fstyear$TD, sndyear$TD)
-  NPOP <- mapply(npop, fstyear$NI, sndyear$NI,
-                 thdyear$NI, fthyear$NI, 
-                 fstyear$TLSE, sndyear$TLSE,
-                 thdyear$TLSE, fthyear$TLSE,
-                 fstyear$TL, sndyear$TL,
-                 thdyear$TL, fthyear$TL,
-                 fstyear$RPS, sndyear$RPS,
-                 thdyear$RPS, fthyear$RPS,
-                 fstyear$NRPS, sndyear$NRPS,
-                 thdyear$NRPS, fthyear$NRPS,
-                 fstyear$GPROF, sndyear$GPROF,
-                 thdyear$GPROF, fthyear$GPROF)
+  NPOP <- mapply(npop, fstyear$NI, sndyear$NI, thdyear$NI, fthyear$NI, fstyear$TLSE, sndyear$TLSE, thdyear$TLSE, fthyear$TLSE, fstyear$TL, sndyear$TL, 
+    thdyear$TL, fthyear$TL, fstyear$RPS, sndyear$RPS, thdyear$RPS, fthyear$RPS, fstyear$NRPS, sndyear$NRPS, thdyear$NRPS, fthyear$NRPS, fstyear$GPROF, 
+    sndyear$GPROF, thdyear$GPROF, fthyear$GPROF)
   
   ## Removes potential errors from Inf values
   EISS[is.infinite(EISS)] <- 0
@@ -190,9 +189,5 @@ market_payouts <- function(companies = qmjdata::companies, financials = qmjdata:
   payouts <- EISS + DISS + NPOP
   
   payouts <- scale(payouts)
-  data.frame(ticker = companies$ticker, 
-             payouts = payouts, 
-             EISS = EISS, 
-             DISS = DISS,
-             NPOP = NPOP)
-}
+  data.frame(ticker = companies$ticker, payouts = payouts, EISS = EISS, DISS = DISS, NPOP = NPOP)
+} 
