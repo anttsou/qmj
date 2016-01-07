@@ -99,7 +99,8 @@ market_data <- function(companies = qmjdata::companies,
   valid_tickers <- sapply(valid_tickers$ticker, second_filter, financials, target_year, leeway_year)
   valid_tickers <- valid_tickers[valid_tickers != ""]
   
-  
+  ## Single out those companies that have passed our filters.
+  companies <- companies[companies$ticker %in% valid_tickers,]
   
   ## Calculate component scores.
   profitability <- market_profitability(companies, financials)$profitability
