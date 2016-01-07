@@ -7,10 +7,14 @@
 #' \code{tidy_prices} produces a data frame that is 'tidy' or 
 #' more readily readable by a user and usable by other functions
 #' within this package.
+#' 
 #' @param x Raw daily data, as produced by get_prices()
+#' 
 #' @return Returns a data set that's been 'tidied' up for use 
 #' by other functions in this package.
+#' 
 #' @seealso \code{\link{get_prices}}
+#' 
 #' @examples
 #' sub_comps <- qmjdata::companies[1:2,]
 #' raw_price_data <- get_prices(sub_comps)
