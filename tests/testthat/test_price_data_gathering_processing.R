@@ -117,6 +117,8 @@ test_that("Raw data matches processed data for any given company", {
     # Grab the ticker by removing everything past, and including, the last '.'
     ticker <- gsub('\\.([^.]*$)(.*)', '', colname)
     
+    message(paste("Comparing raw and tidied prices for", ticker, sep=' '))
+    
     price_subset <- prices[prices$ticker==ticker,]
     
     ## Compare values with their counterparts row-by-row.
