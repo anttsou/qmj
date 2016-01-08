@@ -162,7 +162,7 @@ Payouts is a general measure of the company's friendliness to shareholders. It i
 \section{Recalculating the Data}
 \label{sec:recalculating}
 
-\strong{qmj} is scheduled to update its datasets periodically, at the minimum as the Russell 3000 index rebalances every year. Users however may also directly update, modify, and and create comparable data with qmj’s functions. This feature is important for those who want to calculate quality scores for their own list of publicly traded US companies, or for those who wish to factor in new data based on recent events or returns.
+\strong{qmj} is scheduled to update its datasets periodically, at the minimum as the Russell 3000 index rebalances every year. Users however may also directly update, modify, and create comparable data with qmj’s functions. This feature is important for those who want to calculate quality scores for their own list of publicly traded US companies, or for those who wish to factor in new data based on recent events or returns.
 
 \strong{get\_companies()} will create a companies data set from a text file of space separated company names and tickers. For example, a valid text file input for \strong{get\_companies()} would be: 
 
