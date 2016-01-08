@@ -203,6 +203,8 @@ Specifically, for financial documents, we're interested solely in companies for 
 
 Companies which fail the above criteria will not be considered or included in the resulting data frame.
 
+Similarly, we filter companies which we deem to have inadequate price data to give a good representation of the company. Explicitly, we ensure that \strong{all measured companies have at least 80\% of the maximal number of desired price data points.}
+
 \section{Conclusion}
 
 The \strong{qmj} package offers an R implementation of the methodologies found in the paper,``Quality Minus Junk'' \citep{asness:2013}, providing tools to calculate quality scores in addition to profitability, growth, safety, and payout subscores for publicly traded US companies. \strong{qmj} also serves as a useful reference tool with its focus on the Russell 3000 and provided data, allowing users to immediately browse regularly updated quality scores for the largest public US companies.
