@@ -107,6 +107,17 @@ market_data <- function(companies = qmjdata::companies, financials = qmjdata::fi
   valid_tickers <- sapply(valid_tickers$ticker, second_filter, financials, target_year, leeway_year)
   valid_tickers <- valid_tickers[valid_tickers != ""]
   
+  ## Price Filter: Remove companies from consideration which do not have a significant
+  ## amount of price data.
+  expected_rows <- length(prices$ticker[prices$ticker == 'GSPC'])
+  passing_companies <- table(prices$ticker[!is.na(prices$pret)])
+  
+  ## Say we want each company to have at least 80% of our maximal data company, GSPC.
+  passing_companies <- passing_companies[passing_companies >= (expected_rows * 4/5)]
+  passing_companies <- rownames(passing_companies)
+  
+  valid_tickers <- passing_companies[passing_companies %in% valid_tickers]
+  
   ## Single out those companies that have passed our filters.
   companies <- companies[companies$ticker %in% valid_tickers,]
   
