@@ -170,7 +170,7 @@ APPLE AAPL
 
 GOOGLE GOOG
 
-The user, however, will have to manually create the new text file. \strong{get\_prices()} takes a data frame of companies from \strong{get\_companies()}, organized by name and ticker, and returns the daily prices and returns for the past two years including the most recent trading day. \strong{get\_info()} also takes a data frame of companies, containing the columns “name” and “ticker,” and grabs the four most recent company 10-K financial statements if available. \strong{get\_info()} does not need to be called often since it will only grab new data if a company files a new 10-K statement. 
+The user, however, will have to manually create the new text file. \strong{get\_prices()} takes a data frame of companies from \strong{get\_companies()}, containing the columns "name" and "ticker," and returns the daily prices and returns for the past two years including the most recent trading day. \strong{get\_info()} also takes a similarly formatted data frame of companies and grabs the four most recent company 10-K financial statements if available. \strong{get\_info()} does not need to be called often since it will only grab new data if a company files a new 10-K statement. 
 
 <<echo = TRUE, results = hide, eval= FALSE>>=
 raw_prices <- get_prices(companies)
