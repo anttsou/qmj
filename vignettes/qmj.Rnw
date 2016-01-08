@@ -203,7 +203,7 @@ Specifically, for financial documents, we're interested solely in companies for 
 
 Companies which fail the above criteria will not be considered or included in the resulting data frame.
 
-Similarly, we filter companies which we deem to have inadequate price data to give a good representation of the company. Explicitly, we ensure that \strong{all measured companies have at least 80\% of the maximal number of desired price data points.}
+Similarly, we filter companies which we deem to have inadequate price data to give a good representation of the company. Explicitly, we ensure that \strong{all measured companies have at least 80\% of the maximal number of price data points.}
 
 \section{Conclusion}
 
