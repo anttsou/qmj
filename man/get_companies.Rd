@@ -2,9 +2,7 @@
 % Please edit documentation in R/get_companies.R
 \name{get_companies}
 \alias{get_companies}
-\title{Parses a text file, copied and pasted directly from the
-Russell 3000 Index membership list, and returns a data
-frame of company names and tickers.}
+\title{Builds a companies data frame from a text file.}
 \usage{
 get_companies(filepath = system.file("extdata/companies.txt", package =
   "qmj"))
@@ -26,23 +24,28 @@ the contents into an empty document with
 the .txt extension. The list may be found
 \href{https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}{here}.
 
+If you wish to use your own text file of companies for get_companies to process,
+create a text file containing each company on a separate line. Every word and ticker
+must be capitalized, and the ticker must be the last word, separated by a space, on
+each line.
+
 \code{get_companies} by default uses a text file created from
 the Russell 3000 Index in the package.
 }
 \examples{
-## The function by default uses a text file created from the Russell 3000 Index.
+## The function by default uses a text
+## file created from the Russell 3000 Index.
 
 get_companies()
 
-## If you wish to create your own text file of companies for get_companies to process,
-## create a text file containing each company on a separate line. Every word and ticker
-## must be capitalized, and the ticker must be the last word, separated by a space, on
-## each line.
-## As an example valid txt file, create "companies.txt" in our current working directory
-## containing the following two lines:
+## As an example valid txt file, create
+## 'companies.txt' in our current working
+## directory containing the following two lines:
 ## APPLE AAPL
 ## GOOGLE GOOG
 
-get_companies("companies.txt")
+\dontrun{
+get_companies('companies.txt')
+}
 }
 

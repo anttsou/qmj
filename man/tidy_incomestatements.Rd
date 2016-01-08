@@ -10,7 +10,7 @@ tidy_incomestatements(x)
 \item{x}{A list of raw incomestatement file data produced from quantmod}
 }
 \value{
-Returns a data set that's been "tidied" up for use by other
+Returns a data set that's been 'tidied' up for use by other
 functions in this package.
 }
 \description{
@@ -20,14 +20,9 @@ in a list such that every element is a data frame or matrix containing
 quantmod data.
 }
 \details{
-\code{tidy_incomestatements} produces a data frame that is "tidy"
+\code{tidy_incomestatements} produces a data frame that is 'tidy'
 or more readily readable by a user and usable by other functions within
 this package.
-}
-\examples{
-sub_comps <- qmjdata::companies[1:2,]
-raw_data <- get_info(sub_comps)
-tidyincome <- tidy_incomestatements(raw_data[[2]])
 }
 \seealso{
 \code{\link{get_info}}

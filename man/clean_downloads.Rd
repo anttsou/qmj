@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_downloads.R
 \name{clean_downloads}
 \alias{clean_downloads}
-\title{Removes all downloaded temporary files for a given data frame of companies.}
+\title{Removes downloaded temporary files.}
 \usage{
 clean_downloads(x = qmjdata::companies)
 }
@@ -34,23 +34,27 @@ The clean_downloads() function will also automatically remove any
 temporarily stored data for the S&P 500, with the stock ticker ^GSPC.
 }
 \examples{
-## Without a specified data frame, clean_downloads defaults to the package
+\dontrun{
+## Without a specified data frame,
+## clean_downloads defaults to the package
 ## provided data frame of comapnies.
 
 clean_downloads()
 
-## If we wanted to remove temporarily downloaded files for only some
-## subset of our companies, or if we wanted to specify a modified data frame
+## If we wanted to remove temporarily
+## downloaded files for only some
+## subset of our companies, or if we
+## wanted to specify a modified data frame
 ## of companies.
 
-data(companies)
-sub_comps <- companies[1:80,]
 clean_downloads(sub_comps)
 
-## Fetch fresh data after removing old temporary files.
+## Fetch fresh data after removing old
+## temporary files.
 
 get_prices(sub_comps)
 get_info(sub_comps)
+}
 }
 \seealso{
 \code{\link{get_prices}}

@@ -10,7 +10,7 @@ tidy_cashflows(x)
 \item{x}{A list of raw cash flow data produced from quantmod}
 }
 \value{
-Returns a data set that's been "tidied" up for use
+Returns a data set that's been 'tidied' up for use
 by other functions in this package.
 }
 \description{
@@ -20,14 +20,9 @@ in a list such that every element is a data frame or
 matrix containing quantmod data.
 }
 \details{
-\code{tidy_cashflows} produces a data frame that is "tidy"
+\code{tidy_cashflows} produces a data frame that is 'tidy'
 or more readily readable by a user and usable by other
 functions within this package.
-}
-\examples{
-sub_comps <- qmjdata::companies[1:2,]
-raw_data <- get_info(sub_comps)
-tidycash <- tidy_cashflows(raw_data[[1]])
 }
 \seealso{
 \code{\link{get_info}}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_prices.R
 \name{get_prices}
 \alias{get_prices}
-\title{Grab daily prices and price returns of companies for the previous two years.}
+\title{Grab daily prices and price returns for the previous two years.}
 \usage{
 get_prices(companies = qmjdata::companies)
 }
@@ -17,7 +17,7 @@ exception of price returns, which are stored as pret.#, where # refers to
 the the i-th company given.
 
 The first company calculated is always the S&P 500, and its price return
-column is simply "pret".
+column is simply 'pret'.
 }
 \description{
 \code{get_prices} grabs price-related data for a given data frame
@@ -33,30 +33,40 @@ Once complete, the function deletes all used temporary data.
 Parameter defaults to provided data set of companies if empty.
 }
 \examples{
-## If no data frame is provided, the default is the package's companies data set.
+\dontrun{
+## If no data frame is provided,
+## the default is the package's
+## companies data set.
 
 get_prices()
 
-## If we want to get information for a specific data frame of companies, called
-## comps
+## If we want to get information
+## for a specific data frame of
+## companies, called comps
 
 get_prices(comps)
 
-## If we then decide to quit the process partway through, and then resume downloading,
+## If we then decide to quit the
+## process partway through, and
+## then resume downloading,
 ## the function usage is identical.
 
 get_prices(comps)
 
-## If we quit the process partway through, and then decide to clean the data to start
-## from scratch.
+## If we quit the process partway
+## through, and then decide to clean
+## the data to start from scratch.
 
 clean_downloads(comps)
 get_prices(comps)
 
-## The raw price data is difficult to use, so we'll clean the data for future use.
+## The raw price data is difficult
+## to use, so we'll clean the data
+## for future use.
 
 price_data <- get_prices(comps)
 prices <- tidy_prices(price_data)
+}
 }
 \seealso{
 \code{\link{get_info}}

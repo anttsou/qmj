@@ -14,23 +14,19 @@
 #' @seealso \code{\link{tidy_cashflows}}
 #' @seealso \code{\link{tidy_balancesheets}}
 #' @seealso \code{\link{tidy_incomestatements}}
-#' 
-#' @export
 
 tidy_helper <- function(x) {
-
-  ## Extract the ticker from the first column. 
-  ## Remove the unecessary digits to grab only
-  ## the ticker letters.
-  symbol <- gsub('[0-9 ]', '', colnames(x))[1] 
   
-  ## Extract the years these financial statements were filed. 
-  ## Remove the uncessary letters to grab only the year digits.
-  years <- gsub('[A-Z]', '', colnames(x)) 
+  ## Extract the ticker from the first column.  Remove the unecessary digits to grab only the ticker letters.
+  symbol <- gsub("[0-9 ]", "", colnames(x))[1]
   
-  ## Takes the transpose to make the rows become columns and appends
-  ## the ticker and year columns. 
-  temp <- cbind(data.frame(ticker = symbol, year = as.numeric(years), 
-                           stringsAsFactors = FALSE), 
-                data.frame(t(x)))
-}
+  ## Extract the years these financial statements were filed.  Remove the uncessary letters to grab only the year digits.
+  years <- gsub("[A-Z .-]", "", colnames(x))
+  
+  ## In case a ticker has multiple filings in the same calendar year, we need to differentiate between those rows. We do this by assigning a number in the
+  ## order we process that ticker's data
+  order <- 1:(ncol(x))
+  
+  ## Takes the transpose to make the rows become columns and appends the ticker and year columns.
+  temp <- cbind(data.frame(ticker = symbol, year = as.numeric(years), order = order, stringsAsFactors = FALSE), data.frame(t(x)))
+} 

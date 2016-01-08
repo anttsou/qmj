@@ -1,5 +1,4 @@
-#' Gets raw annual company balance sheets, income statements, and 
-#' cash flows from Google Finance.
+#' Gets raw financial statements from Google Finance.
 #'
 #' \code{get_info} grabs annual financial data for a given data frame of companies.
 #' 
@@ -22,36 +21,48 @@
 #' @seealso \code{\link{tidyinfo}}
 #' 
 #' @examples
-#' ## If no data frame is provided, the default is the package's companies data set.
+#' \dontrun{
+#' ## If no data frame is provided, 
+#' ## the default is the package's 
+#' ## companies data set.
 #' 
 #' get_info()
 #' 
-#' ## If we want to get information for a specific data frame of companies, called
-#' ## comps
+#' ## If we want to get information 
+#' ## for a specific data frame of 
+#' ## companies, called comps
 #' 
 #' get_info(comps)
 #' 
-#' ## If we then decide to quit the process partway through, and then resume downloading,
+#' ## If we then decide to quit the 
+#' ## process partway through, and 
+#' ## then resume downloading,
 #' ## the function usage is identical.
 #' 
 #' get_info(comps)
 #' 
-#' ## If we quit the process partway through, and then decide to clean the data to start
+#' ## If we quit the process partway 
+#' ## through, and then decide to 
+#' ## clean the data to start
 #' ## from scratch.
 #' 
 #' clean_downloads(comps)
 #' get_info(comps)
 #' 
-#' ## The raw financial data is difficult to use, so we'll clean the data for use in other functions.
+#' ## The raw financial data is 
+#' ## difficult to use, so we'll 
+#' ## clean the data for use in 
+#' ## other functions.
 #' 
 #' fin_data <- get_info(comps)
 #' financials <- tidyinfo(fin_data)
+#' }
 #' @importFrom quantmod getFinancials viewFinancials
 #' @export
 
 get_info <- function(companies = qmjdata::companies) {
   tickers = companies$ticker
-  if(length(tickers) == 0) {
+  if (length(tickers) == 0) {
     stop("parameter requires a ticker column.")
   }
   
@@ -60,10 +71,10 @@ get_info <- function(companies = qmjdata::companies) {
   listfiles <- rep("", length(tickers))
   filesInDest <- list.files(path = filepath)
   
-  for(i in tickers) {
+  for (i in tickers) {
     file <- paste0(i, "-fin", ".RData")
     fileName <- paste0(filepath, "/", i, "-fin.RData")
-    if(is.element(file, filesInDest)) {
+    if (is.element(file, filesInDest)) {
       
       ## If the temp file already exists, skip downloading this company's information and inform the user.
       message(paste0(i, " information found in temp directory. Resuming Download."))
@@ -71,20 +82,16 @@ get_info <- function(companies = qmjdata::companies) {
     } else {
       
       ## Test to see if quantmod can successfully grab the financial data.
-      prospective <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE),
-                              error = function(e) e)
+      prospective <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE), error = function(e) e)
       
-      ## Generate an empty matrix. This matrix will temporarily store financial statement data
-      ## before adding that data to the correct list.
+      ## Generate an empty matrix. This matrix will temporarily store financial statement data before adding that data to the correct list.
       matr <- matrix()
-      if(!inherits(prospective,"error")) {
+      if (!inherits(prospective, "error")) {
         
-        ## Grab cash flows from Google Finance.
-        ## Structure of statements is extremely similar for income statements 
-        ## and balance sheets.
+        ## Grab cash flows from Google Finance.  Structure of statements is extremely similar for income statements and balance sheets.
         
-        ## First check if a positive number of rows exist. 
-        if(nrow(matr <- viewFinancials(prospective, type = 'CF', period = 'A'))) {
+        ## First check if a positive number of rows exist.
+        if (nrow(matr <- viewFinancials(prospective, type = "CF", period = "A"))) {
           
           ## Rename columns to include the ticker and the year.
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
@@ -93,14 +100,14 @@ get_info <- function(companies = qmjdata::companies) {
           cashflow <- matr
         }
         
-        ## Grab income statements from Google Finance.    
-        if(nrow(matr <- viewFinancials(prospective, type = 'IS', period = 'A'))) {
+        ## Grab income statements from Google Finance.
+        if (nrow(matr <- viewFinancials(prospective, type = "IS", period = "A"))) {
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           incomestatement <- matr
         }
         
-        ## Grab balance sheets from Google Finance 
-        if(nrow(matr <- viewFinancials(prospective, type = 'BS', period = 'A'))) {
+        ## Grab balance sheets from Google Finance
+        if (nrow(matr <- viewFinancials(prospective, type = "BS", period = "A"))) {
           colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
           balancesheet <- matr
         }
@@ -116,15 +123,14 @@ get_info <- function(companies = qmjdata::companies) {
     }
   }
   
-  ## Extract information from files to compile cash flows, income statements, 
-  ## and balance sheets.
+  ## Extract information from files to compile cash flows, income statements, and balance sheets.
   listfiles <- listfiles[listfiles != ""]
   cashflows <- list()
   incomestatements <- list()
   balancesheets <- list()
   
-  if(length(listfiles) >= 1){
-    for(i in 1:(length(listfiles))) {
+  if (length(listfiles) >= 1) {
+    for (i in 1:(length(listfiles))) {
       load(listfiles[i])
       cashflows <- c(cashflows, clist[1])
       incomestatements <- c(incomestatements, clist[2])
@@ -134,4 +140,4 @@ get_info <- function(companies = qmjdata::companies) {
   resultlist <- list(cashflows, incomestatements, balancesheets)
   file.remove(listfiles)
   resultlist
-}
+} 
