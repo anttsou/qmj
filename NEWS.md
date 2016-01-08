@@ -5,3 +5,5 @@
 * Improved source code quality.
 
 * Built new test cases to cope with data gathering in prices and financials.
+
+* Implemented filters in `market_data()` to remove companies with inadequate data.
