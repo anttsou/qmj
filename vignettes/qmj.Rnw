@@ -184,7 +184,7 @@ clean_prices <- tidy_prices(raw_prices)
 clean_data <- tidyinfo(raw_data)
 @
 
-\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()} and \strong{tidyinfo()} takes as input the result of \strong{get\_info()}. The column names of these data frames will be the same abbreviations that are described in the \hyperref[table:financials]{table under the Financials data subsection}. The quality data frame can then be generated using \strong{market\_data()}.
+\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()} and \strong{tidyinfo()} takes as input the result of \strong{get\_info()}. The column names of clean\_data will be the same abbreviations that are described in the \hyperref[table:financials]{table under the Financials data subsection}. The quality data frame can then be generated using \strong{market\_data()}.
 
 <<echo = TRUE, results = hide, eval= FALSE>>=
 quality_data <- market_data(companies, clean_data, clean_prices)
