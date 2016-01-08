@@ -40,7 +40,7 @@ There is no single, widely accepted definition for the quality of a stock. MSCI'
 
 \strong{qmj} calculates the quality of publicly traded US stocks. The package uses the Russell 3000, an index composed of the 3000 largest US companies by market capitalization, as a sample universe. This universe was chosen for its relevance and reliable presence on Google Finance and Yahoo Finance, which \strong{qmj} uses to automatically gather data. The size of companies in the Russell 3000 also reduces anomalous data points in our calculations.
 
-Using financial statements and stock price data, \strong{qmj} provides a data frame of quality scores for companies in the Russell 3000 Index, allowing users to immediately access an overview of recent quality scores. Users who desire to modify the data or calculate new quality and component scores can do so with package functions.
+Using financial statements and stock price data, \strong{qmj} provides a data frame of quality scores for companies in the Russell 3000 Index, allowing users to immediately access an overview of recent quality scores. Users who desire to modify the data or calculate new quality and component scores can do so with package functions, described in greater detail under the \hyperref[sec:recalculating]{"Recalculating the Data"} section.
 
 \section{Data}
 \subsection{Companies}
@@ -160,6 +160,7 @@ $ADJASSET$ is adjusted total assets, which is $TA$ + 0.1 * (market equity ($ME$,
 Payouts measures the proportion of profits paid to shareholders. It is composed of three variables: net equity issuance ($EISS$), net debt issuance ($DISS$), and total net payout over profits ($NPOP$). $EISS$ is calculated as the negative log of the ratio of $TCSO$ of the most recent year and $TCSO$ of the previous year. $$EISS \ = \ -log\left(\frac{TCSO_t}{TCSO_{t-1}}\right)$$ Though AQR uses split-adjusted number of shares, we are currently using $TCSO$ given available information and will adjust for splits in future iterations of qmj. $DISS$ is calculated as the negative log of the ratio of $TD$ of the most recent year and $TD$ of the previous year. $$DISS \ = \ -log\left(\frac{TD_t}{TD_{t-1}}\right)$$ $NPOP$ is calculated as $NI$ - $\Delta BE$ over a four year span all over sum of $GPROF$ for the past four years (for the same reason as explained in the Growth section). $$NPOP \ = \ \frac{NI - \Delta BE}{\sum_{i=t-4}^{t}GPROF_i}$$
 
 \section{Recalculating the Data}
+\label{sec:recalculating}
 
 \strong{qmj} is scheduled to update its datasets periodically, at the minimum as the Russell 3000 index rebalances. Users however may also directly update, modify, and and create comparable data with qmj’s functions. This feature is important for those who want to calculate quality scores for their own list of publicly traded US companies, or for those who wish to factor in new data based on recent events or returns.
 
