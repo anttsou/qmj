@@ -190,6 +190,10 @@ clean_data <- tidyinfo(raw_data)
 quality_data <- market_data(companies, clean_data, clean_prices)
 @
 
+\section{Handling Missing Data}
+
+A key feature of \strong{qmj} is its ability to automatically retrieve 10-K financial statements and stock price data from public sources for a given data frame of companies TODO: WANT TO MENTION AND REFER TO QUANTMOD FOR THIS PURPOSE.
+
 
 \section{Conclusion}
 
