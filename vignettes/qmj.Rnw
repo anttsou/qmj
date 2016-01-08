@@ -31,24 +31,22 @@
 \maketitle
 
 \abstract{
-The \strong{qmj} package provides tools to produce quality scores for companies from the Russell 3000 Index following the approach described in ``Quality Minus Junk'' \citep{asness:2013}. The package downloads necessary financial statement data and stock returns from Google Finance and Yahoo Finance to calculate these scores. The package has quality scores as of October 2015 in a precalculated data frame, allowing users to use the package as an overview of stocks in the Russell 3000 Universe. Users can also update these scores themselves by using the functions provided in the package.
+The \strong{qmj} package produces quality scores for publicly traded US companies and provides a universe composed of those in the Russell 3000 Index following the approach described in ``Quality Minus Junk'' \citep{asness:2013}. Quality scores as of January 2016 are included in a precalculated data frame, providing users an overview of stocks in the 2015 Russell 3000 Index. Users can also update these scores themselves with \strong{qmj} functions that download necessary financial and stock data from Google Finance and Yahoo Finance.
 }
 
 \section{Introduction}
 
-There is no single, widely accepted definition for the quality of a stock. MSCI's measure of quality combines the z-scores of three winsorized numbers: Return on Equity, Debt to Equity and Earnings Variability to calculate quality indices for their quality indexes\citep{msci:2013}. In ``Quality Minus Junk'' \citep{asness:2013}a, quality is defined as the average of the four scores representing profitability, growth, safety and payouts.
+There is no single, widely accepted definition for the quality of a stock. MSCI's measure of quality combines the z-scores of three winsorized numbers: Return on Equity, Debt to Equity and Earnings Variability to calculate quality indices for their quality indexes \citep{msci:2013}. In ``Quality Minus Junk'' \citep{asness:2013}, quality is defined as the scaled measure of four components: profitability, growth, safety, and payouts. These components respectively measure earnings relative to costs, change in profits over time, risk in future returns, and “shareholder friendliness” \cite[p.~4]{asness:2013}.
 
-Each of the four characteristics is an average of the z-scores of the measures that comprises the characteristic. Profitability covers measures that aim understand earnings relative to the costs incurred. Growth measures the increase in a company's profits. Safety contains measures of risk in future returns. Payout considers how much of the profits goes to the shareholders.
+\strong{qmj} calculates the quality of publicly traded US stocks. The package uses the Russell 3000, an index composed of the 3000 largest US companies by market capitalization, as a sample universe. This universe was chosen for its relevance and reliable presence on Google Finance and Yahoo Finance, which \strong{qmj} uses to automatically gather data. The size of companies in the Russell 3000 also reduces anomalous data points in our calculations.
 
-\strong{qmj} considers the quality of stocks that belong to the Russell 3000. The Russell 3000 is an index that includes the 3000 largest US companies by market capitalization.  This universe was chosen due to the relative ease in obtaining the data necessary for quality score calculation from Google Finance and Yahoo Finance.
-
-Using the necessary financial and stock data as of October 2015, \strong{qmj} provides a precalculated data frame of quality scores for the companies in the 2015 Russell 3000. This is convenient for those who primarily want to use the package for a quick overview of recent Russell 3000 quality scores. Users who want to regularly update the data themselves and recalculate the quality scores can do so by calling the same functions that were used to create the precalculated data frame.
+Using financial statements and stock price data, \strong{qmj} provides a data frame of quality scores for companies in the Russell 3000 Index, allowing users to immediately access an overview of recent quality scores. Users who desire to modify the data or calculate new quality and component scores can do so with package functions, described in greater detail under the \hyperref[sec:recalculating]{"Recalculating the Data"} section.
 
 \section{Data}
 \subsection{Companies}
-The Russell 3000 is an index that tracks 3000 of the largest US-traded companies by Market Capitalization\citep{russell:2015}. It is rebalanced anually in June. The package comes with a data frame called \code{companies} containing the members of 2015 index by name and ticker\footnote{From https://www.russell.com/documents/indexes/construction-methodology-us-indexes.pdf}.
+The Russell 3000 is an index that tracks roughly 3000 of the largest US-traded companies by market capitalization \citep{russell:2015}. It is rebalanced annually in June. This package comes with a data frame, \code{companies}, containing the members of the 2015 index by name and ticker\footnote{From https://www.russell.com/documents/indexes/construction-methodology-us-indexes.pdf}.
 
-Here is a sample of the first five companies in \code{companies}.
+Below is a sample of the first five companies in \code{companies}.
 
 \begin{center}
 <<echo = FALSE>>=
@@ -56,12 +54,14 @@ head(qmjdata::companies, n = 5)
 @
 \end{center}
 
+The companies are arranged alphabetically by ticker and were parsed from a text file containing the same content as the online Russell 3000 component list\footnote{That list may be found here: https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}. 
+
 \subsection{Financials}
-The second dataset, \code{financials} contains the data from the balance sheets, income statements, and cash flows of companies that is necessary for quality score generation.
+Data from the cash flow statements, income statements, and balance sheets of selected companies are consolidated into a second dataset called \code{financials}.
 
-\code{financials} is long format data, so for each ticker, there are four rows corresponding to the past four available fiscal years based on 10-K submission date. Since companies have different 10-K submission dates, the most recently gathered data may not include the financial information for the most current year. Thus, some companies will occasionally not have data for the past four years, but rather data with a one-year lag. 
+\code{financials} is long format data, so for each ticker, there are four rows corresponding to the past four available fiscal years based on 10-K submission date. Since companies have different 10-K submission dates, some companies will occasionally not have data for the past four years, but rather data with some amount of lag. 
 
-Here is a sample of the first five companies in \code{financials}.
+Here is a sample of the first five rows in \code{financials}.
 
 \begin{center}
 <<echo = FALSE>>=
@@ -70,7 +70,7 @@ head(qmjdata::financials, n = 5)
 \end{center}
 
 \begin{table}
-  \caption{Columns in \code{financials}}
+  \caption{Columns in \code{financials} (in millions of USD except for per share items)}
   \label{table:financials}
   \begin{tabularx}{\textwidth}{X X}
     \toprule
@@ -101,7 +101,7 @@ head(qmjdata::financials, n = 5)
 \end{table}
 
 \subsection{Prices}
-The \code{prices} dataset has the closing stock prices and price returns for each day of the past two years for each company. Here is a sample of the data:
+The \code{prices} dataset has the closing stock prices and price returns for the past two years for each company. Here is a sample of the data:
 
 \begin{center}
 <<echo = FALSE>>=
@@ -110,10 +110,10 @@ rbind(head(qmjdata::prices, n = 5),
 @
 \end{center}
 
-Above, we see data for 1st Source Corporation(with ticker SRCE) and the Standard and Poor's 500 Index(with ticker GSPC). 
+In addition to the companies selected, for comparison purposes the Standard and Poor's 500 Index (with ticker GSPC) price data will always be provided. 
 
 \subsection{Quality}
-The data frame \code{quality} contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts that make up the quality score following the methodology described below on the data in the \code{prices} and the \code{financials} data sets.
+The \code{quality} data frame contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts. These z-scores were calculated following the methodology described \hyperref[sec:calculations]{below}, using data from the \code{prices} and \code{financials} data sets.
   
 \begin{center}
 <<echo = FALSE>>=
@@ -126,14 +126,20 @@ head(quality_scores, n = 5)
 \end{center}
 
 Here we have an example showing the top five companies based on quality measurements.
-\section{Calculating Quality}
 
-We calculate quality z-scores for publicly traded companies in the Russell 3000 Index by summing the z-scores for each company's profitability, growth, safety, and payouts. 
+\section{Calculating Quality}
+\label{sec:calculations}
+
+We calculate quality scores for publicly traded companies in the Russell 3000 Index by calculating the z-score of the sum of each company's profitability, growth, safety, and payouts z-scores.
+
+$$Quality \ = \ z(Profitability + Growth + Safety + Payouts)$$
 
 \subsection{Profitability}
-Profitability is a company's profits per unit of book value. It is composed of six variables: gross profits over assets ($GPOA$), return on equity ($ROE$), return on assets ($ROA$), cash flow over assets ($CFOA$), gross margin ($GMAR$), and accruals ($ACC$). $GPOA$ is calculated as gross profits ($GPROF$) over total assets ($TA$). $$GPOA \ = \ \frac{GPROF}{TA}$$ $ROE$ is calculated as net income ($NI$) over book equity ($BE$), which is shareholders' equity (the difference of Total Liabilities and Shareholders' Equity ($TLSE$) with Total Liabilities ($TL$)) - preferred stock (the sum of redeemable preferred stock ($RPS$) and non redeemable preferred stock ($NRPS$)). $$ROE \ = \ \frac{NI}{BE}$$ $ROA$ is calculated as $NI$ over $TA$. $$ROA \ = \ \frac{NI}{TA}$$ $CFOA$ is calculated as $NI$ + depreciation ($DP.DPL$) - changes in working capital ($CWC$) - capital expenditures ($CX$) all over $TA$. $$CFOA \ = \ \frac{NI \ + \ DP.DPL \ - \ CWC \ - \ CX}{TA}$$ $GMAR$ is calculated as $GPROF$ over total revenue ($TREV$). $$GMAR \ = \ \frac{GPROF}{TREV}$$ Finally, $ACC$ is calculated as $DP.DPL$ - $CWC$ all over $TA$. $$ACC \ = \ \frac{DP.DPL \ - \ CWC}{TA}$$ We then standardize all components of profitability to z-scores and then standardize all profitability scores into z-scores. $$Profitability \ = \ z(z_{gpoa} \ + \ z_{roe} \ + \ z_{roa} \ + \ z_{cfoa} \ + \ z_{gmar} \ + \ z_{acc})$$
+Profitability is a company's profits per unit of book value. It is composed of six variables: gross profits over assets ($GPOA$), return on equity ($ROE$), return on assets ($ROA$), cash flow over assets ($CFOA$), gross margin ($GMAR$), and accruals ($ACC$). $GPOA$ is calculated as gross profits ($GPROF$) over total assets ($TA$). $$GPOA \ = \ \frac{GPROF}{TA}$$ $ROE$ is calculated as net income ($NI$) over book equity ($BE$), which is shareholders' equity (the difference of total liabilities and shareholders' equity ($TLSE$) with total liabilities ($TL$)) - preferred stock (the sum of redeemable preferred stock ($RPS$) and non redeemable preferred stock ($NRPS$)). $$ROE \ = \ \frac{NI}{BE}$$ $ROA$ is calculated as $NI$ over $TA$. $$ROA \ = \ \frac{NI}{TA}$$ $CFOA$ is calculated as $NI$ + depreciation ($DP.DPL$) - changes in working capital ($CWC$) - capital expenditures ($CX$) all over $TA$. $$CFOA \ = \ \frac{NI \ + \ DP.DPL \ - \ CWC \ - \ CX}{TA}$$ $GMAR$ is calculated as $GPROF$ over total revenue ($TREV$). $$GMAR \ = \ \frac{GPROF}{TREV}$$ Finally, $ACC$ is calculated as $DP.DPL$ - $CWC$ all over $TA$. $$ACC \ = \ \frac{DP.DPL \ - \ CWC}{TA}$$ We then standardize all components of profitability to z-scores and then standardize the sum of the scaled profitability scores into z-scores. $$Profitability \ = \ z(z_{gpoa} \ + \ z_{roe} \ + \ z_{roa} \ + \ z_{cfoa} \ + \ z_{gmar} \ + \ z_{acc})$$
+
 \subsection{Growth}
-Growth is a measure of a company's increase in profits. It is measured by differences in profitability across a time span of four years. Though AQR recommends measuring growth across a time span of five years, public information that is both consistent and well-organized in 10-K forms is only available for a time span of four years, and it is still too early in the most recent year (2015) for most companies to have submitted a 10-K form. Thus, we measure growth using a time span of four years, which we will update once this year's 10-K form is submitted for each company in the Russell 3000 Index. As of now, $$Growth \ = \ z(z_{\Delta gpoa_{t,t-4}} \ + \ z_{\Delta roe_{t,t-4}} \ + \ z_{\Delta roa_{t,t-4}} \ + \ z_{\Delta cfoa_{t,t-4}} \ + \ z_{\Delta gmar_{t,t-4}} \ + \ z_{\Delta acc_{t,t-4}})$$
+Growth is a measure of a company's increase in profits. It is measured by differences in profitability across a time span of four years. Though AQR recommends measuring growth across a time span of five years, public information that is both consistent and well-organized in 10-K forms is only available for a time span of four years from our sources. Thus, we measure growth using a time span of four years, which we will update once this year's 10-K form is submitted for each company in the Russell 3000 Index. $$Growth \ = \ z(z_{\Delta gpoa_{t,t-4}} \ + \ z_{\Delta roe_{t,t-4}} \ + \ z_{\Delta roa_{t,t-4}} \ + \ z_{\Delta cfoa_{t,t-4}} \ + \ z_{\Delta gmar_{t,t-4}} \ + \ z_{\Delta acc_{t,t-4}})$$
+
 \subsection{Safety}
 Safety is a measure of required return, with safer stocks having a lower required return. Safety is composed of six variables: beta ($BAB$), idiosyncratic volatility ($IVOL$), leverage ($LEV$), Ohlson's O ($O$), Altman's Z ($Z$), and earnings volatility ($EVOL$). $BAB$ is calculated as the negative covariance of each company's daily price returns ($pret_{c_i}$) relative to the benchmark daily market price returns ($pret_{mkt}$), in this case the S\&P 500, over the variance of $pret_{mkt}$. $$BAB \ = \ \frac{-cov(pret_{c_i},pret_{mkt})}{var(pret_{mkt})}$$ $IVOL$ is the standard deviation of daily beta-adjusted excess returns. In other words, $IVOL$ is found by running a regression on each company's price returns and the benchmark, then taking the standard deviation of the residuals. Leverage is -(total debt ($TD$) over $TA$). $$Leverage \ = \ -\frac{TD}{TA}$$ 
 \\
@@ -149,41 +155,59 @@ O \ = \ - \Biggl[-1.32 \ - \ 0.407 \ * \ log\left(\frac{ADJASSET}{CPI}\right) \ 
 \end{equation}
 
 $ADJASSET$ is adjusted total assets, which is $TA$ + 0.1 * (market equity ($ME$, calculated as average price per share for the most recent year * total number of shares outstanding ($TCSO$) - $BE$)). $$ADJASSET \ = \ TA \ + \ 0.1 \ * \ (ME \ - \ BE)$$ $CPI$, the consumer price index, is assumed to be 100, since we only care about the most recent year. $TLTA$ is book value of debt ($BD$, calculated as $TD$ - minority interest ($MI$) - ($RPS$ + $NRPS$)) over $ADJASSET$. $$TLTA \ = \ \frac{BD}{ADJASSET}$$ $WCTA$ is current assets ($TCA$) - current liabilities ($TCL$) over $TA$. $$WCTA \ = \ \frac{TCA - TCL}{TA}$$ $CLCA$ is $TCL$ over $TCA$. $$ CLCA \ = \ \frac{TCL}{TCA}$$ $OENEG$ is a dummy variable that is 1 if total liabilities ($TL$) is greater than $TA$. $$ OENEG \ = \ TL > TA $$ $NITA$ is $NI$ over $TA$. $$NITA \ = \ \frac{NI}{TA}$$ $FUTL$ is income before taxes ($IBT$) over $TL$. $$FUTL \ = \ \frac{IBT}{TL}$$ $INTWO$ is another dummy variable that is 1 if $NI$ for the current year and $NI$ for the previous year are both negative. $$INTWO \ = \ MAX(NI_t,NI_{t-1}) < 0$$ $CHIN$ is $NI$ for the current year - $NI$ for the previous year all over the sum of the absolute value of $NI$ for the current year and the absolute value of $NI$ for the previous year $$CHIN \ = \ \frac{NI_t \ - \ NI_{t-1}}{|NI_t| + |NI_{t-1}|}$$ Altman's Z is calculated using weighted averages of working capital ($WC$, calculated as $TCA$ - $TCL$), $$WC \ = \ TCA \ - \ TCL$$ retained earnings ($RE$, calculated as $NI$ - dividends per share ($DIVC$) * $TCSO$), $$RE \ = \ NI \ - \ DIVC \ * \ TCSO$$ earnings before interest and taxes ($EBIT$, calculated as $NI$ - Discontinued Operations ($DO$) + (income before tax ($IBT$) - income after tax ($IAT$)) + interest expense ($NINT$)), $$ EBIT \ = \ NI \ - \ DO \ + \ (IBT \ - \ IAT) \ + \ NINT $$ $ME$, and $TREV$, all over $TA$. $$Z \ = \frac{\ 1.2 \ * \ WC \ + \ 1.4 \ * \ RE \ + \ 3.3 \ * \ EBIT \ + \ 0.6 \ * \ ME \ + TREV}{TA}$$ $EBIT$ is likely an overestimate for a given company due to potentially missing information. $EVOL$ is calculated as the standard deviation of $ROE$ for a four year span. AQR recommends the past five years, but for the same reason stated in the Growth section, we use a four year span. $$EVOL = \sigma\left(\sum_{i=t-4}^{t}ROE_i\right)$$ Likewise, we standardize each variable and then standardize each safety measure, so $$Safety \ = \ z(z_{bab} \ + \ z_{ivol} \ + \ z_{lev} \ + \ z_{o} \ + \ z_{z} \ + \ z_{evol})$$ 
+
 \subsection{Payouts}
-Payouts measures the proportion of profits paid to shareholders. It is composed of three variables: net equity issuance ($EISS$), net debt issuance ($DISS$), and total net payout over profits ($NPOP$). $EISS$ is calculated as the negative log of the ratio of $TCSO$ of the most recent year and $TCSO$ of the previous year. $$EISS \ = \ -log\left(\frac{TCSO_t}{TCSO_{t-1}}\right)$$ Though AQR uses split-adjusted number of shares, we are currently using $TCSO$ given available information and will adjust for splits in future iterations of qmj. $DISS$ is calculated as the negative log of the ratio of $TD$ of the most recent year and $TD$ of the previous year. $$DISS \ = \ -log\left(\frac{TD_t}{TD_{t-1}}\right)$$ $NPOP$ is calculated as $NI$ - $\Delta BE$ over a four year span all over sum of $GPROF$ for the past four years (for the same reason as explained in the Growth section). $$NPOP \ = \ \frac{NI - \Delta BE}{\sum_{i=t-4}^{t}GPROF_i}$$
+Payouts is a general measure of the company's friendliness to shareholders. It is composed of three variables: net equity issuance ($EISS$), net debt issuance ($DISS$), and total net payout over profits ($NPOP$). $EISS$ is calculated as the negative log of the ratio of $TCSO$ of the most recent year and $TCSO$ of the previous year. $$EISS \ = \ -log\left(\frac{TCSO_t}{TCSO_{t-1}}\right)$$ Though AQR uses split-adjusted number of shares, we are currently using $TCSO$ given available information and will adjust for splits in future iterations of qmj. $DISS$ is calculated as the negative log of the ratio of $TD$ of the most recent year and $TD$ of the previous year. $$DISS \ = \ -log\left(\frac{TD_t}{TD_{t-1}}\right)$$ $NPOP$ is calculated as $NI$ - $\Delta BE$ over a four year span all over sum of $GPROF$ for the past four years (for the same reason as explained in the Growth section). $$NPOP \ = \ \frac{NI - \Delta BE}{\sum_{i=t-4}^{t}GPROF_i}$$
 
 \section{Recalculating the Data}
+\label{sec:recalculating}
 
-\strong{qmj} is planned to be updated periodically with up-to-date data, especially as the Russell 3000 index rebalances. However, the users can also call the functions that generate the dataframes to. This may be useful for users who perhaps want to run their own list of US tickers, or want frequent updates based on recent returns.
+\strong{qmj} is scheduled to update its datasets periodically, at the minimum as the Russell 3000 index rebalances every year. Users however may also directly update, modify, and create comparable data with qmj’s functions. This feature is important for those who want to calculate quality scores for their own list of publicly traded US companies, or for those who wish to factor in new data based on recent events or returns.
 
-\strong{get\_companies()} will create a companies data set from a text file. Usually this information will only need to be updated once a year, as the index rebalances. The user will have to provide the new text file however. \strong{get\_prices()} takes a data frame of companies from \strong{get\_companies()}, organized by name and ticker, and returns the daily prices and returns for the past two years including the most recent trading day. \strong{get\_info()} also takes a data frame of companies, organized by name and ticker, and grabs the most recent company 10-K financial statements. \strong{get\_info()} does not need to be called often since it will only grab new data once per year. 
+\strong{get\_companies()} will create a companies data set from a text file of space separated company names and tickers. For example, a valid text file input for \strong{get\_companies()} would be: 
+
+APPLE AAPL 
+
+GOOGLE GOOG
+
+The user, however, will have to manually create the new text file. \strong{get\_prices()} takes a data frame of companies from \strong{get\_companies()}, containing the columns "name" and "ticker," and returns the daily prices and returns for the past two years including the most recent trading day. \strong{get\_info()} also takes a similarly formatted data frame of companies and grabs the four most recent company 10-K financial statements if available. \strong{get\_info()} does not need to be called often since it will only grab new data if a company files a new 10-K statement. 
 
 <<echo = TRUE, results = hide, eval= FALSE>>=
 raw_prices <- get_prices(companies)
 raw_data <- get_info(companies)
 @
 
-An easy way to make the data more readable is through tidy functions in the \strong{qmj} package. 
+This raw data is neither easily readable nor usable elsewhere in the package however. We need to tidy the data before it may be used in quality calculations.
 
 <<echo = TRUE, results = hide, eval= FALSE>>=
 clean_prices <- tidy_prices(raw_prices)
 clean_data <- tidyinfo(raw_data)
 @
 
-\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()} and \strong{tidyinfo()} takes as input the result of \strong{get\_info()}. The column names of these data frames will be the same abbreviations that are used in the default data frames described in Input Data section. Then the quality data frame can be generated using \strong{market\_data()}.
+\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()} and \strong{tidyinfo()} takes as input the result of \strong{get\_info()}. The column names of clean\_data will be the same abbreviations that are described in the \hyperref[table:financials]{table under the Financials data subsection}. The quality data frame can then be generated using \strong{market\_data()}.
 
 <<echo = TRUE, results = hide, eval= FALSE>>=
 quality_data <- market_data(companies, clean_data, clean_prices)
 @
 
+\section{Handling Missing Data}
+
+A key feature of \strong{qmj} is its ability to automatically retrieve 10-K financial statements and stock price data from public sources for a given data frame of companies through \href{https://cran.r-project.org/web/packages/quantmod/index.html}{\textbf{quantmod} (Ryan et al., 2015)}. As this information is sourced from Google Finance and Yahoo Finance, key pieces of data may be missing. Consequently, when calling the \strong{market\_data()} function, filters exist in order to improve the accuracy of our scaled results.
+
+Specifically, for financial documents, we're interested solely in companies for which we can fulfill the following criteria:
+
+\begin{itemize}
+  \item All companies must have 3-4 contiguous 10-K filings
+  \item Those contiguous 10-K filings must contain a filing that took place within two years (with some leeway) of the present day.
+\end{itemize}
+
+Companies which fail the above criteria will not be considered or included in the resulting data frame.
+
+Similarly, we filter companies which we deem to have inadequate price data to give a good representation of the company. Explicitly, we ensure that \strong{all measured companies have at least 80\% of the maximal number of price data points.}
 
 \section{Conclusion}
 
-The \strong{qmj} package offers an R implementation of the methodologies found in the paper,``Quality Minus Junk''\citep{asness:2013}. The quality scores data it comes with, as well as the functions it provides to calculate the data can be used by a variety of users with different needs. 
-
-A limitation is that it itself can not provide time-series data of these quality scores. An extension as such to the package could provide useful in testing long-quality, short-junk strategies in backtests\footnote{See \cite{enos:2013} for more information}. Such an extension however, would be difficult while still depending on openly available data on Google Finance and Yahoo Finance.
-
-Regardless, \strong{qmj} provides useful tools to create a data frame that provides quality scores, as well as the profitability, growth and safety payout subscores on a ticker level for the Russell 3000 Universe. As it comes with all the dataframes pre-generated, it is also a useful reference tool. 
+The \strong{qmj} package offers an R implementation of the methodologies found in the paper,``Quality Minus Junk'' \citep{asness:2013}, providing tools to calculate quality scores in addition to profitability, growth, safety, and payout subscores for publicly traded US companies. \strong{qmj} also serves as a useful reference tool with its focus on the Russell 3000 and provided data, allowing users to immediately browse regularly updated quality scores for the largest public US companies.
 
 \bibliography{tsou-kane-kwon}
 
@@ -217,4 +241,4 @@ Regardless, \strong{qmj} provides useful tools to create a data frame that provi
   United States}\\
 \email{rynkwn@gmail.com}
 \end{article}
-\end{document}
+\end{document}  
