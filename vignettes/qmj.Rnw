@@ -192,8 +192,16 @@ quality_data <- market_data(companies, clean_data, clean_prices)
 
 \section{Handling Missing Data}
 
-A key feature of \strong{qmj} is its ability to automatically retrieve 10-K financial statements and stock price data from public sources for a given data frame of companies TODO: WANT TO MENTION AND REFER TO QUANTMOD FOR THIS PURPOSE.
+A key feature of \strong{qmj} is its ability to automatically retrieve 10-K financial statements and stock price data from public sources for a given data frame of companies through \href{https://cran.r-project.org/web/packages/quantmod/index.html}{\textbf{quantmod} (Ryan et al., 2015)}. As this information is sourced from Google Finance and Yahoo Finance, key pieces of data may be missing. Consequently, when calling the \strong{market\_data()} function, filters exist in order to improve the accuracy of our scaled results.
 
+Specifically, for financial documents, we're interested solely in companies for which we can fulfill the following criteria:
+
+\begin{itemize}
+  \item All companies must have 3-4 contiguous 10-K filings
+  \item Those contiguous 10-K filings must contain a filing that took place within two years (with some leeway) of the present day.
+\end{itemize}
+
+Companies which fail the above criteria will not be considered or included in the resulting data frame.
 
 \section{Conclusion}
 
