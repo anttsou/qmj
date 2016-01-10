@@ -93,7 +93,8 @@ get_prices <- function(companies = qmjdata::companies) {
   listfiles <- rep("", (numCompanies + 1))
   
   ## Code below specially gathers the daily data for the S&P 500 for use as a benchmark.
-  stockData <- quantmod::getSymbols("^GSPC", src = "yahoo", auto.assign = FALSE, from = startDate)
+  stockData <- quantmod::getSymbols("^GSPC", src = "yahoo", auto.assign = FALSE, from = startDate,
+                                    warnings = FALSE)
   stockData$pret <- pricereturns(stockData)
   stockData <- stockData[-1, ]
   absoluteFilePath <- paste0(filepath, "/", "GSPC.RData")
