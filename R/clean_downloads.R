@@ -23,10 +23,12 @@
 #' The last two indices refer to the S&P 500 temporary data.
 #'
 #' @param x A data frame of companies. Must have a ticker column.
+#' 
 #' @seealso \code{\link{get_prices}}
 #' @seealso \code{\link{get_info}}
 #' @examples
 #' \dontrun{
+#' 
 #' ## Without a specified data frame, 
 #' ## clean_downloads defaults to the package
 #' ## provided data frame of comapnies.
@@ -46,6 +48,7 @@
 #' 
 #' get_prices(sub_comps)
 #' get_info(sub_comps)
+#' 
 #' }
 #' @export
 

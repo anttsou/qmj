@@ -35,6 +35,7 @@ temporarily stored data for the S&P 500, with the stock ticker ^GSPC.
 }
 \examples{
 \dontrun{
+
 ## Without a specified data frame,
 ## clean_downloads defaults to the package
 ## provided data frame of comapnies.
@@ -54,6 +55,7 @@ clean_downloads(sub_comps)
 
 get_prices(sub_comps)
 get_info(sub_comps)
+
 }
 }
 \seealso{

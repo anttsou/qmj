@@ -45,7 +45,9 @@ get_companies()
 ## GOOGLE GOOG
 
 \dontrun{
+
 get_companies('companies.txt')
+
 }
 }
 

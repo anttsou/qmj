@@ -28,6 +28,7 @@
 #' 
 #' @examples
 #' \dontrun{
+#' 
 #' ## If no data frame is provided, 
 #' ## the default is the package's 
 #' ## companies data set.
@@ -60,6 +61,7 @@
 #' 
 #' price_data <- get_prices(comps)
 #' prices <- tidy_prices(price_data)
+#' 
 #' }
 #' @importFrom quantmod getSymbols
 #' @export

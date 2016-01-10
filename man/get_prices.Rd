@@ -34,6 +34,7 @@ Parameter defaults to provided data set of companies if empty.
 }
 \examples{
 \dontrun{
+
 ## If no data frame is provided,
 ## the default is the package's
 ## companies data set.
@@ -66,6 +67,7 @@ get_prices(comps)
 
 price_data <- get_prices(comps)
 prices <- tidy_prices(price_data)
+
 }
 }
 \seealso{

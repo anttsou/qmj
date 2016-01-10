@@ -16,12 +16,14 @@
 #' all cash flow statements, all income statements, and all balance sheets.
 #' 
 #' @param companies A data frame of companies. Must have a ticker column.
+#' 
 #' @seealso \code{\link{get_prices}}
 #' @seealso \code{\link{clean_downloads}}
 #' @seealso \code{\link{tidyinfo}}
 #' 
 #' @examples
 #' \dontrun{
+#' 
 #' ## If no data frame is provided, 
 #' ## the default is the package's 
 #' ## companies data set.
@@ -56,6 +58,7 @@
 #' 
 #' fin_data <- get_info(comps)
 #' financials <- tidyinfo(fin_data)
+#' 
 #' }
 #' @importFrom quantmod getFinancials viewFinancials
 #' @export

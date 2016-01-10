@@ -24,6 +24,8 @@ more readily readable by a user and usable by other functions
 within this package.
 }
 \examples{
+\dontrun{
+
 sub_comps <- qmjdata::companies[1:2,]
 raw_price_data <- get_prices(sub_comps)
 prices <- tidy_prices(raw_price_data)
@@ -31,6 +33,8 @@ prices <- tidy_prices(raw_price_data)
 my_companies <- data.frame(ticker=c('GOOG', 'IBM'))
 raw_price_data <- get_prices(my_companies)
 prices <- tidy_prices(raw_price_data)
+
+}
 }
 \seealso{
 \code{\link{get_prices}}
