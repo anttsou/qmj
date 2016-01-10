@@ -84,7 +84,7 @@ get_prices <- function(companies = qmjdata::companies) {
   }
   
   ## Folder destination of all temp files.
-  filepath <- Sys.getenv("temp")
+  filepath <- tempdir()
   
   ## We only desire stock data for the past two years.
   startDate <- as.POSIXlt(Sys.Date())
