@@ -17,7 +17,7 @@
 #' @seealso \code{\link{market_payouts}}
 #' 
 #' @examples
-#' companies <- qmjdata::companies[50:51,]
+#' companies <- qmjdata::companies[1,]
 #' market_growth(companies, qmjdata::financials)
 #' @importFrom dplyr distinct arrange
 #' @export

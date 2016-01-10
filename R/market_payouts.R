@@ -17,7 +17,7 @@
 #' @seealso \code{\link{market_safety}}
 #' 
 #' @examples
-#' companies <- qmjdata::companies[50:51,]
+#' companies <- qmjdata::companies[1,]
 #' market_payouts(companies, qmjdata::financials)
 #' @importFrom dplyr distinct arrange
 #' @export
