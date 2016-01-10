@@ -14,7 +14,7 @@
 
 context("Gathering Raw Price Data Tests")
 
-companies <- qmjdata::companies[,]
+companies <- qmjdata::companies[1,]
 raw_prices <- qmj::get_prices(companies)
 
 test_that("Every ticker in the raw price data is unique with a predicted number of columns", {

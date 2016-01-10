@@ -21,7 +21,7 @@ test_that("tickers identical in company and quality",{
   temp_growth <- market_growth(companies,financials)
   temp_safety <- market_safety(companies,financials,prices)
   temp_payouts <- market_payouts(companies,financials)
-  expect_equal(length(intersect(companies$ticker,quality$ticker)),equals(length(companies$ticker))
+  expect_equal(length(intersect(companies$ticker,quality$ticker)), length(companies$ticker))
   expect_equal(length(intersect(companies$ticker,temp_profitability$ticker)), length(companies$ticker))
   expect_equal(length(intersect(companies$ticker,temp_growth$ticker)), length(companies$ticker))
   expect_equal(length(intersect(companies$ticker,temp_safety$ticker)), length(companies$ticker))
