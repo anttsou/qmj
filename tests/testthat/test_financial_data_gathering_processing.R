@@ -11,12 +11,17 @@
 #' - For any given ticker, tidied financial information has at most 4 rows.
 #'
 
-companies <- qmjdata::companies[1,]
+companies <- qmjdata::companies[1:3,]
 raw_fins <- qmj::get_info(companies)
 
 context("Gathering Raw Financial Data Tests")
 
 test_that("Missing companies are solely because quantmod provides no data", {
+  
+  ## If no data at all was gathered, assume internet connection is bad.
+  if(length(raw_fins[[1]]) == 0)
+    testthat::skip()
+  
   
   #' @describeIn Grabs the ticker from an element in one of the sublists
   #' of raw_fins
@@ -54,6 +59,10 @@ test_that("Missing companies are solely because quantmod provides no data", {
 context("Processing/Tidying Financial Data Tests")
 
 test_that("Every ticker appears in the tidied financial data set at most four times", {
+  
+  ## If no data at all was gathered, assume internet connection is bad.
+  if(length(raw_fins[[1]]) == 0)
+    testthat::skip();
 
   fins <- tidyinfo(raw_fins)
   

@@ -14,10 +14,14 @@
 
 context("Gathering Raw Price Data Tests")
 
-companies <- qmjdata::companies[1,]
-raw_prices <- qmj::get_prices(companies)
+companies <- qmjdata::companies[1:3,]
+raw_prices <- tryCatch(qmj::get_prices(companies), error = function(e) e)
 
 test_that("Every ticker in the raw price data is unique with a predicted number of columns", {
+  
+  ## If error is returned, no internet connection.
+  if(inherits(raw_prices, "error"))
+    testthat::skip()
   
   ## Grab column names and remove everything but the ticker.
   tickers <- colnames(raw_prices)
@@ -40,6 +44,10 @@ test_that("Every ticker in the raw price data is unique with a predicted number 
 
 test_that("Every ticker for which we successfully grabbed data, has some data", {
   
+  ## If error is returned, no internet connection.
+  if(inherits(raw_prices, "error"))
+    testthat::skip()
+  
   #' @describeIn Check to make sure every column has at least one non-na entry
   col_check <- function(column) {
     expect_true(sum(!is.na(column)) >= 1, label="grabbed data contains some data")
@@ -51,6 +59,10 @@ test_that("Every ticker for which we successfully grabbed data, has some data", 
 })
 
 test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
+  
+  ## If error is returned, no internet connection.
+  if(inherits(raw_prices, "error"))
+    testthat::skip()
   
   ## First get all companies for which we do have data.
   tickers <- colnames(raw_prices)
@@ -94,6 +106,10 @@ test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
 context("Processing/Tidying Price Data Tests")
 
 test_that("Raw data matches processed data for any given company", {
+  
+  ## If error is returned, no internet connection.
+  if(inherits(raw_prices, "error"))
+    testthat::skip()
   
   ## Grab all .Close and pret columns from the raw data.
   close_indices <- grep('(.Close)', colnames(raw_prices))
