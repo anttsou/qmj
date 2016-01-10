@@ -38,9 +38,3 @@ test_that("companies list with no ticker column sparks error", {
   expect_error(market_safety(x,financials,prices),"first parameter requires a ticker column.")
   expect_error(market_payouts(x,financials),"first parameter requires a ticker column.")
 })
-
-test_that("ticker is valid", {
-  x <- data.frame(name = "test", ticker = "TICK9")
-  expect_warning(get_info(x),"No financials for TICK9")
-  expect_warning(get_prices(x),"No daily data for TICK9")
-})
