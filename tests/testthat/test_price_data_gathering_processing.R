@@ -13,8 +13,7 @@
 #'
 
 ## Isolate companies of interest for our testing.
-companies <- qmjdata::companies[1:10,]
-
+companies <- qmjdata::companies[1:3,]
 
 context("Gathering Raw Price Data Tests")
 
@@ -87,6 +86,11 @@ test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
   
 })
 
+#################################################
+##
+## Tests related to data processing.
+##
+#################################################
 
 context("Processing/Tidying Price Data Tests")
 
