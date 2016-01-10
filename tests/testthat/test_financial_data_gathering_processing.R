@@ -11,12 +11,12 @@
 #' PROCESSED/TIDY DATA TESTS:
 #'
 
-companies <- qmjdata::companies
+companies <- qmjdata::companies[1,]
 raw_fins <- qmj::get_info(companies)
 
 context("Gathering Raw Financial Data Tests")
 
-testthat("Missing companies are solely because quantmod provides no data", {
+test_that("Missing companies are solely because quantmod provides no data", {
   
   #' @describeIn Grabs the ticker from an element in one of the sublists
   #' of raw_fins

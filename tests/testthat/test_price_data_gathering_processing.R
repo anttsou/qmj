@@ -13,7 +13,7 @@
 #'
 
 ## Isolate companies of interest for our testing.
-companies <- qmjdata::companies[1:3,]
+companies <- qmjdata::companies[1,]
 
 context("Gathering Raw Price Data Tests")
 
