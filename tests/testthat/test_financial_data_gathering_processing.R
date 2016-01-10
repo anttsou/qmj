@@ -20,24 +20,28 @@ test_that("Missing companies are solely because quantmod provides no data", {
   
   #' @describeIn Grabs the ticker from an element in one of the sublists
   #' of raw_fins
-  #grab_ticker <- function(financial_statement) {
-  #  gsub('[0-9 ]', '', financial_statement)
-  #}
+  grab_ticker <- function(financial_statement) {
+    gsub('[0-9 ]', '', financial_statement)
+  }
   
   ## It may be worthwhile to make this more robust in the future, in case we 
   ## ever change, for whatever reason, the order of raw_fins.
-  ##cf_tickers <- sapply(raw_fins[[1]], grab_ticker)
+  cf_tickers <- sapply(raw_fins[[1]], colnames)
+  cf_tickers <- sapply(cf_tickers, grab_ticker)
   
+  is_tickers <- sapply(raw_fins[[2]], colnames)
+  is_tickers <- sapply(is_tickers, grab_ticker)
+  
+  bs_tickers <- sapply(raw_fins[[3]], colnames)
 })
-
 
 context("Processing/Tidying Financial Data Tests")
 
 test_that("Every ticker appears in the tidied financial data set at most four times", {
 
-  #fins <- tidyinfo(raw_fins)
+  fins <- tidyinfo(raw_fins)
   
-  #occurrences <- table(fins$ticker)
-  #apply(occurrences, MARGIN=1, FUN=function(ticker_occurrences){is_true(ticker_occurrences <= 4)})
+  occurrences <- table(fins$ticker)
+  apply(occurrences, MARGIN=1, FUN=function(ticker_occurrences){is_true(ticker_occurrences <= 4)})
   
 })
