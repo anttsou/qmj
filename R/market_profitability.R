@@ -24,11 +24,15 @@
 #' market_profitability(companies, qmjdata::financials)
 #' @export
 
-market_profitability <- function(companies = qmjdata::companies, financials = qmjdata::financials){ 
+market_profitability <- function(companies = qmjdata::companies, financials = qmjdata::financials) {
   
   ## Stop function if parameters are bad.
-  if(length(companies$ticker) == 0) { stop("first parameter requires a ticker column.") }
-  if(length(which(financials$TCSO < 0))) { stop("Negative TCSO exists.") }
+  if (length(companies$ticker) == 0) {
+    stop("first parameter requires a ticker column.")
+  }
+  if (length(which(financials$TCSO < 0))) {
+    stop("Negative TCSO exists.")
+  }
   
   numCompanies <- length(companies$ticker)
   
@@ -40,23 +44,33 @@ market_profitability <- function(companies = qmjdata::companies, financials = qm
   fin <- financials
   fin <- dplyr::arrange(fin, desc(year))
   fin <- dplyr::distinct_(fin, "ticker")
-  fin <- merge(allcompanies, fin, by="ticker", all.x = TRUE)
+  fin <- merge(allcompanies, fin, by = "ticker", all.x = TRUE)
   
   ## Functions which calculate the individual profitability components.
-  gpoa <- function(gprof, ta){ gprof/ta   }
-  roe <- function(ni, tlse, tl, rps, nrps){ ni/(tlse - tl - (rps + nrps)) }
-  roa <- function(ni, ta){ ni/ta }
-  cfoa <- function(ni, dp, cwc, cx, ta){ (ni + dp - cwc - cx)/ta }
-  gmar <- function(gprof, trev){ gprof/trev }
-  acc <- function(dp, cwc, ta){ (dp - cwc)/ta }
+  gpoa <- function(gprof, ta) {
+    gprof/ta
+  }
+  roe <- function(ni, tlse, tl, rps, nrps) {
+    ni/(tlse - tl - (rps + nrps))
+  }
+  roa <- function(ni, ta) {
+    ni/ta
+  }
+  cfoa <- function(ni, dp, cwc, cx, ta) {
+    (ni + dp - cwc - cx)/ta
+  }
+  gmar <- function(gprof, trev) {
+    gprof/trev
+  }
+  acc <- function(dp, cwc, ta) {
+    (dp - cwc)/ta
+  }
   
   ## Calculate raw profitability scores.
   GPOA <- mapply(gpoa, fin$GPROF, fin$TA)
-  ROE <- mapply(roe, fin$NI, fin$TLSE, 
-                fin$TL, fin$RPS, fin$NRPS)
+  ROE <- mapply(roe, fin$NI, fin$TLSE, fin$TL, fin$RPS, fin$NRPS)
   ROA <- mapply(roa, fin$NI, fin$TA)
-  CFOA <- mapply(cfoa, fin$NI, fin$DP.DPL, 
-                 fin$CWC, fin$CX, fin$TA)
+  CFOA <- mapply(cfoa, fin$NI, fin$DP.DPL, fin$CWC, fin$CX, fin$TA)
   GMAR <- mapply(gmar, fin$GPROF, fin$TREV)
   ACC <- mapply(acc, fin$DP.DPL, fin$CWC, fin$TA)
   
@@ -86,12 +100,5 @@ market_profitability <- function(companies = qmjdata::companies, financials = qm
   
   profitability <- GPOA + ROE + ROA + CFOA + GMAR + ACC
   profitability <- scale(profitability)
-  data.frame(ticker = companies$ticker, 
-             profitability = profitability, 
-             GPOA = GPOA, 
-             ROE = ROE,
-             ROA = ROA,
-             CFOA = CFOA, 
-             GMAR = GMAR,
-             ACC = ACC)
-}
+  data.frame(ticker = companies$ticker, profitability = profitability, GPOA = GPOA, ROE = ROE, ROA = ROA, CFOA = CFOA, GMAR = GMAR, ACC = ACC)
+} 

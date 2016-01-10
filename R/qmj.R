@@ -24,8 +24,8 @@
 #' }
 #' 
 #' @references
-#' Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. "Quality Minus Junk." AQR (2013)
+#' Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. 'Quality Minus Junk.' AQR (2013)
 #' 
 #' @docType package
 #' @name qmj
-NULL
+NULL 
