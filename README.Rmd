@@ -20,10 +20,10 @@ In order to start you off, qmj comes equipped with several data sets, including 
 
 ```{r}
 library(qmj)
-data(companies) ## Stores company names and tickers from the Russell 3000 index.
-data(financials) ## Stores financial documents for the given list of companies.
-data(prices) ## Stores price returns and closing stock prices for the past two years.
-data(quality) ## Stores the quality scores and the scores of its components.
+companies <- qmjdata::companies ## Stores company names and tickers from the Russell 3000 index.
+financials <- qmjdata::financials ## Stores financial documents for the given list of companies.
+prices <- qmjdata::prices ## Stores price returns and closing stock prices for the past two years.
+quality <- qmjdata::quality ## Stores the quality scores and the scores of its components.
 ```
 
 Getting a quality data frame and a holistic summary of all its components can be done by calling

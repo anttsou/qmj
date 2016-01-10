@@ -70,7 +70,7 @@ get_info <- function(companies = qmjdata::companies) {
   }
   
   ## These variables are responsible for temporarily storing fetched data.
-  filepath <- Sys.getenv("temp")
+  filepath <- tempdir()
   listfiles <- rep("", length(tickers))
   filesInDest <- list.files(path = filepath)
   
