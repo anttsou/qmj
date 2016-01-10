@@ -16,6 +16,8 @@
 #' @seealso \code{\link{get_prices}}
 #' 
 #' @examples
+#' \dontrun{
+#' 
 #' sub_comps <- qmjdata::companies[1:2,]
 #' raw_price_data <- get_prices(sub_comps)
 #' prices <- tidy_prices(raw_price_data)
@@ -23,6 +25,8 @@
 #' my_companies <- data.frame(ticker=c('GOOG', 'IBM'))
 #' raw_price_data <- get_prices(my_companies)
 #' prices <- tidy_prices(raw_price_data)
+#' 
+#' }
 #' @export
 
 tidy_prices <- function(x) {
