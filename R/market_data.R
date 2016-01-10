@@ -26,12 +26,12 @@
 #' @seealso \code{\link{market_payouts}}
 #' 
 #' @examples
+#' \dontrun{
 #' ## To immediately get quality scores using 
 #' ## package data sets.
 #' 
 #' market_data()
 #' 
-#' \dontrun{
 #' ## If we desire to produce a set of quality 
 #' ## scores for a specific data frame of 
 #' ## companies, which we'll call companies.

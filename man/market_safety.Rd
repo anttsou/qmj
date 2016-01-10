@@ -23,8 +23,10 @@ O, Z, and EVOL, and determines the z-score of overall safety for each company
 based on the paper Quality Minus Junk (Asness et al.) in Appendix page A2.
 }
 \examples{
-companies <- qmjdata::companies[50:51,]
+\dontrun{
+companies <- qmjdata::companies[1,]
 market_safety(companies, qmjdata::financials, qmjdata::prices)
+}
 }
 \seealso{
 \code{\link{market_data}}

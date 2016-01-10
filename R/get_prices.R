@@ -93,7 +93,8 @@ get_prices <- function(companies = qmjdata::companies) {
   listfiles <- rep("", (numCompanies + 1))
   
   ## Code below specially gathers the daily data for the S&P 500 for use as a benchmark.
-  stockData <- quantmod::getSymbols("^GSPC", src = "yahoo", auto.assign = FALSE, from = startDate)
+  stockData <- quantmod::getSymbols("^GSPC", src="yahoo", auto.assign=FALSE, from=startDate,
+                                    warnings=FALSE, messages=FALSE)
   stockData$pret <- pricereturns(stockData)
   stockData <- stockData[-1, ]
   absoluteFilePath <- paste0(filepath, "/", "GSPC.RData")
@@ -115,7 +116,9 @@ get_prices <- function(companies = qmjdata::companies) {
       listfiles[i + 1] <- absoluteFilePath
       
     } else {
-      stockData <- tryCatch(quantmod::getSymbols(companyTicker, src = "google", auto.assign = FALSE, from = startDate), error = function(e) e)
+      stockData <- tryCatch(quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=startDate,
+                                                 warnings=FALSE, messages=FALSE), 
+                            error = function(e) e)
       
       ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, we save it as a temp file.
       if (!inherits(stockData, "error") && length(stockData[, 1]) > 1) {
@@ -130,7 +133,6 @@ get_prices <- function(companies = qmjdata::companies) {
         save(stockData, file = absoluteFilePath)
       } else {
         message(paste0("Error retrieving data for ", companyTicker))
-        warning(paste0("No daily data for ", companyTicker))
       }
     }
   }

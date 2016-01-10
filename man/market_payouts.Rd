@@ -21,7 +21,7 @@ z-score of overall payout for each company based on the paper Quality
 Minus Junk (Asness et al.) in Appendix page A3-4.
 }
 \examples{
-companies <- qmjdata::companies[50:51,]
+companies <- qmjdata::companies[1,]
 market_payouts(companies, qmjdata::financials)
 }
 \seealso{

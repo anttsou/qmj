@@ -14,8 +14,10 @@
 #' @seealso \code{\link{market_growth}}
 #' @seealso \code{\link{market_payouts}}
 #' @examples
-#' companies <- qmjdata::companies[50:51,]
+#' \dontrun{
+#' companies <- qmjdata::companies[1,]
 #' market_safety(companies, qmjdata::financials, qmjdata::prices)
+#' }
 #' @importFrom dplyr filter distinct arrange
 #' @export
 

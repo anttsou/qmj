@@ -1,19 +1,19 @@
 context("Ticker properties")
 
-companies <- qmjdata::companies
+companies <- qmjdata::companies[1:3,]
 financials <- qmjdata::financials
 prices <- qmjdata::prices
 quality <- qmjdata::quality
 
 test_that("tickers and names same in companies dataset and get_companies function",{
-  temp <- get_companies()
-  expect_that(length(intersect(companies$ticker,temp$ticker)),equals(length(temp$ticker)))
-  expect_that(length(intersect(companies$name,temp$name)),equals(length(temp$name)))
+  temp <- get_companies()[1:length(companies[,1]),]
+  expect_equal(length(intersect(companies$ticker,temp$ticker)), length(temp$ticker))
+  expect_equal(length(intersect(companies$name,temp$name)), length(temp$name))
 }) 
 
 test_that("there are no duplicate tickers",{
-    expect_that(length(companies$ticker[duplicated(companies$ticker)]),equals(0))
-    expect_that(length(quality$ticker[duplicated(quality$ticker)]),equals(0))
+    expect_equal(length(companies$ticker[duplicated(companies$ticker)]), 0)
+    expect_equal(length(quality$ticker[duplicated(quality$ticker)]), 0)
   })
 
 test_that("tickers identical in company and quality",{
@@ -21,14 +21,14 @@ test_that("tickers identical in company and quality",{
   temp_growth <- market_growth(companies,financials)
   temp_safety <- market_safety(companies,financials,prices)
   temp_payouts <- market_payouts(companies,financials)
-  expect_that(length(intersect(companies$ticker,quality$ticker)),equals(length(companies$ticker)))
-  expect_that(length(intersect(companies$ticker,temp_profitability$ticker)),equals(length(companies$ticker)))
-  expect_that(length(intersect(companies$ticker,temp_growth$ticker)),equals(length(companies$ticker)))
-  expect_that(length(intersect(companies$ticker,temp_safety$ticker)),equals(length(companies$ticker)))
-  expect_that(length(intersect(companies$ticker,temp_payouts$ticker)),equals(length(companies$ticker)))
+  expect_equal(length(intersect(companies$ticker,quality$ticker)), length(companies$ticker))
+  expect_equal(length(intersect(companies$ticker,temp_profitability$ticker)), length(companies$ticker))
+  expect_equal(length(intersect(companies$ticker,temp_growth$ticker)), length(companies$ticker))
+  expect_equal(length(intersect(companies$ticker,temp_safety$ticker)), length(companies$ticker))
+  expect_equal(length(intersect(companies$ticker,temp_payouts$ticker)), length(companies$ticker))
 }) 
 
-test_that("companies list has ticker column", {
+test_that("companies list with no ticker column sparks error", {
   x <- data.frame(name = "test")
   expect_error(get_info(x),"parameter requires a ticker column.")
   expect_error(get_prices(x),"parameter requires a ticker column.")
@@ -37,10 +37,4 @@ test_that("companies list has ticker column", {
   expect_error(market_growth(x,financials),"first parameter requires a ticker column.")
   expect_error(market_safety(x,financials,prices),"first parameter requires a ticker column.")
   expect_error(market_payouts(x,financials),"first parameter requires a ticker column.")
-})
-
-test_that("ticker is valid", {
-  x <- data.frame(name = "test", ticker = "TICK9")
-  expect_warning(get_info(x),"No financials for TICK9")
-  expect_warning(get_prices(x),"No daily data for TICK9")
 })
