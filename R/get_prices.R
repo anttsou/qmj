@@ -116,7 +116,9 @@ get_prices <- function(companies = qmjdata::companies) {
       listfiles[i + 1] <- absoluteFilePath
       
     } else {
-      stockData <- tryCatch(quantmod::getSymbols(companyTicker, src = "google", auto.assign = FALSE, from = startDate), error = function(e) e)
+      stockData <- tryCatch(quantmod::getSymbols(companyTicker, src = "google", auto.assign = FALSE, from = startDate,
+                                                 warnings = FALSE), 
+                            error = function(e) e)
       
       ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, we save it as a temp file.
       if (!inherits(stockData, "error") && length(stockData[, 1]) > 1) {
@@ -131,7 +133,6 @@ get_prices <- function(companies = qmjdata::companies) {
         save(stockData, file = absoluteFilePath)
       } else {
         message(paste0("Error retrieving data for ", companyTicker))
-        warning(paste0("No daily data for ", companyTicker))
       }
     }
   }

@@ -6,7 +6,7 @@ prices <- qmjdata::prices
 quality <- qmjdata::quality
 
 test_that("tickers and names same in companies dataset and get_companies function",{
-  temp <- get_companies()
+  temp <- get_companies()[1:length(companies[,1]),]
   expect_equal(length(intersect(companies$ticker,temp$ticker)), length(temp$ticker))
   expect_equal(length(intersect(companies$name,temp$name)), length(temp$name))
 }) 

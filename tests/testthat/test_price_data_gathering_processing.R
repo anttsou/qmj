@@ -70,7 +70,7 @@ test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
   #' xts object.
   download_check <- function(ticker){
      price_data <- tryCatch(
-      quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=start),
+      quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=start, warnings=FALSE),
       error = function(e) e
       )
      
