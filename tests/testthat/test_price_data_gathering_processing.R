@@ -37,7 +37,7 @@ test_that("Every ticker in the raw price data is unique with a predicted number 
   num_of_columns_per_ticker <- 6  # TICK.Open, TICK.High, TICK.Low, TICK.Close, TICK.Volume, pret.num
   
   ## Make sure we covered all columns in the raw price data.
-  expected_num_columns = (num_columns_used_by_GSPC) + (num_of_columns_per_ticker * length(table))
+  expected_num_columns = (num_columns_used_by_GSPC) + (num_of_columns_per_ticker * length(occurrences))
   expect_equal(expected_num_columns, ncol(raw_prices))
   
 })
