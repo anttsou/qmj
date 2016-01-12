@@ -27,6 +27,7 @@
 #' prices <- tidy_prices(raw_price_data)
 #' 
 #' }
+#' @importFrom dplyr bind_rows %>%
 #' @export
 
 tidy_prices <- function(x) {
