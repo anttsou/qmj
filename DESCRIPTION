@@ -5,7 +5,7 @@ Authors@R: c(
 	  person("Anthoney", "Tsou", email = "at6@williams.edu", role= c("aut", "cre")),
     person("Eugene", "Choe", email = "ec7@williams.edu", role = c("aut")),
     person("David", "Kane", email = "dave.kane@gmail.com", role= c("aut")),
-    person("Ryan", "Kwon", email="rynkwn@gmail.com", role=c("aut", "cre")))
+    person("Ryan", "Kwon", email="rynkwn@gmail.com", role=c("aut")))
 Description: Produces quality scores for each of the US companies from the Russell 3000 
     Index, following the approach described in "Quality Minus Junk" (Asness et al., 2013). 
     The package includes datasets for users who wish to view the most recently uploaded quality 
