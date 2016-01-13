@@ -5,8 +5,7 @@ Authors@R: c(
 	  person("Anthoney", "Tsou", email = "anttsou@gmail.com", role = "aut"),
     person("Eugene", "Choe", email = "ec7@williams.edu", role = "aut"),
     person("David", "Kane", email = "dave.kane@gmail.com", role = "aut"),
-    person("Ryan", "Kwon", email="rynkwn@gmail.com", role = "aut"))
-Maintainer: Ryan Kwon <ryankwn@gmail.com>
+    person("Ryan", "Kwon", email="rynkwn@gmail.com", role = c("aut", "cre")))
 Description: Produces quality scores for each of the US companies from 
     the Russell 3000, following the approach described in 
     "Quality Minus Junk" (Asness, Frazzini, & Pedersen, 2013) 
