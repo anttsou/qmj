@@ -6,13 +6,12 @@ Authors@R: c(
     person("Eugene", "Choe", email = "ec7@williams.edu", role = c("aut")),
     person("David", "Kane", email = "dave.kane@gmail.com", role= c("aut")),
     person("Ryan", "Kwon", email="rynkwn@gmail.com", role=c("aut", "cre")))
-Description: The qmj package produces quality scores for each of the 3000
-    largest US companies from the Russell 3000 Index based on the work of
-    Asness et. al (2013). This includes datasets for users who just
-    want to view the most recently uploaded quality scores, as well as
-    tools to automatically gather relevant financial documents and
-    stock price information, allowing users to update data and 
-    customize their universe for further analysis.
+Description: Produces quality scores for each of the US companies from the Russell 3000 
+    Index, following the approach described in "Quality Minus Junk" (Asness et al., 2013). 
+    The package includes datasets for users who wish to view the most recently uploaded quality 
+    scores. It also provides tools to automatically gather relevant financials and stock price 
+    information, allowing users to update their data and customize their universe for 
+    further analysis.
 Imports: quantmod(>= 0.4-3),
 	 dplyr, 
 	 qmjdata,
