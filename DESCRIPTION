@@ -4,10 +4,11 @@ Version: 0.2.1
 Authors@R: c(
 	  person("Anthoney", "Tsou", email = "anttsou@gmail.com", role = c("aut", "cre")),
     person("Eugene", "Choe", email = "ec7@williams.edu", role = c("aut")),
-    person("David", "Kane", email = "dave.kane@gmail.com", role= c("aut")),
+    person("David", "Kane", email = "dave.kane@gmail.com", role = c("aut")),
     person("Ryan", "Kwon", email="rynkwn@gmail.com", role = c("aut", "cre")))
-Description: Produces quality scores for each of the US companies from the Russell 3000 
-    Index, following the approach described in "Quality Minus Junk" (Asness et al., 2013). 
+Description: Produces quality scores for each of the US companies from the Russell 3000,
+    following the approach described in "Quality Minus Junk" (Asness, Frazzini, & Pedersen, 2013) 
+    <http://www.aqr.com/library/working-papers/quality-minus-junk>. 
     The package includes datasets for users who wish to view the most recently uploaded quality 
     scores. It also provides tools to automatically gather relevant financials and stock price 
     information, allowing users to update their data and customize their universe for 
