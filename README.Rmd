@@ -76,3 +76,6 @@ prices <- tidy_prices(rawprices)
 ```
 
 Similar to the get_info function, The get_prices function is also able to save its progress and resume previous downloads.
+
+##More Information
+More information, especially regarding methodology and what measures were used to filter out companies with bad or insufficient data, may be found in our vignette.
