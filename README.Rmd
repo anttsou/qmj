@@ -1,5 +1,5 @@
 # qmj (Quality Minus Junk)
-Authors : Anthoney Tsou, Eugene Choe, David Kane, Ryan Kwon
+Authors : Eugene Choe, David Kane, Ryan Kwon, Anthoney Tsou
 
 To install the package:
 
@@ -49,7 +49,7 @@ Suppose you want to use the qmj package for your a custom set of companies, a da
 
 ## Retrieves raw financial statements from google finance through the quantmod package.
 
-rawdata <- get_info(companies) 
+rawdata <- get_info(custom_companies) 
 
 ## Renders raw data in a format usable by other functions in this package 
 ## and also dramatically improves readability.
@@ -68,7 +68,7 @@ Updating prices is a separate, lengthy process, and for that reason is separated
 ## Retrieves stock price data from Google Finance for listed companies for the past two years. 
 ## Also saves data from the S&P 500, retrieved from Yahoo Finance.
 
-rawprices <- get_prices(companies) 
+rawprices <- get_prices(custom_companies) 
 
 ## Renders the raw data into a form usable by other functions in this package.
 
