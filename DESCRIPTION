@@ -21,7 +21,6 @@ Imports: quantmod(>= 0.4-3),
 	 devtools
 Depends: R (>= 3.1.1)
 Suggests: testthat
-Additional_repositories: https://github.com/anttsou/qmjdata
 License: GPL-3
 BugReports: https://github.com/anttsou/qmj/issues
 LazyData: false
