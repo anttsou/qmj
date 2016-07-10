@@ -17,7 +17,8 @@ Description: Produces quality scores for each of the US companies from
     their data and customize their universe for further analysis.
 Imports: quantmod(>= 0.4-3),
 	 dplyr, 
-	 devtools
+	 devtools,
+   qmjdata
 Depends: R (>= 3.1.1)
 Suggests: testthat
 License: GPL-3

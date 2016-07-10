@@ -1,12 +1,12 @@
 context("Ticker properties")
 
-companies <- qmjdata::companies[1:3,]
+companies <- qmjdata::companies[4:6,]
 financials <- qmjdata::financials
 prices <- qmjdata::prices
 quality <- qmjdata::quality
 
 test_that("tickers and names same in companies dataset and get_companies function",{
-  temp <- get_companies()[1:length(companies[,1]),]
+  temp <- get_companies()[4:6,]
   expect_equal(length(intersect(companies$ticker,temp$ticker)), length(temp$ticker))
   expect_equal(length(intersect(companies$name,temp$name)), length(temp$name))
 }) 
@@ -19,9 +19,10 @@ test_that("there are no duplicate tickers",{
 test_that("tickers identical in company and quality",{
   temp_profitability <- market_profitability(companies,financials)
   temp_growth <- market_growth(companies,financials)
-  temp_safety <- market_safety(companies,financials,prices)
+  temp_safety <- market_safety(companies,financials, prices)
   temp_payouts <- market_payouts(companies,financials)
-  expect_equal(length(intersect(companies$ticker,quality$ticker)), length(companies$ticker))
+  temp_quality <- market_data(companies, financials, prices)
+  expect_equal(length(intersect(companies$ticker,temp_quality$ticker)), length(companies$ticker))
   expect_equal(length(intersect(companies$ticker,temp_profitability$ticker)), length(companies$ticker))
   expect_equal(length(intersect(companies$ticker,temp_growth$ticker)), length(companies$ticker))
   expect_equal(length(intersect(companies$ticker,temp_safety$ticker)), length(companies$ticker))
