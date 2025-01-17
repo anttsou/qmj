@@ -22,16 +22,27 @@
 tidy_balancesheets <- function(x) {
   
   ## Calls tidy_helper to construct a list of data.frames and merges the list elements into one large data.frame
-  balancesheets <- do.call(rbind, lapply(x, tidy_helper))
+  # balancesheets <- do.call(rbind, lapply(x, tidy_helper))
+  balancesheets <- dplyr::bind_rows(lapply(x, tidy_helper))
   
   ## Remove all rows that are solely NAs.
   balancesheets <- balancesheets[rowSums(!is.na(balancesheets)) >= 1, ]
   rownames(balancesheets) <- NULL
   
-  ## These are the categories we expect from the raw data, with abbreviations for each of the variables found in the balanceshee
-  names(balancesheets) <- c("ticker", "year", "order", "CE", "STI", "CSTI", "AR", "RE.O", "TR", "TI", "PE", "OCA", "TCA", "PPE", "AD", "GDW", "INT.N", "LTI", 
-    "OLTA", "TA", "AP", "AE", "STD", "CL", "OCL", "TCL", "LTD", "CLO", "TLTD", "TD", "DIT", "MI", "OL", "TL", "RPS", "NRPS", "CS", "APIC", "RE.AD", "TS", 
-    "OE", "TE", "TLSE", "SO", "TCSO")
+  ## These are the categories we expect from the raw data, with abbreviations for each of the variables found in the balancesheet
+  ## The wanted categories were based on previous outputs from Google Finance API which is discontinued now
+  ## So we have to map the current output (from Yahoo Finance) to previous categories
+  balancesheets <- balancesheets[, c("ticker", "year", "order", 'Preferred.Stock', 'Preferred.Stock', 'Total.Assets', 'Current.Assets', 'Current.Liabilities', 'Ordinary.Shares.Number', 'Total.Debt', 'Total.Liabilities.Net.Minority.Interest', 'Stockholders.Equity')]
+  
+  balancesheets[, -which(names(balancesheets) == "ticker")] <- 
+    lapply(balancesheets[, -which(names(balancesheets) == "ticker")], function(column) {
+      sapply(column, function(x) if (is.null(x)) NA else x)
+    })
+  balancesheets[, -which(names(balancesheets) == "ticker")] <- 
+    lapply(balancesheets[, -which(names(balancesheets) == "ticker")], as.numeric)
+  balancesheets$TLSE <- balancesheets$Total.Liabilities.Net.Minority.Interest + balancesheets$Stockholders.Equity
+  balancesheets$Stockholders.Equity <- NULL
+  names(balancesheets) <- c("ticker", "year", "order", "NRPS", "RPS", "TA", "TCA", "TCL", "TCSO", "TD", "TL", "TLSE")
   
   balancesheets
 } 

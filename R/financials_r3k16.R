@@ -1,0 +1,63 @@
+#' Financial statements of all companies in the Russell 3000 index 
+#' for the past four years
+#'
+#' A data frame containing all annual financial statements (balancesheets,
+#' cashflows, and income statements) for the past four years if available.
+#' For a description of the Russell 3000 index, as well as why it was used
+#' for this package, see \code{\link{companies_r3k16}}. Last updated 2016/01/06.
+#' 
+#' Some companies may store "weird" data, such as having information solely 
+#' for the years 1997-2001, or by having multiple annual reports within the
+#' same year (such as one report being filed in March of 2013, and another 
+#' filed in December of 2013). In the case of companies reporting multiple 
+#' annual data from the same year, the years of their reports are suffixed 
+#' with their order. For example, GOOG may have data from 2013.1, 2013.2, 
+#' 2012.3, 2011.4. This means Google's most recent data set is from 
+#' 2013 (2013.1), another data set was published in 2013 (2013.2), and the 
+#' remaining years are also suffixed for convenience.
+#' 
+#' The main purpose of financials_r3k16 is to provide key information for each 
+#' company in order to calculate each of the quality component scores 
+#' (profitability, growth, safety, and payouts). For every ticker in the 
+#' \code{\link{companies_r3k16}} data set, financials_r3k16 will try to store the most 
+#' recent four years of annual data, though this may vary based on 
+#' availability.
+#' 
+#' @format A data frame with approximately 12000 rows and 23 variables
+#'  \itemize{
+#'    \item AM = Amortization, of class \code{"character"}.
+#'    \item CWC = Changes in Working Capital, of class \code{"character"}.
+#'    \item CX = Capital Expenditures, of class \code{"character"}.
+#'    \item DIVC = Dividends per Share, of class \code{"character"}.
+#'    \item DO = Discontinued Operations, of class \code{"character"}.
+#'    \item DP.DPL = Depreciation/Depletion, of class \code{"character"}.
+#'    \item GPROF = Gross Profits, of class \code{"character"}.
+#'    \item IAT = Income After Taxes, of class \code{"character"}.
+#'    \item IBT = Income Before Taxes, of class \code{"character"}.
+#'    \item NI = Net Income, of class \code{"character"}.
+#'    \item NINT = Interest and Expense - Net Operating, of class 
+#'    \code{"character"}.
+#'    \item NRPS = Non-redeemable Preferred Stock, of class 
+#'    \code{"character"}.
+#'    \item RPS = Redeemable Preferred Stock, of class 
+#'    \code{"character"}.
+#'    \item TA = Total Assets, of class \code{"character"}.
+#'    \item TCA = Total Current Assets, of class \code{"character"}.
+#'    \item TCL = Total Current Liabilities, of class 
+#'    \code{"character"}.
+#'    \item TCSO = Total Common Shares Outstanding, of class 
+#'    \code{"character"}.
+#'    \item TD = Total Debt, of class \code{"character"}.
+#'    \item TL = Total Liabilities, of class \code{"character"}.
+#'    \item TLSE = Total Liabilities and Shareholders' Equity, 
+#'    of class \code{"character"}.
+#'    \item TREV = Total Revenue, of class \code{"character"}.
+#'  }
+#'  
+#' @source Google & Yahoo Finance, accessed through quantmod & yfinance
+#' @name financials_r3k16
+#' @seealso \code{\link{companies_r3k16}}
+#' @seealso \code{\link{prices_r3k16}}
+#' @docType data
+#' @keywords data
+NULL

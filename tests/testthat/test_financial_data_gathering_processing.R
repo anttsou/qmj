@@ -4,19 +4,22 @@
 #' to the fullest possible extent.
 #' 
 #' RAW DATA TESTS:
-#' - Missing companies are missing specifically and only because quantmod
+#' - Missing these_companies are missing specifically and only because quantmod
 #'   does not provide data.
 #' 
 #' PROCESSED/TIDY DATA TESTS:
 #' - For any given ticker, tidied financial information has at most 4 rows.
 #'
 
-companies <- qmjdata::companies[1:3,]
-raw_fins <- qmj::get_info(companies)
-
 context("Gathering Raw Financial Data Tests")
 
-test_that("Missing companies are solely because quantmod provides no data", {
+test_that("Missing these_companies are solely because quantmod provides no data", {
+  these_companies <- companies_r3k16 %>% filter(ticker %in% c('AAPL', 'AMZN'))
+  
+  if (!reticulate::py_module_available("yfinance")) 
+    testthat::skip()
+  
+  raw_fins <- qmj::get_info(these_companies)
   
   ## If no data at all was gathered, assume internet connection is bad.
   if(length(raw_fins[[1]]) == 0)
@@ -35,10 +38,10 @@ test_that("Missing companies are solely because quantmod provides no data", {
   cf_tickers <- sapply(cf_tickers, grab_ticker)
   cf_tickers <- unique(cf_tickers)
   
-  missing_tickers <- companies$ticker[! companies$ticker %in% cf_tickers]
+  missing_tickers <- these_companies$ticker[! these_companies$ticker %in% cf_tickers]
   
   #' @describeIn Check to ensure that quantmod produces no data for missing
-  #' companies.
+  #' these_companies.
   download_check <- function(ticker){
     fin_data <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE), error = function(e) e)
     
@@ -59,6 +62,12 @@ test_that("Missing companies are solely because quantmod provides no data", {
 context("Processing/Tidying Financial Data Tests")
 
 test_that("Every ticker appears in the tidied financial data set at most four times", {
+  these_companies <- companies_r3k16 %>% filter(ticker %in% c('AAPL', 'AMZN'))
+  
+  if (!reticulate::py_module_available("yfinance")) 
+    testthat::skip()
+  
+  raw_fins <- qmj::get_info(these_companies)
   
   ## If no data at all was gathered, assume internet connection is bad.
   if(length(raw_fins[[1]]) == 0)

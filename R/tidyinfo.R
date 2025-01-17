@@ -17,17 +17,16 @@
 #' @seealso \code{\link{tidy_incomestatements}}
 #' 
 #' @examples
-#' \dontrun{
-#' 
-#' sub_comps <- qmjdata::companies[1:2,]
-#' raw_data <- get_info(sub_comps)
-#' financials <- tidyinfo(raw_data)
-#' 
-#' my_companies <- data.frame(ticker = c('GOOG', 'IBM'))
-#' raw_data <- get_info(my_companies)
-#' financials <- tidyinfo(raw_data)
-#' 
+#' \donttest{
+#' if (reticulate::py_module_available("yfinance")) {
+#'   my_companies <- data.frame(ticker = c('GOOG', 'IBM'))
+#'   raw_data <- get_info(my_companies)
+#'   financials <- tidyinfo(raw_data)
 #' }
+#' }
+#' 
+#' @return data.frame of cleaned info (cash flows, income statements, balance sheets)
+#' 
 #' @export
 
 tidyinfo <- function(x) {
@@ -39,9 +38,15 @@ tidyinfo <- function(x) {
   financials <- merge(tidybalance, merge(tidycash, tidyincome, by = c("ticker", "order", "year")), by = c("ticker", "order", "year"))
   
   # The columns below are the only ones used in our formulas, and so the other columns are culled out.
-  keep <- c("ticker", "year", "AM", "CWC", "CX", "DIVC", "DO", "DP.DPL", "GPROF", "IAT", "IBT", "NI", "NINT", "NRPS", "RPS", "TA", "TCA", "TCL", "TCSO", 
-    "TD", "TL", "TLSE", "TREV")
+  keep <- c(
+    "ticker", "year", "order",
+    # Cash flow columns
+    "AM", "CWC", "CX", "DIVC", "DP.DPL", 
+    # Income statement columns
+    "DO", "GPROF", "IAT", "IBT", "NI", "NINT", "TREV", 
+    # Balance sheet columns 
+    "NRPS", "RPS", "TA", "TCA", "TCL", "TCSO", "TD", "TL", "TLSE")
   financials <- financials[keep]
   rownames(financials) <- NULL  # We're not interested in keeping the row numbers.
-  financials
+  financials[financials$order <= 4, ]
 } 

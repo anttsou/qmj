@@ -6,7 +6,7 @@
 #' RAW DATA TESTS:
 #' - Every ticker in the raw price data is unique with a predicted number of columns.
 #' - Every ticker for which we successfully grabbed data, has some data
-#' - Missing Companies is Solely Due To Quantmod Finding No Data
+#' - Missing these_companies is Solely Due To Quantmod Finding No Data
 #' 
 #' PROCESSED DATA TESTs:
 #' - Raw data matches processed data for any given company
@@ -14,10 +14,9 @@
 
 context("Gathering Raw Price Data Tests")
 
-companies <- qmjdata::companies[1:3,]
-raw_prices <- tryCatch(qmj::get_prices(companies), error = function(e) e)
-
 test_that("Every ticker in the raw price data is unique with a predicted number of columns", {
+  these_companies <- companies_r3k16 %>% filter(ticker %in% c('AAPL', 'AMZN'))
+  raw_prices <- tryCatch(qmj::get_prices(these_companies), error = function(e) e)
   
   ## If error is returned, no internet connection.
   if(inherits(raw_prices, "error"))
@@ -43,6 +42,8 @@ test_that("Every ticker in the raw price data is unique with a predicted number 
 })
 
 test_that("Every ticker for which we successfully grabbed data, has some data", {
+  these_companies <- companies_r3k16 %>% filter(ticker %in% c('AAPL', 'AMZN'))
+  raw_prices <- tryCatch(qmj::get_prices(these_companies), error = function(e) e)
   
   ## If error is returned, no internet connection.
   if(inherits(raw_prices, "error"))
@@ -58,20 +59,22 @@ test_that("Every ticker for which we successfully grabbed data, has some data", 
   
 })
 
-test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
+test_that("Missing these_companies is Solely Due To Quantmod Finding No Data", {
+  these_companies <- companies_r3k16 %>% filter(ticker %in% c('AAPL', 'AMZN'))
+  raw_prices <- tryCatch(qmj::get_prices(these_companies), error = function(e) e)
   
   ## If error is returned, no internet connection.
   if(inherits(raw_prices, "error"))
     testthat::skip()
   
-  ## First get all companies for which we do have data.
+  ## First get all these_companies for which we do have data.
   tickers <- colnames(raw_prices)
   tickers <- gsub('\\.([^.]*$)(.*)', '', tickers)  # Remove everything after the last '.' to get rid of '.____' suffixes.
   tickers <- tickers[tickers != 'GSPC' & tickers != 'pret']  # We're not interested in either the GSPC or pret columns.
   tickers <- unique(tickers)
   
-  ## Then determine which companies have no price data
-  missing_tickers <- companies$ticker[!companies$ticker %in% tickers]
+  ## Then determine which these_companies have no price data
+  missing_tickers <- these_companies$ticker[!these_companies$ticker %in% tickers]
   
   ## We only want stock data from the past 2 years
   start <- as.POSIXlt(Sys.Date())
@@ -82,7 +85,7 @@ test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
   #' xts object.
   download_check <- function(ticker){
      price_data <- tryCatch(
-      quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=start, warnings=FALSE,
+      quantmod::getSymbols(companyTicker, src="yahoo", auto.assign=FALSE, from=start, warnings=FALSE,
                            messages=FALSE),
       error = function(e) e
       )
@@ -106,6 +109,8 @@ test_that("Missing Companies is Solely Due To Quantmod Finding No Data", {
 context("Processing/Tidying Price Data Tests")
 
 test_that("Raw data matches processed data for any given company", {
+  these_companies <- companies_r3k16 %>% filter(ticker %in% c('AAPL', 'AMZN'))
+  raw_prices <- tryCatch(qmj::get_prices(these_companies), error = function(e) e)
   
   ## If error is returned, no internet connection.
   if(inherits(raw_prices, "error"))

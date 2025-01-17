@@ -20,11 +20,13 @@
 #' @seealso \code{\link{market_payouts}}
 #' 
 #' @examples
-#' companies <- qmjdata::companies[1,]
-#' market_profitability(companies, qmjdata::financials)
+#' market_profitability(companies_r3k16[1,], financials_r3k16)
+#' @importFrom dplyr desc
+#' @importFrom rlang .data
+#' @return Whatdata.frame of market profitability values
 #' @export
 
-market_profitability <- function(companies = qmjdata::companies, financials = qmjdata::financials) {
+market_profitability <- function(companies = qmj::companies_r3k16, financials = qmj::financials_r3k16) {
   
   ## Stop function if parameters are bad.
   if (length(companies$ticker) == 0) {
@@ -42,8 +44,8 @@ market_profitability <- function(companies = qmjdata::companies, financials = qm
   allcompanies <- data.frame(companies$ticker)
   colnames(allcompanies) <- "ticker"
   fin <- financials
-  fin <- dplyr::arrange(fin, desc(year))
-  fin <- dplyr::distinct_(fin, "ticker")
+  fin <- dplyr::arrange(fin, desc(.data[["year"]]))
+  fin <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   fin <- merge(allcompanies, fin, by = "ticker", all.x = TRUE)
   
   ## Functions which calculate the individual profitability components.

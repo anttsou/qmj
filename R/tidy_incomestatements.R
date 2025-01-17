@@ -22,16 +22,17 @@
 tidy_incomestatements <- function(x) {
   
   ## Calls tidy_helper to construct a list of data.frames and merges the list elements into one large data.frame
-  incomestatements <- do.call(rbind, lapply(x, tidy_helper))
+  # incomestatements <- do.call(rbind, lapply(x, tidy_helper))
+  incomestatements <- dplyr::bind_rows(lapply(x, tidy_helper))
   
   ## Remove all rows that are solely NAs.
   incomestatements <- incomestatements[rowSums(!is.na(incomestatements)) >= 1, ]
   rownames(incomestatements) <- NULL
   
   ## These are the categories we expect from the raw data, with abbreviations for each of the variables found in the income statements
-  names(incomestatements) <- c("ticker", "year", "order", "REV", "OREV", "TREV", "CREV", "GPROF", "SGAE", "RD", "DP.AM", "NINT", "UI", "OOE", "TOE", "OI", 
-    "INT.NNO", "GSA", "OTH", "IBT", "IAT", "MI", "EIA", "NIBEI", "AC", "DO", "EI", "NI", "PD", "IACEEI", "IACIEI", "BWAS", "BEPSEEI", "BEPSIEI", "DILADJ", 
-    "DILWAS", "DILEPSEEI", "DILEPSIEI", "DIVC", "GDIV", "NIASBCE", "BEPSSBCE", "DEPSSBCE", "DPSUP", "TSI", "NIBT", "ESIIT", "ITISI", "NIAT", "NIAC", 
-    "BNEPS", "DNEPS")
+  ## The wanted categories were based on previous outputs from Google Finance API which is discontinued now
+  ## So we have to map the current output (from Yahoo Finance) to previous categories
+  incomestatements <- incomestatements[, c('ticker', 'year', 'order', 'Net.Income.From.Continuing.And.Discontinued.Operation', 'Gross.Profit', 'Net.Income.Continuous.Operations', 'Pretax.Income', 'Net.Income', 'Net.Non.Operating.Interest.Income.Expense', 'Total.Revenue')]
+  names(incomestatements) <- c("ticker", "year", "order", "DO", "GPROF", "IAT", "IBT", "NI", "NINT", "TREV")
   incomestatements
 } 

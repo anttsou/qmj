@@ -20,22 +20,22 @@ In order to start you off, qmj comes equipped with several data sets, including 
 
 ```{r}
 library(qmj)
-companies <- qmjdata::companies ## Stores company names and tickers from the Russell 3000 index.
-financials <- qmjdata::financials ## Stores financial documents for the given list of companies.
-prices <- qmjdata::prices ## Stores price returns and closing stock prices for the past two years.
-quality <- qmjdata::quality ## Stores the quality scores and the scores of its components.
+companies_r3k16   ## Stores company names and tickers from the Russell 3000 index.
+financials_r3k16  ## Stores financial documents for the given list of companies.
+prices_r3k16      ## Stores price returns and closing stock prices for the past two years.
+quality_r3k16     ## Stores the quality scores and the scores of its components.
 ```
 
 Getting a quality data frame and a holistic summary of all its components can be done by calling
 
 ```{r}
-market_data(companies, financials, prices)
+market_data(companies_r3k16, financials_r3k16, prices_r3k16)
 ```
 
 If you're only interested in accessing certain quality factors, such as profitability, as well as what makes it up (such as gross profits over assets (GPOA), or cash flow over assets (CFOA)) call
 
 ```{r}
-market_profitability(companies, financials)
+market_profitability(companies_r3k16, financials_r3k16)
 ```
 
 This will return a data frame containing profitability z-scores for the given companies as well as the z-scores for the components creating the profitability scores.

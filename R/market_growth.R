@@ -17,12 +17,13 @@
 #' @seealso \code{\link{market_payouts}}
 #' 
 #' @examples
-#' companies <- qmjdata::companies[1,]
-#' market_growth(companies, qmjdata::financials)
-#' @importFrom dplyr distinct arrange
+#' market_growth(companies_r3k16[1,], financials_r3k16)
+#' @importFrom dplyr distinct arrange desc
+#' @importFrom rlang .data
+#' @return data.frame of market growth values
 #' @export
 
-market_growth <- function(companies = qmjdata::companies, financials = qmjdata::financials) {
+market_growth <- function(companies = qmj::companies_r3k16, financials = qmj::financials_r3k16) {
   if (length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
@@ -40,13 +41,13 @@ market_growth <- function(companies = qmjdata::companies, financials = qmjdata::
   ## We only need the first and last years of company financials to calculate growth.  In this case, order the data by year, and then grab the first
   ## instance of each ticker to appear. In order to get the last year, reverse the ordering and repeat.
   fin <- financials
-  fin <- dplyr::arrange(fin, desc(year))
+  fin <- dplyr::arrange(fin, desc(.data[["year"]]))
   
-  fstyear <- dplyr::distinct_(fin, "ticker")
+  fstyear <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   fstyear <- merge(allcompanies, fstyear, by = "ticker", all.x = TRUE)
   
-  fin <- dplyr::arrange(fin, year)
-  lstyear <- dplyr::distinct_(fin, "ticker")
+  fin <- dplyr::arrange(fin, .data[["year"]])
+  lstyear <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   lstyear <- merge(allcompanies, lstyear, by = "ticker", all.x = TRUE)
   
   ## Functions below calculate the individual components of growth for each company.

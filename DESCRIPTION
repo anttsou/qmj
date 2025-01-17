@@ -5,8 +5,9 @@ Authors@R: c(
     person("Anthoney", "Tsou", email = "anttsou@gmail.com", role = "aut"),
     person("Eugene", "Choe", email = "ec7@williams.edu", role = "aut"),
     person("David", "Kane", email = "dave.kane@gmail.com", role = "aut"),
-    person("Ryan", "Kwon", email = "rynkwn@gmail.com", role = c("aut", "cre")))
-Maintainer: Ryan Kwon <rynkwn@gmail.com>
+    person("Ryan", "Kwon", email = "rynkwn@gmail.com", role = "aut"),
+    person("Yanrong", "Song", email = "yrsong129@gmail.com", role = c("aut", "cre")),
+    person("Zijie", "Zhu", email = "zijie.miller.zhu@gmail.com", role = "aut"))
 Description: Produces quality scores for each of the US companies from 
     the Russell 3000, following the approach described in 
     "Quality Minus Junk" (Asness, Frazzini, & Pedersen, 2013) 
@@ -15,12 +16,13 @@ Description: Produces quality scores for each of the US companies from
     uploaded quality scores. It also provides tools to automatically gather 
     relevant financials and stock price information, allowing users to update 
     their data and customize their universe for further analysis.
-Imports: quantmod(>= 0.4-3),
-	 dplyr, 
-	 devtools,
-   qmjdata
-Depends: R (>= 3.1.1)
+Imports: quantmod(>= 0.4-3), dplyr, reticulate, rlang
+Depends: R (>= 3.5.0)
 Suggests: testthat
 License: GPL-3
 BugReports: https://github.com/anttsou/qmj/issues
-LazyData: false
+LazyData: true
+LazyDataCompression: xz
+RoxygenNote: 7.3.2
+Encoding: UTF-8
+Config/reticulate: list(packages = list(list(package = "yfinance")))

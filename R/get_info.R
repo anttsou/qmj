@@ -9,7 +9,7 @@
 #' data, quickly resuming its progress. Once complete, \code{get_info} deletes
 #' all used temporary data.
 #' 
-#' Parameter data frame defaults to provided \code{companies} data set if not specified.
+#' Parameter data frame defaults to provided \code{companies_r3k16} data set if not specified.
 #' 
 #' @return A list with three elements. Each element is a list containing
 #' all financial documents of a specific type for each company. These lists are, in order,
@@ -22,48 +22,17 @@
 #' @seealso \code{\link{tidyinfo}}
 #' 
 #' @examples
-#' \dontrun{
-#' 
-#' ## If no data frame is provided, 
-#' ## the default is the package's 
-#' ## companies data set.
-#' 
-#' get_info()
-#' 
-#' ## If we want to get information 
-#' ## for a specific data frame of 
-#' ## companies, called comps
-#' 
-#' get_info(comps)
-#' 
-#' ## If we then decide to quit the 
-#' ## process partway through, and 
-#' ## then resume downloading,
-#' ## the function usage is identical.
-#' 
-#' get_info(comps)
-#' 
-#' ## If we quit the process partway 
-#' ## through, and then decide to 
-#' ## clean the data to start
-#' ## from scratch.
-#' 
-#' clean_downloads(comps)
-#' get_info(comps)
-#' 
-#' ## The raw financial data is 
-#' ## difficult to use, so we'll 
-#' ## clean the data for use in 
-#' ## other functions.
-#' 
-#' fin_data <- get_info(comps)
-#' financials <- tidyinfo(fin_data)
-#' 
+#' \donttest{
+#' # Takes more than 10 secs
+#' if (reticulate::py_module_available("yfinance")) 
+#'   get_info(companies_r3k16[companies_r3k16$ticker %in% c("AAPL", "AMZN"), ])
 #' }
+#' 
 #' @importFrom quantmod getFinancials viewFinancials
+#' @importFrom reticulate py_run_string import
 #' @export
 
-get_info <- function(companies = qmjdata::companies) {
+get_info <- function(companies = qmj::companies_r3k16) {
   tickers = companies$ticker
   if (length(tickers) == 0) {
     stop("parameter requires a ticker column.")
@@ -74,55 +43,60 @@ get_info <- function(companies = qmjdata::companies) {
   listfiles <- rep("", length(tickers))
   filesInDest <- list.files(path = filepath)
   
-  for (i in tickers) {
-    file <- paste0(i, "-fin", ".RData")
-    fileName <- paste0(filepath, "/", i, "-fin.RData")
+  for (ticker in tickers) {
+    file <- paste0(ticker, "-fin", ".RData")
+    fileName <- paste0(filepath, "/", ticker, "-fin.RData")
+    
     if (is.element(file, filesInDest)) {
       
       ## If the temp file already exists, skip downloading this company's information and inform the user.
-      message(paste0(i, " information found in temp directory. Resuming Download."))
-      listfiles[i] <- fileName
+      message(paste0(ticker, " information found in temp directory. Resuming Download."))
+      listfiles[ticker] <- fileName
     } else {
-      
-      ## Test to see if quantmod can successfully grab the financial data.
-      prospective <- tryCatch(quantmod::getFinancials(i, auto.assign = FALSE), error = function(e) e)
-      
-      ## Generate an empty matrix. This matrix will temporarily store financial statement data before adding that data to the correct list.
-      matr <- matrix()
-      if (!inherits(prospective, "error")) {
+      py_run_string("import yfinance as yf")
+      yf <- import("yfinance")
+    
+      tryCatch({
+        # Use yfinance to download financial data for the ticker
+        stock <- yf$Ticker(ticker)
         
-        ## Grab cash flows from Google Finance.  Structure of statements is extremely similar for income statements and balance sheets.
+        # Retrieve financial statements
+        cashflow <- stock$cashflow
+        incomestatement <- stock$financials
+        balancesheet <- stock$balance_sheet
         
-        ## First check if a positive number of rows exist.
-        if (nrow(matr <- viewFinancials(prospective, type = "CF", period = "A"))) {
-          
-          ## Rename columns to include the ticker and the year.
-          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
-          
-          ## Add company cash flows to building list.
-          cashflow <- matr
+        # Process cash flow statement
+        if (!is.null(cashflow)) {
+          colnames(cashflow) <- sub("[-][0-9]*[-][0-9]*.*", "", paste0(ticker, " ", colnames(cashflow)))
+          cashflow_matrix <- as.matrix(cashflow)
+        } else {
+          cashflow_matrix <- matrix()
         }
         
-        ## Grab income statements from Google Finance.
-        if (nrow(matr <- viewFinancials(prospective, type = "IS", period = "A"))) {
-          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
-          incomestatement <- matr
+        # Process income statement
+        if (!is.null(incomestatement)) {
+          colnames(incomestatement) <- sub("[-][0-9]*[-][0-9]*.*", "", paste0(ticker, " ", colnames(incomestatement)))
+          income_matrix <- as.matrix(incomestatement)
+        } else {
+          income_matrix <- matrix()
         }
         
-        ## Grab balance sheets from Google Finance
-        if (nrow(matr <- viewFinancials(prospective, type = "BS", period = "A"))) {
-          colnames(matr) <- sub("[-][0-9]*[-][0-9]*", "", paste0(i, " ", colnames(matr)))
-          balancesheet <- matr
+        # Process balance sheet
+        if (!is.null(balancesheet)) {
+          colnames(balancesheet) <- sub("[-][0-9]*[-][0-9]*.*", "", paste0(ticker, " ", colnames(balancesheet)))
+          balance_matrix <- as.matrix(balancesheet)
+        } else {
+          balance_matrix <- matrix()
         }
         
         ## Create a temporary list containing the data, and save the result to an RData file.
-        clist <- list(cashflow, incomestatement, balancesheet)
-        listfiles[i] <- fileName
+        clist <- list(cashflow_matrix, income_matrix, balance_matrix)
+        listfiles[ticker] <- fileName
         save(clist, file = fileName)
-      } else {
-        message(paste0("Error retrieving data for ", i))
-        warning(paste0("No financials for ", i))
-      }
+      }, error = function(e) {
+        message(paste0("Error retrieving data for ", ticker, ": ", e$message))
+        warning(paste0("No financials for ", ticker))
+      })
     }
   }
   

@@ -17,14 +17,18 @@
 #' @seealso \code{\link{market_payouts}}
 #' 
 #' @examples
-#' \dontrun{
-#' companies <- qmjdata::companies[1,]
-#' market_safety(companies, qmjdata::financials, qmjdata::prices)
+#' \donttest{
+#' # Takes more than 10 secs
+#' market_safety(companies_r3k16[companies_r3k16$ticker %in% c("AAPL"), ])
 #' }
-#' @importFrom dplyr filter distinct arrange
+#' 
+#' @importFrom dplyr filter distinct arrange desc
+#' @importFrom stats cov lm residuals sd var
+#' @importFrom rlang .data
+#' @return data.frame of market safety values
 #' @export
 
-market_safety <- function(companies = qmjdata::companies, financials = qmjdata::financials, prices = qmjdata::prices) {
+market_safety <- function(companies = qmj::companies_r3k16, financials = qmj::financials_r3k16, prices = qmj::prices_r3k16) {
   
   if (length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
@@ -44,9 +48,12 @@ market_safety <- function(companies = qmjdata::companies, financials = qmjdata::
   
   prices$pret[is.nan(prices$pret)] <- 0
   prices$pret[is.infinite(prices$pret)] <- 0
-  currentyear <- as.numeric(format(Sys.Date(), "%Y"))
-  market <- dplyr::filter(prices, ticker == "GSPC")
-  nogspc <- dplyr::filter(prices, ticker != "GSPC")
+  
+  # currentyear <- as.numeric(format(Sys.Date(), "%Y"))
+  currentyear <- as.numeric(format(max(as.Date(prices$date)), '%Y'))
+  
+  market <- dplyr::filter(prices, .data[["ticker"]] == "GSPC")
+  nogspc <- dplyr::filter(prices, .data[["ticker"]] != "GSPC")
   year <- numeric()
   if (sum(as.numeric(sub("-.*", "", market$date)) == currentyear) <= 150) {
     year <- currentyear - 1
@@ -73,17 +80,17 @@ market_safety <- function(companies = qmjdata::companies, financials = qmjdata::
   }
   
   fin <- financials
-  fin <- dplyr::arrange(financials, desc(year))
-  fstyear <- dplyr::distinct_(fin, "ticker")
+  fin <- dplyr::arrange(financials, desc(.data[["year"]]))
+  fstyear <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- dplyr::distinct_(fin, "ticker")
+  sndyear <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- dplyr::distinct_(fin, "ticker")
+  thdyear <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   
   fthyear <- modifiedsetdiff(fin, thdyear)
-  fthyear <- dplyr::distinct_(fthyear, "ticker")
+  fthyear <- dplyr::distinct(fthyear, .data[["ticker"]], .keep_all = TRUE)
   
   ## Forces all data frames to have the same number of rows.
   

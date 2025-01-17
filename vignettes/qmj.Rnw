@@ -10,7 +10,7 @@
 \usepackage[parfill]{parskip}
 \usepackage[round]{natbib}
 
-%\VignetteEngine{Sweave}
+%\VignetteEngine{utils::Sweave}
 %\VignetteIndexEntry{qmj}
 
 \begin{document}
@@ -26,7 +26,7 @@
 
 \title{An Implementation of Quality Minus Junk}
 
-\author{by Anthoney Tsou, Eugene Choe, David Kane, and Ryan Kwon}
+\author{by Anthoney Tsou, Eugene Choe, David Kane, Ryan Kwon, Yanrong Song, Zijie Zhu}
 
 \maketitle
 
@@ -44,34 +44,35 @@ Using financial statements and stock price data, \strong{qmj} provides a data fr
 
 \section{Data}
 \subsection{Companies}
-The Russell 3000 is an index that tracks roughly 3000 of the largest US-traded companies by market capitalization \citep{russell:2015}. It is rebalanced annually in June. This package comes with a data frame, \code{companies}, containing the members of the 2015 index by name and ticker\footnote{From https://www.russell.com/documents/indexes/construction-methodology-us-indexes.pdf}.
+The Russell 3000 is an index that tracks roughly 3000 of the largest US-traded companies by market capitalization \citep{russell:2015}. It is rebalanced annually in June. This package comes with a data frame, \code{companies\_r3k16}, containing the members of the 2015 index by name and ticker\footnote{From https://www.russell.com/documents/indexes/construction-methodology-us-indexes.pdf}.
 
-Below is a sample of the first five companies in \code{companies}.
+Below is a sample of the first five companies in \code{companies\_r3k16}.
 
 \begin{center}
 <<echo = FALSE>>=
-head(qmjdata::companies, n = 5)
+library(qmj)
+head(companies_r3k16, n = 5)
 @
 \end{center}
 
-The companies are arranged alphabetically by ticker and were parsed from a text file containing the same content as the online Russell 3000 component list\footnote{That list may be found here: https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}. 
+The companies are arranged alphabetically by ticker and were parsed from a text file containing the same content as the online Russell 3000 component list\footnote{That list may be found here: https://www.lseg.com/en/ftse-russell}. 
 
 \subsection{Financials}
-Data from the cash flow statements, income statements, and balance sheets of selected companies are consolidated into a second dataset called \code{financials}.
+Data from the cash flow statements, income statements, and balance sheets of selected companies are consolidated into a second dataset called \code{financials\_r3k16}.
 
 \code{financials} is long format data, so for each ticker, there are four rows corresponding to the past four available fiscal years based on 10-K submission date. Since companies have different 10-K submission dates, some companies will occasionally not have data for the past four years, but rather data with some amount of lag. 
 
-Here is a sample of the first five rows in \code{financials}.
+Here is a sample of the first five rows in \code{financials\_r3k16}.
 
 \begin{center}
 <<echo = FALSE>>=
-head(qmjdata::financials, n = 5)
+head(financials_r3k16, n = 5)
 @
 \end{center}
 
 \begin{table}
-  \caption{Columns in \code{financials} (in millions of USD except for per share items)}
-  \label{table:financials}
+  \caption{Columns in \code{financials\_r3k16} (in millions of USD except for per share items)}
+  \label{table:financials_r3k16}
   \begin{tabularx}{\textwidth}{X X}
     \toprule
       Abbreviation & Name \\ 
@@ -101,23 +102,23 @@ head(qmjdata::financials, n = 5)
 \end{table}
 
 \subsection{Prices}
-The \code{prices} dataset has the closing stock prices and price returns for the past two years for each company. Here is a sample of the data:
+The \code{prices\_r3k16} dataset has the closing stock prices and price returns for the past two years for each company. Here is a sample of the data:
 
 \begin{center}
 <<echo = FALSE>>=
-rbind(head(qmjdata::prices, n = 5),
-      qmjdata::prices[1050:1054,])
+rbind(head(prices_r3k16, n = 5),
+      prices_r3k16[1050:1054,])
 @
 \end{center}
 
 In addition to the companies selected, for comparison purposes the Standard and Poor's 500 Index (with ticker GSPC) price data will always be provided. 
 
 \subsection{Quality}
-The \code{quality} data frame contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts. These z-scores were calculated following the methodology described \hyperref[sec:calculations]{below}, using data from the \code{prices} and \code{financials} data sets.
+The \code{quality\_r3k16} data frame contains the quality scores for each company as well as the four z-scores measuring profitability, growth, safety, and payouts. These z-scores were calculated following the methodology described \hyperref[sec:calculations]{below}, using data from the \code{prices\_r3k16} and \code{financials\_r3k16} data sets.
   
 \begin{center}
 <<echo = FALSE>>=
-quality_scores <- qmjdata::quality
+quality_scores <- quality_r3k16
 quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))] <-
   round(quality_scores[-which(colnames(quality_scores) %in% c("ticker", "name"))], 
         digits = 3)
@@ -173,8 +174,8 @@ GOOGLE GOOG
 The user, however, will have to manually create the new text file. \strong{get\_prices()} takes a data frame of companies from \strong{get\_companies()}, containing the columns "name" and "ticker," and returns the daily prices and returns for the past two years including the most recent trading day. \strong{get\_info()} also takes a similarly formatted data frame of companies and grabs the four most recent company 10-K financial statements if available. \strong{get\_info()} does not need to be called often since it will only grab new data if a company files a new 10-K statement. 
 
 <<echo = TRUE, results = hide, eval= FALSE>>=
-raw_prices <- get_prices(companies)
-raw_data <- get_info(companies)
+raw_prices <- get_prices(companies_r3k16)
+raw_data <- get_info(companies_r3k16)
 @
 
 This raw data is neither easily readable nor usable elsewhere in the package however. We need to tidy the data before it may be used in quality calculations.
@@ -184,10 +185,10 @@ clean_prices <- tidy_prices(raw_prices)
 clean_data <- tidyinfo(raw_data)
 @
 
-\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()} and \strong{tidyinfo()} takes as input the result of \strong{get\_info()}. The column names of clean\_data will be the same abbreviations that are described in the \hyperref[table:financials]{table under the Financials data subsection}. The quality data frame can then be generated using \strong{market\_data()}.
+\strong{tidy\_prices()} takes as input the result of \strong{get\_prices()} and \strong{tidyinfo()} takes as input the result of \strong{get\_info()}. The column names of clean\_data will be the same abbreviations that are described in the \hyperref[table:financials_r3k16]{table under the Financials data subsection}. The quality data frame can then be generated using \strong{market\_data()}.
 
 <<echo = TRUE, results = hide, eval= FALSE>>=
-quality_data <- market_data(companies, clean_data, clean_prices)
+quality_data <- market_data(companies_r3k16, clean_data, clean_prices)
 @
 
 \section{Handling Missing Data}
@@ -209,7 +210,7 @@ Similarly, we filter companies which we deem to have inadequate price data to gi
 
 The \strong{qmj} package offers an R implementation of the methodologies found in the paper,``Quality Minus Junk'' \citep{asness:2013}, providing tools to calculate quality scores in addition to profitability, growth, safety, and payout subscores for publicly traded US companies. \strong{qmj} also serves as a useful reference tool with its focus on the Russell 3000 and provided data, allowing users to immediately browse regularly updated quality scores for the largest public US companies.
 
-\bibliography{tsou-kane-kwon}
+\bibliography{qmj}
 
 \address{Anthoney Tsou\\
   Williams College\\
@@ -240,5 +241,20 @@ The \strong{qmj} package offers an R implementation of the methodologies found i
   Williamstown, MA 01267\\
   United States}\\
 \email{rynkwn@gmail.com}
+
+\address{Yanrong Song\\
+  Columbia University\\
+  116th and Broadway\\
+  New York, NY 10027\\
+  United States}\\
+\email{yrsong129@gmail.com}
+
+\address{Zijie Zhu\\
+  Columbia University\\
+  116th and Broadway\\
+  New York, NY 10027\\
+  United States}\\
+\email{zijie.miller.zhu@gmail.com}
+
 \end{article}
 \end{document}  

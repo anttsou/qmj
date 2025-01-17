@@ -17,12 +17,13 @@
 #' @seealso \code{\link{market_safety}}
 #' 
 #' @examples
-#' companies <- qmjdata::companies[1,]
-#' market_payouts(companies, qmjdata::financials)
-#' @importFrom dplyr distinct arrange
+#' market_payouts(companies_r3k16[1,], financials_r3k16)
+#' @importFrom dplyr distinct arrange desc
+#' @importFrom rlang .data
+#' @return data.frame of market payouts values
 #' @export
 
-market_payouts <- function(companies = qmjdata::companies, financials = qmjdata::financials) {
+market_payouts <- function(companies = qmj::companies_r3k16, financials = qmj::financials_r3k16) {
   
   ## Stop the function in case of bad data.
   if (length(companies$ticker) == 0) {
@@ -49,17 +50,17 @@ market_payouts <- function(companies = qmjdata::companies, financials = qmjdata:
   colnames(allcompanies) <- "ticker"
   
   fin <- financials
-  fin <- dplyr::arrange(financials, desc(year))
-  fstyear <- dplyr::distinct_(fin, "ticker")
+  fin <- dplyr::arrange(financials, desc(.data[["year"]]))
+  fstyear <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   
   fin <- modifiedsetdiff(fin, fstyear)
-  sndyear <- dplyr::distinct_(fin, "ticker")
+  sndyear <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   
   fin <- modifiedsetdiff(fin, sndyear)
-  thdyear <- dplyr::distinct_(fin, "ticker")
+  thdyear <- dplyr::distinct(fin, .data[["ticker"]], .keep_all = TRUE)
   
   fthyear <- modifiedsetdiff(fin, thdyear)
-  fthyear <- dplyr::distinct_(fthyear, "ticker")
+  fthyear <- dplyr::distinct(fthyear, .data[["ticker"]], .keep_all = TRUE)
   
   ## Forces all data frames to have the same number of rows.
   fstyear <- merge(allcompanies, fstyear, by = "ticker", all.x = TRUE)

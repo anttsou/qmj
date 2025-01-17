@@ -27,46 +27,12 @@
 #' @seealso \code{\link{tidy_prices}}
 #' 
 #' @examples
-#' \dontrun{
+#' get_prices(companies_r3k16[companies_r3k16$ticker %in% c("AAPL", "AMZN"), ])
 #' 
-#' ## If no data frame is provided, 
-#' ## the default is the package's 
-#' ## companies data set.
-#' 
-#' get_prices()
-#' 
-#' ## If we want to get information 
-#' ## for a specific data frame of 
-#' ## companies, called comps
-#' 
-#' get_prices(comps)
-#' 
-#' ## If we then decide to quit the 
-#' ## process partway through, and 
-#' ## then resume downloading,
-#' ## the function usage is identical.
-#' 
-#' get_prices(comps)
-#' 
-#' ## If we quit the process partway 
-#' ## through, and then decide to clean 
-#' ## the data to start from scratch.
-#' 
-#' clean_downloads(comps)
-#' get_prices(comps)
-#' 
-#' ## The raw price data is difficult 
-#' ## to use, so we'll clean the data 
-#' ## for future use.
-#' 
-#' price_data <- get_prices(comps)
-#' prices <- tidy_prices(price_data)
-#' 
-#' }
 #' @importFrom quantmod getSymbols
 #' @export
 
-get_prices <- function(companies = qmjdata::companies) {
+get_prices <- function(companies = qmj::companies_r3k16) {
   numCompanies <- length(companies$ticker)
   if (numCompanies == 0) {
     stop("parameter requires a ticker column.")
@@ -118,12 +84,14 @@ get_prices <- function(companies = qmjdata::companies) {
       listfiles[i + 1] <- absoluteFilePath
       
     } else {
-      stockData <- tryCatch(quantmod::getSymbols(companyTicker, src="google", auto.assign=FALSE, from=startDate,
+      stockData <- tryCatch(quantmod::getSymbols(companyTicker, src="yahoo", auto.assign=FALSE, from=startDate,
                                                  warnings=FALSE, messages=FALSE), 
                             error = function(e) e)
       
       ## If we successfully retrieved the data, and there's enough of that data to be worth keeping, we save it as a temp file.
       if (!inherits(stockData, "error") && length(stockData[, 1]) > 1) {
+        ## Don't want TICK.Adjusted column
+        stockData <- stockData[, -ncol(stockData)]
         
         ## Inform the user of progress.
         message(paste0("Price data for ", companyTicker, sep = ""))

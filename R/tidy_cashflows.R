@@ -22,14 +22,17 @@
 tidy_cashflows <- function(x) {
   
   ## Calls tidy_helper to construct a list of data.frames and merges the list elements into one large data.frame
-  cashflows <- do.call(rbind, lapply(x, tidy_helper))
+  # cashflows <- do.call(rbind, lapply(x, tidy_helper))
+  cashflows <- dplyr::bind_rows(lapply(x, tidy_helper))
   
   ## Remove all rows that are solely NAs.
   cashflows <- cashflows[rowSums(!is.na(cashflows)) >= 1, ]
   rownames(cashflows) <- NULL
   
   ## These are the categories we expect from the raw data, with abbreviations for each of the variables found in the cash flows
-  names(cashflows) <- c("ticker", "year", "order", "NI.SL", "DP.DPL", "AM", "DT", "NCI", "CWC", "COA", "CX", "OICF", "CIA", "FCFI", "TCDP", "ISN", "IDN", 
-    "CFA", "FEE", "NCC", "CIP", "CTP")
+  ## The wanted categories were based on previous outputs from Google Finance API which is discontinued now
+  ## So we have to map the current output (from Yahoo Finance) to previous categories
+  cashflows <- cashflows[, c('ticker', 'year', 'order', 'Depreciation.Amortization.Depletion', 'Depreciation.And.Amortization', 'Change.In.Working.Capital', 'Changes.In.Cash', 'Cash.Dividends.Paid')]
+  names(cashflows) <- c("ticker", "year", "order", "DP.DPL", "AM", "CWC", "CX", "DIVC")
   cashflows
 } 

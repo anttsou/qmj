@@ -27,32 +27,11 @@
 #' @seealso \code{\link{get_prices}}
 #' @seealso \code{\link{get_info}}
 #' @examples
-#' \dontrun{
-#' 
-#' ## Without a specified data frame, 
-#' ## clean_downloads defaults to the package
-#' ## provided data frame of comapnies.
-#' 
 #' clean_downloads()
 #' 
-#' ## If we wanted to remove temporarily 
-#' ## downloaded files for only some
-#' ## subset of our companies, or if we 
-#' ## wanted to specify a modified data frame
-#' ## of companies.
-#' 
-#' clean_downloads(sub_comps)
-#' 
-#' ## Fetch fresh data after removing old 
-#' ## temporary files.
-#' 
-#' get_prices(sub_comps)
-#' get_info(sub_comps)
-#' 
-#' }
 #' @export
 
-clean_downloads <- function(x = qmjdata::companies) {
+clean_downloads <- function(x = qmj::companies_r3k16) {
   tickers = x$ticker
   if (length(tickers) == 0) {
     stop("parameter requires a ticker column.")

@@ -14,18 +14,25 @@
 #' available for use.
 #' Index of datasets:
 #' \itemize{
-#'  \item companies - A data frame of publicly traded companies in the Russell 
+#'  \item companies_r3k16 - A data frame of publicly traded companies in the Russell 
 #'  3000 Index.
-#'  \item financials - Financial statements for companies in the 
-#'  companies dataset.
-#'  \item prices - Daily prices and price returns for the past two years for
+#'  \item financials_r3k16 - Financial statements for companies in the 
+#'  companies_r3k16 dataset.
+#'  \item prices_r3k16 - Daily prices and price returns for the past two years for
 #'  each company.
-#'  \item quality - Most recently measured quality z-scores and component scores.
+#'  \item quality_r3k16 - Measured quality z-scores and component scores
 #' }
 #' 
 #' @references
 #' Asness, Clifford S., Andrea Frazzini, and Lasse H. Pedersen. 'Quality Minus Junk.' AQR (2013)
 #' 
-#' @docType package
+#' @importFrom dplyr %>%
+#' @importFrom reticulate use_virtualenv
+#' 
 #' @name qmj
-NULL 
+"_PACKAGE"
+
+
+.onLoad <- function(...) {
+  use_virtualenv("r-qmj", required = FALSE)
+}

@@ -26,34 +26,19 @@
 #' @seealso \code{\link{market_payouts}}
 #' 
 #' @examples
-#' \dontrun{
-#' ## To immediately get quality scores using 
-#' ## package data sets.
-#' 
-#' market_data()
-#' 
-#' ## If we desire to produce a set of quality 
-#' ## scores for a specific data frame of 
-#' ## companies, which we'll call companies.
-#' 
-#' # Remove old temporary data, if present.
-#' clean_downloads(companies)
-#' 
-#' # Get raw financial and price data.
-#' raw_financials <- get_info(companies)
-#' raw_prices <- get_prices(companies)
-#' 
-#' # Clean raw data for use in market_data.
-#' financials <- tidyinfo(raw_financials)
-#' prices <- tidy_prices(raw_prices)
-#' 
-#' quality_scores <- market_data(companies, financials, prices)
+#' \donttest{
+#' # Takes more than 10 secs
+#' market_data(companies_r3k16[companies_r3k16$ticker %in% c("AAPL"), ])
 #' }
-#' @importFrom dplyr arrange %>%
-#' @import qmjdata
+#' 
+#' @importFrom dplyr arrange desc %>%
+#' @importFrom rlang .data
+#' 
+#' @return data.frame of all market data
+#' 
 #' @export
 
-market_data <- function(companies = qmjdata::companies, financials = qmjdata::financials, prices = qmjdata::prices) {
+market_data <- function(companies = qmj::companies_r3k16, financials = qmj::financials_r3k16, prices = qmj::prices_r3k16) {
   if (length(companies$ticker) == 0) {
     stop("first parameter requires a ticker column.")
   }
@@ -65,20 +50,21 @@ market_data <- function(companies = qmjdata::companies, financials = qmjdata::fi
   ## we'll call this the target-year. Since some companies may produce an 10-K filing early
   ## the next year, we'll also allow any company which produced a filing the following year
   ## through this filter.
-  target_year <- as.numeric(format(Sys.Date(), "%Y")) - 2
+  # target_year <- as.numeric(format(Sys.Date(), "%Y")) - 2
+  target_year <- max(financials$year) - 2
   leeway_year <- target_year + 1
   
-  valid_tickers <- dplyr::filter(financials, year==target_year | year==leeway_year) %>%
+  valid_tickers <- dplyr::filter(financials, .data[["year"]]==target_year | .data[["year"]]==leeway_year) %>%
                    dplyr::select(ticker) %>%
                    dplyr::distinct()
   
   ## Second Filter: All companies must have 3-4 years of contiguous financial data including
   ## the target year.
   
-  #' @includeIn Second Filter: Keeps only those companies which have 3-4 years of contiguous
-  #' financial data including the target year (or leeway year).
+  ## Second Filter: Keeps only those companies which have 3-4 years of contiguous
+  ## financial data including the target year (or leeway year).
   second_filter <- function(selected_ticker, fin, target_year, leeway_year) {
-    selected_rows <- dplyr::filter(fin, ticker==selected_ticker)
+    selected_rows <- dplyr::filter(fin, .data[["ticker"]]==selected_ticker)
     
     ## Check to ensure that 3-4 years of financial data exist.
     if(nrow(selected_rows) >= 3) {

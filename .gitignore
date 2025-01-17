@@ -15,7 +15,6 @@ vignettes/*.pdf
 vignettes/*.out
 vignettes/*.dvi
 vignettes/*.toc
-vignettes/tsou-kane-kwon-blx.bib
 vignettes/qmj-blx.bib
 vignettes/*.brf
 vignettes/*.bbl
@@ -24,6 +23,5 @@ vignettes/*.aux
 vignettes/figure*
 vignettes/*.sty
 vignettes/qmj.run.xml
-vignettes/tsou-kane-kwon.run.xml
 qmj.Rproj
 *.html

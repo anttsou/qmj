@@ -9,7 +9,7 @@
 #' data correctly. Simply select all of the component list and paste 
 #' the contents into an empty document with
 #' the .txt extension. The list may be found 
-#' \href{https://www.russell.com/documents/indexes/membership/membership-russell-3000.pdf}{here}.
+#' \href{https://www.lseg.com/en/ftse-russell}{here}.
 #' 
 #' If you wish to use your own text file of companies for get_companies to process,
 #' create a text file containing each company on a separate line. Every word and ticker
@@ -23,24 +23,13 @@
 #' tickers of interest. May be either absolute or relative to working directory.
 #' 
 #' @examples
-#' ## The function by default uses a text 
-#' ## file created from the Russell 3000 Index.
-#' 
 #' get_companies()
 #' 
-#' ## As an example valid txt file, create 
-#' ## 'companies.txt' in our current working 
-#' ## directory containing the following two lines:
-#' ## APPLE AAPL
-#' ## GOOGLE GOOG
-#' 
-#' \dontrun{
-#' 
-#' get_companies('companies.txt')
-#' 
-#' }
-#' 
 #' @importFrom dplyr arrange
+#' @importFrom rlang .data
+#' 
+#' @return data.frame of companies info
+#' 
 #' @export
 
 get_companies <- function(filepath = system.file("extdata/companies.txt", package = "qmj")) {
@@ -76,6 +65,5 @@ get_companies <- function(filepath = system.file("extdata/companies.txt", packag
   row.names(companies) <- NULL
   
   ## Arrange alphabetically by ticker.
-  companies <- dplyr::arrange(companies, ticker)
-  companies
+  dplyr::arrange(companies, .data[["ticker"]])
 } 
