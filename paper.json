@@ -1,0 +1,53 @@
+{
+  "@context": "https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld",
+  "@type": "Code",
+  "author": [
+    {
+      "@type": "Person",
+      "email": "anttsou@gmail.com",
+      "name": "Anthoney Tsou",
+      "affiliation": "Williams College"
+    },
+    {
+      "@type": "Person",
+      "email": "ec7@williams.edu",
+      "name": "Eugene Choe",
+      "affiliation": "Williams College"
+    },
+    {
+      "@type": "Person",
+      "email": "david.kane@gmail.com",
+      "name": "David Kane",
+      "affiliation": "Harvard University"
+    },
+    {
+      "@type": "Person",
+      "email": "rynkwn@gmail.com",
+      "name": "Ryan Kwon",
+      "affiliation": "Williams College"
+    },
+      {
+      "@type": "Person",
+      "email": "yrsong129@gmail.com",
+      "name": "Yanrong Song",
+      "affiliation": "Columbia University"
+    },
+      {
+      "@type": "Person",
+      "email": "zijie.miller.zhu@gmail.com",
+      "name": "Zijie Zhu",
+      "affiliation": "Columbia University"
+    }
+
+
+  ],
+  "codeRepository": "https://github.com/anttsou/qmj",
+  "datePublished": "2025-01-20",
+  "dateModified": "2025-01-20",
+  "dateCreated": "2025-01-20",
+  "description": "produces quality scores for each of the US companies from the Russell 3000, following the approach described in 'Quality Minus Junk' (Asness, Frazzini, & Pedersen, 2013) <http://www.aqr.com/library/working-papers/quality-minus-junk>. The package includes datasets for users who wish to view the most recently uploaded quality scores. It also provides tools to automatically gather relevant financials and stock price information, allowing users to update their data and customize their universe for further analysis.",
+  "keywords": "Quality Minus Junk, quantitative investment, R package",
+  "license": "GPL-3",
+  "title": "Quality Scores for the Russell 3000",
+  "version": "0.2.1"
+}

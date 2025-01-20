@@ -1,6 +1,0 @@
-# To-Do List
-
-* Format vignette as The R Journal submission (R Markdown)
-* Take care of issues raised in R CMD check (format data size)
-
-
