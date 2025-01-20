@@ -1,5 +1,5 @@
 # qmj (Quality Minus Junk)
-Authors : Eugene Choe, David Kane, Ryan Kwon, Anthoney Tsou
+Authors : Eugene Choe, David Kane, Ryan Kwon, Anthoney Tsou, Yanrong Song, Zijie Zhu
 
 To install the package:
 
