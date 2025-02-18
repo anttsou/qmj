@@ -31,7 +31,7 @@
 \maketitle
 
 \abstract{
-The \strong{qmj} package produces quality scores for publicly traded US companies and provides a universe composed of those in the Russell 3000 Index following the approach described in ``Quality Minus Junk'' \citep{asness:2013}. Quality scores as of January 2016 are included in a precalculated data frame, providing users an overview of stocks in the 2015 Russell 3000 Index. Users can also update these scores themselves with \strong{qmj} functions that download necessary financial and stock data from Google Finance and Yahoo Finance.
+The qmj package produces quality scores for publicly traded US companies and provides a universe composed of those in the Russell 3000 Index following the approach described in ``Quality Minus Junk''. Quality scores as of January 2016 are included in a precalculated data frame, providing users an overview of stocks in the 2015 Russell 3000 Index. Users can also update these scores themselves with qmj functions that download necessary financial and stock data from Google Finance and Yahoo Finance.
 }
 
 \section{Introduction}
@@ -128,7 +128,7 @@ head(quality_scores, n = 5)
 
 Here we have an example showing the top five companies based on quality measurements.
 
-\section{Calculating Quality}
+\section{Calculating quality}
 \label{sec:calculations}
 
 We calculate quality scores for publicly traded companies in the Russell 3000 Index by calculating the z-score of the sum of each company's profitability, growth, safety, and payouts z-scores.
@@ -160,7 +160,7 @@ $ADJASSET$ is adjusted total assets, which is $TA$ + 0.1 * (market equity ($ME$,
 \subsection{Payouts}
 Payouts is a general measure of the company's friendliness to shareholders. It is composed of three variables: net equity issuance ($EISS$), net debt issuance ($DISS$), and total net payout over profits ($NPOP$). $EISS$ is calculated as the negative log of the ratio of $TCSO$ of the most recent year and $TCSO$ of the previous year. $$EISS \ = \ -log\left(\frac{TCSO_t}{TCSO_{t-1}}\right)$$ Though AQR uses split-adjusted number of shares, we are currently using $TCSO$ given available information and will adjust for splits in future iterations of qmj. $DISS$ is calculated as the negative log of the ratio of $TD$ of the most recent year and $TD$ of the previous year. $$DISS \ = \ -log\left(\frac{TD_t}{TD_{t-1}}\right)$$ $NPOP$ is calculated as $NI$ - $\Delta BE$ over a four year span all over sum of $GPROF$ for the past four years (for the same reason as explained in the Growth section). $$NPOP \ = \ \frac{NI - \Delta BE}{\sum_{i=t-4}^{t}GPROF_i}$$
 
-\section{Recalculating the Data}
+\section{Recalculating the data}
 \label{sec:recalculating}
 
 \strong{qmj} is scheduled to update its datasets periodically, at the minimum as the Russell 3000 index rebalances every year. Users however may also directly update, modify, and create comparable data with qmj’s functions. This feature is important for those who want to calculate quality scores for their own list of publicly traded US companies, or for those who wish to factor in new data based on recent events or returns.
@@ -191,7 +191,7 @@ clean_data <- tidyinfo(raw_data)
 quality_data <- market_data(companies_r3k16, clean_data, clean_prices)
 @
 
-\section{Handling Missing Data}
+\section{Handling missing data}
 
 A key feature of \strong{qmj} is its ability to automatically retrieve 10-K financial statements and stock price data from public sources for a given data frame of companies through \href{https://cran.r-project.org/web/packages/quantmod/index.html}{\textbf{quantmod} (Ryan et al., 2015)}. As this information is sourced from Google Finance and Yahoo Finance, key pieces of data may be missing. Consequently, when calling the \strong{market\_data()} function, filters exist in order to improve the accuracy of our scaled results.
 
@@ -210,6 +210,7 @@ Similarly, we filter companies which we deem to have inadequate price data to gi
 
 The \strong{qmj} package offers an R implementation of the methodologies found in the paper,``Quality Minus Junk'' \citep{asness:2013}, providing tools to calculate quality scores in addition to profitability, growth, safety, and payout subscores for publicly traded US companies. \strong{qmj} also serves as a useful reference tool with its focus on the Russell 3000 and provided data, allowing users to immediately browse regularly updated quality scores for the largest public US companies.
 
+%%\section*{References}
 \bibliography{qmj}
 
 \address{Anthoney Tsou\\
