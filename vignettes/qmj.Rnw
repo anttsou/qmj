@@ -26,7 +26,7 @@
 
 \title{An Implementation of Quality Minus Junk}
 
-\author{by Anthoney Tsou, Eugene Choe, David Kane, Ryan Kwon, Yanrong Song, Zijie Zhu}
+\author{by Anthoney Tsou, Yanrong Song, David Kane, Ryan Kwon, Eugene Choe, Zijie Zhu}
 
 \maketitle
 
@@ -219,12 +219,12 @@ The \strong{qmj} package offers an R implementation of the methodologies found i
   United States}\\
 \email{anttsou@gmail.com}
 
-\address{Eugene Choe\\
-  Williams College\\
-  1104 Paresky Center\\
-  Williamstown, MA 01267\\
+\address{Yanrong Song\\
+  Columbia University\\
+  116th and Broadway\\
+  New York, NY 10027\\
   United States}\\
-\email{ec7@williams.edu}
+\email{yrsong129@gmail.com}
 
 \address{David Kane\\
   Harvard University\\
@@ -242,12 +242,12 @@ The \strong{qmj} package offers an R implementation of the methodologies found i
   United States}\\
 \email{rynkwn@gmail.com}
 
-\address{Yanrong Song\\
-  Columbia University\\
-  116th and Broadway\\
-  New York, NY 10027\\
+\address{Eugene Choe\\
+  Williams College\\
+  1104 Paresky Center\\
+  Williamstown, MA 01267\\
   United States}\\
-\email{yrsong129@gmail.com}
+\email{ec7@williams.edu}
 
 \address{Zijie Zhu\\
   Columbia University\\
